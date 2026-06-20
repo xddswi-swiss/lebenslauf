@@ -25,7 +25,16 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
         r.includes('treuhand') ||
         r.includes('bank') ||
         r.includes('schüler') ||
-        r.includes('sekundarschule')
+        r.includes('sekundarschule') ||
+        r.includes('ticari') ||
+        r.includes('ticaret') ||
+        r.includes('bankacılık') ||
+        r.includes('ortaokulu') ||
+        r.includes('sekundar') ||
+        r.includes('commercial') ||
+        r.includes('banking') ||
+        r.includes('apprentice') ||
+        r.includes('school')
       );
     }
     if (selectedMatcher === 'elektro') {
@@ -33,7 +42,13 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
         r.includes('elektro') ||
         r.includes('netzelektriker') ||
         r.includes('schüler') ||
-        r.includes('sekundarschule')
+        r.includes('sekundarschule') ||
+        r.includes('elektrik') ||
+        r.includes('ortaokulu') ||
+        r.includes('sekundar') ||
+        r.includes('electrical') ||
+        r.includes('installer') ||
+        r.includes('school')
       );
     }
     return true;
@@ -275,18 +290,22 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
                         <m.div
                           key={`work-${index}`}
                           variants={itemVariants}
-                          className={`relative group transition-all duration-500 ${
-                            selectedMatcher && !matchesPath(item.role)
-                              ? 'opacity-20 grayscale scale-[0.98] pointer-events-none'
-                              : 'opacity-100'
-                          }`}
+                          className="relative group pl-0"
                         >
                           {/* Timeline node */}
-                          <div className="absolute -left-14 md:-left-[4.5rem] top-5 flex items-center justify-center w-8 h-8 rounded-full bg-[var(--background)] border border-[var(--glass-border)] group-hover:border-primary transition-all duration-300">
+                          <div className={`absolute -left-14 md:-left-[4.5rem] top-5 flex items-center justify-center w-8 h-8 rounded-full bg-[var(--background)] border border-[var(--glass-border)] group-hover:border-primary transition-all duration-300 ${
+                            selectedMatcher && !matchesPath(item.role)
+                              ? 'opacity-20 grayscale'
+                              : 'opacity-100'
+                          }`}>
                             <FiBriefcase className="text-sm text-[var(--text-muted)] group-hover:text-primary transition-all duration-300" />
                           </div>
 
-                          <div className="glass-card rounded-3xl overflow-hidden border border-[var(--glass-border)]">
+                          <div className={`glass-card rounded-3xl overflow-hidden border border-[var(--glass-border)] transition-all duration-500 ${
+                            selectedMatcher && !matchesPath(item.role)
+                              ? 'opacity-20 grayscale scale-[0.98] pointer-events-none'
+                              : 'opacity-100'
+                          }`}>
                             {/* Collapsible Header */}
                             <div 
                               onClick={() => toggleExpand(index)}

@@ -159,7 +159,7 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({ selectedMatcher = null }
                     key={index} 
                     className={`space-y-1.5 transition-all duration-500 ${
                       selectedMatcher && !matches 
-                        ? 'opacity-25 blur-[0.2px] scale-[0.99]' 
+                        ? 'opacity-20 scale-[0.98]' 
                         : 'opacity-100'
                     }`}
                   >
