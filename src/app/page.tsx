@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
-import { ThemeProvider, useTheme } from './contexts/ThemeContext';
+import { useLanguage } from './contexts/LanguageContext';
+import { useTheme } from './contexts/ThemeContext';
 import { Timeline } from '@/components/Timeline';
 import { AdminExperienceForm } from '@/components/AdminExperienceForm';
 import { SkillsGrid } from '@/components/SkillsGrid';
@@ -479,11 +479,5 @@ const MainContent: React.FC = () => {
 };
 
 export default function Home() {
-  return (
-    <ThemeProvider>
-      <LanguageProvider>
-        <MainContent />
-      </LanguageProvider>
-    </ThemeProvider>
-  );
+  return <MainContent />;
 }

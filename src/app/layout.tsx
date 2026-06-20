@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Roboto_Flex, PT_Serif } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 
 const robotoFlex = Roboto_Flex({
   variable: "--font-sans",
@@ -29,7 +31,13 @@ export default function RootLayout({
       className={`${robotoFlex.variable} ${ptSerif.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col" suppressHydrationWarning>{children}</body>
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <ThemeProvider>
+          <LanguageProvider>
+            {children}
+          </LanguageProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

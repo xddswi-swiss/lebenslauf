@@ -113,6 +113,19 @@ export interface TranslationSchema {
     contactTitle: string;
     rightsReserved: string;
   };
+  notFound: {
+    title: string;
+    description: string;
+    btnHome: string;
+    btnBack: string;
+    sitemapTitle: string;
+  };
+  errorPage: {
+    title: string;
+    description: string;
+    btnRetry: string;
+    btnHome: string;
+  };
 }
 
 import experiencesData from './experiences.json';
@@ -223,6 +236,19 @@ export const translations: Record<Language, TranslationSchema> = {
       technologiesDesc: "Diese Portfolio-Website wurde mit modernen Technologien entwickelt. Insgesamt wurden 12 verschiedene Technologien verwendet.",
       contactTitle: "Kontakt",
       rightsReserved: "Alle Rechte vorbehalten."
+    },
+    notFound: {
+      title: "Seite nicht gefunden",
+      description: "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+      btnHome: "Zur Startseite",
+      btnBack: "Zurückgehen",
+      sitemapTitle: "Direkt dorthin springen:"
+    },
+    errorPage: {
+      title: "Etwas ist schiefgelaufen",
+      description: "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder gehen Sie zurück zur Startseite.",
+      btnRetry: "Erneut versuchen",
+      btnHome: "Zur Startseite"
     }
   },
   tr: {
@@ -306,6 +332,19 @@ export const translations: Record<Language, TranslationSchema> = {
       technologiesDesc: "Bu portfolyo web sitesi modern teknolojilerle geliştirilmiştir. Toplamda 12 farklı teknoloji kullanılmıştır.",
       contactTitle: "İletişim",
       rightsReserved: "Tüm hakları saklıdır."
+    },
+    notFound: {
+      title: "Sayfa Bulunamadı",
+      description: "Aradığınız sayfa mevcut değil veya başka bir yere taşınmış.",
+      btnHome: "Ana Sayfaya Dön",
+      btnBack: "Geri Dön",
+      sitemapTitle: "Hızlıca şuralara göz atabilirsiniz:"
+    },
+    errorPage: {
+      title: "Bir şeyler yanlış gitti",
+      description: "Beklenmedik bir hata oluştu. Lütfen tekrar deneyin veya ana sayfaya dönün.",
+      btnRetry: "Tekrar Dene",
+      btnHome: "Ana Sayfaya Dön"
     }
   },
   en: {
@@ -389,6 +428,19 @@ export const translations: Record<Language, TranslationSchema> = {
       technologiesDesc: "This portfolio website was developed using modern technologies. A total of 12 different technologies were used.",
       contactTitle: "Contact",
       rightsReserved: "All rights reserved."
+    },
+    notFound: {
+      title: "Page Not Found",
+      description: "The page you are looking for does not exist or has been moved.",
+      btnHome: "Go to Homepage",
+      btnBack: "Go Back",
+      sitemapTitle: "Jump directly to:"
+    },
+    errorPage: {
+      title: "Something went wrong",
+      description: "An unexpected error occurred. Please try again or return to the homepage.",
+      btnRetry: "Try Again",
+      btnHome: "Go to Homepage"
     }
   }
 };
