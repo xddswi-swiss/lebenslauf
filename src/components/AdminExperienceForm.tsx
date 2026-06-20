@@ -206,16 +206,24 @@ export const AdminExperienceForm: React.FC = () => {
               : 'Company created, but server is read-only. Copy and paste the JSON.'
         );
       } else {
-        setSuccessMsg(
-          language === 'tr'
-            ? 'Yeni firma başarıyla eklendi!'
-            : language === 'de'
-              ? 'Neue Firma erfolgreich hinzugefügt!'
-              : 'New company successfully added!'
-        );
+        const successAlertMsg = {
+          tr: 'Yeni firma başarıyla eklendi! Değişiklikler sisteme kaydedildi. Sitenin tamamen güncellenmesi ve yeni stajın herkes tarafından görünür olması yaklaşık 30-40 saniye sürecektir (Vercel arka planda yeniden derleniyor).',
+          de: 'Neue Firma erfolgreich hinzugefügt! Die Änderungen wurden gespeichert. Es dauert ca. 30-40 Sekunden, bis die Website vollständig aktualisiert und für alle sichtbar ist (Vercel wird im Hintergrund neu gebaut).',
+          en: 'New company successfully added! Changes saved to the system. It will take about 30-40 seconds for the website to be fully updated and visible to everyone (Vercel is rebuilding in the background).'
+        };
+        
         resetForm();
-        // Trigger custom event to notify Timeline component to reload
-        window.dispatchEvent(new Event('experiences-updated'));
+        setIsOpen(false);
+        
+        // Trigger custom event to notify Timeline component to reload and do optimistic update
+        window.dispatchEvent(new CustomEvent('experiences-updated', {
+          detail: {
+            action: 'add',
+            data: result.data || result.jsonBackup
+          }
+        }));
+
+        alert(successAlertMsg[language as 'de' | 'tr' | 'en'] || successAlertMsg.tr);
       }
     } catch (err: any) {
       console.error(err);
@@ -667,6 +675,38 @@ export const AdminExperienceForm: React.FC = () => {
               </div>
             </m.div>
           </div>
+        )}
+      </AnimatePresence>
+
+      {/* 4. Fullscreen Loading Overlay */}
+      <AnimatePresence>
+        {isLoading && (
+          <m.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center p-6 bg-black/75 backdrop-blur-md text-white"
+          >
+            <div className="flex flex-col items-center space-y-6 max-w-md text-center p-8 glass-card border border-white/10 rounded-3xl shadow-2xl">
+              <FiLoader className="animate-spin text-5xl text-primary" />
+              <div className="space-y-2">
+                <h3 className="text-xl font-bold">
+                  {language === 'tr' 
+                    ? 'Lütfen Bekleyin...' 
+                    : language === 'de' 
+                      ? 'Bitte warten...' 
+                      : 'Please wait...'}
+                </h3>
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  {language === 'tr' 
+                    ? 'İşleminiz gerçekleştiriliyor ve veriler güncelleniyor. Lütfen bu sayfayı kapatmayın.' 
+                    : language === 'de' 
+                      ? 'Ihre Anfrage wird verarbeitet und die Daten werden aktualisiert. Bitte schließen Sie diese Seite nicht.' 
+                      : 'Processing your request and updating the data. Please do not close this page.'}
+                </p>
+              </div>
+            </div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

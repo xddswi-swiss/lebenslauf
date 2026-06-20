@@ -285,7 +285,9 @@ export async function POST(request: Request) {
           return NextResponse.json({
             success: true,
             githubSync: true,
-            message: 'Erfolgreich über GitHub hinzugefügt / GitHub üzerinden başarıyla eklendi / Successfully added via GitHub. Site rebuilding...'
+            message: 'Erfolgreich über GitHub hinzugefügt / GitHub üzerinden başarıyla eklendi / Successfully added via GitHub. Site rebuilding...',
+            newExperience,
+            data: updatedData
           });
         } catch (gitErr: any) {
           console.error('Error syncing with GitHub API:', gitErr);
@@ -372,7 +374,8 @@ export async function DELETE(request: Request) {
           return NextResponse.json({
             success: true,
             githubSync: true,
-            message: 'Erfolgreich über GitHub gelöscht / GitHub üzerinden başarıyla silindi / Successfully deleted via GitHub. Site rebuilding...'
+            message: 'Erfolgreich über GitHub gelöscht / GitHub üzerinden başarıyla silindi / Successfully deleted via GitHub. Site rebuilding...',
+            data: updatedData
           });
         } catch (gitErr: any) {
           console.error('Error syncing DELETE with GitHub API:', gitErr);

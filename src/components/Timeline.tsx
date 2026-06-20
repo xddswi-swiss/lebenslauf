@@ -102,14 +102,22 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
 
     fetchExperiences();
 
-    const handleRefresh = () => {
+    const handleRefresh = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (customEvent.detail && customEvent.detail.data) {
+        const updatedData = customEvent.detail.data;
+        if (isMounted && updatedData && updatedData[language]) {
+          setWorkItems(updatedData[language]);
+          return;
+        }
+      }
       fetchExperiences();
     };
 
-    window.addEventListener('experiences-updated', handleRefresh);
+    window.addEventListener('experiences-updated', handleRefresh as EventListener);
     return () => {
       isMounted = false;
-      window.removeEventListener('experiences-updated', handleRefresh);
+      window.removeEventListener('experiences-updated', handleRefresh as EventListener);
     };
   }, [language]);
 
@@ -203,7 +211,20 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
         );
         console.log("Experiences JSON Backup after deletion:", backupJson);
       } else {
-        window.dispatchEvent(new Event('experiences-updated'));
+        const deleteAlertMsg = {
+          tr: `"${company}" başarıyla silindi! Değişiklikler sisteme kaydedildi. Sitenin tamamen güncellenmesi ve değişikliğin herkes tarafından görünür olması yaklaşık 30-40 saniye sürecektir (Vercel arka planda yeniden derleniyor).`,
+          de: `"${company}" erfolgreich gelöscht! Die Änderungen wurden gespeichert. Es dauert ca. 30-40 Sekunden, bis die Website vollständig aktualisiert und für alle sichtbar ist (Vercel wird im Hintergrund neu gebaut).`,
+          en: `"${company}" successfully deleted! Changes saved to the system. It will take about 30-40 seconds for the website to be fully updated and visible to everyone (Vercel is rebuilding in the background).`
+        };
+
+        window.dispatchEvent(new CustomEvent('experiences-updated', {
+          detail: {
+            action: 'delete',
+            data: result.data || result.jsonBackup
+          }
+        }));
+
+        alert(deleteAlertMsg[language as 'de' | 'tr' | 'en'] || deleteAlertMsg.tr);
       }
     } catch (err: any) {
       console.error(err);
