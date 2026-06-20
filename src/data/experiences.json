@@ -1,0 +1,916 @@
+{
+  "de": [
+    {
+      "period": "06/2026",
+      "role": "Schnupperlehre Elektroinstallateur",
+      "company": "Elektro Appenzeller AG",
+      "city": "Zürich",
+      "tasks": [
+        "Einblick in den Beruf des Elektroinstallateurs EFZ.",
+        "Kennenlernen von Werkzeugen, Materialien und Sicherheitsvorschriften.",
+        "Unterstützung bei einfachen Installationsarbeiten und Kabelverlegungen.",
+        "Erstellen von Kanälen, Bohrarbeiten und Einziehen von Leitungen."
+      ],
+      "pdfReport": "/assets/pdfs/apenzeler.pdf",
+      "imageUrl": "/assets/bilder/apenzeler.png",
+      "type": "work"
+    },
+    {
+      "period": "06/2026",
+      "role": "Schnupperlehre Elektroinstallateur",
+      "company": "Sprecher & Co AG",
+      "city": "Zürich",
+      "tasks": [
+        "Einblick in Elektroinstallationen im Wohnungs- und Gewerbebau.",
+        "Durchführung einfacher Montagearbeiten unter Anleitung.",
+        "Verlegen von Leitungen und Rohren.",
+        "Kennenlernen der Arbeitssicherheit auf der Baustelle."
+      ],
+      "pdfReport": "/assets/pdfs/sprecher.pdf",
+      "imageUrl": "/assets/bilder/sprecher.jpg",
+      "type": "work"
+    },
+    {
+      "period": "06/2026",
+      "role": "Schnupperlehre Elektroinstallateur",
+      "company": "Götz Elektro Zürich",
+      "city": "Zürich",
+      "tasks": [
+        "Erneuter Einblick in das Berufsfeld des Elektroinstallateurs.",
+        "Praktische handwerkliche Arbeiten auf verschiedenen Baustellen.",
+        "Unterstützung beim Kabelverlegen und Erstellen von Kanälen.",
+        "Einziehen von Leitungen unter Anleitung."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/gotzelek.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2026",
+      "role": "Schnupperlehre Elektroinstallateur",
+      "company": "Micom Technics Elektro",
+      "city": "Zürich",
+      "tasks": [
+        "Einblicke in die Tätigkeiten eines Elektroinstallateurs.",
+        "Arbeiten mit der Bohrmaschine und Werkzeugen.",
+        "Kabel verlegen, Steckdosen und Schalter vorbereiten.",
+        "Erstellen von Kanälen und Einziehen von Leitungen."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/micom.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2026",
+      "role": "Schnupperlehre Elektroinstallateur",
+      "company": "Elektro Kasper AG",
+      "city": "Zürich",
+      "tasks": [
+        "Praktische Mitarbeit bei Service- und Installationsarbeiten.",
+        "Kennenlernen und richtige Handhabung verschiedener Werkzeuge.",
+        "Mithilfe beim Verlegen von Kabeln und Anschliessen von Steckdosen.",
+        "Unterstützung des Teams bei täglichen Serviceaufträgen."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/kasper.png",
+      "type": "work"
+    },
+    {
+      "period": "04/2026",
+      "role": "Schnupperlehre Elektroinstallateur",
+      "company": "Etavis AG Zürich",
+      "city": "Zürich",
+      "tasks": [
+        "Kennenlernen des Berufsfeldes Elektroinstallateur bei einem Grossbetrieb.",
+        "Aktive Mitarbeit beim Verlegen von Kabeln und Bohren von Kanälen.",
+        "Einblick in die Struktur und Abläufe grosser Bauprojekte.",
+        "Kennenlernen von modernen Mess- und Prüfgeräten."
+      ],
+      "pdfReport": "/assets/pdfs/etavis.pdf",
+      "imageUrl": "/assets/bilder/etavis.png",
+      "type": "work"
+    },
+    {
+      "period": "04/2026",
+      "role": "Schnupperlehre Elektroinstallateur",
+      "company": "Schibli AG Zürich",
+      "city": "Zürich",
+      "tasks": [
+        "Praktische Erfahrungen im Elektro-Handwerk gesammelt.",
+        "Arbeiten mit der Bohrmaschine und Verlegen von Kabeln.",
+        "Erstellen von Kanälen und Einziehen von Leitungen auf der Baustelle."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/Schibli.png",
+      "type": "work"
+    },
+    {
+      "period": "03/2026",
+      "role": "Schnupperlehre Elektroinstallateur",
+      "company": "Götz Elektro Zürich",
+      "city": "Zürich",
+      "tasks": [
+        "Praktische handwerkliche Arbeiten auf verschiedenen Baustellen.",
+        "Verlegen von Leitungen und Einbauen von Tragsystemen.",
+        "Erstellen von Kabelkanälen und Rohranschlüssen.",
+        "Zusammenarbeit im Team vor Ort."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/gotzelek.png",
+      "type": "work"
+    },
+    {
+      "period": "06/2025",
+      "role": "Schnupperparcours KV Branche Bank",
+      "company": "Zürcher Kantonalbank",
+      "city": "Zürich",
+      "tasks": [
+        "Umfassender Einblick in eine Filiale der Zürcher Kantonalbank.",
+        "Kennenlernen von ausbildungs- und bankspezifischen Themen.",
+        "Einblick in die Tätigkeiten des Kaufmanns EFZ.",
+        "Austausch mit Lernenden, Mitarbeitenden und Personalverantwortlichen.",
+        "Informationen zum Bewerbungsprozess und der Lehre."
+      ],
+      "pdfReport": "/assets/pdfs/kantonalbankparcoursKVBrancheBank.pdf",
+      "imageUrl": "/assets/bilder/kantonalbankparcoursKVBrancheBank.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2025",
+      "role": "Schnupperparcours Informatik",
+      "company": "Zürcher Kantonalbank",
+      "city": "Zürich",
+      "tasks": [
+        "Vielseitiger Einblick in die IT-Ausbildungswelt der ZKB.",
+        "Entwicklung einer Website mit HTML und CSS.",
+        "Lösen von logischen Aufgaben am Computer.",
+        "Programmieren von Robotern mit Codeblöcken.",
+        "Austausch über den Bewerbungsprozess und allgemeine KV-Fragen."
+      ],
+      "pdfReport": "/assets/pdfs/kantonalbankSchnupperparcoursInformatik.pdf",
+      "imageUrl": "/assets/bilder/kantonalbankSchnupperparcoursInformatik.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2025",
+      "role": "Kaufmännische Grundbildung",
+      "company": "UBS Bank",
+      "city": "Zürich",
+      "tasks": [
+        "Einblicke in die zentralen Geschäftsfelder einer internationalen Grossbank.",
+        "Rekrutierungsprozess und Voraussetzungen für die KV-Lehre kennengelernt.",
+        "Austausch mit KV-Lernenden und Berufsbildnern.",
+        "Bearbeitung von Fallbeispielen aus dem Bankalltag."
+      ],
+      "pdfReport": "/assets/pdfs/UBS.pdf",
+      "imageUrl": "/assets/bilder/UBS.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2025",
+      "role": "Berufsinformations-Veranstaltung",
+      "company": "EWZ",
+      "city": "Zürich",
+      "tasks": [
+        "Teilnahme an einer Berufsinformationsveranstaltung der EWZ.",
+        "Einblicke in verschiedene kaufmännische und technische Berufsbilder.",
+        "Austausch mit Lernenden und Ausbildungsverantwortlichen."
+      ],
+      "pdfReport": "/assets/pdfs/ewz.pdf",
+      "imageUrl": "/assets/bilder/Ewz.png",
+      "type": "work"
+    },
+    {
+      "period": "04/2025",
+      "role": "KV Treuhand / Immobilien",
+      "company": "Kornhaus Verwaltungs AG",
+      "city": "Zürich",
+      "tasks": [
+        "Einblicke in die Tätigkeiten im Treuhand- und Immobilienbereich.",
+        "Kennenlernen kaufmännischer Abläufe im Immobilien-Business.",
+        "Kennenlernen des Rekrutierungs- und Bewerbungsprozesses.",
+        "Austausch mit Lernenden und Mitarbeitenden."
+      ],
+      "pdfReport": "/assets/pdfs/kornhaus.pdf",
+      "imageUrl": "/assets/bilder/kornhaus.png",
+      "type": "work"
+    },
+    {
+      "period": "04/2025",
+      "role": "Informatiker EFZ",
+      "company": "Ergon Smart Software",
+      "city": "Zürich",
+      "tasks": [
+        "Umfassende Einblicke in ICT-Lehrberufe mit Fokus Applikationsentwicklung.",
+        "Kennenlernen der Firma Ergon Informatik AG und laufender Projekte.",
+        "Informationen über Voraussetzungen und den Selektionsprozess.",
+        "Teilnahme an praktischen Übungen wie 'CS Unplugged'.",
+        "Austausch mit Lernenden."
+      ],
+      "pdfReport": "/assets/pdfs/ergon.pdf",
+      "imageUrl": "/assets/bilder/ergon.png",
+      "type": "work"
+    },
+    {
+      "period": "03/2025",
+      "role": "Kaufmann EFZ",
+      "company": "E. Weber & Cie AG",
+      "city": "Zürich",
+      "tasks": [
+        "Vielseitiger Einblick in die kaufmännischen Abläufe eines Grossunternehmens.",
+        "Einblicke in die Bereiche Kundendienst und Buchhaltung.",
+        "Kennenlernen der Abteilungen Einkauf, Marketing und Verkauf."
+      ],
+      "pdfReport": "/assets/pdfs/weber.pdf",
+      "imageUrl": "/assets/bilder/weber.png",
+      "type": "work"
+    },
+    {
+      "period": "03/2025",
+      "role": "KV Bank & Mediamatik",
+      "company": "Zürcher Kantonalbank",
+      "city": "Zürich",
+      "tasks": [
+        "Einblick in die ZKB und ihre Ausbildungswelt.",
+        "Kennenlernen des Lehrablaufs mit den drei Lernorten.",
+        "Informationen über die Lehrberufe Bank-KV and Mediamatik.",
+        "Austausch mit Lernenden, Mitarbeitenden und Personalverantwortlichen."
+      ],
+      "pdfReport": "/assets/pdfs/KBInfoKVMediamatik.pdf",
+      "imageUrl": "/assets/bilder/KBInfoKVMediamatik.png",
+      "type": "work"
+    },
+    {
+      "period": "03/2025",
+      "role": "IT & EDB Info",
+      "company": "Zürcher Kantonalbank",
+      "city": "Zürich",
+      "tasks": [
+        "Kennenlernen der ZKB und ihrer Ausbildungswelt.",
+        "Einblicke in den Ablauf der IT- und EDB-Lehre (Entwicklung digitales Business).",
+        "Informationen über Bewerbungs- und Rekrutierungsprozesse.",
+        "Austausch mit Lernenden und Ausbildungsverantwortlichen."
+      ],
+      "pdfReport": "/assets/pdfs/KBInforInformatikBus.pdf",
+      "imageUrl": "/assets/bilder/KBInforInformatikBus.png",
+      "type": "work"
+    },
+    {
+      "period": "01/2025",
+      "role": "Kaufmann EFZ",
+      "company": "Sunrise GmbH",
+      "city": "Glattpark",
+      "tasks": [
+        "Teilnahme an einem Informationstag der Sunrise GmbH.",
+        "Einblicke in kaufmännische Tätigkeiten in der Telekommunikationsbranche."
+      ],
+      "pdfReport": "/assets/pdfs/sunrise.pdf",
+      "imageUrl": "/assets/bilder/sunrise.png",
+      "type": "work"
+    },
+    {
+      "period": "11/2024",
+      "role": "Kaufmann EFZ",
+      "company": "Post Immobilien AG, Zürich",
+      "city": "Zürich",
+      "tasks": [
+        "Einblick in die kaufmännischen Abläufe eines Grossunternehmens.",
+        "Kennenlernen von Immobilienprozessen bei der Post."
+      ],
+      "pdfReport": "/assets/pdfs/post.pdf",
+      "imageUrl": "/assets/bilder/post.png",
+      "type": "work"
+    },
+    {
+      "period": "08/2024 - 2025",
+      "role": "Aushilfe / Schnuppern",
+      "company": "Kita Bärlis Oerlikon",
+      "city": "Zürich",
+      "tasks": [
+        "Unterstützung bei der Betreuung von Kindern im Alter von 0 bis 3 Jahren.",
+        "Mithilfe beim Aufräumen sowie bei der Organisation von Materialien.",
+        "Unterstützung bei alltäglichen Spiel- und Bastelaktivitäten."
+      ],
+      "pdfReport": "/assets/pdfs/Kita_Schnupperlehre.pdf",
+      "imageUrl": "/assets/bilder/kita.png",
+      "type": "work"
+    },
+    {
+      "type": "education",
+      "period": "2023 - 2026",
+      "role": "Sekundarschule (Sek A)",
+      "company": "Sekundarschule Zürich Rebhügel",
+      "city": "Zürich",
+      "tasks": [
+        "Aktuell: Dritte Sekundarstufe (Sek A) an der Sekundarschule Zürich Rebhügel (Abschluss 2026/2027)."
+      ]
+    }
+  ],
+  "tr": [
+    {
+      "period": "06/2026",
+      "role": "Elektrik Tesisatçısı Stajı",
+      "company": "Elektro Appenzeller AG",
+      "city": "Zürih",
+      "tasks": [
+        "Elektrik tesisatı alanında pratik deneyimler.",
+        "Aletlerin, malzemelerin ve güvenlik kurallarının öğrenilmesi.",
+        "Basit montaj işlerinde ve kablo çekiminde yardım.",
+        "Kanal açma, matkapla delme ve kabloları yerleştirme işlemleri."
+      ],
+      "pdfReport": "/assets/pdfs/apenzeler.pdf",
+      "imageUrl": "/assets/bilder/apenzeler.png",
+      "type": "work"
+    },
+    {
+      "period": "06/2026",
+      "role": "Elektrik Tesisatçısı Stajı",
+      "company": "Sprecher & Co AG",
+      "city": "Zürih",
+      "tasks": [
+        "Konut ve ticari binalarda elektrik tesisatı gözlemi.",
+        "Rehberlik eşliğinde basit montaj işlerinin gerçekleştirilmesi.",
+        "Kablo ve boru döşeme çalışmaları.",
+        "Şantiyede iş güvenliği kurallarının öğrenilmesi."
+      ],
+      "pdfReport": "/assets/pdfs/sprecher.pdf",
+      "imageUrl": "/assets/bilder/sprecher.jpg",
+      "type": "work"
+    },
+    {
+      "period": "06/2026",
+      "role": "Elektrik Tesisatçısı Stajı",
+      "company": "Götz Elektro Zürich",
+      "city": "Zürih",
+      "tasks": [
+        "Elektrik tesisatçılığı alanında pratik çalışmalar.",
+        "Kablo döşeme ve montaj işlerine katılım.",
+        "Kablo kanallarının ve boru bağlantılarının yapılması."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/gotzelek.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2026",
+      "role": "Elektrik Tesisatçısı Stajı",
+      "company": "Micom Technics Elektro",
+      "city": "Zürih",
+      "tasks": [
+        "Elektrik tesisatı alanında pratik çalışmalar.",
+        "Matkap kullanımı ve alet çantası hazırlığı.",
+        "Kablo çekme, priz ve anahtar montaj hazırlıkları.",
+        "Kanal açma ve kabloların çekilmesi."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/micom.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2026",
+      "role": "Elektrik Tesisatçısı Stajı",
+      "company": "Elektro Kasper AG",
+      "city": "Zürih",
+      "tasks": [
+        "Servis ve kurulum işlerinde pratik çalışma.",
+        "Çeşitli aletlerin tanınması ve doğru kullanımı.",
+        "Kablo döşeme ve priz bağlantılarında yardım.",
+        "Günlük servis taleplerinde ekibe destek sağlama."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/kasper.png",
+      "type": "work"
+    },
+    {
+      "period": "04/2026",
+      "role": "Elektrik Tesisatçısı Stajı",
+      "company": "Etavis AG Zürich",
+      "city: tr": "Zürih",
+      "city": "Zürih",
+      "tasks": [
+        "Büyük bir işletmede elektrik tesisatçılığı mesleğinin gözlemlenmesi.",
+        "Kablo döşeme ve kanal delme işlemlerinde aktif çalışma.",
+        "Büyük inşaat projelerinin yapısı ve süreçleri hakkında bilgi.",
+        "Modern ölçüm ve test cihazlarının tanıtılması."
+      ],
+      "pdfReport": "/assets/pdfs/etavis.pdf",
+      "imageUrl": "/assets/bilder/etavis.png",
+      "type": "work"
+    },
+    {
+      "period": "04/2026",
+      "role": "Elektrik Tesisatçısı Stajı",
+      "company": "Schibli AG Zürich",
+      "city": "Zürih",
+      "tasks": [
+        "Elektrik tesisatı alanında pratik deneyim kazanılması.",
+        "Matkap ile çalışma ve kabloların döşenmesi.",
+        "Şantiyede kablo kanallarının açılması ve hatların çekilmesi."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/Schibli.png",
+      "type": "work"
+    },
+    {
+      "period": "03/2026",
+      "role": "Elektrik Tesisatçısı Stajı",
+      "company": "Götz Elektro Zürich",
+      "city": "Zürih",
+      "tasks": [
+        "Farklı inşaat şantiyelerinde pratik el işçiliği deneyimi.",
+        "Kabloların döşenmesi ve taşıyıcı sistemlerin kurulması.",
+        "Kablo kanalları ve boru bağlantılarının yapılması.",
+        "Şantiyede ekip çalışmasına katılım."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/gotzelek.png",
+      "type": "work"
+    },
+    {
+      "period": "06/2025",
+      "role": "Bankacılık Sektörü Ticari Stajı",
+      "company": "Zürcher Kantonalbank",
+      "city": "Zürih",
+      "tasks": [
+        "Bir banka şubesinin günlük işleyişine kapsamlı genel bakış.",
+        "Bankacılık konularını ve müşteri hizmetleri alanlarını tanıma.",
+        "Kaufmann/Kauffrau EFZ (Ticari Eleman) mesleği ve eğitim sürecinin tanıtımı.",
+        "Kursiyerlerin sunumlarına ve grup çalışmalarına katılım."
+      ],
+      "pdfReport": "/assets/pdfs/kantonalbankparcoursKVBrancheBank.pdf",
+      "imageUrl": "/assets/bilder/kantonalbankparcoursKVBrancheBank.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2025",
+      "role": "Bilişim ve Web Geliştirme Stajı",
+      "company": "Zürcher Kantonalbank",
+      "city": "Zürih",
+      "tasks": [
+        "Büyük bir bankanın BT eğitim dünyasına bakış.",
+        "HTML, CSS und JavaScript ile pratik web geliştirme çalışmaları.",
+        "Mantıksal problem çözme ve programlama zorluklarını aşma.",
+        "Küçük programlama projelerinin sunumu."
+      ],
+      "pdfReport": "/assets/pdfs/kantonalbankSchnupperparcoursInformatik.pdf",
+      "imageUrl": "/assets/bilder/kantonalbankSchnupperparcoursInformatik.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2025",
+      "role": "Temel Ticari Eğitim Gözlemi",
+      "company": "UBS Bank",
+      "city": "Zürih",
+      "tasks": [
+        "Uluslararası büyük bir bankanın ana iş kollarına genel bakış.",
+        "Ticari çıraklık eğitimi için işe alım ve başvuru süreçlerini öğrenme.",
+        "Mevcut çıraklar ve mesleki eğitmenler ile deneyim paylaşımı.",
+        "Günlük bankacılık vakalarının örnek analizleri üzerinde çalışma."
+      ],
+      "pdfReport": "/assets/pdfs/UBS.pdf",
+      "imageUrl": "/assets/bilder/UBS.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2025",
+      "role": "Meslek Bilgilendirme Etkinliği",
+      "company": "EWZ",
+      "city": "Zürih",
+      "tasks": [
+        "EWZ bünyesinde meslek bilgilendirme etkinliğine katılım.",
+        "Ticari ve teknik meslek alanlarına dair geniş gözlemler.",
+        "Kursiyerler ve eğitim sorumluları ile deneyim paylaşımı."
+      ],
+      "pdfReport": "/assets/pdfs/ewz.pdf",
+      "imageUrl": "/assets/bilder/Ewz.png",
+      "type": "work"
+    },
+    {
+      "period": "04/2025",
+      "role": "KV Tröst / Gayrimenkul Stajı",
+      "company": "Kornhaus Verwaltungs AG",
+      "city": "Zürih",
+      "tasks": [
+        "Tröst ve gayrimenkul alanındaki ticari faaliyetlerin gözlemlenmesi.",
+        "Mülk yönetimi ve kiralama süreçlerindeki ticari işleyişi öğrenme.",
+        "İşe alım ve başvuru süreçleri hakkında bilgi edinme.",
+        "Çalışanlar ve stajyerler ile görüşmeler."
+      ],
+      "pdfReport": "/assets/pdfs/kornhaus.pdf",
+      "imageUrl": "/assets/bilder/kornhaus.png",
+      "type": "work"
+    },
+    {
+      "period": "04/2025",
+      "role": "Bilişimci (EFZ) Gözlemi",
+      "company": "Ergon Smart Software",
+      "city": "Zürih",
+      "tasks": [
+        "Ergon Informatik AG şirket yapısının ve projelerinin incelenmesi.",
+        "Gerekli yetkinlikler ve çıraklık seçim süreçleri hakkında bilgi.",
+        "'CS Unplugged' gibi pratik problem çözme etkinliklerine katılım.",
+        "Stajyerlerle deneyim paylaşımı."
+      ],
+      "pdfReport": "/assets/pdfs/ergon.pdf",
+      "imageUrl": "/assets/bilder/ergon.png",
+      "type": "work"
+    },
+    {
+      "period": "03/2025",
+      "role": "Ticari Eleman (Kaufmann EFZ) Stajı",
+      "company": "E. Weber & Cie AG",
+      "city": "Zürih",
+      "tasks": [
+        "Büyük bir firmanın ticari süreçlerine genel bakış.",
+        "Müşteri hizmetleri ve ön muhasebe alanlarında gözlem yapma.",
+        "Satın alma, pazarlama ve satış departmanlarını tanıma."
+      ],
+      "pdfReport": "/assets/pdfs/weber.pdf",
+      "imageUrl": "/assets/bilder/weber.png",
+      "type": "work"
+    },
+    {
+      "period": "03/2025",
+      "role": "Ticaret & Medyamatik Toplantısı",
+      "company": "Zürcher Kantonalbank",
+      "city": "Zürih",
+      "tasks": [
+        "ZKB ve eğitim olanaklarının genel tanıtımı.",
+        "Bankacılık-Ticaret (Bank-KV) ve Medyamatik çıraklık eğitimi süreçleri.",
+        "Üç farklı eğitim yerinden oluşan çıraklık modelinin öğrenilmesi.",
+        "Stajyerler ve insan kaynakları uzmanları ile soru-cevap söyleşisi."
+      ],
+      "pdfReport": "/assets/pdfs/KBInfoKVMediamatik.pdf",
+      "imageUrl": "/assets/bilder/KBInfoKVMediamatik.png",
+      "type": "work"
+    },
+    {
+      "period": "03/2025",
+      "role": "Bilişim & Dijital İş Geliştirme",
+      "company": "Zürcher Kantonalbank",
+      "city": "Zürih",
+      "tasks": [
+        "ZKB bünyesindeki bilişim (IT) ve dijital iş geliştirme (EDB) eğitimleri.",
+        "Çıraklık eğitimi aşamaları, başvuru ve seçim süreçlerinin aktarılması.",
+        "Eğitim sorumluları ve stajyerlerle genel söyleşiler."
+      ],
+      "pdfReport": "/assets/pdfs/KBInforInformatikBus.pdf",
+      "imageUrl": "/assets/bilder/KBInforInformatikBus.png",
+      "type": "work"
+    },
+    {
+      "period": "01/2025",
+      "role": "Ticari Eleman (Kaufmann EFZ) Günü",
+      "company": "Sunrise GmbH",
+      "city": "Glattpark",
+      "tasks": [
+        "Telekomünikasyon sektöründeki ticari faaliyetlerin tanıtımı.",
+        "Sunrise GmbH bünyesinde kaufmann/kauffrau mesleğine dair bilgilendirme günü."
+      ],
+      "pdfReport": "/assets/pdfs/sunrise.pdf",
+      "imageUrl": "/assets/bilder/sunrise.png",
+      "type": "work"
+    },
+    {
+      "period": "11/2024",
+      "role": "Ticari Eleman (Kaufmann EFZ) Stajı",
+      "company": "Post Immobilien AG, Zürich",
+      "city": "Zürih",
+      "tasks": [
+        "Büyük bir kurum bünyesindeki ticari süreçlerin gözlemlenmesi.",
+        "Posta hizmetleri ve gayrimenkul yönetimi süreçlerinin incelenmesi."
+      ],
+      "pdfReport": "/assets/pdfs/post.pdf",
+      "imageUrl": "/assets/bilder/post.png",
+      "type": "work"
+    },
+    {
+      "period": "08/2024 - 2025",
+      "role": "Çocuk Bakımı Yardımcılığı",
+      "company": "Kita Bärlis Oerlikon",
+      "city": "Zürih",
+      "tasks": [
+        "0-3 yaş arası çocukların günlük bakımı ve gözetiminde ekibe destek olma.",
+        "Malzemelerin düzenlenmesi, temizlik ve genel düzene yardımcı olma.",
+        "Eğlenceli oyun ve boyama etkinliklerinde çocuklara eşlik etme."
+      ],
+      "pdfReport": "/assets/pdfs/Kita_Schnupperlehre.pdf",
+      "imageUrl": "/assets/bilder/kita.png",
+      "type": "work"
+    },
+    {
+      "type": "education",
+      "period": "2023 - 2026",
+      "role": "Sekundar Ortaokulu (Sek A)",
+      "company": "Sekundarschule Zürich Rebhügel",
+      "city": "Zürih",
+      "tasks": [
+        "Mevcut: Zürih Rebhügel Ortaokulu'nda 3. Sekundarstufe eğitimi (Mezuniyet 2026/2027)."
+      ]
+    }
+  ],
+  "en": [
+    {
+      "period": "06/2026",
+      "role": "Trial Apprenticeship Electrical Installer",
+      "company": "Elektro Appenzeller AG",
+      "city": "Zurich",
+      "tasks": [
+        "Insight into the profession of Electrical Installer EFZ.",
+        "Learning about tools, materials, and safety regulations.",
+        "Assisting with simple installation and cable laying tasks.",
+        "Creating channels, drilling work, and pulling cables."
+      ],
+      "pdfReport": "/assets/pdfs/apenzeler.pdf",
+      "imageUrl": "/assets/bilder/apenzeler.png",
+      "type": "work"
+    },
+    {
+      "period": "06/2026",
+      "role": "Trial Apprenticeship Electrical Installer",
+      "company": "Sprecher & Co AG",
+      "city": "Zurich",
+      "tasks": [
+        "Insight into electrical installations in residential and commercial buildings.",
+        "Performing simple assembly tasks under guidance.",
+        "Laying conduits and cables.",
+        "Learning about occupational safety on construction sites."
+      ],
+      "pdfReport": "/assets/pdfs/sprecher.pdf",
+      "imageUrl": "/assets/bilder/sprecher.jpg",
+      "type": "work"
+    },
+    {
+      "period": "06/2026",
+      "role": "Trial Apprenticeship Electrical Installer",
+      "company": "Götz Elektro Zurich",
+      "city": "Zurich",
+      "tasks": [
+        "Practical handcraft work on electrical installations.",
+        "Assisting with cable routing and simple montage work.",
+        "Laying conduits and safety compliance on site."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/gotzelek.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2026",
+      "role": "Trial Apprenticeship Electrical Installer",
+      "company": "Micom Technics Elektro",
+      "city": "Zurich",
+      "tasks": [
+        "Insight into the daily work of an electrical installer.",
+        "Operating drilling machines and preparing toolboxes.",
+        "Laying cables and preparing switches and sockets.",
+        "Carving channels and pulling wires."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/micom.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2026",
+      "role": "Trial Apprenticeship Electrical Installer",
+      "company": "Elektro Kasper AG",
+      "city": "Zurich",
+      "tasks": [
+        "Practical cooperation in service and installation tasks.",
+        "Learning and proper handling of various professional tools.",
+        "Assisting with cable laying and outlet connections.",
+        "Supporting the team in daily service orders."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/kasper.png",
+      "type": "work"
+    },
+    {
+      "period": "04/2026",
+      "role": "Trial Apprenticeship Electrical Installer",
+      "company": "Etavis AG Zürich",
+      "city": "Zurich",
+      "tasks": [
+        "Learning about the electrical installer profession in a large company.",
+        "Active participation in cable routing and channel drilling.",
+        "Insight into the structure and workflows of major construction projects.",
+        "Introduction to modern measurement and testing devices."
+      ],
+      "pdfReport": "/assets/pdfs/etavis.pdf",
+      "imageUrl": "/assets/bilder/etavis.png",
+      "type": "work"
+    },
+    {
+      "period": "04/2026",
+      "role": "Trial Apprenticeship Electrical Installer",
+      "company": "Schibli AG Zürich",
+      "city": "Zurich",
+      "tasks": [
+        "Acquired practical experience in electrical handcraft.",
+        "Operating drilling machines and cable routing on site.",
+        "Creating cable channels and routing wires."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/Schibli.png",
+      "type": "work"
+    },
+    {
+      "period": "03/2026",
+      "role": "Trial Apprenticeship Electrical Installer",
+      "company": "Götz Elektro Zurich",
+      "city": "Zurich",
+      "tasks": [
+        "Practical manual work on various construction sites.",
+        "Laying conduits and installing support systems.",
+        "Creating cable trays and conduit connections.",
+        "Collaborating with the local team."
+      ],
+      "pdfReport": "/assets/pdfs/x.pdf",
+      "imageUrl": "/assets/bilder/gotzelek.png",
+      "type": "work"
+    },
+    {
+      "period": "06/2025",
+      "role": "Commercial Apprenticeship Tour - Banking",
+      "company": "Zürcher Kantonalbank",
+      "city": "Zurich",
+      "tasks": [
+        "Comprehensive insight into the daily operations of a bank branch.",
+        "Introduction to bank-specific topics and customer relations.",
+        "Overview of the Kaufmann/Kauffrau EFZ profession and apprenticeship structure.",
+        "Participation in apprentice presentations and team exercises."
+      ],
+      "pdfReport": "/assets/pdfs/kantonalbankparcoursKVBrancheBank.pdf",
+      "imageUrl": "/assets/bilder/kantonalbankparcoursKVBrancheBank.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2025",
+      "role": "IT Apprenticeship Tour",
+      "company": "Zürcher Kantonalbank",
+      "city": "Zurich",
+      "tasks": [
+        "Insight into the IT training division of a major bank.",
+        "Practical web development exercises using HTML, CSS, and JavaScript.",
+        "Solving logical puzzles and basic programming challenges.",
+        "Presentation of small programming projects."
+      ],
+      "pdfReport": "/assets/pdfs/kantonalbankSchnupperparcoursInformatik.pdf",
+      "imageUrl": "/assets/bilder/kantonalbankSchnupperparcoursInformatik.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2025",
+      "role": "Commercial Basic Training Insight",
+      "company": "UBS Bank",
+      "city": "Zurich",
+      "tasks": [
+        "Insights into the core business divisions of a major international bank.",
+        "Introduction to the recruitment process for commercial apprenticeships.",
+        "Q&A sessions with active commercial apprentices and trainers.",
+        "Working on sample case studies from the banking sector."
+      ],
+      "pdfReport": "/assets/pdfs/UBS.pdf",
+      "imageUrl": "/assets/bilder/UBS.png",
+      "type": "work"
+    },
+    {
+      "period": "05/2025",
+      "role": "Vocational Information Event",
+      "company": "EWZ",
+      "city": "Zurich",
+      "tasks": [
+        "Participation in an EWZ vocational info session.",
+        "Insights into various commercial and technical professions.",
+        "Q&A with active apprentices and training managers."
+      ],
+      "pdfReport": "/assets/pdfs/ewz.pdf",
+      "imageUrl": "/assets/bilder/Ewz.png",
+      "type": "work"
+    },
+    {
+      "period": "04/2025",
+      "role": "Commercial Real Estate & Trust",
+      "company": "Kornhaus Verwaltungs AG",
+      "city": "Zurich",
+      "tasks": [
+        "Insights into commercial operations in trust and real estate management.",
+        "Understanding basic commercial tasks and processes in property renting.",
+        "Overview of the recruitment and application procedures.",
+        "Interactions with current trainees and employees."
+      ],
+      "pdfReport": "/assets/pdfs/kornhaus.pdf",
+      "imageUrl": "/assets/bilder/kornhaus.png",
+      "type": "work"
+    },
+    {
+      "period": "04/2025",
+      "role": "ICT Info Session - IT Specialist",
+      "company": "Ergon Smart Software",
+      "city": "Zurich",
+      "tasks": [
+        "Overview of ICT apprenticeships with a focus on application development.",
+        "Learning about agile methodologies (Scrum) in software development.",
+        "Office tour and introduction to development teams.",
+        "Hands-on participation in exercises like 'CS Unplugged'.",
+        "Exchanging experiences with active apprentices."
+      ],
+      "pdfReport": "/assets/pdfs/ergon.pdf",
+      "imageUrl": "/assets/bilder/ergon.png",
+      "type": "work"
+    },
+    {
+      "period": "03/2025",
+      "role": "Commercial Apprentice Intern",
+      "company": "E. Weber & Cie AG",
+      "city": "Zurich",
+      "tasks": [
+        "Vibrant overview of commercial operations in a major company.",
+        "Insights into customer service and basic book-keeping.",
+        "Introduction to purchasing, marketing, and sales departments."
+      ],
+      "pdfReport": "/assets/pdfs/weber.pdf",
+      "imageUrl": "/assets/bilder/weber.png",
+      "type": "work"
+    },
+    {
+      "period": "03/2025",
+      "role": "KV Bank & Mediamatics Info",
+      "company": "Zürcher Kantonalbank",
+      "city": "Zurich",
+      "tasks": [
+        "Overview of ZKB and its apprenticeships.",
+        "Introduction to Bank-KV and Mediamatics fields.",
+        "Learning about the three learning venues in the Swiss system.",
+        "Q&A with current apprentices and recruiters."
+      ],
+      "pdfReport": "/assets/pdfs/KBInfoKVMediamatik.pdf",
+      "imageUrl": "/assets/bilder/KBInfoKVMediamatik.png",
+      "type": "work"
+    },
+    {
+      "period": "03/2025",
+      "role": "IT & EDB Info Session",
+      "company": "Zürcher Kantonalbank",
+      "city": "Zurich",
+      "tasks": [
+        "Introduction to ZKB apprenticeships in IT and digital business development (EDB).",
+        "Information on apprenticeship structure, requirements, and selection process.",
+        "Exchanging questions with trainers and current apprentices."
+      ],
+      "pdfReport": "/assets/pdfs/KBInforInformatikBus.pdf",
+      "imageUrl": "/assets/bilder/KBInforInformatikBus.png",
+      "type": "work"
+    },
+    {
+      "period": "01/2025",
+      "role": "Commercial Apprentice Info Day",
+      "company": "Sunrise GmbH",
+      "city": "Glattpark",
+      "tasks": [
+        "Insights into commercial activities in the telecommunications industry.",
+        "Information day at Sunrise GmbH regarding the Kaufmann/Kauffrau EFZ apprenticeship."
+      ],
+      "pdfReport": "/assets/pdfs/sunrise.pdf",
+      "imageUrl": "/assets/bilder/sunrise.png",
+      "type": "work"
+    },
+    {
+      "period": "11/2024",
+      "role": "Commercial Apprentice Intern",
+      "company": "Post Immobilien AG, Zürich",
+      "city": "Zurich",
+      "tasks": [
+        "Insight into commercial processes in a large corporation.",
+        "Introduction to real estate management workflows at Swiss Post."
+      ],
+      "pdfReport": "/assets/pdfs/post.pdf",
+      "imageUrl": "/assets/bilder/post.png",
+      "type": "work"
+    },
+    {
+      "period": "08/2024 - 2025",
+      "role": "Childcare Assistant Intern",
+      "company: en": "Kita Bärlis Oerlikon",
+      "company": "Kita Bärlis Oerlikon",
+      "city": "Zurich",
+      "tasks": [
+        "Assisting the team in caring for children aged 0 to 3 years.",
+        "Helping with keeping order and organizing toys/materials.",
+        "Supporting children in play, painting, and daily activities."
+      ],
+      "pdfReport": "/assets/pdfs/Kita_Schnupperlehre.pdf",
+      "imageUrl": "/assets/bilder/kita.png",
+      "type": "work"
+    },
+    {
+      "type": "education",
+      "period": "2023 - 2026",
+      "role": "Sekundarschule (Sek A)",
+      "company": "Sekundarschule Zurich Rebhugel",
+      "city": "Zurich",
+      "tasks": [
+        "Current: Third secondary stage (Sek A) at Sekundarschule Zurich Rebhügel (Graduating 2026/2027)."
+      ]
+    }
+  ]
+}

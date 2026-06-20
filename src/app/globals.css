@@ -1,26 +1,315 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Fonts */
+  --font-sans: var(--font-sans), sans-serif;
+  --font-serif: var(--font-serif), serif;
+
+  /* Font Sizes */
+  --font-size-display-7: 4.5rem;
+  --font-size-display-6: 4rem;
+  --font-size-display-5: 3.75rem;
+  --font-size-9xl: 3.75rem;
+  --font-size-display-4: 3.375rem;
+  --font-size-8xl: 3.375rem;
+  --font-size-display-3: 3rem;
+  --font-size-7xl: 3rem;
+  --font-size-display-2: 2.625rem;
+  --font-size-6xl: 2.625rem;
+  --font-size-display-1: 2.25rem;
+  --font-size-5xl: 2.25rem;
+  --font-size-h1: 2rem;
+  --font-size-4xl: 2rem;
+  --font-size-h2: 1.75rem;
+  --font-size-quote: 1.75rem;
+  --font-size-3xl: 1.75rem;
+  --font-size-h3: 1.5rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-h4: 1.25rem;
+  --font-size-xl: 1.25rem;
+  --font-size-body-3: 1.25rem;
+  --font-size-h5: 1.125rem;
+  --font-size-lg: 1.125rem;
+  --font-size-body-2: 1.125rem;
+  --font-size-h6: 1rem;
+  --font-size-md: 1rem;
+  --font-size-body-1: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-button: 0.875rem;
+  --font-size-xs: 0.75rem;
+
+  /* Color Palette (User Config) */
+  --color-white: #ffffff;
+  --color-user-bg: #FFF9E9;
+  --color-user-green: #5A8100;
+  --color-user-yellow: #FFB400;
+  --color-user-yellow-dark: #B37D00;
+  --color-user-orange: #FF6C02;
+  --color-user-orange-dark: #D45600;
+
+  /* Dark Theme Config (User Image Colors) */
+  --color-user-dark-bg: #030303;
+  --color-user-dark-fg: #FFFFFE;
+  --color-user-dark-red: #F21137;
+  --color-user-dark-maroon: #68020F;
+
+  /* Mappings for Theme Utilities */
+  --color-primary: var(--primary);
+  --color-primary-glow: var(--primary-glow);
+  --color-secondary: var(--secondary);
+  --color-secondary-glow: var(--secondary-glow);
+  --color-accent: var(--accent);
+  --color-text-main: var(--text-main);
+  --color-text-body: var(--text-body);
+  --color-text-muted: var(--text-muted);
+  --color-title-from: var(--title-gradient-from);
+  --color-title-to: var(--title-gradient-to);
+  
+  --color-navy-25: #fdfcfc;
+  --color-navy-50: #f8faf9;
+  --color-navy-100: #e1f2ef;
+  --color-navy-200: #d5efec;
+  --color-navy-300: #cbe8e8;
+  --color-navy-400: #b2dbde;
+  --color-navy-500: #abd1da;
+  --color-navy-600: #6facc5;
+  --color-navy-700: #5f90b2;
+  --color-navy-800: #325c7f;
+  --color-navy-900: #203c53;
+
+  --color-green-25: #fdfcfc;
+  --color-green-50: #f7f9f3;
+  --color-green-100: #f2f7e1;
+  --color-green-200: #eaf1cb;
+  --color-green-300: #e2ecbc;
+  --color-green-400: #d0de9b;
+  --color-green-500: #c3d870;
+  --color-green-600: #9cbd3d;
+  --color-green-700: #6b9b3b;
+  --color-green-800: #3f6d37;
+  --color-green-900: #354c2d;
+
+  --color-orange-25: #fdfcfc;
+  --color-orange-50: #f9f7f6;
+  --color-orange-100: #faede4;
+  --color-orange-200: #fae2d7;
+  --color-orange-300: #fad5c0;
+  --color-orange-400: #ffc6ae;
+  --color-orange-500: #f2a989;
+  --color-orange-600: #eb7a56;
+  --color-orange-700: #f04e29;
+  --color-orange-800: #a14429;
+  --color-orange-900: #722e1e;
+
+  --color-gray-25: #fdfcfc;
+  --color-gray-50: #f5f4f3;
+  --color-gray-100: #f1f0ee;
+  --color-gray-200: #ebe9e5;
+  --color-gray-300: #e5e3dc;
+  --color-gray-400: #dedad1;
+  --color-gray-500: #bebbb4;
+  --color-gray-600: #9d9b96;
+  --color-gray-700: #777674;
+  --color-gray-800: #525152;
+  --color-gray-900: #262626;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  h1 {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-h1);
   }
+  h2 {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-h2);
+  }
+  h3 {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-h3);
+  }
+  h4 {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-h4);
+  }
+  h5 {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-h5);
+  }
+  h6 {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-h6);
+  }
+  p {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* Day & Night Custom Theme Variables mapping */
+:root {
+  /* Default: Light Theme variables mapping */
+  --background: var(--color-user-bg);
+  --foreground: var(--color-gray-900);
+  --card: var(--color-white);
+  --card-border: rgba(90, 129, 0, 0.08);
+  --primary: var(--color-user-orange-dark);
+  --primary-glow: rgba(212, 86, 0, 0.1);
+  --secondary: var(--color-user-green);
+  --secondary-glow: rgba(90, 129, 0, 0.1);
+  --accent: var(--color-user-orange);
+  --muted: #5a5a5a;
+  
+  --text-main: var(--color-gray-900);
+  --text-body: var(--color-gray-800);
+  --text-muted: var(--muted);
+  
+  --glass-bg: rgba(255, 249, 233, 0.85);
+  --glass-card-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(90, 129, 0, 0.06);
+  --grid-color: rgba(90, 129, 0, 0.03);
+  --badge-bg: rgba(255, 108, 2, 0.08);
+  --badge-border: rgba(255, 108, 2, 0.15);
+
+  --title-gradient-from: var(--color-user-orange-dark);
+  --title-gradient-to: #354c2d;
+}
+
+:root.dark {
+  /* Dark Theme variables - User config: black, crimson, maroon */
+  --background: var(--color-user-dark-bg);
+  --foreground: var(--color-user-dark-fg);
+  --card: #0a0a0a;
+  --card-border: rgba(255, 59, 92, 0.12);
+  --primary: #FF3B5C;
+  --primary-glow: rgba(255, 59, 92, 0.15);
+  --secondary: var(--color-user-dark-maroon);
+  --secondary-glow: rgba(104, 2, 15, 0.20);
+  --accent: var(--color-user-dark-red);
+  --muted: #b0b0b0;
+  
+  --text-main: var(--color-user-dark-fg);
+  --text-body: #e5e5e5;
+  --text-muted: var(--muted);
+  
+  --glass-bg: rgba(3, 3, 3, 0.82);
+  --glass-card-bg: rgba(12, 12, 12, 0.5);
+  --glass-border: rgba(255, 59, 92, 0.12);
+  --grid-color: rgba(255, 59, 92, 0.03);
+  --badge-bg: rgba(255, 59, 92, 0.10);
+  --badge-border: rgba(255, 59, 92, 0.20);
+
+  --title-gradient-from: #FF3B5C;
+  --title-gradient-to: #FFA3B1;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--card-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: var(--glass-border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.header-glass-gradient {
+  background: linear-gradient(
+    to right,
+    rgba(255, 249, 233, 0.96) 0%,
+    rgba(255, 249, 233, 0.90) 50%,
+    rgba(212, 86, 0, 0.04) 80%,
+    rgba(90, 129, 0, 0.06) 100%
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
+  transition: all 0.3s ease;
+}
+
+:root.dark .header-glass-gradient {
+  background: linear-gradient(
+    to right,
+    rgba(3, 3, 3, 0.96) 0%,
+    rgba(3, 3, 3, 0.90) 50%,
+    rgba(104, 2, 15, 0.12) 80%,
+    rgba(242, 17, 55, 0.15) 100%
+  );
+}
+
+.drawer-glass-gradient {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 249, 233, 0.98) 0%,
+    rgba(255, 255, 255, 0.95) 70%,
+    rgba(90, 129, 0, 0.08) 100%
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
+  transition: all 0.3s ease;
+}
+
+:root.dark .drawer-glass-gradient {
+  background: linear-gradient(
+    to bottom,
+    rgba(3, 3, 3, 0.98) 0%,
+    rgba(10, 10, 10, 0.95) 70%,
+    rgba(242, 17, 55, 0.10) 100%
+  );
+}
+
+
+.glass-card {
+  background: var(--glass-card-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 10px 30px -10px var(--primary-glow);
+  transform: translateY(-2px);
+}
+
+/* Custom background mesh */
+.bg-grid-mesh {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+}
+
+/* Highlight style */
+::selection {
+  background: var(--primary);
+  color: #fff;
 }
