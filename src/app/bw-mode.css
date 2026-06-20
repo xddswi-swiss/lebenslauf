@@ -286,6 +286,22 @@
   border-radius: 4px !important;
 }
 
+/* Keep all elements that are rounded-full in color mode rounded-full in B&W mode too */
+.bw-mode .rounded-full,
+.bw-mode button.rounded-full,
+.bw-mode a.rounded-full {
+  border-radius: 9999px !important;
+}
+
+/* Force all transparent gradient text to render as solid black in B&W mode */
+.bw-mode .text-transparent,
+.bw-mode [class*="text-transparent"] {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+
+
 
 
 
