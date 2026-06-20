@@ -100,10 +100,11 @@
   color: #ffffff !important;
 }
 
-/* Remove colored glows */
+/* Remove colored glows but keep backdrop-blurs visible */
 .bw-mode .bg-violet-600\/10,
 .bw-mode .bg-cyan-600\/10,
-.bw-mode [class*="blur-"] {
+.bw-mode [class^="blur-"],
+.bw-mode [class*=" blur-"] {
   display: none !important;
 }
 
