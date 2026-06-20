@@ -7,8 +7,37 @@ import { motion as m, AnimatePresence } from 'framer-motion';
 import { FiBriefcase, FiBookOpen, FiMapPin, FiChevronDown, FiDownload, FiTrash2 } from 'react-icons/fi';
 import { ExperienceItem } from '@/data/translations';
 
-export const Timeline: React.FC = () => {
+interface TimelineProps {
+  selectedMatcher?: 'kaufmann' | 'elektro' | null;
+}
+
+export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) => {
   const { t, language } = useLanguage();
+  
+  const matchesPath = (role: string) => {
+    if (!selectedMatcher) return true;
+    const r = role.toLowerCase();
+    if (selectedMatcher === 'kaufmann') {
+      return (
+        r.includes('kaufmann') ||
+        r.includes('kaufmännische') ||
+        r.includes('kv') ||
+        r.includes('treuhand') ||
+        r.includes('bank') ||
+        r.includes('schüler') ||
+        r.includes('sekundarschule')
+      );
+    }
+    if (selectedMatcher === 'elektro') {
+      return (
+        r.includes('elektro') ||
+        r.includes('netzelektriker') ||
+        r.includes('schüler') ||
+        r.includes('sekundarschule')
+      );
+    }
+    return true;
+  };
   const [isWorkExpanded, setIsWorkExpanded] = useState(false);
   const [isEducationExpanded, setIsEducationExpanded] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null); // All items closed by default
@@ -246,7 +275,11 @@ export const Timeline: React.FC = () => {
                         <m.div
                           key={`work-${index}`}
                           variants={itemVariants}
-                          className="relative group"
+                          className={`relative group transition-all duration-500 ${
+                            selectedMatcher && !matchesPath(item.role)
+                              ? 'opacity-20 grayscale scale-[0.98] pointer-events-none'
+                              : 'opacity-100'
+                          }`}
                         >
                           {/* Timeline node */}
                           <div className="absolute -left-14 md:-left-[4.5rem] top-5 flex items-center justify-center w-8 h-8 rounded-full bg-[var(--background)] border border-[var(--glass-border)] group-hover:border-primary transition-all duration-300">

@@ -16,8 +16,45 @@ interface SkillCategory {
   skills: Skill[];
 }
 
-export const SkillsGrid: React.FC = () => {
+interface SkillsGridProps {
+  selectedMatcher?: 'kaufmann' | 'elektro' | null;
+}
+
+export const SkillsGrid: React.FC<SkillsGridProps> = ({ selectedMatcher = null }) => {
   const { t } = useLanguage();
+  
+  const isSkillMatching = (skillName: string) => {
+    if (!selectedMatcher) return true;
+    const s = skillName.toLowerCase();
+    if (selectedMatcher === 'kaufmann') {
+      return (
+        s.includes('team') ||
+        s.includes('hilfsbereit') ||
+        s.includes('verantwortung') ||
+        s.includes('deutsch') ||
+        s.includes('türkisch') ||
+        s.includes('englisch') ||
+        s.includes('word') ||
+        s.includes('excel') ||
+        s.includes('powerpoint') ||
+        s.includes('medien')
+      );
+    }
+    if (selectedMatcher === 'elektro') {
+      return (
+        s.includes('zuverlässig') ||
+        s.includes('lernbereit') ||
+        s.includes('verantwortung') ||
+        s.includes('geometrie') ||
+        s.includes('mathe') ||
+        s.includes('rechnen') ||
+        s.includes('hardware') ||
+        s.includes('pc') ||
+        s.includes('kung-fu')
+      );
+    }
+    return true;
+  };
 
   const categories: SkillCategory[] = [
     {
@@ -115,28 +152,44 @@ export const SkillsGrid: React.FC = () => {
             </div>
 
             <div className="space-y-4">
-              {category.skills.map((skill, index) => (
-                <div key={index} className="space-y-1.5">
-                  <div className="flex justify-between text-sm">
-                    <span className="font-medium text-[var(--text-body)]">{skill.name}</span>
-                    <span className="text-[var(--text-muted)] font-semibold">{skill.level}%</span>
+              {category.skills.map((skill, index) => {
+                const matches = isSkillMatching(skill.name);
+                return (
+                  <div 
+                    key={index} 
+                    className={`space-y-1.5 transition-all duration-500 ${
+                      selectedMatcher && !matches 
+                        ? 'opacity-25 blur-[0.2px] scale-[0.99]' 
+                        : 'opacity-100'
+                    }`}
+                  >
+                    <div className="flex justify-between text-sm">
+                      <span className={`font-medium transition-colors duration-300 ${
+                        selectedMatcher && matches 
+                          ? 'text-primary font-bold shadow-sm' 
+                          : 'text-[var(--text-body)]'
+                      }`}>
+                        {skill.name}
+                      </span>
+                      <span className="text-[var(--text-muted)] font-semibold">{skill.level}%</span>
+                    </div>
+                    <div className="h-2 w-full bg-[var(--background)] rounded-full overflow-hidden border border-[var(--glass-border)]">
+                      <m.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${skill.level}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
+                        className={`h-full rounded-full bg-gradient-to-r ${
+                          category.key === 'personal' ? 'from-orange-600 to-orange-400' :
+                          category.key === 'school' ? 'from-navy-700 to-navy-500' :
+                          category.key === 'digital' ? 'from-green-600 to-green-400' :
+                          'from-orange-600 to-navy-600'
+                        }`}
+                      />
+                    </div>
                   </div>
-                  <div className="h-2 w-full bg-[var(--background)] rounded-full overflow-hidden border border-[var(--glass-border)]">
-                    <m.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.level}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
-                      className={`h-full rounded-full bg-gradient-to-r ${
-                        category.key === 'personal' ? 'from-orange-600 to-orange-400' :
-                        category.key === 'school' ? 'from-navy-700 to-navy-500' :
-                        category.key === 'digital' ? 'from-green-600 to-green-400' :
-                        'from-orange-600 to-navy-600'
-                      }`}
-                    />
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </m.div>
         ))}

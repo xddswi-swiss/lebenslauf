@@ -143,6 +143,12 @@ export interface TranslationSchema {
     btnSubmit: string;
     successMessage: string;
   };
+  matcher: {
+    title: string;
+    kaufmann: string;
+    elektro: string;
+    reset: string;
+  };
 }
 
 import experiencesData from './experiences.json';
@@ -283,6 +289,12 @@ export const translations: Record<Language, TranslationSchema> = {
       posOther: "Schnupperlehre / Anderes",
       btnSubmit: "Senden, damit ich mich melde",
       successMessage: "Erfolgreich gesendet! Ich werde mich so schnell wie möglich bei Ihnen melden. Vielen Dank!"
+    },
+    matcher: {
+      title: "Passen Sie Erens Profil an Ihren gesuchten Lehrberuf an:",
+      kaufmann: "Kaufmann EFZ (KV)",
+      elektro: "Elektroinstallateur EFZ",
+      reset: "Zurücksetzen / Alle anzeigen"
     }
   },
   tr: {
@@ -396,6 +408,12 @@ export const translations: Record<Language, TranslationSchema> = {
       posOther: "Staj / Diğer",
       btnSubmit: "Gönder ki Sana Dönüş Yapayım",
       successMessage: "Başarıyla gönderildi! En kısa sürede sizinle iletişime geçeceğim. Teşekkürler!"
+    },
+    matcher: {
+      title: "Eren'in profilini aradığınız çıraklık mesleğine göre özelleştirin:",
+      kaufmann: "Kaufmann EFZ (Ticari)",
+      elektro: "Elektroinstallateur EFZ (Elektrik)",
+      reset: "Filtreyi Sıfırla / Hepsini Göster"
     }
   },
   en: {
@@ -509,6 +527,12 @@ export const translations: Record<Language, TranslationSchema> = {
       posOther: "Trial Apprenticeship / Other",
       btnSubmit: "Send so I can get back to you",
       successMessage: "Sent successfully! I will get back to you as soon as possible. Thank you!"
+    },
+    matcher: {
+      title: "Customize Eren's profile based on your apprenticeship role:",
+      kaufmann: "Commercial (Kaufmann)",
+      elektro: "Electrical Installer",
+      reset: "Reset Filter / Show All"
     }
   }
 };

@@ -18,7 +18,10 @@ import {
   FiArrowUp,
   FiGithub,
   FiInstagram,
-  FiFileText
+  FiFileText,
+  FiZap,
+  FiX,
+  FiBriefcase
 } from 'react-icons/fi';
 import { reportItems, languagesData, referencesData } from '@/data/translations';
 import { 
@@ -72,6 +75,7 @@ const MainContent: React.FC = () => {
   const { t } = useLanguage();
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [randomColorIndex, setRandomColorIndex] = useState<number>(-1);
+  const [selectedMatcher, setSelectedMatcher] = useState<'kaufmann' | 'elektro' | null>(null);
 
   React.useEffect(() => {
     // Pick a random index once on client mount
@@ -207,6 +211,54 @@ const MainContent: React.FC = () => {
             </div>
           </m.div>
         </section>
+
+        {/* Apprenticeship Matcher Section */}
+        <m.section 
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="scroll-mt-24 max-w-2xl mx-auto w-full"
+        >
+          <div className="glass-card p-6 md:p-8 rounded-3xl text-center border border-[var(--glass-border)] bg-[var(--glass-card-bg)] backdrop-blur-md relative overflow-hidden shadow-lg">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-secondary opacity-60" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] mb-4">
+              {t.matcher.title}
+            </h3>
+            <div className="flex flex-wrap gap-3 justify-center items-center">
+              <button
+                onClick={() => setSelectedMatcher(selectedMatcher === 'kaufmann' ? null : 'kaufmann')}
+                className={`px-5 py-3 rounded-2xl text-xs md:text-sm font-bold border transition-all duration-300 cursor-pointer flex items-center gap-2 ${
+                  selectedMatcher === 'kaufmann'
+                    ? 'bg-primary text-white border-primary shadow-md shadow-primary/25 scale-[1.02]'
+                    : 'bg-transparent text-[var(--text-body)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5'
+                }`}
+              >
+                <FiBriefcase className="text-base" />
+                {t.matcher.kaufmann}
+              </button>
+              <button
+                onClick={() => setSelectedMatcher(selectedMatcher === 'elektro' ? null : 'elektro')}
+                className={`px-5 py-3 rounded-2xl text-xs md:text-sm font-bold border transition-all duration-300 cursor-pointer flex items-center gap-2 ${
+                  selectedMatcher === 'elektro'
+                    ? 'bg-primary text-white border-primary shadow-md shadow-primary/25 scale-[1.02]'
+                    : 'bg-transparent text-[var(--text-body)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5'
+                }`}
+              >
+                <FiZap className="text-base" />
+                {t.matcher.elektro}
+              </button>
+              {selectedMatcher && (
+                <button
+                  onClick={() => setSelectedMatcher(null)}
+                  className="p-3 rounded-2xl border border-red-500/20 hover:border-red-500 bg-red-500/5 hover:bg-red-500 text-red-500 hover:text-white transition-all cursor-pointer flex items-center justify-center active:scale-95 shadow-sm"
+                  title={t.matcher.reset}
+                >
+                  <FiX className="text-base" />
+                </button>
+              )}
+            </div>
+          </div>
+        </m.section>
 
         {/* About Me Section */}
         <section id="about" className="scroll-mt-24">
@@ -345,13 +397,13 @@ const MainContent: React.FC = () => {
               {t.experience.title}
             </h2>
           </div>
-          <Timeline />
+          <Timeline selectedMatcher={selectedMatcher} />
           <AdminExperienceForm />
         </section>
 
         {/* Skills Section */}
         <section id="skills" className="scroll-mt-24">
-          <SkillsGrid />
+          <SkillsGrid selectedMatcher={selectedMatcher} />
         </section>
 
         {/* Languages, Hobbies & References Section */}
