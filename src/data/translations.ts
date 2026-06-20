@@ -50,6 +50,7 @@ export interface TranslationSchema {
     subtitle: string;
     downloadCv: string;
     emailMe: string;
+    statusBadge: string;
   };
   about: {
     title: string;
@@ -173,7 +174,8 @@ export const translations: Record<Language, TranslationSchema> = {
       role: "Schüler & Lehrstellensuchender",
       subtitle: "Ich besuche die 3. Sekundarstufe an der Sekundarschule Zürich Rebhügel und suche eine Lehrstelle als Kaufmann EFZ oder Elektroinstallateur EFZ.",
       downloadCv: "Lebenslauf herunterladen",
-      emailMe: "Kontakt aufnehmen"
+      emailMe: "Kontakt aufnehmen",
+      statusBadge: "SUCHE EINE LEHRSTELLE"
     },
     about: {
       title: "Persönliches Profil",
@@ -269,7 +271,8 @@ export const translations: Record<Language, TranslationSchema> = {
       role: "Öğrenci & Stajyer Adayı",
       subtitle: "Zürih Rebhügel Ortaokulu'nda 3. sınıf öğrencisiyim. Ticaret (Kaufmann EFZ) veya Elektrik Tesisatçılığı (Elektroinstallateur EFZ) alanında çıraklık eğitimi (Lehrstelle) arıyorum.",
       downloadCv: "Özgeçmişi İndir",
-      emailMe: "İletişime Geç"
+      emailMe: "İletişime Geç",
+      statusBadge: "ÇIRAKLIK YERİ ARIYORUM"
     },
     about: {
       title: "Kişisel Profil",
@@ -365,7 +368,8 @@ export const translations: Record<Language, TranslationSchema> = {
       role: "Student & Apprenticeship Seeker",
       subtitle: "I attend the 3rd secondary level at Sekundarschule Zurich Rebhügel and am looking for an apprenticeship as Kaufmann EFZ (Commercial) or Elektroinstallateur EFZ (Electrical Installer).",
       downloadCv: "Download Resume",
-      emailMe: "Get in Touch"
+      emailMe: "Get in Touch",
+      statusBadge: "APPRENTICESHIP SEEKER"
     },
     about: {
       title: "Personal Profile",

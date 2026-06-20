@@ -111,7 +111,7 @@ const MainContent: React.FC = () => {
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-bg)] border border-[var(--badge-border)] text-primary text-xs font-bold"
             >
               <span className="w-2 h-2 rounded-full bg-violet-400 animate-ping" />
-              <span>SUCHE EINE LEHRSTELLE / APPRENTICESHIP SEEKER</span>
+              <span>{t.hero.statusBadge}</span>
             </m.div>
 
             <m.h1 
