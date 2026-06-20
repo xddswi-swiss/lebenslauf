@@ -300,6 +300,15 @@
   -webkit-text-fill-color: #000000 !important;
 }
 
+/* Grayscale main content, footer, and language switcher in B&W mode to strip color from emojis and flags */
+.bw-mode main,
+.bw-mode footer,
+.bw-mode header .relative,
+.bw-mode [style*="drawer"] .relative {
+  filter: grayscale(100%) !important;
+}
+
+
 
 
 
