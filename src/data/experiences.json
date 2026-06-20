@@ -1,6 +1,18 @@
 {
   "de": [
     {
+      "type": "work",
+      "period": "6/2026",
+      "role": "Kaufmann",
+      "company": "Test Ag",
+      "city": "Türich",
+      "tasks": [
+        "Pc bedinen",
+        "Büro sachen",
+        "Team austausch"
+      ]
+    },
+    {
       "period": "06/2026",
       "role": "Schnupperlehre Elektroinstallateur",
       "company": "Elektro Appenzeller AG",
@@ -308,6 +320,18 @@
   ],
   "tr": [
     {
+      "type": "work",
+      "period": "6/2026",
+      "role": "Kaufmann",
+      "company": "Test Ag",
+      "city": "Türich",
+      "tasks": [
+        "Pc bedinen",
+        "Büro sachen",
+        "Team austausch"
+      ]
+    },
+    {
       "period": "06/2026",
       "role": "Elektrik Tesisatçısı Stajı",
       "company": "Elektro Appenzeller AG",
@@ -610,6 +634,18 @@
     }
   ],
   "en": [
+    {
+      "type": "work",
+      "period": "6/2026",
+      "role": "Kaufmann",
+      "company": "Test Ag",
+      "city": "Türich",
+      "tasks": [
+        "Pc bedinen",
+        "Büro sachen",
+        "Team austausch"
+      ]
+    },
     {
       "period": "06/2026",
       "role": "Trial Apprenticeship Electrical Installer",
