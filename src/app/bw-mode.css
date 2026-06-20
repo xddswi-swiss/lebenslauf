@@ -161,3 +161,11 @@
   color: #000000 !important;
   font-family: monospace, Courier, monospace !important;
 }
+
+/* Force filled progress bar lines to be visible as black blocks in B&W mode */
+.bw-mode .h-2 > * {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  background-image: none !important;
+}
+
