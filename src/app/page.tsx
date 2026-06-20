@@ -516,6 +516,12 @@ const MainContent: React.FC = () => {
                   iconHoverBg: "group-hover:bg-amber-500 group-hover:text-white",
                   button: "bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/20",
                   glow: "bg-amber-500/10"
+                },
+                {
+                  icon: "text-rose-500 dark:text-rose-400",
+                  iconHoverBg: "group-hover:bg-rose-500 group-hover:text-white",
+                  button: "bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/20",
+                  glow: "bg-rose-500/10"
                 }
               ];
 
