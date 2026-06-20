@@ -20,7 +20,6 @@
   text-shadow: none !important;
   box-shadow: none !important;
   background-image: none !important;
-  filter: grayscale(100%) !important;
   border-color: #000000 !important;
 }
 
@@ -167,5 +166,32 @@
   background: #000000 !important;
   background-color: #000000 !important;
   background-image: none !important;
+}
+
+/* Keep floating action buttons rounded (pill shape) in B&W mode */
+.bw-mode button.fixed {
+  border-radius: 9999px !important;
+}
+
+/* Fix Recruiter floating button readability in B&W mode (black background with white text) */
+.bw-mode button.fixed.left-6 {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
+}
+
+.bw-mode button.fixed.left-6 * {
+  color: #ffffff !important;
+}
+
+.bw-mode button.fixed.left-6:hover {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.bw-mode button.fixed.left-6:hover * {
+  color: #000000 !important;
 }
 
