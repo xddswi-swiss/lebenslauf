@@ -15,6 +15,42 @@ function slugify(text: string): string {
     .replace(/-+/g, '-'); // Collapse multiple -
 }
 
+// Helper to normalize period inputs (e.g. "6/2026" -> "06/2026", "6.2026" -> "06/2026")
+function normalizePeriod(period: string): string {
+  const clean = period.trim();
+
+  // Helper to normalize individual date part (like "6/2026" -> "06/2026")
+  const normalizePart = (part: string) => {
+    const p = part.trim();
+    const match = p.match(/^(\d{1,2})[\/\.\-–](\d{4})$/);
+    if (match) {
+      const month = match[1].padStart(2, '0');
+      const year = match[2];
+      return `${month}/${year}`;
+    }
+    return p;
+  };
+
+  // 1. Try to normalize as a single date first
+  const singleNormalized = normalizePart(clean);
+  if (singleNormalized !== clean && singleNormalized.includes('/')) {
+    return singleNormalized;
+  }
+
+  // 2. Otherwise, check if it's a range (contains -, –, —, "bis", "to")
+  const parts = clean.split(/\s*([-–—]|bis|to)\s*/);
+  if (parts.length >= 3) {
+    // Reconstruct normalized range
+    const start = normalizePart(parts[0]);
+    const separator = parts[1];
+    const end = normalizePart(parts[2]);
+    return `${start} ${separator} ${end}`;
+  }
+
+  return singleNormalized;
+}
+
+
 // Helper to write file directly to GitHub repository via REST API
 async function saveToGitHub(filePath: string, base64Data: string, message: string) {
   const token = process.env.GITHUB_TOKEN;
@@ -98,7 +134,9 @@ export async function POST(request: Request) {
     const trTasks = (tr?.tasks && tr.tasks.length > 0) ? tr.tasks : deTasks;
     const enTasks = (en?.tasks && en.tasks.length > 0) ? en.tasks : deTasks;
 
-    if (!company || !city || !period || !deRole) {
+    const normalizedPeriod = normalizePeriod(period || '');
+
+    if (!company || !city || !normalizedPeriod || !deRole) {
       return NextResponse.json({ error: 'Fehlende Felder / Eksik alanlar / Missing required fields (Company, City, Period and at least one Role/Tasks are required)' }, { status: 400 });
     }
 
@@ -168,7 +206,7 @@ export async function POST(request: Request) {
     const newExperience = {
       de: {
         type,
-        period,
+        period: normalizedPeriod,
         role: deRole,
         company,
         city,
@@ -178,7 +216,7 @@ export async function POST(request: Request) {
       },
       tr: {
         type,
-        period,
+        period: normalizedPeriod,
         role: trRole,
         company,
         city,
@@ -188,7 +226,7 @@ export async function POST(request: Request) {
       },
       en: {
         type,
-        period,
+        period: normalizedPeriod,
         role: enRole,
         company,
         city,
@@ -301,9 +339,10 @@ export async function DELETE(request: Request) {
       currentData = JSON.parse(JSON.stringify(experiencesData));
     }
 
+    const normalizedPeriod = normalizePeriod(period || '');
     // Filter out the item to delete
     const filterFn = (item: any) => {
-      return !(item.company.toLowerCase().trim() === company.toLowerCase().trim() && item.period === period);
+      return !(item.company.toLowerCase().trim() === company.toLowerCase().trim() && normalizePeriod(item.period) === normalizedPeriod);
     };
 
     const updatedData = {

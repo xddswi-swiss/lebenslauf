@@ -128,21 +128,33 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
     show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 100, damping: 15 } }
   };
 
-  // Helper to parse period strings (like 06/2026 or 2023 - 2026) for chronological sorting
+  // Helper to parse period strings (like 06/2026, 6/2026, or 2023 - 2026) for chronological sorting
   const parsePeriodToDate = (period: string) => {
     const clean = period.trim();
-    // Match MM/YYYY (e.g. 06/2026)
-    const match = clean.match(/^(\d{2})\/(\d{4})/);
+
+    // 1. Try to match a single date first (e.g. 06/2026, 6/2026, 6-2026, 6.2026)
+    const singleMatch = clean.match(/^(\d{1,2})[\/\.\-–](\d{4})$/);
+    if (singleMatch) {
+      return new Date(parseInt(singleMatch[2], 10), parseInt(singleMatch[1], 10) - 1);
+    }
+
+    // 2. If it's not a single date, split by common range separators to get the start date first (e.g. "08/2024 - 2025" -> "08/2024")
+    const parts = clean.split(/[-–—]|bis|to/);
+    const startPart = parts[0].trim();
+
+    // Match MM/YYYY or M/YYYY (e.g. 06/2026 or 6/2026) with various separators (/, ., -)
+    const match = startPart.match(/^(\d{1,2})[\/\.\-–](\d{4})/);
     if (match) {
       return new Date(parseInt(match[2], 10), parseInt(match[1], 10) - 1);
     }
     // Match YYYY (e.g. 2023 - 2026)
-    const yearMatch = clean.match(/^(\d{4})/);
+    const yearMatch = startPart.match(/^(\d{4})/);
     if (yearMatch) {
       return new Date(parseInt(yearMatch[1], 10), 0);
     }
     return new Date(0);
   };
+
 
   const localizedWorkItems = workItems
     .filter(item => item.type === 'work' || !item.type)
