@@ -102,7 +102,7 @@ const MainContent: React.FC = () => {
       {/* Main Container */}
       <main className="flex-1 max-w-6xl w-full mx-auto px-6 py-12 md:py-24 space-y-32">
         {/* Hero Section */}
-        <section id="hero" className="min-h-[50vh] flex flex-col-reverse lg:flex-row items-center justify-between gap-12 relative py-12">
+        <section id="hero" className="min-h-[50vh] flex flex-col-reverse lg:flex-row items-center justify-between gap-12 relative pt-12 pb-0">
           <div className="max-w-3xl space-y-6 flex-1">
             <m.div
               initial={{ opacity: 0, y: 15 }}

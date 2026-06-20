@@ -192,7 +192,7 @@ export const Timeline: React.FC = () => {
   const reportLabel = reportLabels[language] || reportLabels.de;
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-4 space-y-6">
+    <div className="w-full max-w-4xl mx-auto py-0 space-y-6">
       
       {/* SECTION 1: ERFAHRUNGEN (WORK EXPERIENCES) */}
       <div className="glass-card rounded-3xl overflow-hidden border border-[var(--glass-border)] shadow-xl transition-all duration-300">
