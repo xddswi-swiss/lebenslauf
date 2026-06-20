@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto_Flex, PT_Serif } from "next/font/google";
 import "./globals.css";
+import "./bw-mode.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 

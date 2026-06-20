@@ -1,0 +1,91 @@
+/* Black & White Blueprint / Sketch Mode */
+.bw-mode {
+  --background: #ffffff !important;
+  --text-main: #000000 !important;
+  --text-body: #111111 !important;
+  --text-muted: #555555 !important;
+  --primary: #000000 !important;
+  --secondary: #000000 !important;
+  --glass-card-bg: #ffffff !important;
+  --glass-border: #000000 !important;
+  --badge-bg: #ffffff !important;
+  --badge-border: #000000 !important;
+  --title-from: #000000 !important;
+  --title-to: #000000 !important;
+  color-scheme: light !important;
+}
+
+/* Force all text shadow, box shadow, gradients, and filters to be B&W */
+.bw-mode * {
+  text-shadow: none !important;
+  box-shadow: none !important;
+  background-image: none !important;
+  filter: grayscale(100%) !important;
+  border-color: #000000 !important;
+}
+
+.bw-mode body {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Override borders, background, shadow and border radius for all UI elements to look like a draft drawing */
+.bw-mode .glass-card,
+.bw-mode header,
+.bw-mode footer,
+.bw-mode button,
+.bw-mode input,
+.bw-mode textarea,
+.bw-mode section,
+.bw-mode .timeline-card {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 2px solid #000000 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  border-radius: 4px !important; /* Blocky technical layout */
+}
+
+/* Remove colored glows and grid meshes */
+.bw-mode .bg-grid-mesh,
+.bw-mode .bg-violet-600\/10,
+.bw-mode .bg-cyan-600\/10,
+.bw-mode [class*="blur-"] {
+  background: #ffffff !important;
+  background-image: none !important;
+  display: none !important;
+}
+
+/* Make image elements look drawn or strictly black & white */
+.bw-mode img {
+  filter: grayscale(100%) contrast(150%) !important;
+  border: 2px solid #000000 !important;
+  border-radius: 4px !important;
+}
+
+/* Switch styling itself shouldn't be fully B&W to remain usable/tactile */
+.bw-mode button[title*="Lichtschalter"] * {
+  filter: none !important;
+}
+
+/* Force specific components like timeline items to be clean */
+.bw-mode .timeline-node {
+  background-color: #ffffff !important;
+  border: 2px solid #000000 !important;
+}
+
+.bw-mode .timeline-line {
+  border-left-color: #000000 !important;
+}
+
+/* Monospace fonts for all headings to give it a blueprint draft feel */
+.bw-mode h1,
+.bw-mode h2,
+.bw-mode h3,
+.bw-mode h4,
+.bw-mode h5,
+.bw-mode h6 {
+  color: #000000 !important;
+  font-family: monospace, Courier, monospace !important;
+}

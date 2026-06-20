@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/app/contexts/LanguageContext';
 import { useTheme } from '@/app/contexts/ThemeContext';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { SwissSwitch } from '@/components/SwissSwitch';
 import { motion as m, AnimatePresence } from 'framer-motion';
 import { 
   FiSun, 
@@ -151,6 +152,9 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
             <div className="hidden lg:flex items-center gap-4">
               <LanguageSwitcher />
 
+              {/* Swiss Light Switch (B&W Mode) */}
+              <SwissSwitch />
+
               {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
@@ -163,6 +167,9 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
 
             {/* Mobile Menu Actions */}
             <div className="flex lg:hidden items-center gap-2">
+              {/* Swiss Light Switch (B&W Mode) */}
+              <SwissSwitch />
+
               <button
                 onClick={toggleTheme}
                 aria-label="Toggle Theme"
