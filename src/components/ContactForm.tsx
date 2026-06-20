@@ -20,15 +20,30 @@ export const ContactForm: React.FC = () => {
 
     setStatus('sending');
 
-    // Simulate sending message
-    setTimeout(() => {
-      try {
-        setStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-      } catch (err) {
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          setStatus('success');
+          setFormData({ name: '', email: '', message: '' });
+        } else {
+          setStatus('error');
+        }
+      } else {
         setStatus('error');
       }
-    }, 1800);
+    } catch (err) {
+      console.error('Contact form submission error:', err);
+      setStatus('error');
+    }
   };
 
   return (
