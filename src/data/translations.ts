@@ -155,11 +155,29 @@ import experiencesData from './experiences.json';
 
 export const experienceItems: Record<Language, ExperienceItem[]> = experiencesData as Record<Language, ExperienceItem[]>;
 
-export const reportItems: ReportItem[] = [
-  { term: 'Zeugnisse 1. Sek (Gesamt)', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
-  { term: 'Zeugnisse 2. Sek (Gesamt)', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
-  { term: 'Semesterzeugnis 3. Sek – 1. Semester', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' }
-];
+export const reportItems: Record<Language, ReportItem[]> = {
+  de: [
+    { term: 'Zeugnisse 1. Sek (Gesamt)', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
+    { term: 'Zeugnisse 2. Sek (Gesamt)', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
+    { term: 'Semesterzeugnis 3. Sek – 1. Semester', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
+    { term: 'Stellwerk 8 Testbericht', date: '2025', file: '/assets/pdfs/Stellwerk.pdf' },
+    { term: 'Multicheck Zertifikat', date: '2026', file: '/assets/pdfs/Multicheck.pdf' }
+  ],
+  tr: [
+    { term: '1. Sek Okul Karneleri (Tümü)', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
+    { term: '2. Sek Okul Karneleri (Tümü)', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
+    { term: '3. Sek Güz Dönemi Karnesi', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
+    { term: 'Stellwerk 8 Sınav Sonucu', date: '2025', file: '/assets/pdfs/Stellwerk.pdf' },
+    { term: 'Multicheck Sınav Sonucu', date: '2026', file: '/assets/pdfs/Multicheck.pdf' }
+  ],
+  en: [
+    { term: 'School Reports 1. Sek (All)', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
+    { term: 'School Reports 2. Sek (All)', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
+    { term: 'School Report 3. Sek – 1st Semester', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
+    { term: 'Stellwerk 8 Test Report', date: '2025', file: '/assets/pdfs/Stellwerk.pdf' },
+    { term: 'Multicheck Certificate', date: '2026', file: '/assets/pdfs/Multicheck.pdf' }
+  ]
+};
 
 export const languagesData: LanguageItem[] = [
   { code: 'DE', name: 'Deutsch', note: 'Muttersprache', level: 100 },
@@ -211,8 +229,8 @@ export const translations: Record<Language, TranslationSchema> = {
       statsLastUpdate: "Letzte Aktualisierung"
     },
     documents: {
-      title: "Schulische Unterlagen",
-      subtitle: "Hier finden Sie meine aktuellen Zeugnisse und Nachweise zum Download.",
+      title: "Bewerbungsunterlagen",
+      subtitle: "Hier finden Sie meine aktuellen Zeugnisse, Stellwerk- und Multicheck-Testergebnisse zum Download.",
       download: "PDF Herunterladen"
     },
     experience: {
@@ -330,8 +348,8 @@ export const translations: Record<Language, TranslationSchema> = {
       statsLastUpdate: "Son Güncelleme"
     },
     documents: {
-      title: "Okul Belgeleri",
-      subtitle: "Güncel karne ve staj belgelerimi buradan indirebilirsiniz.",
+      title: "Başvuru Belgeleri",
+      subtitle: "Güncel karne, Stellwerk ve Multicheck sınav sonuçlarımı buradan indirebilirsiniz.",
       download: "PDF İndir"
     },
     experience: {
@@ -449,8 +467,8 @@ export const translations: Record<Language, TranslationSchema> = {
       statsLastUpdate: "Last Updated"
     },
     documents: {
-      title: "School Documents",
-      subtitle: "Here you can download my current school reports and reference letters.",
+      title: "Application Documents",
+      subtitle: "Here you can download my current school reports, Stellwerk, and Multicheck test results.",
       download: "Download PDF"
     },
     experience: {

@@ -484,7 +484,7 @@ const MainContent: React.FC = () => {
             <p className="text-[var(--text-muted)] text-sm md:text-base">{t.documents.subtitle}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {(() => {
               const docColors = [
                 {
@@ -504,10 +504,24 @@ const MainContent: React.FC = () => {
                   iconHoverBg: "group-hover:bg-emerald-500 group-hover:text-white",
                   button: "bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
                   glow: "bg-emerald-500/10"
+                },
+                {
+                  icon: "text-violet-500 dark:text-violet-400",
+                  iconHoverBg: "group-hover:bg-violet-500 group-hover:text-white",
+                  button: "bg-violet-500/10 hover:bg-violet-500/20 text-violet-600 dark:text-violet-400 border-violet-500/20",
+                  glow: "bg-violet-500/10"
+                },
+                {
+                  icon: "text-amber-500 dark:text-amber-400",
+                  iconHoverBg: "group-hover:bg-amber-500 group-hover:text-white",
+                  button: "bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/20",
+                  glow: "bg-amber-500/10"
                 }
               ];
 
-              return reportItems.map((doc, index) => {
+              const currentReportItems = reportItems[language] || [];
+
+              return currentReportItems.map((doc, index) => {
                 const colors = docColors[index % docColors.length];
                 return (
                   <div 
