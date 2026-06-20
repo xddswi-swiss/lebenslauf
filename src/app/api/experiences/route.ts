@@ -15,6 +15,58 @@ function slugify(text: string): string {
     .replace(/-+/g, '-'); // Collapse multiple -
 }
 
+// Helper to write file directly to GitHub repository via REST API
+async function saveToGitHub(filePath: string, base64Data: string, message: string) {
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) throw new Error('GITHUB_TOKEN env variable not set');
+
+  const owner = 'xddswi-swiss';
+  const repo = 'lebenslauf';
+  const branch = 'main';
+  const url = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`;
+
+  // 1. Try to get the SHA of the file if it already exists
+  let sha: string | undefined;
+  try {
+    const getRes = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github+json',
+        'User-Agent': 'NextJS-CV-App'
+      }
+    });
+    if (getRes.ok) {
+      const data = await getRes.json();
+      sha = data.sha;
+    }
+  } catch (err) {
+    console.log(`File ${filePath} does not exist on GitHub yet or error fetching SHA. Creating as new file.`);
+  }
+
+  // 2. Put content to GitHub
+  const putRes = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json',
+      'User-Agent': 'NextJS-CV-App'
+    },
+    body: JSON.stringify({
+      message,
+      content: base64Data,
+      ...(sha && { sha }),
+      branch
+    })
+  });
+
+  if (!putRes.ok) {
+    const errorText = await putRes.text();
+    throw new Error(`GitHub API error: ${putRes.status} - ${errorText}`);
+  }
+}
+
 export async function GET() {
   try {
     const jsonPath = path.join(process.cwd(), 'src', 'data', 'experiences.json');
@@ -56,17 +108,24 @@ export async function POST(request: Request) {
     let readOnly = false;
     let writeErrors: string[] = [];
 
+    let logoBase64ToUpload = '';
+    let logoGitHubPath = '';
+    let pdfBase64ToUpload = '';
+    let pdfGitHubPath = '';
+
     // 1. Process Logo File if uploaded
     if (logoFile && logoFile.base64 && logoFile.name) {
       try {
         const logoExt = path.extname(logoFile.name) || '.png';
         const logoFileName = `${slug}${logoExt}`;
         logoPath = `/assets/bilder/${logoFileName}`;
+        logoGitHubPath = `public/assets/bilder/${logoFileName}`;
         
         let base64Data = logoFile.base64;
         if (base64Data.includes(';base64,')) {
           base64Data = base64Data.split(';base64,')[1];
         }
+        logoBase64ToUpload = base64Data;
         const buffer = Buffer.from(base64Data, 'base64');
         
         const bilderDir = path.join(process.cwd(), 'public', 'assets', 'bilder');
@@ -74,8 +133,8 @@ export async function POST(request: Request) {
         const logoFullPath = path.join(bilderDir, logoFileName);
         await fs.writeFile(logoFullPath, buffer);
       } catch (err: any) {
-        console.error('Error writing logo image:', err);
-        writeErrors.push(`Logo image save failed: ${err.message}`);
+        console.error('Error writing logo image locally:', err);
+        writeErrors.push(`Logo image local save failed: ${err.message}`);
         readOnly = true;
       }
     }
@@ -85,11 +144,13 @@ export async function POST(request: Request) {
       try {
         const pdfFileName = `${slug}.pdf`;
         pdfPath = `/assets/pdfs/${pdfFileName}`;
+        pdfGitHubPath = `public/assets/pdfs/${pdfFileName}`;
         
         let base64Data = pdfFile.base64;
         if (base64Data.includes(';base64,')) {
           base64Data = base64Data.split(';base64,')[1];
         }
+        pdfBase64ToUpload = base64Data;
         const buffer = Buffer.from(base64Data, 'base64');
         
         const pdfsDir = path.join(process.cwd(), 'public', 'assets', 'pdfs');
@@ -97,8 +158,8 @@ export async function POST(request: Request) {
         const pdfFullPath = path.join(pdfsDir, pdfFileName);
         await fs.writeFile(pdfFullPath, buffer);
       } catch (err: any) {
-        console.error('Error writing PDF report:', err);
-        writeErrors.push(`PDF report save failed: ${err.message}`);
+        console.error('Error writing PDF report locally:', err);
+        writeErrors.push(`PDF report local save failed: ${err.message}`);
         readOnly = true;
       }
     }
@@ -141,38 +202,64 @@ export async function POST(request: Request) {
     let updatedData: any = {};
     const jsonPath = path.join(process.cwd(), 'src', 'data', 'experiences.json');
 
+    let currentData: any = { de: [], tr: [], en: [] };
     try {
-      let currentData: any = { de: [], tr: [], en: [] };
-      try {
-        const fileContent = await fs.readFile(jsonPath, 'utf8');
-        currentData = JSON.parse(fileContent);
-      } catch (e) {
-        // Fallback to static experiencesData if read fails
-        currentData = JSON.parse(JSON.stringify(experiencesData));
-      }
+      const fileContent = await fs.readFile(jsonPath, 'utf8');
+      currentData = JSON.parse(fileContent);
+    } catch (e) {
+      // Fallback to static experiencesData if read fails
+      currentData = JSON.parse(JSON.stringify(experiencesData));
+    }
 
-      // Prepend to array
-      updatedData = {
-        de: [newExperience.de, ...(currentData.de || [])],
-        tr: [newExperience.tr, ...(currentData.tr || [])],
-        en: [newExperience.en, ...(currentData.en || [])]
-      };
+    // Prepend to array
+    updatedData = {
+      de: [newExperience.de, ...(currentData.de || [])],
+      tr: [newExperience.tr, ...(currentData.tr || [])],
+      en: [newExperience.en, ...(currentData.en || [])]
+    };
 
+    try {
       if (!readOnly) {
         await fs.writeFile(jsonPath, JSON.stringify(updatedData, null, 2), 'utf8');
       }
     } catch (err: any) {
-      console.error('Error writing experiences.json:', err);
-      writeErrors.push(`JSON write failed: ${err.message}`);
+      console.error('Error writing experiences.json locally:', err);
+      writeErrors.push(`JSON local write failed: ${err.message}`);
       readOnly = true;
     }
 
     if (readOnly) {
-      // Return readOnly flag along with the formatted JSON for fallback copy-paste
+      const token = process.env.GITHUB_TOKEN;
+      if (token) {
+        try {
+          // 1. Upload Logo to GitHub if present
+          if (logoBase64ToUpload && logoGitHubPath) {
+            await saveToGitHub(logoGitHubPath, logoBase64ToUpload, `Upload logo for ${company}`);
+          }
+          // 2. Upload PDF to GitHub if present
+          if (pdfBase64ToUpload && pdfGitHubPath) {
+            await saveToGitHub(pdfGitHubPath, pdfBase64ToUpload, `Upload PDF report for ${company}`);
+          }
+          // 3. Upload updated experiences.json to GitHub
+          const jsonBase64 = Buffer.from(JSON.stringify(updatedData, null, 2), 'utf8').toString('base64');
+          await saveToGitHub('src/data/experiences.json', jsonBase64, `Add new experience at ${company} via Admin Panel`);
+
+          return NextResponse.json({
+            success: true,
+            githubSync: true,
+            message: 'Erfolgreich über GitHub hinzugefügt / GitHub üzerinden başarıyla eklendi / Successfully added via GitHub. Site rebuilding...'
+          });
+        } catch (gitErr: any) {
+          console.error('Error syncing with GitHub API:', gitErr);
+          writeErrors.push(`GitHub sync failed: ${gitErr.message}`);
+        }
+      }
+
+      // Return readOnly flag along with the formatted JSON for fallback copy-paste if GITHUB_TOKEN is missing or push failed
       return NextResponse.json({
         success: false,
         readOnly: true,
-        message: 'Hosting environment is read-only (e.g. Serverless). JSON was generated but not saved.',
+        message: 'Hosting environment is read-only. GITHUB_TOKEN environment variable is missing or GitHub write failed.',
         errors: writeErrors,
         newExperience,
         jsonBackup: updatedData
@@ -237,10 +324,27 @@ export async function DELETE(request: Request) {
     }
 
     if (readOnly) {
+      const token = process.env.GITHUB_TOKEN;
+      if (token) {
+        try {
+          const jsonBase64 = Buffer.from(JSON.stringify(updatedData, null, 2), 'utf8').toString('base64');
+          await saveToGitHub('src/data/experiences.json', jsonBase64, `Delete experience at ${company} via Admin Panel`);
+
+          return NextResponse.json({
+            success: true,
+            githubSync: true,
+            message: 'Erfolgreich über GitHub gelöscht / GitHub üzerinden başarıyla silindi / Successfully deleted via GitHub. Site rebuilding...'
+          });
+        } catch (gitErr: any) {
+          console.error('Error syncing DELETE with GitHub API:', gitErr);
+          writeError = `GitHub sync failed: ${gitErr.message}`;
+        }
+      }
+
       return NextResponse.json({
         success: false,
         readOnly: true,
-        message: 'Hosting environment is read-only. JSON was generated but not saved.',
+        message: 'Hosting environment is read-only. GITHUB_TOKEN environment variable is missing or GitHub write failed.',
         error: writeError,
         jsonBackup: updatedData
       });
