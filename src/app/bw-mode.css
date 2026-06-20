@@ -47,6 +47,31 @@
   border-radius: 4px !important; /* Blocky technical layout */
 }
 
+/* Fix active and selected buttons (solid black background with white text) */
+.bw-mode button.bg-primary,
+.bw-mode button[class*="bg-primary"],
+.bw-mode .bg-primary {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+}
+
+.bw-mode button.bg-primary *,
+.bw-mode button[class*="bg-primary"] *,
+.bw-mode .bg-primary *,
+.bw-mode .text-white {
+  color: #ffffff !important;
+}
+
+/* Inactive buttons (white background with black text) */
+.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white) {
+  color: #000000 !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 2px solid #000000 !important;
+}
+
 /* Remove colored glows */
 .bw-mode .bg-violet-600\/10,
 .bw-mode .bg-cyan-600\/10,
