@@ -10,6 +10,43 @@ export const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
+  // Captcha states
+  const [captcha, setCaptcha] = useState<{ text: string; expectedHash: string } | null>(null);
+  const [userCaptchaAnswer, setUserCaptchaAnswer] = useState('');
+  const [captchaError, setCaptchaError] = useState(false);
+
+  const generateCaptcha = () => {
+    const operators = ['+', '-', '*'];
+    const op = operators[Math.floor(Math.random() * operators.length)];
+    let n1 = 0, n2 = 0, ans = 0;
+
+    if (op === '+') {
+      n1 = Math.floor(Math.random() * 10) + 1; // 1-10
+      n2 = Math.floor(Math.random() * 10) + 1; // 1-10
+      ans = n1 + n2;
+    } else if (op === '-') {
+      n1 = Math.floor(Math.random() * 10) + 5; // 5-15
+      n2 = Math.floor(Math.random() * n1);     // 0 to n1 (ensures positive result)
+      ans = n1 - n2;
+    } else { // '*'
+      n1 = Math.floor(Math.random() * 8) + 2; // 2-9
+      n2 = Math.floor(Math.random() * 8) + 2; // 2-9
+      ans = n1 * n2;
+    }
+
+    const opSymbol = op === '*' ? '×' : op;
+    const text = `${n1} ${opSymbol} ${n2} = ?`;
+    const expectedHash = String(ans * 43 + 17);
+
+    setCaptcha({ text, expectedHash });
+    setUserCaptchaAnswer('');
+    setCaptchaError(false);
+  };
+
+  React.useEffect(() => {
+    generateCaptcha();
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -17,6 +54,14 @@ export const ContactForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
+
+    // Verify Captcha
+    const parsedUserAnswer = parseInt(userCaptchaAnswer.trim(), 10);
+    const calculatedHash = String(parsedUserAnswer * 43 + 17);
+    if (!captcha || calculatedHash !== captcha.expectedHash) {
+      setCaptchaError(true);
+      return;
+    }
 
     setStatus('sending');
 
@@ -26,7 +71,11 @@ export const ContactForm: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          mathAnswer: userCaptchaAnswer,
+          mathHash: captcha.expectedHash
+        }),
       });
 
       if (response.ok) {
@@ -34,15 +83,19 @@ export const ContactForm: React.FC = () => {
         if (result.success) {
           setStatus('success');
           setFormData({ name: '', email: '', message: '' });
+          generateCaptcha();
         } else {
           setStatus('error');
+          generateCaptcha();
         }
       } else {
         setStatus('error');
+        generateCaptcha();
       }
     } catch (err) {
       console.error('Contact form submission error:', err);
       setStatus('error');
+      generateCaptcha();
     }
   };
 
@@ -108,6 +161,34 @@ export const ContactForm: React.FC = () => {
               disabled={status === 'sending'}
               className="w-full px-4 py-3 bg-[var(--background)] border border-[var(--glass-border)] rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50 resize-none"
             />
+          </div>
+
+          {/* Math Captcha Box */}
+          <div className="p-5 glass-card rounded-2xl border border-[var(--glass-border)] bg-zinc-900/10 space-y-4">
+            <div className="flex items-center gap-2 text-sm font-bold text-[var(--text-main)]">
+              <span>🔢</span>
+              <span>{t.contact.captchaTitle}: {captcha?.text}</span>
+            </div>
+            <input
+              type="text"
+              required
+              placeholder={t.contact.captchaPlaceholder}
+              value={userCaptchaAnswer}
+              onChange={(e) => {
+                setUserCaptchaAnswer(e.target.value);
+                setCaptchaError(false);
+              }}
+              disabled={status === 'sending'}
+              className="w-full px-4 py-3 bg-[var(--background)] border border-[var(--glass-border)] rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
+            />
+            {captchaError && (
+              <p className="text-xs text-rose-400 font-bold mt-1">
+                ❌ {t.contact.captchaError}
+              </p>
+            )}
+            <p className="text-xs text-[var(--text-muted)] font-medium">
+              {t.contact.captchaInstruction}
+            </p>
           </div>
 
           <button

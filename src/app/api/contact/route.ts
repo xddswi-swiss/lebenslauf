@@ -13,8 +13,15 @@ export async function POST(request: NextRequest) {
     const data = await request.json();
     console.log('API route received data:', data);
     
-    if (!data.name || !data.email || !data.message) {
+    if (!data.name || !data.email || !data.message || data.mathAnswer === undefined || !data.mathHash) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+    // Verify captcha
+    const parsedAnswer = parseInt(String(data.mathAnswer).trim(), 10);
+    const expectedHash = String(parsedAnswer * 43 + 17);
+    if (expectedHash !== data.mathHash) {
+      return NextResponse.json({ error: 'Incorrect security answer' }, { status: 400 });
     }
 
     // Resend ile email gönder

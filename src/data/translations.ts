@@ -99,6 +99,10 @@ export interface TranslationSchema {
     sending: string;
     success: string;
     error: string;
+    captchaTitle: string;
+    captchaPlaceholder: string;
+    captchaInstruction: string;
+    captchaError: string;
   };
   footer: {
     description: string;
@@ -205,7 +209,11 @@ export const translations: Record<Language, TranslationSchema> = {
       send: "Nachricht senden",
       sending: "Wird gesendet...",
       success: "Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.",
-      error: "Hoppla! Es gab ein Problem beim Senden Ihrer Nachricht."
+      error: "Hoppla! Es gab ein Problem beim Senden Ihrer Nachricht.",
+      captchaTitle: "Sicherheitsfrage",
+      captchaPlaceholder: "Ihre Antwort",
+      captchaInstruction: "Bitte lösen Sie diese einfache Rechenaufgabe, um Spam zu verhindern.",
+      captchaError: "Falsche Sicherheitsantwort"
     },
     footer: {
       description: "Schüler mit Interesse an KV-Berufen und Bankwesen. Motiviert und bereit für neue Herausforderungen.",
@@ -284,7 +292,11 @@ export const translations: Record<Language, TranslationSchema> = {
       send: "Mesajı Gönder",
       sending: "Gönderiliyor...",
       success: "Teşekkürler! Mesajınız başarıyla gönderildi.",
-      error: "Hata! Mesajınız gönderilirken bir sorun oluştu."
+      error: "Hata! Mesajınız gönderilirken bir sorun oluştu.",
+      captchaTitle: "Güvenlik Sorusu",
+      captchaPlaceholder: "Yanıtınız",
+      captchaInstruction: "Spamı önlemek için lütfen bu basit matematik işlemini çözün.",
+      captchaError: "Yanlış güvenlik yanıtı"
     },
     footer: {
       description: "KV (Ticari) meslekleri ve bankacılık sektörü ile ilgilenen öğrenci. Yeni zorluklara hazır ve motive.",
@@ -363,7 +375,11 @@ export const translations: Record<Language, TranslationSchema> = {
       send: "Send Message",
       sending: "Sending...",
       success: "Thank you! Your message has been sent successfully.",
-      error: "Oops! Something went wrong while sending your message."
+      error: "Oops! Something went wrong while sending your message.",
+      captchaTitle: "Security Question",
+      captchaPlaceholder: "Your Answer",
+      captchaInstruction: "Please solve this simple math problem to prevent spam.",
+      captchaError: "Incorrect security answer"
     },
     footer: {
       description: "Student interested in commercial (KV) professions and banking. Motivated and ready for new challenges.",
