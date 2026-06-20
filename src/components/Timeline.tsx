@@ -60,6 +60,12 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    if (selectedMatcher) {
+      setIsWorkExpanded(true);
+    }
+  }, [selectedMatcher]);
+
+  useEffect(() => {
     const checkAdmin = () => {
       if (typeof window !== 'undefined') {
         setIsAdmin(localStorage.getItem('admin_unlocked') === 'true');
