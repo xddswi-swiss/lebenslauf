@@ -47,14 +47,18 @@
   border-radius: 4px !important; /* Blocky technical layout */
 }
 
-/* Remove colored glows and grid meshes */
-.bw-mode .bg-grid-mesh,
+/* Remove colored glows */
 .bw-mode .bg-violet-600\/10,
 .bw-mode .bg-cyan-600\/10,
 .bw-mode [class*="blur-"] {
-  background: #ffffff !important;
-  background-image: none !important;
   display: none !important;
+}
+
+/* Remove grid meshes background but keep element visible */
+.bw-mode .bg-grid-mesh {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
 }
 
 /* Make image elements look drawn or strictly black & white */
