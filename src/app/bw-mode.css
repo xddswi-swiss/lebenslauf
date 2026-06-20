@@ -64,12 +64,40 @@
   color: #ffffff !important;
 }
 
-/* Inactive buttons (white background with black text) */
+/* Selected button hover (invert to white background, black text) */
+.bw-mode button.bg-primary:hover,
+.bw-mode button[class*="bg-primary"]:hover,
+.bw-mode .bg-primary:hover {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+}
+
+.bw-mode button.bg-primary:hover *,
+.bw-mode button[class*="bg-primary"]:hover *,
+.bw-mode .bg-primary:hover * {
+  color: #000000 !important;
+}
+
+/* Inactive buttons default state (white background with black text) */
 .bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white) {
   color: #000000 !important;
   background: #ffffff !important;
   background-color: #ffffff !important;
   border: 2px solid #000000 !important;
+}
+
+/* Inactive buttons hover state (invert to black background, white text) */
+.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover {
+  color: #ffffff !important;
+  background: #000000 !important;
+  background-color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+
+.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover * {
+  color: #ffffff !important;
 }
 
 /* Remove colored glows */
