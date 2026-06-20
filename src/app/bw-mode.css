@@ -37,7 +37,6 @@
 .bw-mode button,
 .bw-mode input,
 .bw-mode textarea,
-.bw-mode section,
 .bw-mode .timeline-card {
   background: #ffffff !important;
   background-color: #ffffff !important;
@@ -45,6 +44,21 @@
   box-shadow: none !important;
   text-shadow: none !important;
   border-radius: 4px !important; /* Blocky technical layout */
+}
+
+/* Fix statistics cards in B&W mode (solid black background with white text) */
+.bw-mode .from-blue-600,
+.bw-mode .from-emerald-600 {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
+  border-radius: 4px !important;
+}
+
+.bw-mode .from-blue-600 *,
+.bw-mode .from-emerald-600 * {
+  color: #ffffff !important;
 }
 
 /* Fix active and selected buttons (solid black background with white text) */
