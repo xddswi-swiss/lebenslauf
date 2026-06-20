@@ -277,5 +277,15 @@
   color: #ffffff !important;
 }
 
+/* Force the Feller/Draggable switch plate to look flat and B&W in blueprint mode */
+.bw-mode .bw-switch-plate {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 2px solid #000000 !important;
+  box-shadow: none !important;
+  border-radius: 4px !important;
+}
+
+
 
 
