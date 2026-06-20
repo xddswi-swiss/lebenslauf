@@ -287,7 +287,7 @@ body {
 
 
 .glass-card {
-  background: var(--glass-card-bg);
+  background-color: var(--glass-card-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--glass-border);
@@ -312,4 +312,36 @@ body {
 ::selection {
   background: var(--primary);
   color: #fff;
+}
+
+/* Document card icon container hover colors (disabled in B&W mode) */
+:root:not(.bw-mode) .group:hover .glass-card.text-blue-500,
+:root:not(.bw-mode) .group:hover .glass-card.text-blue-600 {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+:root:not(.bw-mode) .group:hover .glass-card.text-orange-500,
+:root:not(.bw-mode) .group:hover .glass-card.text-orange-600 {
+  background-color: #f97316 !important;
+  color: #ffffff !important;
+}
+:root:not(.bw-mode) .group:hover .glass-card.text-emerald-500,
+:root:not(.bw-mode) .group:hover .glass-card.text-emerald-600 {
+  background-color: #10b981 !important;
+  color: #ffffff !important;
+}
+:root:not(.bw-mode) .group:hover .glass-card.text-violet-500,
+:root:not(.bw-mode) .group:hover .glass-card.text-violet-600 {
+  background-color: #8b5cf6 !important;
+  color: #ffffff !important;
+}
+:root:not(.bw-mode) .group:hover .glass-card.text-amber-500,
+:root:not(.bw-mode) .group:hover .glass-card.text-amber-600 {
+  background-color: #f59e0b !important;
+  color: #ffffff !important;
+}
+:root:not(.bw-mode) .group:hover .glass-card.text-rose-500,
+:root:not(.bw-mode) .group:hover .glass-card.text-rose-600 {
+  background-color: #f43f5e !important;
+  color: #ffffff !important;
 }
