@@ -24,20 +24,40 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Incorrect security answer' }, { status: 400 });
     }
 
+    const isRecruiter = data.type === 'recruiter';
+    const subject = isRecruiter 
+      ? `Mülakat / Lehrstelle Daveti - ${data.company || 'Bilinmeyen Firma'} (${data.name})`
+      : `Yeni İletişim Formu - ${data.name}`;
+
+    const htmlContent = isRecruiter
+      ? `
+        <h2>Yeni Mülakat / Lehrstelle Daveti (Recruiter Fast-Track)</h2>
+        <p><strong>Gönderen (İsim):</strong> ${data.name}</p>
+        <p><strong>Firma:</strong> ${data.company || '-'}</p>
+        <p><strong>Pozisyon:</strong> ${data.position || '-'}</p>
+        <p><strong>Telefon:</strong> ${data.phone || '-'}</p>
+        <p><strong>E-posta:</strong> ${data.email}</p>
+        <p><strong>Kısa Mesaj:</strong></p>
+        <p style="white-space: pre-line;">${data.message}</p>
+        <hr>
+        <p><small>Bu e-posta, Eren Aydin Schüler Portfolyosu'nun Hızlı Başvuru modülü üzerinden gönderildi.</small></p>
+      `
+      : `
+        <h2>Yeni İletişim Formu Mesajı</h2>
+        <p><strong>İsim:</strong> ${data.name}</p>
+        <p><strong>E-posta:</strong> ${data.email}</p>
+        <p><strong>Mesaj:</strong></p>
+        <p style="white-space: pre-line;">${data.message}</p>
+        <hr>
+        <p><small>Bu e-posta, Eren Aydin Schüler Portfolyosu'nun İletişim Formu üzerinden gönderildi.</small></p>
+      `;
+
     // Resend ile email gönder
     const { data: emailData, error } = await resend.emails.send({
       from: 'Contact Form <contact@jes.ch>',
       to: ['eren.yigit.aydin@gmail.com'],
-      subject: `Yeni İletişim Formu - ${data.name}`,
-      html: `
-        <h2>Yeni İletişim Formu Mesajı</h2>
-        <p><strong>İsim:</strong> ${data.name}</p>
-        <p><strong>Email:</strong> ${data.email}</p>
-        <p><strong>Mesaj:</strong></p>
-        <p>${data.message}</p>
-        <hr>
-        <p><small>Bu mesaj lebenslauf portfolio contact form'undan gönderildi.</small></p>
-      `,
+      subject: subject,
+      html: htmlContent,
     });
 
     if (error) {

@@ -127,6 +127,22 @@ export interface TranslationSchema {
     btnRetry: string;
     btnHome: string;
   };
+  recruiter: {
+    floatingBtn: string;
+    modalTitle: string;
+    modalSubtitle: string;
+    fieldName: string;
+    fieldCompany: string;
+    fieldPosition: string;
+    fieldPhone: string;
+    fieldEmail: string;
+    fieldMessage: string;
+    posKaufmann: string;
+    posElektro: string;
+    posOther: string;
+    btnSubmit: string;
+    successMessage: string;
+  };
 }
 
 import experiencesData from './experiences.json';
@@ -251,6 +267,22 @@ export const translations: Record<Language, TranslationSchema> = {
       description: "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder gehen Sie zurück zur Startseite.",
       btnRetry: "Erneut versuchen",
       btnHome: "Zur Startseite"
+    },
+    recruiter: {
+      floatingBtn: "Schnell-Einladung",
+      modalTitle: "Schnelle Einladung erhalten",
+      modalSubtitle: "Laden Sie mich unkompliziert zu einem Vorstellungsgespräch oder einer Schnupperlehre ein.",
+      fieldName: "Ihr Name",
+      fieldCompany: "Firma / Lehrbetrieb",
+      fieldPosition: "Gewünschter Beruf",
+      fieldPhone: "Telefonnummer (für Rückruf)",
+      fieldEmail: "E-Mail-Adresse",
+      fieldMessage: "Kurze Nachricht (optional)",
+      posKaufmann: "Kaufmann/Kauffrau EFZ",
+      posElektro: "Elektroinstallateur EFZ",
+      posOther: "Schnupperlehre / Anderes",
+      btnSubmit: "Senden, damit ich mich melde",
+      successMessage: "Erfolgreich gesendet! Ich werde mich so schnell wie möglich bei Ihnen melden. Vielen Dank!"
     }
   },
   tr: {
@@ -348,6 +380,22 @@ export const translations: Record<Language, TranslationSchema> = {
       description: "Beklenmedik bir hata oluştu. Lütfen tekrar deneyin veya ana sayfaya dönün.",
       btnRetry: "Tekrar Dene",
       btnHome: "Ana Sayfaya Dön"
+    },
+    recruiter: {
+      floatingBtn: "Mülakat Daveti",
+      modalTitle: "Hızlı Mülakat Daveti",
+      modalSubtitle: "Bana kolayca bir çıraklık yeri veya mülakat teklif edin. En kısa sürede size geri dönüş yapacağım!",
+      fieldName: "Adınız Soyadınız",
+      fieldCompany: "Şirket / Kurum",
+      fieldPosition: "İlgili Pozisyon",
+      fieldPhone: "Telefon Numaranız",
+      fieldEmail: "E-posta Adresiniz",
+      fieldMessage: "Kısa Mesaj (İsteğe bağlı)",
+      posKaufmann: "Kaufmann EFZ (Ticari)",
+      posElektro: "Elektroinstallateur EFZ (Elektrik)",
+      posOther: "Staj / Diğer",
+      btnSubmit: "Gönder ki Sana Dönüş Yapayım",
+      successMessage: "Başarıyla gönderildi! En kısa sürede sizinle iletişime geçeceğim. Teşekkürler!"
     }
   },
   en: {
@@ -445,6 +493,22 @@ export const translations: Record<Language, TranslationSchema> = {
       description: "An unexpected error occurred. Please try again or return to the homepage.",
       btnRetry: "Try Again",
       btnHome: "Go to Homepage"
+    },
+    recruiter: {
+      floatingBtn: "Quick Invite",
+      modalTitle: "Recruiter Quick Invite",
+      modalSubtitle: "Offer me an apprenticeship or interview. I will get back to you as soon as possible!",
+      fieldName: "Your Name",
+      fieldCompany: "Company Name",
+      fieldPosition: "Desired Position",
+      fieldPhone: "Phone Number",
+      fieldEmail: "Email Address",
+      fieldMessage: "Short Message (optional)",
+      posKaufmann: "Kaufmann EFZ (Commercial)",
+      posElektro: "Elektroinstallateur EFZ (Electrical)",
+      posOther: "Trial Apprenticeship / Other",
+      btnSubmit: "Send so I can get back to you",
+      successMessage: "Sent successfully! I will get back to you as soon as possible. Thank you!"
     }
   }
 };

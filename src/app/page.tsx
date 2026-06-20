@@ -9,6 +9,7 @@ import { SkillsGrid } from '@/components/SkillsGrid';
 import { ContactForm } from '@/components/ContactForm';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { RecruiterWidget } from '@/components/RecruiterWidget';
 import Strands from '@/components/Strands';
 import { motion as m, AnimatePresence } from 'framer-motion';
 import { 
@@ -478,6 +479,7 @@ const MainContent: React.FC = () => {
           </m.button>
         )}
       </AnimatePresence>
+      <RecruiterWidget />
     </div>
   );
 };
