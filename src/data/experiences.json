@@ -1,17 +1,6 @@
 {
   "de": [
     {
-      "type": "work",
-      "period": "05/2026",
-      "role": "Kaufmann",
-      "company": "TestAg",
-      "city": "Zürich",
-      "tasks": [
-        "Pc arbeit",
-        "Zusammen"
-      ]
-    },
-    {
       "period": "06/2026",
       "role": "Schnupperlehre Elektroinstallateur",
       "company": "Elektro Appenzeller AG",
@@ -319,17 +308,6 @@
   ],
   "tr": [
     {
-      "type": "work",
-      "period": "05/2026",
-      "role": "Kaufmann",
-      "company": "TestAg",
-      "city": "Zürich",
-      "tasks": [
-        "Pc arbeit",
-        "Zusammen"
-      ]
-    },
-    {
       "period": "06/2026",
       "role": "Elektrik Tesisatçısı Stajı",
       "company": "Elektro Appenzeller AG",
@@ -632,17 +610,6 @@
     }
   ],
   "en": [
-    {
-      "type": "work",
-      "period": "05/2026",
-      "role": "Kaufmann",
-      "company": "TestAg",
-      "city": "Zürich",
-      "tasks": [
-        "Pc arbeit",
-        "Zusammen"
-      ]
-    },
     {
       "period": "06/2026",
       "role": "Trial Apprenticeship Electrical Installer",
