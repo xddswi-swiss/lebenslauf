@@ -416,7 +416,7 @@ const MainContent: React.FC = () => {
 
         {/* About Me Section */}
         <section id="about" className="scroll-mt-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
             <m.div 
               whileHover={{ scale: 1.01 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -429,7 +429,7 @@ const MainContent: React.FC = () => {
               <p className="text-[var(--text-body)] text-base md:text-lg leading-relaxed whitespace-pre-line" dangerouslySetInnerHTML={{ __html: t.about.description }} />
             </m.div>
 
-            <div className="lg:col-span-5 glass-card p-6 md:p-8 rounded-3xl space-y-6 flex flex-col justify-between max-w-[360px] w-full lg:ml-auto mx-auto lg:-mt-8">
+            <div className="lg:col-span-5 glass-card p-6 md:p-8 rounded-3xl space-y-6 flex flex-col justify-between max-w-[360px] w-full lg:ml-auto mx-auto">
               <div>
                 <h3 className="text-xl font-bold text-[var(--text-main)] border-b border-[var(--glass-border)] pb-3 mb-5">
                   {t.about.quickFactsTitle}
