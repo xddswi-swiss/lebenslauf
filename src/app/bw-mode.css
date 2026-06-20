@@ -195,3 +195,87 @@
   color: #000000 !important;
 }
 
+/* Style all download buttons inside the document cards */
+.bw-mode #documents a.border {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+}
+
+.bw-mode #documents a.border * {
+  color: #000000 !important;
+}
+
+.bw-mode #documents a.border:hover {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+}
+
+.bw-mode #documents a.border:hover * {
+  color: #ffffff !important;
+}
+
+/* Force all standard Tailwind colored text classes to black in B&W mode */
+.bw-mode [class*="text-blue-"],
+.bw-mode [class*="text-orange-"],
+.bw-mode [class*="text-emerald-"],
+.bw-mode [class*="text-violet-"],
+.bw-mode [class*="text-amber-"],
+.bw-mode [class*="text-rose-"],
+.bw-mode [class*="text-navy-"],
+.bw-mode [class*="text-green-"],
+.bw-mode [class*="text-cyan-"],
+.bw-mode [class*="text-sky-"] {
+  color: #000000 !important;
+}
+
+/* Force all standard Tailwind colored border classes to black in B&W mode */
+.bw-mode [class*="border-blue-"],
+.bw-mode [class*="border-orange-"],
+.bw-mode [class*="border-emerald-"],
+.bw-mode [class*="border-violet-"],
+.bw-mode [class*="border-amber-"],
+.bw-mode [class*="border-rose-"],
+.bw-mode [class*="border-navy-"],
+.bw-mode [class*="border-green-"],
+.bw-mode [class*="border-cyan-"],
+.bw-mode [class*="border-sky-"] {
+  border-color: #000000 !important;
+}
+
+/* Clear all standard Tailwind colored backgrounds in B&W mode, unless they are specific B&W active states */
+.bw-mode [class*="bg-blue-"]:not(.from-blue-600),
+.bw-mode [class*="bg-orange-"],
+.bw-mode [class*="bg-emerald-"]:not(.from-emerald-600),
+.bw-mode [class*="bg-violet-"],
+.bw-mode [class*="bg-amber-"],
+.bw-mode [class*="bg-rose-"],
+.bw-mode [class*="bg-navy-"],
+.bw-mode [class*="bg-green-"],
+.bw-mode [class*="bg-cyan-"],
+.bw-mode [class*="bg-sky-"] {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Force company initials badge in timeline cards to have a solid black background with white text in B&W mode */
+.bw-mode [class*="from-orange-500"],
+.bw-mode [class*="from-green-500"],
+.bw-mode [class*="from-navy-600"] {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
+}
+
+.bw-mode [class*="from-orange-500"] *,
+.bw-mode [class*="from-green-500"] *,
+.bw-mode [class*="from-navy-600"] * {
+  color: #ffffff !important;
+}
+
+
+
