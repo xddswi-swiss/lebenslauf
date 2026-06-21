@@ -353,7 +353,7 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
                               <div className="flex-1 min-w-0">
                                 {/* Row 1: Company & City */}
                                 <div className="flex items-center gap-2 flex-wrap mb-1">
-                                  <h3 className="text-lg md:text-xl font-bold text-[var(--text-main)] group-hover:text-primary transition-colors duration-300">
+                                  <h3 className="text-lg md:text-xl font-bold text-[var(--text-main)] group-hover:text-primary transition-colors duration-300 min-w-max">
                                     {item.company}
                                   </h3>
                                   <span className="text-xs px-2 py-0.5 rounded bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] flex items-center gap-1 font-medium">
