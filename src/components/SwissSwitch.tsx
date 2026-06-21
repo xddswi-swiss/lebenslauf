@@ -4,12 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { motion as m } from 'framer-motion';
 
 export const SwissSwitch: React.FC = () => {
-  const [bwMode, setBwMode] = useState(false);
+  const [bwMode, setBwMode] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const active = document.documentElement.classList.contains('bw-mode');
       setBwMode(active);
+      setMounted(true);
     }
   }, []);
 

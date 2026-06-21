@@ -29,9 +29,25 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${robotoFlex.variable} ${ptSerif.variable} h-full antialiased`}
+      className={`${robotoFlex.variable} ${ptSerif.variable} h-full antialiased bw-mode`}
       suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var bw = localStorage.getItem('bw-mode');
+                if (bw === 'false') {
+                  document.documentElement.classList.remove('bw-mode');
+                } else {
+                  document.documentElement.classList.add('bw-mode');
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <ThemeProvider>
           <LanguageProvider>
