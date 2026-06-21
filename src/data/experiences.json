@@ -1,6 +1,17 @@
 {
   "de": [
     {
+      "type": "work",
+      "period": "04/2026",
+      "role": "Kauffmann",
+      "company": "TestAg",
+      "city": "Bern",
+      "tasks": [
+        "Arbeiten mit pc",
+        "Word exel verstehen"
+      ]
+    },
+    {
       "period": "06/2026",
       "role": "Schnupperlehre Elektroinstallateur",
       "company": "Elektro Appenzeller AG",
@@ -308,6 +319,17 @@
   ],
   "tr": [
     {
+      "type": "work",
+      "period": "04/2026",
+      "role": "Kauffmann",
+      "company": "TestAg",
+      "city": "Bern",
+      "tasks": [
+        "Arbeiten mit pc",
+        "Word exel verstehen"
+      ]
+    },
+    {
       "period": "06/2026",
       "role": "Elektrik Tesisatçısı Stajı",
       "company": "Elektro Appenzeller AG",
@@ -610,6 +632,17 @@
     }
   ],
   "en": [
+    {
+      "type": "work",
+      "period": "04/2026",
+      "role": "Kauffmann",
+      "company": "TestAg",
+      "city": "Bern",
+      "tasks": [
+        "Arbeiten mit pc",
+        "Word exel verstehen"
+      ]
+    },
     {
       "period": "06/2026",
       "role": "Trial Apprenticeship Electrical Installer",
