@@ -56,22 +56,46 @@ export const SwissSwitch: React.FC = () => {
   const travelDistance = 20;
 
   return (
-    <div className="flex items-center gap-2 z-30 select-none">
-      {/* Label: Color (OFF) */}
-      <span className={`text-[10px] font-black tracking-wider transition-colors duration-300 ${bwMode ? 'text-zinc-400 dark:text-zinc-500' : 'text-primary font-black'}`}>
+    <div className="flex items-center gap-2 z-30 select-none bw-switch-container">
+      {/* Label: Color (ON) */}
+      <span className={`text-[10px] tracking-wider transition-all duration-300 inline-block ${
+        bwMode 
+          ? 'text-zinc-400 font-medium scale-100' 
+          : 'text-[#00c853] font-black scale-105 drop-shadow-[0_0_8px_rgba(0,200,83,0.45)]'
+      }`}>
         COLOR
       </span>
 
       {/* Switch Plate */}
       <div 
         onClick={handleToggle}
-        className="w-10 h-14 rounded-xl bg-gradient-to-b from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-900 border border-zinc-400 dark:border-zinc-700 shadow-[0_2px_4px_rgba(0,0,0,0.15),inset_0_1px_0_white] dark:shadow-[0_2px_4px_rgba(0,0,0,0.4)] flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-105 active:scale-98 relative bw-switch-plate"
+        className={`w-10 h-14 border flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-105 active:scale-98 relative ${
+          bwMode
+            ? 'bg-white border-2 border-black shadow-none rounded-[4px]'
+            : 'bg-gradient-to-b from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-900 border-zinc-400 dark:border-zinc-700 shadow-[0_2px_4px_rgba(0,0,0,0.15),inset_0_1px_0_white] dark:shadow-[0_2px_4px_rgba(0,0,0,0.4)] rounded-xl'
+        }`}
       >
         {/* Track Slot */}
-        <div className="w-5 h-10 bg-zinc-950 rounded-full relative shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col justify-between p-0.5">
+        <div className={`w-5 h-10 rounded-full relative overflow-hidden flex flex-col justify-between p-0.5 border transition-all duration-300 ${
+          bwMode
+            ? 'bg-zinc-950 border border-black shadow-none'
+            : 'bg-zinc-950 border-transparent shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)]'
+        }`}>
           {/* Active color strip backings */}
-          <div className={`absolute top-0 left-0 right-0 h-1/2 bg-green-500/80 transition-opacity duration-300 ${bwMode ? 'opacity-100' : 'opacity-20'}`} />
-          <div className={`absolute bottom-0 left-0 right-0 h-1/2 bg-red-500/80 transition-opacity duration-300 ${bwMode ? 'opacity-20' : 'opacity-100'}`} />
+          <div 
+            className="absolute top-0 left-0 right-0 h-1/2 transition-all duration-300"
+            style={{ 
+              backgroundColor: bwMode ? '#27272a' : '#00c853',
+              opacity: bwMode ? 1 : 0.75
+            }} 
+          />
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-1/2 transition-all duration-300"
+            style={{ 
+              backgroundColor: bwMode ? '#e4e4e7' : '#ff0000',
+              opacity: bwMode ? 1 : 0.75
+            }} 
+          />
 
           {/* Draggable Knob */}
           <m.div
@@ -79,17 +103,22 @@ export const SwissSwitch: React.FC = () => {
             dragConstraints={{ top: 0, bottom: travelDistance }}
             dragElastic={0.05}
             dragMomentum={false}
-            animate={{ y: bwMode ? 0 : travelDistance }}
+            animate={{ y: bwMode ? travelDistance : 0 }}
             onDragEnd={(_, info) => {
               const midPoint = travelDistance / 2;
               const dragY = info.offset.y;
-              // If dragged upwards, turn ON (y=0)
-              // If dragged downwards, turn OFF (y=travelDistance)
-              const finalVal = bwMode ? (dragY > midPoint) : (dragY > -midPoint);
-              if (finalVal) {
-                setMode(false);
+              if (bwMode) {
+                if (dragY < -midPoint) {
+                  setMode(false);
+                } else {
+                  setMode(true);
+                }
               } else {
-                setMode(true);
+                if (dragY > midPoint) {
+                  setMode(true);
+                } else {
+                  setMode(false);
+                }
               }
             }}
             onClick={(e) => {
@@ -97,17 +126,21 @@ export const SwissSwitch: React.FC = () => {
               handleToggle();
             }}
             whileHover={{ scale: 1.08 }}
-            className={`w-4 h-4 rounded-full shadow-[0_2px_4px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.4)] cursor-grab active:cursor-grabbing border z-10 transition-colors duration-300 ${
+            className={`w-4 h-4 rounded-full cursor-grab active:cursor-grabbing border z-10 transition-all duration-300 ${
               bwMode 
-                ? 'bg-zinc-800 border-zinc-950' 
-                : 'bg-gradient-to-tr from-red-600 to-red-400 border-red-700'
+                ? 'bg-white border-2 border-black shadow-none' 
+                : 'bg-gradient-to-tr from-[#00c853] to-[#69f0ae] border-[#008e3c] shadow-[0_2px_4px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.4)]'
             }`}
           />
         </div>
       </div>
 
-      {/* Label: B&W (ON) */}
-      <span className={`text-[10px] font-black tracking-wider transition-colors duration-300 ${bwMode ? 'text-green-500 font-black' : 'text-zinc-400 dark:text-zinc-500'}`}>
+      {/* Label: B&W (OFF) */}
+      <span className={`text-[10px] tracking-wider transition-all duration-300 inline-block ${
+        bwMode 
+          ? 'text-black font-black scale-105 drop-shadow-none' 
+          : 'text-[#ff0000]/70 font-bold scale-100'
+      }`}>
         B&W
       </span>
     </div>

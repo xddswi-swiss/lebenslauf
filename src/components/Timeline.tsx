@@ -224,6 +224,11 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
           }
         }));
 
+        // Automatically log out admin for security and cleaner UX flow
+        localStorage.removeItem('admin_unlocked');
+        localStorage.removeItem('admin_passcode');
+        window.dispatchEvent(new Event('admin-state-changed'));
+
         alert(deleteAlertMsg[language as 'de' | 'tr' | 'en'] || deleteAlertMsg.tr);
       }
     } catch (err: any) {

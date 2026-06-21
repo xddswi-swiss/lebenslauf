@@ -53,16 +53,26 @@ export const AdminExperienceForm: React.FC = () => {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    // Check if passcode was already entered
-    if (typeof window !== 'undefined') {
-      const isUnlockedLocally = localStorage.getItem('admin_unlocked') === 'true';
-      if (isUnlockedLocally) {
-        setIsUnlocked(true);
-        setPasscode(localStorage.getItem('admin_passcode') || '');
-        setIsOpen(true);
-        window.dispatchEvent(new Event('admin-state-changed'));
+    const checkAdmin = () => {
+      if (typeof window !== 'undefined') {
+        const isUnlockedLocally = localStorage.getItem('admin_unlocked') === 'true';
+        setIsUnlocked(isUnlockedLocally);
+        if (!isUnlockedLocally) {
+          setIsOpen(false);
+          setPasscode('');
+          setPasscodeError('');
+        } else {
+          setPasscode(localStorage.getItem('admin_passcode') || '');
+          setIsOpen(true);
+        }
       }
-    }
+    };
+    
+    checkAdmin();
+    window.addEventListener('admin-state-changed', checkAdmin);
+    return () => {
+      window.removeEventListener('admin-state-changed', checkAdmin);
+    };
   }, []);
 
   const handlePasscodeSubmit = (e: React.FormEvent) => {
@@ -213,7 +223,6 @@ export const AdminExperienceForm: React.FC = () => {
         };
         
         resetForm();
-        setIsOpen(false);
         
         // Trigger custom event to notify Timeline component to reload and do optimistic update
         window.dispatchEvent(new CustomEvent('experiences-updated', {
@@ -222,6 +231,11 @@ export const AdminExperienceForm: React.FC = () => {
             data: result.data || result.jsonBackup
           }
         }));
+
+        // Automatically log out admin for security and cleaner flow
+        localStorage.removeItem('admin_unlocked');
+        localStorage.removeItem('admin_passcode');
+        window.dispatchEvent(new Event('admin-state-changed'));
 
         alert(successAlertMsg[language as 'de' | 'tr' | 'en'] || successAlertMsg.tr);
       }

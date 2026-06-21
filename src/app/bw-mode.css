@@ -16,7 +16,7 @@
 }
 
 /* Force all text shadow, box shadow, gradients, and filters to be B&W */
-.bw-mode * {
+.bw-mode *:not(.bw-switch-container):not(.bw-switch-container *) {
   text-shadow: none !important;
   box-shadow: none !important;
   background-image: none !important;
@@ -277,14 +277,7 @@
   color: #ffffff !important;
 }
 
-/* Force the Feller/Draggable switch plate to look flat and B&W in blueprint mode */
-.bw-mode .bw-switch-plate {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  border: 2px solid #000000 !important;
-  box-shadow: none !important;
-  border-radius: 4px !important;
-}
+/* Keep the Feller/Draggable switch plate 3D/tactile even in blueprint mode */
 
 /* Keep all elements that are rounded-full in color mode rounded-full in B&W mode too */
 .bw-mode .rounded-full,
@@ -303,9 +296,15 @@
 /* Grayscale main content, footer, and language switcher in B&W mode to strip color from emojis and flags */
 .bw-mode main,
 .bw-mode footer,
-.bw-mode header .relative,
-.bw-mode [style*="drawer"] .relative {
+.bw-mode header .relative:not(.bw-switch-container):not(.bw-switch-container *),
+.bw-mode [style*="drawer"] .relative:not(.bw-switch-container):not(.bw-switch-container *) {
   filter: grayscale(100%) !important;
+}
+
+/* Explicitly protect switch container and its kids from any parent filters */
+.bw-mode .bw-switch-container,
+.bw-mode .bw-switch-container * {
+  filter: none !important;
 }
 
 

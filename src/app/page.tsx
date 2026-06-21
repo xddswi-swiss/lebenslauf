@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from './contexts/LanguageContext';
 import { useTheme } from './contexts/ThemeContext';
 import { Timeline } from '@/components/Timeline';
@@ -710,6 +710,113 @@ const MainContent: React.FC = () => {
   );
 };
 
+// 4. Premium Loading Splash Screen
+const PageLoader: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const duration = 1400; // 1.4 seconds loading duration
+    const intervalTime = 15; // Tick every 15ms
+    const step = 100 / (duration / intervalTime);
+
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= 100) {
+        setProgress(100);
+        clearInterval(timer);
+        setTimeout(() => {
+          onComplete();
+        }, 250); // Pause briefly at 100%
+      } else {
+        setProgress(Math.floor(start));
+      }
+    }, intervalTime);
+
+    return () => clearInterval(timer);
+  }, [onComplete]);
+
+  return (
+    <m.div
+      initial={{ opacity: 1 }}
+      exit={{ 
+        y: "-100%", 
+        opacity: 0,
+        transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } 
+      }}
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#09090b] text-white select-none overflow-hidden"
+    >
+      {/* Decorative Glowing Gradients */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary/10 blur-[150px] rounded-full pointer-events-none" />
+
+      <div className="w-full max-w-xs md:max-w-md px-6 flex flex-col space-y-6 relative z-10">
+        {/* Name Logo */}
+        <m.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="flex flex-col items-start"
+        >
+          <span className="text-[10px] uppercase tracking-[0.3em] text-zinc-500 font-bold mb-1">Portfolio</span>
+          <h2 className="text-xl md:text-2xl font-black tracking-[0.25em] bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent font-sans">
+            EREN AYDIN
+          </h2>
+        </m.div>
+
+        {/* Monospace progress number */}
+        <div className="flex items-baseline justify-between">
+          <m.span 
+            className="text-6xl md:text-8xl font-light font-mono tracking-tighter tabular-nums text-zinc-100"
+          >
+            {String(progress).padStart(3, '0')}
+          </m.span>
+          <span className="text-xl md:text-2xl font-light text-zinc-500 font-mono">%</span>
+        </div>
+
+        {/* Progress Bar Container */}
+        <div className="h-[2px] w-full bg-zinc-800/40 rounded-full overflow-hidden relative">
+          <m.div 
+            className="h-full bg-gradient-to-r from-primary via-secondary to-primary shadow-[0_0_8px_rgba(236,72,153,0.5)] rounded-full"
+            style={{ width: `${progress}%` }}
+            transition={{ type: "tween", ease: "easeOut" }}
+          />
+        </div>
+        
+        {/* Subtext */}
+        <div className="flex justify-between text-[8px] md:text-[9px] uppercase tracking-[0.2em] text-zinc-500 font-semibold">
+          <span>Loading Experience</span>
+          <span>Please Wait</span>
+        </div>
+      </div>
+    </m.div>
+  );
+};
+
 export default function Home() {
-  return <MainContent />;
+  const [isLoading, setIsLoading] = useState(true);
+
+  return (
+    <>
+      <AnimatePresence mode="wait">
+        {isLoading && (
+          <PageLoader key="loader" onComplete={() => setIsLoading(false)} />
+        )}
+      </AnimatePresence>
+      
+      <m.div
+        animate={{ 
+          opacity: isLoading ? 0 : 1,
+          y: isLoading ? 30 : 0
+        }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        style={{ 
+          height: isLoading ? '100vh' : 'auto', 
+          overflow: isLoading ? 'hidden' : 'visible'
+        }}
+      >
+        <MainContent />
+      </m.div>
+    </>
+  );
 }
