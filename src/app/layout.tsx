@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Roboto_Flex, PT_Serif } from "next/font/google";
 import "./globals.css";
 import "./bw-mode.css";
@@ -17,8 +17,15 @@ const ptSerif = PT_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Eren Aydin | Schüler Portfolio",
+  title: "Eren Aydin | Portfolio",
   description: "Persönliches Profil, schulische Unterlagen, Erfahrungen, Sprachkenntnisse und Projekte von Eren Aydin aus Zürich.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -44,6 +51,11 @@ export default function RootLayout({
                   document.documentElement.classList.add('bw-mode');
                 }
               })();
+
+              // Prevent pinch-to-zoom on mobile devices (e.g. iOS Safari)
+              document.addEventListener('gesturestart', function(e) {
+                e.preventDefault();
+              });
             `,
           }}
         />
@@ -58,3 +70,4 @@ export default function RootLayout({
     </html>
   );
 }
+
