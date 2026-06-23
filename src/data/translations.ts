@@ -83,12 +83,30 @@ export interface TranslationSchema {
       digital: string;
       hobbies: string;
     };
+    items: {
+      personal: { id: string; name: string; level: number }[];
+      school: { id: string; name: string; level: number }[];
+      digital: { id: string; name: string; level: number }[];
+      hobbies: { id: string; name: string; level: number }[];
+    };
   };
   details: {
     title: string;
     languagesTitle: string;
     referencesTitle: string;
     interestsTitle: string;
+    interests: {
+      cook: string;
+      'kung-fu': string;
+      swim: string;
+      music: string;
+      nature: string;
+      photography: string;
+      walk: string;
+      word: string;
+      excel: string;
+      code: string;
+    };
   };
   contact: {
     title: string;
@@ -182,17 +200,41 @@ export const reportItems: Record<Language, ReportItem[]> = {
   ]
 };
 
-export const languagesData: LanguageItem[] = [
-  { code: 'DE', name: 'Deutsch', note: 'Muttersprache', level: 100 },
-  { code: 'TR', name: 'Türkisch', note: 'Muttersprache', level: 100 },
-  { code: 'GB', name: 'Englisch', note: 'Schulkenntnisse (7. Jahr)', level: 70 },
-  { code: 'FR', name: 'Französisch', note: 'Schulkenntnisse (4. Jahr)', level: 55 }
-];
+export const languagesData: Record<Language, LanguageItem[]> = {
+  de: [
+    { code: 'DE', name: 'Deutsch', note: 'Muttersprache', level: 100 },
+    { code: 'TR', name: 'Türkisch', note: 'Muttersprache', level: 100 },
+    { code: 'GB', name: 'Englisch', note: 'Schulkenntnisse (7. Jahr)', level: 70 },
+    { code: 'FR', name: 'Französisch', note: 'Schulkenntnisse (4. Jahr)', level: 55 }
+  ],
+  tr: [
+    { code: 'DE', name: 'Almanca', note: 'Ana Dil', level: 100 },
+    { code: 'TR', name: 'Türkçe', note: 'Ana Dil', level: 100 },
+    { code: 'GB', name: 'İngilizce', note: 'Okul Bilgisi (7. Yıl)', level: 70 },
+    { code: 'FR', name: 'Fransızca', note: 'Okul Bilgisi (4. Yıl)', level: 55 }
+  ],
+  en: [
+    { code: 'DE', name: 'German', note: 'Native Language', level: 100 },
+    { code: 'TR', name: 'Turkish', note: 'Native Language', level: 100 },
+    { code: 'GB', name: 'English', note: 'School Knowledge (7th Year)', level: 70 },
+    { code: 'FR', name: 'French', note: 'School Knowledge (4th Year)', level: 55 }
+  ]
+};
 
-export const referencesData: ReferenceItem[] = [
-  { name: 'Thomas Seinige', title: 'Klassenlehrer', email: 'thomas.seinige@schulen.zuerich.ch', phone: 'Auf Anfrage' },
-  { name: 'Cyrill Lam', title: 'Kung‑Fu Lehrer (SKEMA)', email: 'zuerich@skema.ch', phone: '044 401 40 42' }
-];
+export const referencesData: Record<Language, ReferenceItem[]> = {
+  de: [
+    { name: 'Thomas Seinige', title: 'Klassenlehrer', email: 'thomas.seinige@schulen.zuerich.ch', phone: 'Auf Anfrage' },
+    { name: 'Cyrill Lam', title: 'Kung‑Fu Lehrer (SKEMA)', email: 'zuerich@skema.ch', phone: '044 401 40 42' }
+  ],
+  tr: [
+    { name: 'Thomas Seinige', title: 'Sınıf Öğretmeni', email: 'thomas.seinige@schulen.zuerich.ch', phone: 'Talep üzerine' },
+    { name: 'Cyrill Lam', title: 'Kung‑Fu Eğitmeni (SKEMA)', email: 'zuerich@skema.ch', phone: '044 401 40 42' }
+  ],
+  en: [
+    { name: 'Thomas Seinige', title: 'Class Teacher', email: 'thomas.seinige@schulen.zuerich.ch', phone: 'On request' },
+    { name: 'Cyrill Lam', title: 'Kung‑Fu Instructor (SKEMA)', email: 'zuerich@skema.ch', phone: '044 401 40 42' }
+  ]
+};
 
 export const interestsData = [
   'Kochen', 'Kung‑Fu', 'Schwimmen', 'Musik hören', 'Natur', 'Fotografieren', 'Spazieren', 'Word', 'Excel', 'Programmieren'
@@ -250,13 +292,55 @@ export const translations: Record<Language, TranslationSchema> = {
         school: "Schulische Stärken",
         digital: "IT & Digitale Medien",
         hobbies: "Interessen & Hobbys"
+      },
+      items: {
+        personal: [
+          { id: 'reliability', name: 'Zuverlässigkeit & Pünktlichkeit', level: 98 },
+          { id: 'teamwork', name: 'Teamfähigkeit', level: 95 },
+          { id: 'helpfulness', name: 'Hilfsbereitschaft', level: 95 },
+          { id: 'learning', name: 'Lernbereitschaft & Fleiss', level: 90 },
+          { id: 'responsibility', name: 'Verantwortungsbewusstsein', level: 85 }
+        ],
+        school: [
+          { id: 'geometry', name: 'Geometrie & Zeichnen', level: 90 },
+          { id: 'math', name: 'Mathematik & Rechnen', level: 85 },
+          { id: 'german', name: 'Deutsch (Muttersprache)', level: 100 },
+          { id: 'turkish', name: 'Türkisch (Muttersprache)', level: 100 },
+          { id: 'english', name: 'Englisch (7. Schuljahr)', level: 70 }
+        ],
+        digital: [
+          { id: 'word', name: 'Microsoft Word & Dokumente', level: 90 },
+          { id: 'excel', name: 'Microsoft Excel & Tabellen', level: 85 },
+          { id: 'powerpoint', name: 'Microsoft PowerPoint', level: 85 },
+          { id: 'web', name: 'HTML5 & CSS3 (Grundlagen)', level: 65 },
+          { id: 'hardware', name: 'PC & Hardware Verständnis', level: 80 }
+        ],
+        hobbies: [
+          { id: 'kung-fu', name: 'Kung-Fu Sport (Disziplin)', level: 95 },
+          { id: 'swim', name: 'Schwimmsport (Ausdauer)', level: 90 },
+          { id: 'cook', name: 'Kochen & Rezepte', level: 80 },
+          { id: 'photography', name: 'Fotografie & Natur', level: 75 },
+          { id: 'media', name: 'Medien & Kommunikation', level: 80 }
+        ]
       }
     },
     details: {
       title: "Fähigkeiten & Referenzen",
       languagesTitle: "Sprachkenntnisse",
       referencesTitle: "Referenzen",
-      interestsTitle: "Interessen & Freizeit"
+      interestsTitle: "Interessen & Freizeit",
+      interests: {
+        cook: 'Kochen',
+        'kung-fu': 'Kung‑Fu',
+        swim: 'Schwimmen',
+        music: 'Musik hören',
+        nature: 'Natur',
+        photography: 'Fotografieren',
+        walk: 'Spazieren',
+        word: 'Word',
+        excel: 'Excel',
+        code: 'Programmieren'
+      }
     },
     contact: {
       title: "Kontakt",
@@ -369,13 +453,55 @@ export const translations: Record<Language, TranslationSchema> = {
         school: "Okul Başarıları",
         digital: "BT ve Dijital Medya",
         hobbies: "İlgi Alanları & Hobiler"
+      },
+      items: {
+        personal: [
+          { id: 'reliability', name: 'Güvenilirlik & Dakiklik', level: 98 },
+          { id: 'teamwork', name: 'Ekip Çalışması', level: 95 },
+          { id: 'helpfulness', name: 'Yardımseverlik', level: 95 },
+          { id: 'learning', name: 'Öğrenme İsteği & Çalışkanlık', level: 90 },
+          { id: 'responsibility', name: 'Sorumluluk Bilinci', level: 85 }
+        ],
+        school: [
+          { id: 'geometry', name: 'Geometri & Çizim', level: 90 },
+          { id: 'math', name: 'Matematik & Hesaplama', level: 85 },
+          { id: 'german', name: 'Almanca (Ana Dil)', level: 100 },
+          { id: 'turkish', name: 'Türkçe (Ana Dil)', level: 100 },
+          { id: 'english', name: 'İngilizce (7. Okul Yılı)', level: 70 }
+        ],
+        digital: [
+          { id: 'word', name: 'Microsoft Word & Belgeler', level: 90 },
+          { id: 'excel', name: 'Microsoft Excel & Tablolar', level: 85 },
+          { id: 'powerpoint', name: 'Microsoft PowerPoint', level: 85 },
+          { id: 'web', name: 'HTML5 & CSS3 (Temel Düzey)', level: 65 },
+          { id: 'hardware', name: 'Bilgisayar & Donanım Bilgisi', level: 80 }
+        ],
+        hobbies: [
+          { id: 'kung-fu', name: 'Kung-Fu Sporu (Disiplin)', level: 95 },
+          { id: 'swim', name: 'Yüzme Sporu (Dayanıklılık)', level: 90 },
+          { id: 'cook', name: 'Yemek Pişirme & Tarifler', level: 80 },
+          { id: 'photography', name: 'Fotoğrafçılık & Doğa', level: 75 },
+          { id: 'media', name: 'Medya & İletişim', level: 80 }
+        ]
       }
     },
     details: {
       title: "Beceriler & Referanslar",
       languagesTitle: "Dil Becerileri",
       referencesTitle: "Referanslar",
-      interestsTitle: "İlgi Alanları & Hobiler"
+      interestsTitle: "İlgi Alanları & Hobiler",
+      interests: {
+        cook: 'Yemek Pişirme',
+        'kung-fu': 'Kung‑Fu',
+        swim: 'Yüzme',
+        music: 'Müzik dinlemek',
+        nature: 'Doğa',
+        photography: 'Fotoğrafçılık',
+        walk: 'Yürüyüş yapmak',
+        word: 'Word',
+        excel: 'Excel',
+        code: 'Programlama'
+      }
     },
     contact: {
       title: "İletişim",
@@ -488,13 +614,55 @@ export const translations: Record<Language, TranslationSchema> = {
         school: "Academic Strengths",
         digital: "IT & Digital Media",
         hobbies: "Interests & Hobbies"
+      },
+      items: {
+        personal: [
+          { id: 'reliability', name: 'Reliability & Punctuality', level: 98 },
+          { id: 'teamwork', name: 'Teamwork & Collaboration', level: 95 },
+          { id: 'helpfulness', name: 'Helpfulness', level: 95 },
+          { id: 'learning', name: 'Willingness to Learn & Diligence', level: 90 },
+          { id: 'responsibility', name: 'Sense of Responsibility', level: 85 }
+        ],
+        school: [
+          { id: 'geometry', name: 'Geometry & Drawing', level: 90 },
+          { id: 'math', name: 'Mathematics & Arithmetic', level: 85 },
+          { id: 'german', name: 'German (Native)', level: 100 },
+          { id: 'turkish', name: 'Turkish (Native)', level: 100 },
+          { id: 'english', name: 'English (7th School Year)', level: 70 }
+        ],
+        digital: [
+          { id: 'word', name: 'Microsoft Word & Documents', level: 90 },
+          { id: 'excel', name: 'Microsoft Excel & Spreadsheets', level: 85 },
+          { id: 'powerpoint', name: 'Microsoft PowerPoint', level: 85 },
+          { id: 'web', name: 'HTML5 & CSS3 (Basics)', level: 65 },
+          { id: 'hardware', name: 'PC & Hardware Understanding', level: 80 }
+        ],
+        hobbies: [
+          { id: 'kung-fu', name: 'Kung-Fu Sport (Discipline)', level: 95 },
+          { id: 'swim', name: 'Swimming (Endurance)', level: 90 },
+          { id: 'cook', name: 'Cooking & Recipes', level: 80 },
+          { id: 'photography', name: 'Photography & Nature', level: 75 },
+          { id: 'media', name: 'Media & Communication', level: 80 }
+        ]
       }
     },
     details: {
       title: "Skills & References",
       languagesTitle: "Language Skills",
       referencesTitle: "References",
-      interestsTitle: "Interests & Hobbies"
+      interestsTitle: "Interests & Hobbies",
+      interests: {
+        cook: 'Cooking',
+        'kung-fu': 'Kung‑Fu',
+        swim: 'Swimming',
+        music: 'Listening to music',
+        nature: 'Nature',
+        photography: 'Photography',
+        walk: 'Walking',
+        word: 'Word',
+        excel: 'Excel',
+        code: 'Programming'
+      }
     },
     contact: {
       title: "Contact",

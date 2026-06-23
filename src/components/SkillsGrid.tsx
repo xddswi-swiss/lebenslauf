@@ -6,6 +6,7 @@ import { motion as m } from 'framer-motion';
 import { FiUserCheck, FiBookOpen, FiMonitor, FiHeart } from 'react-icons/fi';
 
 interface Skill {
+  id: string;
   name: string;
   level: number; // 0-100 for visual indicators
 }
@@ -13,7 +14,6 @@ interface Skill {
 interface SkillCategory {
   key: 'personal' | 'school' | 'digital' | 'hobbies';
   icon: React.ReactNode;
-  skills: Skill[];
 }
 
 interface SkillsGridProps {
@@ -23,35 +23,33 @@ interface SkillsGridProps {
 export const SkillsGrid: React.FC<SkillsGridProps> = ({ selectedMatcher = null }) => {
   const { t } = useLanguage();
   
-  const isSkillMatching = (skillName: string) => {
+  const isSkillMatching = (skillId: string) => {
     if (!selectedMatcher) return true;
-    const s = skillName.toLowerCase();
+    const s = skillId.toLowerCase();
     if (selectedMatcher === 'kaufmann') {
-      return (
-        s.includes('team') ||
-        s.includes('hilfsbereit') ||
-        s.includes('verantwortung') ||
-        s.includes('deutsch') ||
-        s.includes('türkisch') ||
-        s.includes('englisch') ||
-        s.includes('word') ||
-        s.includes('excel') ||
-        s.includes('powerpoint') ||
-        s.includes('medien')
-      );
+      return [
+        'teamwork',
+        'helpfulness',
+        'responsibility',
+        'german',
+        'turkish',
+        'english',
+        'word',
+        'excel',
+        'powerpoint',
+        'media'
+      ].includes(s);
     }
     if (selectedMatcher === 'elektro') {
-      return (
-        s.includes('zuverlässig') ||
-        s.includes('lernbereit') ||
-        s.includes('verantwortung') ||
-        s.includes('geometrie') ||
-        s.includes('mathe') ||
-        s.includes('rechnen') ||
-        s.includes('hardware') ||
-        s.includes('pc') ||
-        s.includes('kung-fu')
-      );
+      return [
+        'reliability',
+        'learning',
+        'responsibility',
+        'geometry',
+        'math',
+        'hardware',
+        'kung-fu'
+      ].includes(s);
     }
     return true;
   };
@@ -60,46 +58,18 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({ selectedMatcher = null }
     {
       key: 'personal',
       icon: <FiUserCheck className="text-xl text-orange-700 dark:text-orange-400" />,
-      skills: [
-        { name: 'Zuverlässigkeit & Pünktlichkeit', level: 98 },
-        { name: 'Teamfähigkeit', level: 95 },
-        { name: 'Hilfsbereitschaft', level: 95 },
-        { name: 'Lernbereitschaft & Fleiss', level: 90 },
-        { name: 'Verantwortungsbewusstsein', level: 85 }
-      ]
     },
     {
       key: 'school',
       icon: <FiBookOpen className="text-xl text-navy-700 dark:text-navy-400" />,
-      skills: [
-        { name: 'Geometrie & Zeichnen', level: 90 },
-        { name: 'Mathematik & Rechnen', level: 85 },
-        { name: 'Deutsch (Muttersprache)', level: 100 },
-        { name: 'Türkisch (Muttersprache)', level: 100 },
-        { name: 'Englisch (7. Schuljahr)', level: 70 }
-      ]
     },
     {
       key: 'digital',
       icon: <FiMonitor className="text-xl text-green-700 dark:text-green-400" />,
-      skills: [
-        { name: 'Microsoft Word & Dokumente', level: 90 },
-        { name: 'Microsoft Excel & Tabellen', level: 85 },
-        { name: 'Microsoft PowerPoint', level: 85 },
-        { name: 'HTML5 & CSS3 (Grundlagen)', level: 65 },
-        { name: 'PC & Hardware Verständnis', level: 80 }
-      ]
     },
     {
       key: 'hobbies',
       icon: <FiHeart className="text-xl text-orange-700 dark:text-orange-400" />,
-      skills: [
-        { name: 'Kung-Fu Sport (Disziplin)', level: 95 },
-        { name: 'Schwimmsport (Ausdauer)', level: 90 },
-        { name: 'Kochen & Rezepte', level: 80 },
-        { name: 'Fotografie & Natur', level: 75 },
-        { name: 'Medien & Kommunikation', level: 80 }
-      ]
     }
   ];
 
@@ -152,8 +122,8 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({ selectedMatcher = null }
             </div>
 
             <div className="space-y-4">
-              {category.skills.map((skill, index) => {
-                const matches = isSkillMatching(skill.name);
+              {t.skills.items[category.key].map((skill, index) => {
+                const matches = isSkillMatching(skill.id);
                 return (
                   <div 
                     key={index} 

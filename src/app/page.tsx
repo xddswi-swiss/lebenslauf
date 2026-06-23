@@ -38,16 +38,16 @@ import {
 } from 'react-icons/fa';
 
 const hobbiesWithIcons = [
-  { name: 'Kochen', icon: <FaUtensils /> },
-  { name: 'Kung‑Fu', icon: <FaFistRaised /> },
-  { name: 'Schwimmen', icon: <FaSwimmer /> },
-  { name: 'Musik hören', icon: <FaMusic /> },
-  { name: 'Natur', icon: <FaLeaf /> },
-  { name: 'Fotografieren', icon: <FaCamera /> },
-  { name: 'Spazieren', icon: <FaWalking /> },
-  { name: 'Word', icon: <FaFileWord /> },
-  { name: 'Excel', icon: <FaFileExcel /> },
-  { name: 'Programmieren', icon: <FaCode /> }
+  { key: 'cook' as const, icon: <FaUtensils /> },
+  { key: 'kung-fu' as const, icon: <FaFistRaised /> },
+  { key: 'swim' as const, icon: <FaSwimmer /> },
+  { key: 'music' as const, icon: <FaMusic /> },
+  { key: 'nature' as const, icon: <FaLeaf /> },
+  { key: 'photography' as const, icon: <FaCamera /> },
+  { key: 'walk' as const, icon: <FaWalking /> },
+  { key: 'word' as const, icon: <FaFileWord /> },
+  { key: 'excel' as const, icon: <FaFileExcel /> },
+  { key: 'code' as const, icon: <FaCode /> }
 ];
 
 const getStrandsColors = (index: number) => {
@@ -141,40 +141,38 @@ const MainContent: React.FC = () => {
 
     // Count skills
     const skillsList = [
-      'Zuverlässigkeit & Pünktlichkeit', 'Teamfähigkeit', 'Hilfsbereitschaft', 'Lernbereitschaft & Fleiss', 'Verantwortungsbewusstsein',
-      'Geometrie & Zeichnen', 'Mathematik & Rechnen', 'Deutsch (Muttersprache)', 'Türkisch (Muttersprache)', 'Englisch (7. Schuljahr)',
-      'Microsoft Word & Dokumente', 'Microsoft Excel & Tabellen', 'Microsoft PowerPoint', 'HTML5 & CSS3 (Grundlagen)', 'PC & Hardware Verständnis',
-      'Kung-Fu Sport (Disziplin)', 'Schwimmsport (Ausdauer)', 'Kochen & Rezepte', 'Fotografie & Natur', 'Medien & Kommunikation'
+      'reliability', 'teamwork', 'helpfulness', 'learning', 'responsibility',
+      'geometry', 'math', 'german', 'turkish', 'english',
+      'word', 'excel', 'powerpoint', 'web', 'hardware',
+      'kung-fu', 'swim', 'cook', 'photography', 'media'
     ];
 
-    const matchesSkill = (skillName: string) => {
-      const s = skillName.toLowerCase();
+    const matchesSkill = (skillId: string) => {
+      const s = skillId.toLowerCase();
       if (selectedMatcher === 'kaufmann') {
-        return (
-          s.includes('team') ||
-          s.includes('hilfsbereit') ||
-          s.includes('verantwortung') ||
-          s.includes('deutsch') ||
-          s.includes('türkisch') ||
-          s.includes('englisch') ||
-          s.includes('word') ||
-          s.includes('excel') ||
-          s.includes('powerpoint') ||
-          s.includes('medien')
-        );
+        return [
+          'teamwork',
+          'helpfulness',
+          'responsibility',
+          'german',
+          'turkish',
+          'english',
+          'word',
+          'excel',
+          'powerpoint',
+          'media'
+        ].includes(s);
       }
       if (selectedMatcher === 'elektro') {
-        return (
-          s.includes('zuverlässig') ||
-          s.includes('lernbereit') ||
-          s.includes('verantwortung') ||
-          s.includes('geometrie') ||
-          s.includes('mathe') ||
-          s.includes('rechnen') ||
-          s.includes('hardware') ||
-          s.includes('pc') ||
-          s.includes('kung-fu')
-        );
+        return [
+          'reliability',
+          'learning',
+          'responsibility',
+          'geometry',
+          'math',
+          'hardware',
+          'kung-fu'
+        ].includes(s);
       }
       return true;
     };
@@ -598,7 +596,7 @@ const MainContent: React.FC = () => {
                   {t.details.languagesTitle}
                 </h3>
                 <div className="space-y-6">
-                  {languagesData.map((lang, idx) => (
+                  {languagesData[language].map((lang, idx) => (
                     <div key={idx} className="space-y-2">
                       <div className="flex justify-between text-sm">
                         <span className="font-semibold text-[var(--text-body)]">
@@ -638,7 +636,7 @@ const MainContent: React.FC = () => {
                         {hobby.icon}
                       </span>
                       <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[200px] group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-bold">
-                        {hobby.name}
+                        {t.details.interests[hobby.key]}
                       </span>
                     </m.div>
                   ))}
@@ -653,7 +651,7 @@ const MainContent: React.FC = () => {
                 {t.details.referencesTitle}
               </h3>
               <div className="space-y-6 flex-1 flex flex-col justify-center">
-                {referencesData.map((ref, idx) => (
+                {referencesData[language].map((ref, idx) => (
                   <div 
                     key={idx}
                     className="p-5 glass-card rounded-2xl space-y-3 hover:border-cyan-500/30 transition-all duration-300"
