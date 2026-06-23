@@ -258,8 +258,8 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               {/* Drawer Footer */}
               <div className="pt-6 border-t border-[var(--glass-border)] mt-auto space-y-6">
                 {/* Language Switcher */}
-                <div className="flex justify-center">
-                  <LanguageSwitcher />
+                <div className="flex justify-center w-full">
+                  <LanguageSwitcher inline />
                 </div>
 
                 {/* Social media shortcuts */}

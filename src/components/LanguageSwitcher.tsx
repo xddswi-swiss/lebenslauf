@@ -12,11 +12,36 @@ const languages = [
   { code: 'en' as Language, label: 'English', flag: '🇬🇧' }
 ];
 
-export const LanguageSwitcher: React.FC = () => {
+interface LanguageSwitcherProps {
+  inline?: boolean;
+}
+
+export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ inline = false }) => {
   const { language, setLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
 
   const currentLang = languages.find(lang => lang.code === language) || languages[0];
+
+  if (inline) {
+    return (
+      <div className="flex gap-1.5 rounded-2xl glass-card p-1 border border-[var(--glass-border)] w-full justify-between">
+        {languages.map((lang) => (
+          <button
+            key={lang.code}
+            onClick={() => setLanguage(lang.code)}
+            className={`flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all flex-1 cursor-pointer ${
+              language === lang.code
+                ? 'bg-primary text-white shadow-sm'
+                : 'text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-violet-600/10'
+            }`}
+          >
+            <span className="text-base">{lang.flag}</span>
+            <span>{lang.label}</span>
+          </button>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="relative">
