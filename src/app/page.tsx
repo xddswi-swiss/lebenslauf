@@ -10,12 +10,12 @@ import { ContactForm } from '@/components/ContactForm';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { RecruiterWidget } from '@/components/RecruiterWidget';
+import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import Strands from '@/components/Strands';
 import { motion as m, AnimatePresence } from 'framer-motion';
 import { 
   FiDownload, 
   FiArrowRight, 
-  FiArrowUp,
   FiGithub,
   FiInstagram,
   FiFileText,
@@ -73,7 +73,6 @@ const STATS_LETZTE_AKTUALISIERUNG = "19.06.2026"; // Son Güncelleme Tarihi
 
 const MainContent: React.FC = () => {
   const { t, language } = useLanguage();
-  const [showScrollTop, setShowScrollTop] = useState(false);
   const [randomColorIndex, setRandomColorIndex] = useState<number>(-1);
   const [selectedMatcher, setSelectedMatcher] = useState<'kaufmann' | 'elektro' | null>(null);
 
@@ -203,21 +202,7 @@ const MainContent: React.FC = () => {
   React.useEffect(() => {
     // Pick a random index once on client mount
     setRandomColorIndex(Math.floor(Math.random() * 5));
-
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowScrollTop(true);
-      } else {
-        setShowScrollTop(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <div className="min-h-screen bg-grid-mesh relative text-[var(--text-body)] bg-[var(--background)] transition-colors duration-300 flex flex-col">
@@ -689,20 +674,7 @@ const MainContent: React.FC = () => {
 
       <Footer activeColorIndex={randomColorIndex} />
       {/* Scroll to Top Button */}
-      <AnimatePresence>
-        {showScrollTop && (
-          <m.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            onClick={scrollToTop}
-            className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 p-4 rounded-full bg-primary hover:opacity-90 text-white shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300 cursor-pointer"
-            aria-label="Scroll to top"
-          >
-            <FiArrowUp className="text-xl" />
-          </m.button>
-        )}
-      </AnimatePresence>
+      <ScrollToTopButton />
       <RecruiterWidget />
     </div>
   );
