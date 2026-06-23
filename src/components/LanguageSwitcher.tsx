@@ -24,19 +24,19 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ inline = fal
 
   if (inline) {
     return (
-      <div className="flex gap-1.5 rounded-2xl glass-card p-1 border border-[var(--glass-border)] w-full justify-between">
+      <div className="flex gap-1 rounded-2xl glass-card p-1 border border-[var(--glass-border)] w-full justify-between">
         {languages.map((lang) => (
           <button
             key={lang.code}
             onClick={() => setLanguage(lang.code)}
-            className={`flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all flex-1 cursor-pointer ${
+            className={`flex items-center justify-center gap-1 px-2.5 py-2 rounded-xl text-xs font-bold transition-all flex-1 cursor-pointer ${
               language === lang.code
                 ? 'bg-primary text-white shadow-sm'
                 : 'text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-violet-600/10'
             }`}
           >
-            <span className="text-base">{lang.flag}</span>
-            <span>{lang.label}</span>
+            <span className="text-sm md:text-base">{lang.flag}</span>
+            <span>{lang.code.toUpperCase()}</span>
           </button>
         ))}
       </div>
