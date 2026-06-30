@@ -74,6 +74,41 @@ const MainContent: React.FC = () => {
   const { t, language } = useLanguage();
   const [randomColorIndex, setRandomColorIndex] = useState<number>(-1);
   const [selectedMatcher, setSelectedMatcher] = useState<'kaufmann' | 'elektro' | null>(null);
+  const [docs, setDocs] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Set initial static items immediately to prevent hydration mismatches during server rendering
+    setDocs(reportItems[language] || []);
+
+    let isMounted = true;
+    const fetchDocuments = () => {
+      fetch('/api/documents')
+        .then(res => {
+          if (res.ok) return res.json();
+          throw new Error('Failed to fetch documents');
+        })
+        .then(data => {
+          if (isMounted && data && data[language]) {
+            setDocs(data[language]);
+          }
+        })
+        .catch(err => {
+          console.warn('Fallback to static local document data:', err);
+        });
+    };
+
+    fetchDocuments();
+
+    const handleRefresh = () => {
+      fetchDocuments();
+    };
+
+    window.addEventListener('documents-updated', handleRefresh);
+    return () => {
+      isMounted = false;
+      window.removeEventListener('documents-updated', handleRefresh);
+    };
+  }, [language]);
 
   const handleMatcherClick = (type: 'kaufmann' | 'elektro') => {
     const nextVal = selectedMatcher === type ? null : type;
@@ -507,9 +542,7 @@ const MainContent: React.FC = () => {
                 }
               ];
 
-              const currentReportItems = reportItems[language] || [];
-
-              return currentReportItems.map((doc, index) => {
+              return docs.map((doc, index) => {
                 const colors = docColors[index % docColors.length];
                 return (
                   <div 

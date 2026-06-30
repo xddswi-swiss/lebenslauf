@@ -3,10 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { AdminExperienceForm } from '@/components/AdminExperienceForm';
+import { AdminDocumentForm } from '@/components/AdminDocumentForm';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
-import { FiArrowLeft, FiLock, FiUnlock, FiAlertCircle, FiChevronRight, FiBriefcase, FiLogOut } from 'react-icons/fi';
+import { FiArrowLeft, FiLock, FiUnlock, FiAlertCircle, FiChevronRight, FiBriefcase, FiLogOut, FiFileText } from 'react-icons/fi';
 import Link from 'next/link';
 
 export default function AdminPage() {
@@ -28,7 +29,8 @@ export default function AdminPage() {
       passError: "Falsches Passwort!",
       logout: "Abmelden",
       menuTitle: "Menü / Sektionen",
-      tabExperiences: "Neue Schnupperlehre"
+      tabExperiences: "Neue Schnupperlehre",
+      tabDocuments: "Bewerbungsunterlagen"
     },
     tr: {
       back: "Ana Sayfaya Dön",
@@ -41,7 +43,8 @@ export default function AdminPage() {
       passError: "Yanlış Şifre!",
       logout: "Çıkış Yap",
       menuTitle: "Menü / Bölümler",
-      tabExperiences: "Yeni Deneyim Ekle"
+      tabExperiences: "Yeni Deneyim Ekle",
+      tabDocuments: "Başvuru Belgeleri"
     },
     en: {
       back: "Back to Home",
@@ -54,7 +57,8 @@ export default function AdminPage() {
       passError: "Incorrect Passcode!",
       logout: "Logout",
       menuTitle: "Menu / Sections",
-      tabExperiences: "Add New Experience"
+      tabExperiences: "Add New Experience",
+      tabDocuments: "Application Docs"
     }
   };
 
@@ -193,21 +197,34 @@ export default function AdminPage() {
                     </span>
                     <FiChevronRight className={`text-base transition-transform ${activeTab === 'experiences' ? 'rotate-90' : ''}`} />
                   </button>
-                  
-                  {/* Future tabs placeholder */}
-                  <div className="border-t border-[var(--glass-border)]/50 pt-3 mt-3 px-3">
-                    <p className="text-[10px] text-left text-[var(--text-muted)] font-medium italic">
-                      * Weitere Sektionen (Projekte, Skills etc.) können in Zukunft einfach hier hinzugefügt werden.
-                    </p>
-                  </div>
+
+                  <button
+                    onClick={() => setActiveTab('documents')}
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all cursor-pointer ${
+                      activeTab === 'documents'
+                        ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]'
+                        : 'hover:bg-zinc-800/10 text-[var(--text-body)]'
+                    }`}
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <FiFileText className="text-base" />
+                      <span>{activeT.tabDocuments}</span>
+                    </span>
+                    <FiChevronRight className={`text-base transition-transform ${activeTab === 'documents' ? 'rotate-90' : ''}`} />
+                  </button>
                 </div>
               </div>
 
               {/* Right Content Area */}
               <div className="lg:col-span-8 glass-card rounded-3xl p-6 md:p-8 border border-[var(--glass-border)] bg-[var(--glass-card-bg)] min-h-[450px]">
                 {activeTab === 'experiences' && (
-                  <div className="space-y-6">
+                  <div className="space-y-6 animate-fade-in">
                     <AdminExperienceForm forceOpen={true} />
+                  </div>
+                )}
+                {activeTab === 'documents' && (
+                  <div className="space-y-6 animate-fade-in">
+                    <AdminDocumentForm />
                   </div>
                 )}
               </div>
