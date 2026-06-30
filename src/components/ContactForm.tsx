@@ -127,7 +127,7 @@ export const ContactForm: React.FC = () => {
               value={formData.name}
               onChange={handleChange}
               disabled={status === 'sending'}
-              className="w-full px-4 py-3 bg-[var(--background)] border border-[var(--glass-border)] rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
+              className="w-full px-4 py-3 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
             />
           </div>
 
@@ -143,7 +143,7 @@ export const ContactForm: React.FC = () => {
               value={formData.email}
               onChange={handleChange}
               disabled={status === 'sending'}
-              className="w-full px-4 py-3 bg-[var(--background)] border border-[var(--glass-border)] rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
+              className="w-full px-4 py-3 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
             />
           </div>
 
@@ -159,7 +159,7 @@ export const ContactForm: React.FC = () => {
               value={formData.message}
               onChange={handleChange}
               disabled={status === 'sending'}
-              className="w-full px-4 py-3 bg-[var(--background)] border border-[var(--glass-border)] rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50 resize-none"
+              className="w-full px-4 py-3 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50 resize-none"
             />
           </div>
 
@@ -179,7 +179,7 @@ export const ContactForm: React.FC = () => {
                 setCaptchaError(false);
               }}
               disabled={status === 'sending'}
-              className="w-full px-4 py-3 bg-[var(--background)] border border-[var(--glass-border)] rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
+              className="w-full px-4 py-3 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
             />
             {captchaError && (
               <p className="text-xs text-rose-400 font-bold mt-1">
