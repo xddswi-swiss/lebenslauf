@@ -167,39 +167,65 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
         .filter(t => t.length > 0);
     };
 
-    const fallbackRole = roles.de.trim() || roles.tr.trim() || roles.en.trim();
-    const finalDeRole = roles.de.trim() || fallbackRole;
-    const finalTrRole = roles.tr.trim() || fallbackRole;
-    const finalEnRole = roles.en.trim() || fallbackRole;
-
-    const fallbackTasksText = tasksText.de.trim() || tasksText.tr.trim() || tasksText.en.trim();
-    const finalDeTasksText = tasksText.de.trim() || fallbackTasksText;
-    const finalTrTasksText = tasksText.tr.trim() || fallbackTasksText;
-    const finalEnTasksText = tasksText.en.trim() || fallbackTasksText;
-
-    const payload = {
-      passcode,
-      type,
-      company,
-      city,
-      period,
-      de: {
-        role: finalDeRole,
-        tasks: parseTasks(finalDeTasksText)
-      },
-      tr: {
-        role: finalTrRole,
-        tasks: parseTasks(finalTrTasksText)
-      },
-      en: {
-        role: finalEnRole,
-        tasks: parseTasks(finalEnTasksText)
-      },
-      pdfFile,
-      logoFile
+    const translateText = async (text: string, from: string, to: string): Promise<string> => {
+      if (!text.trim()) return '';
+      try {
+        const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`);
+        if (res.ok) {
+          const data = await res.json();
+          return data[0].map((x: any) => x[0]).join('');
+        }
+      } catch (err) {
+        console.error(`Translation error from ${from} to ${to}:`, err);
+      }
+      return text;
     };
 
+    // Determine source language based on which one has input
+    let srcLang = 'de';
+    if (roles.de.trim() || tasksText.de.trim()) {
+      srcLang = 'de';
+    } else if (roles.tr.trim() || tasksText.tr.trim()) {
+      srcLang = 'tr';
+    } else if (roles.en.trim() || tasksText.en.trim()) {
+      srcLang = 'en';
+    }
+
+    const srcRole = roles[srcLang as 'de' | 'tr' | 'en'].trim();
+    const srcTasks = tasksText[srcLang as 'de' | 'tr' | 'en'].trim();
+
     try {
+      const [finalDeRole, finalTrRole, finalEnRole, finalDeTasksText, finalTrTasksText, finalEnTasksText] = await Promise.all([
+        roles.de.trim() ? Promise.resolve(roles.de.trim()) : translateText(srcRole, srcLang, 'de'),
+        roles.tr.trim() ? Promise.resolve(roles.tr.trim()) : translateText(srcRole, srcLang, 'tr'),
+        roles.en.trim() ? Promise.resolve(roles.en.trim()) : translateText(srcRole, srcLang, 'en'),
+        tasksText.de.trim() ? Promise.resolve(tasksText.de.trim()) : translateText(srcTasks, srcLang, 'de'),
+        tasksText.tr.trim() ? Promise.resolve(tasksText.tr.trim()) : translateText(srcTasks, srcLang, 'tr'),
+        tasksText.en.trim() ? Promise.resolve(tasksText.en.trim()) : translateText(srcTasks, srcLang, 'en')
+      ]);
+
+      const payload = {
+        passcode,
+        type,
+        company,
+        city,
+        period,
+        de: {
+          role: finalDeRole,
+          tasks: parseTasks(finalDeTasksText)
+        },
+        tr: {
+          role: finalTrRole,
+          tasks: parseTasks(finalTrTasksText)
+        },
+        en: {
+          role: finalEnRole,
+          tasks: parseTasks(finalEnTasksText)
+        },
+        pdfFile,
+        logoFile
+      };
+
       const response = await fetch('/api/experiences', {
         method: 'POST',
         headers: {
