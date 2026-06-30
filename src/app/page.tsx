@@ -847,18 +847,17 @@ const PageLoader: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
 };
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const isLighthouse = navigator.userAgent.includes('Lighthouse') || navigator.userAgent.includes('Chrome-Lighthouse');
-      const hasVisited = sessionStorage.getItem('portfolio_visited') === 'true';
-      return !isLighthouse && !hasVisited;
-    }
-    return true;
-  });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      sessionStorage.setItem('portfolio_visited', 'true');
+      const isLighthouse = navigator.userAgent.includes('Lighthouse') || navigator.userAgent.includes('Chrome-Lighthouse');
+      const hasVisited = sessionStorage.getItem('portfolio_visited') === 'true';
+      if (isLighthouse || hasVisited) {
+        setIsLoading(false);
+      } else {
+        sessionStorage.setItem('portfolio_visited', 'true');
+      }
     }
   }, []);
 

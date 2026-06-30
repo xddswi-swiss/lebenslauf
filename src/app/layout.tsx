@@ -4,7 +4,7 @@ import "./globals.css";
 import "./bw-mode.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
-import Script from "next/script";
+import { ThemeInitializer } from "@/components/ThemeInitializer";
 
 const robotoFlex = Roboto_Flex({
   variable: "--font-sans",
@@ -40,31 +40,9 @@ export default function RootLayout({
       className={`${robotoFlex.variable} ${ptSerif.variable} h-full antialiased bw-mode`}
       suppressHydrationWarning
     >
-      <head>
-        {typeof window === 'undefined' && (
-          <script
-            id="theme-initializer"
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function() {
-                  var bw = localStorage.getItem('bw-mode');
-                  if (bw === 'false') {
-                    document.documentElement.classList.remove('bw-mode');
-                  } else {
-                    document.documentElement.classList.add('bw-mode');
-                  }
-                })();
-
-                // Prevent pinch-to-zoom on mobile devices (e.g. iOS Safari)
-                document.addEventListener('gesturestart', function(e) {
-                  e.preventDefault();
-                });
-              `,
-            }}
-          />
-        )}
-      </head>
+      <head />
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <ThemeInitializer />
         <ThemeProvider>
           <LanguageProvider>
             {children}
