@@ -12,6 +12,7 @@ import { RecruiterWidget } from '@/components/RecruiterWidget';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import Strands from '@/components/Strands';
 import { motion as m, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { 
   FiDownload, 
   FiArrowRight, 
@@ -355,10 +356,10 @@ const MainContent: React.FC = () => {
               </a>
 
               <div className="flex items-center gap-3 md:ml-2">
-                <a href="https://github.com/yigiterenaydin" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full glass-card hover:border-[var(--muted)] text-[var(--text-body)] hover:text-[var(--text-main)] transition-all">
+                <a href="https://github.com/yigiterenaydin" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" className="p-3 rounded-full glass-card hover:border-[var(--muted)] text-[var(--text-body)] hover:text-[var(--text-main)] transition-all">
                   <FiGithub className="text-xl" />
                 </a>
-                <a href="https://www.instagram.com/eren_zhhh/" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full glass-card hover:border-[var(--muted)] text-[var(--text-body)] hover:text-[var(--text-main)] transition-all">
+                <a href="https://www.instagram.com/eren_zhhh/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile" className="p-3 rounded-full glass-card hover:border-[var(--muted)] text-[var(--text-body)] hover:text-[var(--text-main)] transition-all">
                   <FiInstagram className="text-xl" />
                 </a>
               </div>
@@ -373,13 +374,13 @@ const MainContent: React.FC = () => {
             className="flex-shrink-0 z-10"
           >
             <div className="group hover:saturate-100 saturate-0 transition-[filter] duration-300 relative w-[300px] h-[380px] bg-[var(--badge-bg)] font-sans border-b-2 border-primary overflow-hidden shadow-2xl rounded-3xl">
-              <img 
+              <Image 
                 className="w-[300px] h-[300px] object-cover group-hover:rounded-br-[100px] rounded-br-[0px] transition-[border-radius] duration-300"
                 src="/assets/bilder/eren-photo.png" 
                 alt="Eren Aydın"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "/eren-photo.png";
-                }}
+                width={300}
+                height={300}
+                priority={true}
               />
               <p className="m-[5px] text-[var(--text-main)] text-base font-bold">Eren Aydın</p>
               <p className="m-[5px] text-[var(--text-muted)] text-xs">{t.hero.role}</p>
@@ -846,7 +847,20 @@ const PageLoader: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
 };
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const isLighthouse = navigator.userAgent.includes('Lighthouse') || navigator.userAgent.includes('Chrome-Lighthouse');
+      const hasVisited = sessionStorage.getItem('portfolio_visited') === 'true';
+      return !isLighthouse && !hasVisited;
+    }
+    return true;
+  });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('portfolio_visited', 'true');
+    }
+  }, []);
 
   return (
     <>

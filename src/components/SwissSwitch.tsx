@@ -71,6 +71,15 @@ export const SwissSwitch: React.FC = () => {
       {/* Switch Plate */}
       <div 
         onClick={handleToggle}
+        role="button"
+        tabIndex={0}
+        aria-label="Toggle Color Mode"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleToggle();
+          }
+        }}
         className={`w-10 h-14 border flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-105 active:scale-98 relative ${
           bwMode
             ? 'bg-white border-2 border-black shadow-none rounded-[4px]'
