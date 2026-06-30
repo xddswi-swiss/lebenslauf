@@ -106,14 +106,21 @@ export const AdminDocumentForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!deTerm || !date || !pdfFile) {
-      setErrorMsg(language === 'tr' ? 'Lütfen tüm zorunlu (*) alanları doldurun!' : 'Bitte füllen Sie alle Pflichtfelder (*) aus!');
+
+    const fallbackTitle = deTerm.trim() || trTerm.trim() || enTerm.trim();
+
+    if (!fallbackTitle || !date || !pdfFile) {
+      setErrorMsg(language === 'tr' ? 'Lütfen en az bir Başlık, Tarih ve PDF dosyası girin!' : 'Bitte geben Sie mindestens einen Titel, ein Datum und eine PDF-Datei an!');
       return;
     }
 
     setIsLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
+
+    const finalDeTerm = deTerm.trim() || fallbackTitle;
+    const finalTrTerm = trTerm.trim() || fallbackTitle;
+    const finalEnTerm = enTerm.trim() || fallbackTitle;
 
     const passcode = localStorage.getItem('admin_passcode') || 'eren2026';
 
@@ -123,9 +130,9 @@ export const AdminDocumentForm: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           passcode,
-          deTerm,
-          trTerm,
-          enTerm,
+          deTerm: finalDeTerm,
+          trTerm: finalTrTerm,
+          enTerm: finalEnTerm,
           date,
           pdfFile
         })

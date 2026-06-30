@@ -167,6 +167,16 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
         .filter(t => t.length > 0);
     };
 
+    const fallbackRole = roles.de.trim() || roles.tr.trim() || roles.en.trim();
+    const finalDeRole = roles.de.trim() || fallbackRole;
+    const finalTrRole = roles.tr.trim() || fallbackRole;
+    const finalEnRole = roles.en.trim() || fallbackRole;
+
+    const fallbackTasksText = tasksText.de.trim() || tasksText.tr.trim() || tasksText.en.trim();
+    const finalDeTasksText = tasksText.de.trim() || fallbackTasksText;
+    const finalTrTasksText = tasksText.tr.trim() || fallbackTasksText;
+    const finalEnTasksText = tasksText.en.trim() || fallbackTasksText;
+
     const payload = {
       passcode,
       type,
@@ -174,16 +184,16 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
       city,
       period,
       de: {
-        role: roles.de,
-        tasks: parseTasks(tasksText.de)
+        role: finalDeRole,
+        tasks: parseTasks(finalDeTasksText)
       },
       tr: {
-        role: roles.tr,
-        tasks: parseTasks(tasksText.tr)
+        role: finalTrRole,
+        tasks: parseTasks(finalTrTasksText)
       },
       en: {
-        role: roles.en,
-        tasks: parseTasks(tasksText.en)
+        role: finalEnRole,
+        tasks: parseTasks(finalEnTasksText)
       },
       pdfFile,
       logoFile
