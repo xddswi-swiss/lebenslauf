@@ -29,11 +29,6 @@
       "term": "Berufswahlanalyse Zertifikat",
       "date": "2025",
       "file": "/assets/pdfs/Berufswahlanalyse_Zertifikat.pdf"
-    },
-    {
-      "term": "ingilizce  karnem",
-      "date": "2026",
-      "file": "/assets/pdfs/ingilizce-karnem.pdf"
     }
   ],
   "tr": [
@@ -66,11 +61,6 @@
       "term": "Meslek Seçim Analizi Sertifikası",
       "date": "2025",
       "file": "/assets/pdfs/Berufswahlanalyse_Zertifikat.pdf"
-    },
-    {
-      "term": "ingilizce  karnem",
-      "date": "2026",
-      "file": "/assets/pdfs/ingilizce-karnem.pdf"
     }
   ],
   "en": [
@@ -103,11 +93,6 @@
       "term": "Career Choice Analysis Certificate",
       "date": "2025",
       "file": "/assets/pdfs/Berufswahlanalyse_Zertifikat.pdf"
-    },
-    {
-      "term": "ingilizce  karnem",
-      "date": "2026",
-      "file": "/assets/pdfs/ingilizce-karnem.pdf"
     }
   ]
 }

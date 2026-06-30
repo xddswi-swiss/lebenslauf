@@ -41,6 +41,7 @@ export default function RootLayout({
     >
       <head>
         <script
+          id="theme-initializer"
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
