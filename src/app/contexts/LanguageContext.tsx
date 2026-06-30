@@ -19,16 +19,6 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const savedLang = localStorage.getItem('preferred-language') as Language;
     if (savedLang && (savedLang === 'de' || savedLang === 'tr' || savedLang === 'en')) {
       setLanguageState(savedLang);
-    } else {
-      // Try to detect browser language
-      const browserLang = navigator.language.slice(0, 2);
-      if (browserLang === 'tr') {
-        setLanguageState('tr');
-      } else if (browserLang === 'de') {
-        setLanguageState('de');
-      } else {
-        setLanguageState('en');
-      }
     }
   }, []);
 
