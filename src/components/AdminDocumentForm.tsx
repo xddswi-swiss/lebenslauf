@@ -118,13 +118,41 @@ export const AdminDocumentForm: React.FC = () => {
     setErrorMsg('');
     setSuccessMsg('');
 
-    const finalDeTerm = deTerm.trim() || fallbackTitle;
-    const finalTrTerm = trTerm.trim() || fallbackTitle;
-    const finalEnTerm = enTerm.trim() || fallbackTitle;
+    const translateText = async (text: string, from: string, to: string): Promise<string> => {
+      if (!text.trim()) return '';
+      try {
+        const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`);
+        if (res.ok) {
+          const data = await res.json();
+          return data[0].map((x: any) => x[0]).join('');
+        }
+      } catch (err) {
+        console.error(`Translation error from ${from} to ${to}:`, err);
+      }
+      return text;
+    };
 
-    const passcode = localStorage.getItem('admin_passcode') || 'eren2026';
+    // Determine source language
+    let srcLang = 'de';
+    if (deTerm.trim()) {
+      srcLang = 'de';
+    } else if (trTerm.trim()) {
+      srcLang = 'tr';
+    } else if (enTerm.trim()) {
+      srcLang = 'en';
+    }
+
+    const srcTitle = deTerm.trim() || trTerm.trim() || enTerm.trim();
 
     try {
+      const [finalDeTerm, finalTrTerm, finalEnTerm] = await Promise.all([
+        deTerm.trim() ? Promise.resolve(deTerm.trim()) : translateText(srcTitle, srcLang, 'de'),
+        trTerm.trim() ? Promise.resolve(trTerm.trim()) : translateText(srcTitle, srcLang, 'tr'),
+        enTerm.trim() ? Promise.resolve(enTerm.trim()) : translateText(srcTitle, srcLang, 'en')
+      ]);
+
+      const passcode = localStorage.getItem('admin_passcode') || 'eren2026';
+
       const response = await fetch('/api/documents', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
