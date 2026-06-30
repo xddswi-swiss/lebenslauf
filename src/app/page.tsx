@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from './contexts/LanguageContext';
 import { useTheme } from './contexts/ThemeContext';
 import { Timeline } from '@/components/Timeline';
-import { AdminExperienceForm } from '@/components/AdminExperienceForm';
 import { SkillsGrid } from '@/components/SkillsGrid';
 import { ContactForm } from '@/components/ContactForm';
 import { Header } from '@/components/Header';
@@ -555,7 +554,6 @@ const MainContent: React.FC = () => {
             </h2>
           </div>
           <Timeline selectedMatcher={selectedMatcher} />
-          <AdminExperienceForm />
         </section>
 
         {/* Skills Section */}

@@ -20,9 +20,9 @@ interface FileData {
   base64: string;
 }
 
-export const AdminExperienceForm: React.FC = () => {
+export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOpen = false }) => {
   const { language } = useLanguage();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(forceOpen);
   const [passcode, setPasscode] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [passcodeError, setPasscodeError] = useState('');
@@ -58,7 +58,7 @@ export const AdminExperienceForm: React.FC = () => {
         const isUnlockedLocally = localStorage.getItem('admin_unlocked') === 'true';
         setIsUnlocked(isUnlockedLocally);
         if (!isUnlockedLocally) {
-          setIsOpen(false);
+          setIsOpen(forceOpen);
           setPasscode('');
           setPasscodeError('');
         } else {
@@ -73,7 +73,7 @@ export const AdminExperienceForm: React.FC = () => {
     return () => {
       window.removeEventListener('admin-state-changed', checkAdmin);
     };
-  }, []);
+  }, [forceOpen]);
 
   const handlePasscodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -327,26 +327,28 @@ export const AdminExperienceForm: React.FC = () => {
   return (
     <div className="w-full max-w-4xl mx-auto mt-10">
       {/* Toggle Button */}
-      <div className="flex justify-center">
-        <button
-          onClick={() => {
-            const nextOpen = !isOpen;
-            setIsOpen(nextOpen);
-            if (!nextOpen) {
-              setPasscode('');
-              setIsUnlocked(false);
-              setPasscodeError('');
-              localStorage.removeItem('admin_unlocked');
-              localStorage.removeItem('admin_passcode');
-              window.dispatchEvent(new Event('admin-state-changed'));
-            }
-          }}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold border border-[var(--glass-border)] bg-zinc-900/10 hover:bg-zinc-800/20 text-[var(--text-body)] hover:text-[var(--text-main)] transition-all cursor-pointer shadow-sm active:scale-95"
-        >
-          {isUnlocked ? <FiUnlock className="text-sm" /> : <FiLock className="text-sm" />}
-          {isOpen ? t.btnClose : t.btnOpen}
-        </button>
-      </div>
+      {!forceOpen && (
+        <div className="flex justify-center">
+          <button
+            onClick={() => {
+              const nextOpen = !isOpen;
+              setIsOpen(nextOpen);
+              if (!nextOpen) {
+                setPasscode('');
+                setIsUnlocked(false);
+                setPasscodeError('');
+                localStorage.removeItem('admin_unlocked');
+                localStorage.removeItem('admin_passcode');
+                window.dispatchEvent(new Event('admin-state-changed'));
+              }
+            }}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold border border-[var(--glass-border)] bg-zinc-900/10 hover:bg-zinc-800/20 text-[var(--text-body)] hover:text-[var(--text-main)] transition-all cursor-pointer shadow-sm active:scale-95"
+          >
+            {isUnlocked ? <FiUnlock className="text-sm" /> : <FiLock className="text-sm" />}
+            {isOpen ? t.btnClose : t.btnOpen}
+          </button>
+        </div>
+      )}
 
       <AnimatePresence>
         {isOpen && (

@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/app/contexts/LanguageContext';
 import { useTheme } from '@/app/contexts/ThemeContext';
-import { FiDownload, FiInstagram, FiGithub, FiMail } from 'react-icons/fi';
+import { FiDownload, FiInstagram, FiGithub, FiMail, FiLock } from 'react-icons/fi';
+import Link from 'next/link';
 
 // --- MANUEL DEĞİŞTİREBİLECEĞİNİZ İLETİŞİM / SOSYAL MEDYA LİNKLERİ ---
 const LINK_GITHUB = "https://github.com/yigiterenaydin";
@@ -187,8 +188,11 @@ export const Footer: React.FC<FooterProps> = ({ activeColorIndex }) => {
         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-black text-lg shadow-lg shadow-primary/20 hover:scale-110 transition-transform duration-300 cursor-default">
           E
         </div>
-        <p className="text-xs">
+        <p className="text-xs flex items-center gap-1.5 justify-center">
           &copy; {new Date().getFullYear()} EREN AYDIN. {t.footer.rightsReserved}
+          <Link href="/admin" className="opacity-20 hover:opacity-100 hover:text-primary transition-opacity ml-1 cursor-pointer" aria-label="Admin Login">
+            <FiLock className="w-3 h-3" />
+          </Link>
         </p>
       </div>
     </footer>
