@@ -40,28 +40,31 @@ export default function RootLayout({
       className={`${robotoFlex.variable} ${ptSerif.variable} h-full antialiased bw-mode`}
       suppressHydrationWarning
     >
-      <head />
-      <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <Script
-          id="theme-initializer"
-          strategy="beforeInteractive"
-        >
-          {`
-            (function() {
-              var bw = localStorage.getItem('bw-mode');
-              if (bw === 'false') {
-                document.documentElement.classList.remove('bw-mode');
-              } else {
-                document.documentElement.classList.add('bw-mode');
-              }
-            })();
+      <head>
+        {typeof window === 'undefined' && (
+          <script
+            id="theme-initializer"
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function() {
+                  var bw = localStorage.getItem('bw-mode');
+                  if (bw === 'false') {
+                    document.documentElement.classList.remove('bw-mode');
+                  } else {
+                    document.documentElement.classList.add('bw-mode');
+                  }
+                })();
 
-            // Prevent pinch-to-zoom on mobile devices (e.g. iOS Safari)
-            document.addEventListener('gesturestart', function(e) {
-              e.preventDefault();
-            });
-          `}
-        </Script>
+                // Prevent pinch-to-zoom on mobile devices (e.g. iOS Safari)
+                document.addEventListener('gesturestart', function(e) {
+                  e.preventDefault();
+                });
+              `,
+            }}
+          />
+        )}
+      </head>
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <ThemeProvider>
           <LanguageProvider>
             {children}
