@@ -242,10 +242,10 @@ body {
 .header-glass-gradient {
   background: linear-gradient(
     to right,
-    rgba(255, 249, 233, 0.96) 0%,
-    rgba(255, 249, 233, 0.90) 50%,
-    rgba(212, 86, 0, 0.04) 80%,
-    rgba(90, 129, 0, 0.06) 100%
+    rgba(255, 249, 233, 0.98) 0%,
+    rgba(255, 249, 233, 0.95) 50%,
+    rgba(212, 86, 0, 0.80) 80%,
+    rgba(90, 129, 0, 0.75) 100%
   );
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -256,10 +256,10 @@ body {
 :root.dark .header-glass-gradient {
   background: linear-gradient(
     to right,
-    rgba(3, 3, 3, 0.96) 0%,
-    rgba(3, 3, 3, 0.90) 50%,
-    rgba(104, 2, 15, 0.12) 80%,
-    rgba(242, 17, 55, 0.15) 100%
+    rgba(3, 3, 3, 0.98) 0%,
+    rgba(3, 3, 3, 0.95) 50%,
+    rgba(104, 2, 15, 0.80) 80%,
+    rgba(242, 17, 55, 0.75) 100%
   );
 }
 
