@@ -200,3 +200,95 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: `Internal Server Error: ${error.message}` }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const body = await request.json();
+    const { passcode, term } = body;
+
+    // Validate passcode
+    if (passcode !== 'eren2026') {
+      return NextResponse.json({ error: 'Falsches Passwort / Yanlış Şifre / Incorrect Password' }, { status: 401 });
+    }
+
+    if (!term) {
+      return NextResponse.json({ error: 'Missing term' }, { status: 400 });
+    }
+
+    const jsonPath = path.join(process.cwd(), 'src', 'data', 'documents.json');
+    let currentData: any = { de: [], tr: [], en: [] };
+
+    try {
+      const fileContent = await fs.readFile(jsonPath, 'utf8');
+      currentData = JSON.parse(fileContent);
+    } catch (e) {
+      currentData = JSON.parse(JSON.stringify(documentsData));
+    }
+
+    const cleanTerm = term.toLowerCase().trim();
+    const deIndex = (currentData.de || []).findIndex((item: any) => item.term.toLowerCase().trim() === cleanTerm);
+    const trIndex = (currentData.tr || []).findIndex((item: any) => item.term.toLowerCase().trim() === cleanTerm);
+    const enIndex = (currentData.en || []).findIndex((item: any) => item.term.toLowerCase().trim() === cleanTerm);
+
+    const indexToDelete = deIndex !== -1 ? deIndex : trIndex !== -1 ? trIndex : enIndex;
+
+    if (indexToDelete === -1) {
+      return NextResponse.json({ error: 'Document not found' }, { status: 404 });
+    }
+
+    // Filter out by index to preserve translation alignment
+    const updatedData = {
+      de: (currentData.de || []).filter((_: any, idx: number) => idx !== indexToDelete),
+      tr: (currentData.tr || []).filter((_: any, idx: number) => idx !== indexToDelete),
+      en: (currentData.en || []).filter((_: any, idx: number) => idx !== indexToDelete)
+    };
+
+    let readOnly = false;
+    let writeError = '';
+
+    try {
+      await fs.writeFile(jsonPath, JSON.stringify(updatedData, null, 2), 'utf8');
+    } catch (err: any) {
+      console.error('Error writing documents.json in DELETE:', err);
+      writeError = err.message;
+      readOnly = true;
+    }
+
+    if (readOnly) {
+      const token = process.env.GITHUB_TOKEN;
+      if (token) {
+        try {
+          const jsonBase64 = Buffer.from(JSON.stringify(updatedData, null, 2), 'utf8').toString('base64');
+          await saveToGitHub('src/data/documents.json', jsonBase64, `Delete document: ${term} via Admin Panel`);
+
+          return NextResponse.json({
+            success: true,
+            githubSync: true,
+            message: 'Successfully deleted via GitHub. Site rebuilding...',
+            data: updatedData
+          });
+        } catch (gitErr: any) {
+          console.error('Error syncing DELETE with GitHub API:', gitErr);
+          writeError = `GitHub sync failed: ${gitErr.message}`;
+        }
+      }
+
+      return NextResponse.json({
+        success: false,
+        readOnly: true,
+        message: 'Hosting environment is read-only. GITHUB_TOKEN environment variable is missing or GitHub write failed.',
+        error: writeError,
+        jsonBackup: updatedData
+      });
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'Successfully Deleted',
+      data: updatedData
+    });
+  } catch (error: any) {
+    console.error('API DELETE Error for documents:', error);
+    return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+  }
+}

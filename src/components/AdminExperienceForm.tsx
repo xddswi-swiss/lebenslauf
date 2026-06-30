@@ -268,11 +268,6 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
           }
         }));
 
-        // Automatically log out admin for security and cleaner flow
-        localStorage.removeItem('admin_unlocked');
-        localStorage.removeItem('admin_passcode');
-        window.dispatchEvent(new Event('admin-state-changed'));
-
         alert(successAlertMsg[language as 'de' | 'tr' | 'en'] || successAlertMsg.tr);
       }
     } catch (err: any) {

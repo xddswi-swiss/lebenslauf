@@ -20,7 +20,8 @@ import {
   FiFileText,
   FiZap,
   FiX,
-  FiBriefcase
+  FiBriefcase,
+  FiTrash2
 } from 'react-icons/fi';
 import { reportItems, languagesData, referencesData, experienceItems } from '@/data/translations';
 import { 
@@ -75,6 +76,7 @@ const MainContent: React.FC = () => {
   const [randomColorIndex, setRandomColorIndex] = useState<number>(-1);
   const [selectedMatcher, setSelectedMatcher] = useState<'kaufmann' | 'elektro' | null>(null);
   const [docs, setDocs] = useState<any[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     // Set initial static items immediately to prevent hydration mismatches during server rendering
@@ -103,12 +105,50 @@ const MainContent: React.FC = () => {
       fetchDocuments();
     };
 
+    const checkAdmin = () => {
+      if (typeof window !== 'undefined') {
+        setIsAdmin(localStorage.getItem('admin_unlocked') === 'true');
+      }
+    };
+    checkAdmin();
+
     window.addEventListener('documents-updated', handleRefresh);
+    window.addEventListener('admin-state-changed', checkAdmin);
     return () => {
       isMounted = false;
       window.removeEventListener('documents-updated', handleRefresh);
+      window.removeEventListener('admin-state-changed', checkAdmin);
     };
   }, [language]);
+
+  const handleDeleteDocument = async (term: string) => {
+    const confirmMsg = {
+      de: `Sind Sie sicher, dass Sie das Dokument "${term}" löschen möchten?`,
+      tr: `"${term}" belgesini silmek istediğinize emin misiniz?`,
+      en: `Are you sure you want to delete the document "${term}"?`
+    };
+    const msg = confirmMsg[language as 'de' | 'tr' | 'en'] || confirmMsg.de;
+    if (!window.confirm(msg)) return;
+
+    try {
+      const passcode = localStorage.getItem('admin_passcode') || 'eren2026';
+      const response = await fetch('/api/documents', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ passcode, term })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        window.dispatchEvent(new Event('documents-updated'));
+      } else {
+        alert(data.error || 'Delete failed');
+      }
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || 'Error occurred');
+    }
+  };
 
   const handleMatcherClick = (type: 'kaufmann' | 'elektro') => {
     const nextVal = selectedMatcher === type ? null : type;
@@ -562,16 +602,27 @@ const MainContent: React.FC = () => {
                       </div>
                     </div>
 
-                    <a 
-                      href={doc.file}
-                      download
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`w-full mt-4 flex items-center justify-center gap-2 py-2.5 rounded-xl border ${colors.button} text-sm font-semibold transition-all cursor-pointer`}
-                    >
-                      <FiDownload className="text-xs" />
-                      {t.documents.download}
-                    </a>
+                    <div className="flex gap-2 items-center w-full mt-4">
+                      <a 
+                        href={doc.file}
+                        download
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border ${colors.button} text-sm font-semibold transition-all cursor-pointer`}
+                      >
+                        <FiDownload className="text-xs" />
+                        {t.documents.download}
+                      </a>
+                      {isAdmin && (
+                        <button
+                          onClick={() => handleDeleteDocument(doc.term)}
+                          title="Löschen / Sil / Delete"
+                          className="p-2.5 rounded-xl border border-red-500/20 hover:border-red-500 bg-red-500/5 hover:bg-red-500 text-red-500 hover:text-white transition-all cursor-pointer active:scale-95"
+                        >
+                          <FiTrash2 className="text-sm" />
+                        </button>
+                      )}
+                    </div>
                   </div>
                 );
               });
