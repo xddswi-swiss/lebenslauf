@@ -221,7 +221,6 @@ export const AdminDocumentForm: React.FC = () => {
             <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.lblDeTitle}</label>
             <input
               type="text"
-              required
               value={deTerm}
               onChange={(e) => setDeTerm(e.target.value)}
               className="w-full px-4 py-3 rounded-xl bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all"
