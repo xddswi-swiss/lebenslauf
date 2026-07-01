@@ -395,6 +395,9 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
           en: 'New entry successfully added! 🎉'
         };
         
+        setSuccessMsg(successAlertMsg[language as 'de' | 'tr' | 'en'] || successAlertMsg.tr);
+        setTimeout(() => setSuccessMsg(''), 5000);
+
         resetForm();
         fetchExperiences();
         
@@ -405,8 +408,6 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
             data: result.data || result.jsonBackup
           }
         }));
-
-        alert(successAlertMsg[language as 'de' | 'tr' | 'en'] || successAlertMsg.tr);
       }
     } catch (err: any) {
       console.error(err);
