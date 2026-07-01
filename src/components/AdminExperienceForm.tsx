@@ -177,8 +177,8 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
     setTasksText(prev => ({ ...prev, [activeTab]: val }));
   };
 
-  const handleAutoTranslateRole = async () => {
-    const textToTranslate = roles[activeTab];
+  const handleAutoTranslateRole = async (sourceLang: 'de' | 'tr' | 'en') => {
+    const textToTranslate = roles[sourceLang];
     if (!textToTranslate.trim()) return;
 
     setIsLoading(true);
@@ -201,8 +201,8 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
 
       const targets: ('de' | 'tr' | 'en')[] = ['de', 'tr', 'en'];
       const promises = targets.map(async (lang) => {
-        if (lang === activeTab) return;
-        const translated = await translateText(textToTranslate, activeTab, lang);
+        if (lang === sourceLang) return;
+        const translated = await translateText(textToTranslate, sourceLang, lang);
         if (translated) {
           setRoles(prev => ({ ...prev, [lang]: translated }));
         }
@@ -216,8 +216,8 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
     }
   };
 
-  const handleAutoTranslateTasks = async () => {
-    const textToTranslate = tasksText[activeTab];
+  const handleAutoTranslateTasks = async (sourceLang: 'de' | 'tr' | 'en') => {
+    const textToTranslate = tasksText[sourceLang];
     if (!textToTranslate.trim()) return;
 
     setIsLoading(true);
@@ -240,8 +240,8 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
 
       const targets: ('de' | 'tr' | 'en')[] = ['de', 'tr', 'en'];
       const promises = targets.map(async (lang) => {
-        if (lang === activeTab) return;
-        const translated = await translateText(textToTranslate, activeTab, lang);
+        if (lang === sourceLang) return;
+        const translated = await translateText(textToTranslate, sourceLang, lang);
         if (translated) {
           setTasksText(prev => ({ ...prev, [lang]: translated }));
         }
@@ -668,94 +668,166 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
                   );
                 })()}
 
-                {/* Translation tabs selector */}
-                <div className="space-y-4 pt-2">
-                  <div className="flex border-b border-[var(--glass-border)]">
-                    {(['de', 'tr', 'en'] as const).map((lang) => (
-                      <button
-                        key={lang}
-                        type="button"
-                        onClick={() => setActiveTab(lang)}
-                        className={`px-6 py-2.5 text-xs font-bold tracking-wider uppercase border-b-2 transition-all cursor-pointer ${
-                          activeTab === lang
-                            ? 'border-primary text-primary bg-primary/5'
-                            : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-body)]'
-                        }`}
-                      >
-                        {lang === 'de' ? 'Deutsch (DE)' : lang === 'tr' ? 'Türkçe (TR)' : 'English (EN)'}
-                      </button>
-                    ))}
+                {/* Translation input fields (No tabs, show all languages for instant preview) */}
+                <div className="space-y-6 pt-2">
+                  {/* Deutsch (DE) Block */}
+                  <div className="space-y-4 p-5 rounded-2xl border border-[var(--glass-border)] bg-[var(--background)]/10">
+                    <h4 className="text-xs font-black text-primary uppercase tracking-widest">Deutsch (DE)</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                            {type === 'work' ? 'Rolle / Berufsbild (DE)' : 'Klasse / Ausbildunggang (DE)'} *
+                          </label>
+                          {roles.de.trim() && (
+                            <button
+                              type="button"
+                              onClick={() => handleAutoTranslateRole('de')}
+                              className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
+                            >
+                              {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                            </button>
+                          )}
+                        </div>
+                        <input
+                          type="text"
+                          value={roles.de}
+                          onChange={(e) => setRoles(prev => ({ ...prev, de: e.target.value }))}
+                          placeholder={type === 'work' ? 'z.B. Schnupperlehre Elektroinstallateur' : 'z.B. Sekundarschule (Sek A)'}
+                          className="w-full px-4 py-3 rounded-xl bg-[var(--background)] border border-[var(--glass-border)] focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all"
+                        />
+                      </div>
+                      
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                            {type === 'work' ? 'Tätigkeiten (DE)' : 'Beschreibung (DE)'} *
+                          </label>
+                          {tasksText.de.trim() && (
+                            <button
+                              type="button"
+                              onClick={() => handleAutoTranslateTasks('de')}
+                              className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
+                            >
+                              {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                            </button>
+                          )}
+                        </div>
+                        <textarea
+                          value={tasksText.de}
+                          onChange={(e) => setTasksText(prev => ({ ...prev, de: e.target.value }))}
+                          placeholder={type === 'work' ? t.placeholderTasks : 'Beschreibung...'}
+                          className="w-full px-4 py-3 rounded-xl bg-[var(--background)] border border-[var(--glass-border)] focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all min-h-[100px]"
+                        />
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Tab Contents */}
-                  {(() => {
-                    const roleLabel = type === 'work'
-                      ? t.lblRole
-                      : (language === 'tr' ? 'Bölüm / Derece / Sınıf' : language === 'de' ? 'Klasse / Ausbildungsgang' : 'Degree / Program / Class');
-
-                    const rolePlaceholder = type === 'work'
-                      ? 'e.g. Schnupperlehre Elektroinstallateur'
-                      : (language === 'tr' ? 'Örn: Sekundarschule (Sek A)' : language === 'de' ? 'Z.B. Sekundarschule (Sek A)' : 'e.g. Sekundarschule (Sek A)');
-
-                    const tasksLabel = type === 'work'
-                      ? t.lblTasks
-                      : (language === 'tr' ? 'Açıklama / Detaylar (Her satıra bir adet)' : language === 'de' ? 'Beschreibung / Details (Eine pro Zeile)' : 'Description / Details (One per line)');
-
-                    const tasksPlaceholder = type === 'work'
-                      ? t.placeholderTasks
-                      : (language === 'tr' ? 'Örn: Ortaokul eğitimi ve mezuniyet hazırlıkları...' : language === 'de' ? 'Z.B. Sekundarstufe Ausbildung...' : 'E.g. Secondary education...');
-
-                    return (
-                      <div className="space-y-4">
-                        <div className="space-y-1.5">
-                          <div className="flex items-center justify-between">
-                            <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
-                              {roleLabel} ({activeTab.toUpperCase()})
-                            </label>
-                            {roles[activeTab].trim() && (
-                              <button
-                                type="button"
-                                onClick={handleAutoTranslateRole}
-                                className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
-                              >
-                                {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
-                              </button>
-                            )}
-                          </div>
-                          <input
-                            type="text"
-                            value={roles[activeTab]}
-                            onChange={(e) => handleRoleChange(e.target.value)}
-                            placeholder={rolePlaceholder}
-                            className="w-full px-4 py-3 rounded-xl bg-[var(--background)] border border-[var(--glass-border)] focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all"
-                          />
+                  {/* Türkçe (TR) Block */}
+                  <div className="space-y-4 p-5 rounded-2xl border border-[var(--glass-border)] bg-[var(--background)]/10">
+                    <h4 className="text-xs font-black text-primary uppercase tracking-widest">Türkçe (TR)</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                            {type === 'work' ? 'Rolle / Berufsbild (TR)' : 'Bölüm / Derece (TR)'}
+                          </label>
+                          {roles.tr.trim() && (
+                            <button
+                              type="button"
+                              onClick={() => handleAutoTranslateRole('tr')}
+                              className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
+                            >
+                              {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                            </button>
+                          )}
                         </div>
-
-                        <div className="space-y-1.5">
-                          <div className="flex items-center justify-between">
-                            <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
-                              {tasksLabel} ({activeTab.toUpperCase()})
-                            </label>
-                            {tasksText[activeTab].trim() && (
-                              <button
-                                type="button"
-                                onClick={handleAutoTranslateTasks}
-                                className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
-                              >
-                                {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
-                              </button>
-                            )}
-                          </div>
-                          <textarea
-                            value={tasksText[activeTab]}
-                            onChange={(e) => handleTasksChange(e.target.value)}
-                            placeholder={tasksPlaceholder}
-                            className="w-full px-4 py-3 rounded-xl bg-[var(--background)] border border-[var(--glass-border)] focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all min-h-[120px] font-sans leading-relaxed"
-                          />
-                        </div>
+                        <input
+                          type="text"
+                          value={roles.tr}
+                          onChange={(e) => setRoles(prev => ({ ...prev, tr: e.target.value }))}
+                          placeholder={type === 'work' ? 'Örn: Elektrik Tesisatçısı Stajı' : 'Örn: Sekundarschule (Sek A)'}
+                          className="w-full px-4 py-3 rounded-xl bg-[var(--background)] border border-[var(--glass-border)] focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all"
+                        />
                       </div>
-                    );
-                  })()}
+                      
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                            {type === 'work' ? 'Tätigkeiten (TR)' : 'Açıklama (TR)'}
+                          </label>
+                          {tasksText.tr.trim() && (
+                            <button
+                              type="button"
+                              onClick={() => handleAutoTranslateTasks('tr')}
+                              className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
+                            >
+                              {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                            </button>
+                          )}
+                        </div>
+                        <textarea
+                          value={tasksText.tr}
+                          onChange={(e) => setTasksText(prev => ({ ...prev, tr: e.target.value }))}
+                          placeholder="Açıklama..."
+                          className="w-full px-4 py-3 rounded-xl bg-[var(--background)] border border-[var(--glass-border)] focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all min-h-[100px]"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* English (EN) Block */}
+                  <div className="space-y-4 p-5 rounded-2xl border border-[var(--glass-border)] bg-[var(--background)]/10">
+                    <h4 className="text-xs font-black text-primary uppercase tracking-widest">English (EN)</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                            {type === 'work' ? 'Rolle / Berufsbild (EN)' : 'Degree / Program (EN)'}
+                          </label>
+                          {roles.en.trim() && (
+                            <button
+                              type="button"
+                              onClick={() => handleAutoTranslateRole('en')}
+                              className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
+                            >
+                              {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                            </button>
+                          )}
+                        </div>
+                        <input
+                          type="text"
+                          value={roles.en}
+                          onChange={(e) => setRoles(prev => ({ ...prev, en: e.target.value }))}
+                          placeholder="e.g. Trial Apprenticeship Electrical Installer"
+                          className="w-full px-4 py-3 rounded-xl bg-[var(--background)] border border-[var(--glass-border)] focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all"
+                        />
+                      </div>
+                      
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                            {type === 'work' ? 'Tätigkeiten (EN)' : 'Description (EN)'}
+                          </label>
+                          {tasksText.en.trim() && (
+                            <button
+                              type="button"
+                              onClick={() => handleAutoTranslateTasks('en')}
+                              className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
+                            >
+                              {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                            </button>
+                          )}
+                        </div>
+                        <textarea
+                          value={tasksText.en}
+                          onChange={(e) => setTasksText(prev => ({ ...prev, en: e.target.value }))}
+                          placeholder="Description..."
+                          className="w-full px-4 py-3 rounded-xl bg-[var(--background)] border border-[var(--glass-border)] focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all min-h-[100px]"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* File Uploads */}
