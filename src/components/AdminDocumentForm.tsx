@@ -104,6 +104,51 @@ export const AdminDocumentForm: React.FC = () => {
     reader.readAsDataURL(file);
   };
 
+  const handleAutoTranslate = async (sourceLang: 'de' | 'tr' | 'en') => {
+    let textToTranslate = '';
+    if (sourceLang === 'de') textToTranslate = deTerm;
+    else if (sourceLang === 'tr') textToTranslate = trTerm;
+    else if (sourceLang === 'en') textToTranslate = enTerm;
+
+    if (!textToTranslate.trim()) return;
+
+    setIsLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+
+    try {
+      const translateText = async (text: string, from: string, to: string): Promise<string> => {
+        try {
+          const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`);
+          if (res.ok) {
+            const data = await res.json();
+            return data[0].map((x: any) => x[0]).join('');
+          }
+        } catch (err) {
+          console.error(err);
+        }
+        return '';
+      };
+
+      const targets: ('de' | 'tr' | 'en')[] = ['de', 'tr', 'en'];
+      const promises = targets.map(async (lang) => {
+        if (lang === sourceLang) return;
+        const translated = await translateText(textToTranslate, sourceLang, lang);
+        if (translated) {
+          if (lang === 'de') setDeTerm(translated);
+          else if (lang === 'tr') setTrTerm(translated);
+          else if (lang === 'en') setEnTerm(translated);
+        }
+      });
+      await Promise.all(promises);
+    } catch (e) {
+      console.error(e);
+      setErrorMsg('Translation failed.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -246,7 +291,18 @@ export const AdminDocumentForm: React.FC = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.lblDeTitle}</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.lblDeTitle}</label>
+              {deTerm.trim() && (
+                <button
+                  type="button"
+                  onClick={() => handleAutoTranslate('de')}
+                  className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
+                >
+                  {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                </button>
+              )}
+            </div>
             <input
               type="text"
               value={deTerm}
@@ -255,7 +311,18 @@ export const AdminDocumentForm: React.FC = () => {
             />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.lblTrTitle}</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.lblTrTitle}</label>
+              {trTerm.trim() && (
+                <button
+                  type="button"
+                  onClick={() => handleAutoTranslate('tr')}
+                  className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
+                >
+                  {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                </button>
+              )}
+            </div>
             <input
               type="text"
               value={trTerm}
@@ -264,7 +331,18 @@ export const AdminDocumentForm: React.FC = () => {
             />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.lblEnTitle}</label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.lblEnTitle}</label>
+              {enTerm.trim() && (
+                <button
+                  type="button"
+                  onClick={() => handleAutoTranslate('en')}
+                  className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
+                >
+                  {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                </button>
+              )}
+            </div>
             <input
               type="text"
               value={enTerm}

@@ -118,6 +118,84 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
     setTasksText(prev => ({ ...prev, [activeTab]: val }));
   };
 
+  const handleAutoTranslateRole = async () => {
+    const textToTranslate = roles[activeTab];
+    if (!textToTranslate.trim()) return;
+
+    setIsLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+
+    try {
+      const translateText = async (text: string, from: string, to: string): Promise<string> => {
+        try {
+          const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`);
+          if (res.ok) {
+            const data = await res.json();
+            return data[0].map((x: any) => x[0]).join('');
+          }
+        } catch (err) {
+          console.error(err);
+        }
+        return '';
+      };
+
+      const targets: ('de' | 'tr' | 'en')[] = ['de', 'tr', 'en'];
+      const promises = targets.map(async (lang) => {
+        if (lang === activeTab) return;
+        const translated = await translateText(textToTranslate, activeTab, lang);
+        if (translated) {
+          setRoles(prev => ({ ...prev, [lang]: translated }));
+        }
+      });
+      await Promise.all(promises);
+    } catch (e) {
+      console.error(e);
+      setErrorMsg('Translation failed.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAutoTranslateTasks = async () => {
+    const textToTranslate = tasksText[activeTab];
+    if (!textToTranslate.trim()) return;
+
+    setIsLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+
+    try {
+      const translateText = async (text: string, from: string, to: string): Promise<string> => {
+        try {
+          const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`);
+          if (res.ok) {
+            const data = await res.json();
+            return data[0].map((x: any) => x[0]).join('');
+          }
+        } catch (err) {
+          console.error(err);
+        }
+        return '';
+      };
+
+      const targets: ('de' | 'tr' | 'en')[] = ['de', 'tr', 'en'];
+      const promises = targets.map(async (lang) => {
+        if (lang === activeTab) return;
+        const translated = await translateText(textToTranslate, activeTab, lang);
+        if (translated) {
+          setTasksText(prev => ({ ...prev, [lang]: translated }));
+        }
+      });
+      await Promise.all(promises);
+    } catch (e) {
+      console.error(e);
+      setErrorMsg('Translation failed.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const resetForm = () => {
     setType('work');
     setCompany('');
@@ -570,9 +648,20 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
                     return (
                       <div className="space-y-4">
                         <div className="space-y-1.5">
-                          <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
-                            {roleLabel} ({activeTab.toUpperCase()})
-                          </label>
+                          <div className="flex items-center justify-between">
+                            <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                              {roleLabel} ({activeTab.toUpperCase()})
+                            </label>
+                            {roles[activeTab].trim() && (
+                              <button
+                                type="button"
+                                onClick={handleAutoTranslateRole}
+                                className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
+                              >
+                                {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                              </button>
+                            )}
+                          </div>
                           <input
                             type="text"
                             value={roles[activeTab]}
@@ -583,9 +672,20 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
-                            {tasksLabel} ({activeTab.toUpperCase()})
-                          </label>
+                          <div className="flex items-center justify-between">
+                            <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                              {tasksLabel} ({activeTab.toUpperCase()})
+                            </label>
+                            {tasksText[activeTab].trim() && (
+                              <button
+                                type="button"
+                                onClick={handleAutoTranslateTasks}
+                                className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
+                              >
+                                {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                              </button>
+                            )}
+                          </div>
                           <textarea
                             value={tasksText[activeTab]}
                             onChange={(e) => handleTasksChange(e.target.value)}
