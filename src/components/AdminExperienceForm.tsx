@@ -11,7 +11,8 @@ import {
   FiFileText, 
   FiImage, 
   FiLoader,
-  FiX
+  FiX,
+  FiTrash2
 } from 'react-icons/fi';
 import { useLanguage } from '@/app/contexts/LanguageContext';
 
@@ -47,6 +48,64 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   
+  // List of existing experiences for deletion in admin
+  const [existingExperiences, setExistingExperiences] = useState<any[]>([]);
+
+  const fetchExperiences = async () => {
+    try {
+      const res = await fetch('/api/experiences');
+      if (res.ok) {
+        const data = await res.json();
+        setExistingExperiences(data.de || []);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleDeleteExperience = async (company: string, period: string) => {
+    const confirmMsg = language === 'tr' 
+      ? `"${company}" kaydını silmek istediğinize emin misiniz?` 
+      : `Sind Sie sicher, dass Sie den Eintrag "${company}" löschen möchten?`;
+    if (!window.confirm(confirmMsg)) return;
+
+    setIsLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+
+    try {
+      const passcode = localStorage.getItem('admin_passcode') || 'eren2026';
+      const res = await fetch('/api/experiences', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ passcode, company, period })
+      });
+
+      if (res.ok) {
+        const result = await res.json();
+        setSuccessMsg(language === 'tr' ? 'Başarıyla silindi!' : 'Erfolgreich gelöscht!');
+        fetchExperiences();
+        // Trigger event to refresh homepage
+        window.dispatchEvent(new CustomEvent('experiences-updated', {
+          detail: { action: 'delete', data: result.data }
+        }));
+      } else {
+        const errData = await res.json();
+        setErrorMsg(errData.error || 'Failed to delete.');
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Error occurred.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isUnlocked) {
+      fetchExperiences();
+    }
+  }, [isUnlocked]);
+
   // Read-only serverless fallback states
   const [showFallbackModal, setShowFallbackModal] = useState(false);
   const [fallbackJson, setFallbackJson] = useState('');
@@ -331,12 +390,13 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
         );
       } else {
         const successAlertMsg = {
-          tr: 'Yeni firma başarıyla eklendi! Değişiklikler sisteme kaydedildi. Sitenin tamamen güncellenmesi ve yeni stajın herkes tarafından görünür olması yaklaşık 30-40 saniye sürecektir (Vercel arka planda yeniden derleniyor).',
-          de: 'Neue Firma erfolgreich hinzugefügt! Die Änderungen wurden gespeichert. Es dauert ca. 30-40 Sekunden, bis die Website vollständig aktualisiert und für alle sichtbar ist (Vercel wird im Hintergrund neu gebaut).',
-          en: 'New company successfully added! Changes saved to the system. It will take about 30-40 seconds for the website to be fully updated and visible to everyone (Vercel is rebuilding in the background).'
+          tr: 'Yeni firma/deneyim başarıyla eklendi! 🎉',
+          de: 'Neuer Eintrag erfolgreich hinzugefügt! 🎉',
+          en: 'New entry successfully added! 🎉'
         };
         
         resetForm();
+        fetchExperiences();
         
         // Trigger custom event to notify Timeline component to reload and do optimistic update
         window.dispatchEvent(new CustomEvent('experiences-updated', {
@@ -762,8 +822,49 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
                   ) : (
                     <FiPlus className="text-lg" />
                   )}
-                  {t.btnSubmit}
                 </button>
+
+                {/* Existing Experiences List for Deletion */}
+                <div className="mt-12 pt-8 border-t border-[var(--glass-border)] space-y-4">
+                  <h4 className="text-base font-bold text-[var(--text-main)] flex items-center gap-2">
+                    <span className="w-1.5 h-5 bg-primary rounded-full" />
+                    {language === 'tr' ? 'Mevcut Kayıtları Yönet' : language === 'de' ? 'Einträge verwalten' : 'Manage Existing Entries'}
+                  </h4>
+                  <p className="text-xs text-[var(--text-muted)]">
+                    {language === 'tr' 
+                      ? 'Listeden silmek istediğiniz staj veya okul kaydını çöp kutusu simgesine tıklayarak kaldırabilirsiniz.' 
+                      : 'Klicken Sie auf das Papierkorb-Symbol, um einen Eintrag zu löschen.'}
+                  </p>
+                  
+                  <div className="space-y-3 pt-2">
+                    {existingExperiences.map((item, idx) => (
+                      <div 
+                        key={idx}
+                        className="p-4 rounded-2xl border border-[var(--glass-border)] bg-[var(--background)]/5 flex items-center justify-between gap-4 hover:bg-[var(--glass-border)]/10 transition-all"
+                      >
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-sm font-bold text-[var(--text-main)]">{item.company}</span>
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-primary/10 text-primary uppercase">
+                              {item.type === 'education' ? (language === 'tr' ? 'EĞİTİM' : 'BILDUNG') : (language === 'tr' ? 'STAJ' : 'ARBEIT')}
+                            </span>
+                          </div>
+                          <p className="text-xs text-[var(--text-body)] mt-0.5 font-medium">{item.role}</p>
+                          <span className="text-[10px] text-[var(--text-muted)] font-mono">{item.period}</span>
+                        </div>
+                        
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteExperience(item.company, item.period)}
+                          className="p-2 rounded-xl border border-red-500/20 hover:border-red-500 bg-red-500/5 hover:bg-red-500 text-red-500 hover:text-white transition-all cursor-pointer active:scale-95"
+                          title="Löschen / Sil / Delete"
+                        >
+                          <FiTrash2 className="text-base" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </form>
             )}
           </m.div>

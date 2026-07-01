@@ -615,15 +615,6 @@ const MainContent: React.FC = () => {
                         <FiDownload className="text-xs" />
                         {t.documents.download}
                       </a>
-                      {isAdmin && (
-                        <button
-                          onClick={() => handleDeleteDocument(doc.term)}
-                          title="Löschen / Sil / Delete"
-                          className="p-2.5 rounded-xl border border-red-500/20 hover:border-red-500 bg-red-500/5 hover:bg-red-500 text-red-500 hover:text-white transition-all cursor-pointer active:scale-95"
-                        >
-                          <FiTrash2 className="text-sm" />
-                        </button>
-                      )}
                     </div>
                   </div>
                 );

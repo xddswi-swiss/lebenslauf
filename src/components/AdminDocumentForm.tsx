@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion as m, AnimatePresence } from 'framer-motion';
 import { 
   FiFileText, 
@@ -8,7 +8,8 @@ import {
   FiCheck, 
   FiAlertCircle, 
   FiLoader,
-  FiX
+  FiX,
+  FiTrash2
 } from 'react-icons/fi';
 import { useLanguage } from '@/app/contexts/LanguageContext';
 
@@ -31,6 +32,59 @@ export const AdminDocumentForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+
+  // List of existing documents for deletion in admin
+  const [existingDocuments, setExistingDocuments] = useState<any[]>([]);
+
+  const fetchDocuments = async () => {
+    try {
+      const res = await fetch('/api/documents');
+      if (res.ok) {
+        const data = await res.json();
+        setExistingDocuments(data.de || []);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleDeleteDocument = async (term: string) => {
+    const confirmMsg = language === 'tr'
+      ? `"${term}" belgesini silmek istediğinize emin misiniz?`
+      : `Sind Sie sicher, dass Sie das Dokument "${term}" löschen möchten?`;
+    if (!window.confirm(confirmMsg)) return;
+
+    setIsLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+
+    try {
+      const passcode = localStorage.getItem('admin_passcode') || 'eren2026';
+      const res = await fetch('/api/documents', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ passcode, term })
+      });
+
+      if (res.ok) {
+        setSuccessMsg(language === 'tr' ? 'Başarıyla silindi!' : 'Erfolgreich gelöscht!');
+        fetchDocuments();
+        // Trigger event to refresh homepage
+        window.dispatchEvent(new Event('documents-updated'));
+      } else {
+        const errData = await res.json();
+        setErrorMsg(errData.error || 'Failed to delete.');
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Error occurred.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDocuments();
+  }, []);
 
   // Read-only serverless fallback states
   const [showFallbackModal, setShowFallbackModal] = useState(false);
@@ -215,7 +269,7 @@ export const AdminDocumentForm: React.FC = () => {
 
       if (response.ok) {
         if (data.success) {
-          setSuccessMsg(t.success);
+          setSuccessMsg(language === 'tr' ? 'Belge başarıyla eklendi! 🎉' : 'Dokument erfolgreich hinzugefügt! 🎉');
           window.dispatchEvent(new Event('documents-updated'));
           // Reset form
           setDeTerm('');
@@ -226,6 +280,7 @@ export const AdminDocumentForm: React.FC = () => {
           // Reset file input element
           const fileInput = document.getElementById('document-pdf-upload') as HTMLInputElement;
           if (fileInput) fileInput.value = '';
+          fetchDocuments();
         } else {
           // If read-only mode locally or fails local writes, generate fallback JSON
           if (data.errors && data.errors.some((err: string) => err.includes('local save failed'))) {
@@ -398,6 +453,52 @@ export const AdminDocumentForm: React.FC = () => {
           )}
           {t.btnSubmit}
         </button>
+
+        {/* Existing Documents List for Deletion */}
+        <div className="mt-12 pt-8 border-t border-[var(--glass-border)] space-y-4">
+          <h4 className="text-base font-bold text-[var(--text-main)] flex items-center gap-2">
+            <span className="w-1.5 h-5 bg-primary rounded-full" />
+            {language === 'tr' ? 'Mevcut Belgeleri Yönet' : language === 'de' ? 'Bewerbungsunterlagen verwalten' : 'Manage Existing Documents'}
+          </h4>
+          <p className="text-xs text-[var(--text-muted)]">
+            {language === 'tr' 
+              ? 'Listeden silmek istediğiniz karne veya sertifika kaydını çöp kutusu simgesine tıklayarak kaldırabilirsiniz.' 
+              : 'Klicken Sie auf das Papierkorb-Symbol, um ein Dokument zu löschen.'}
+          </p>
+          
+          <div className="space-y-3 pt-2">
+            {existingDocuments.map((item, idx) => (
+              <div 
+                key={idx}
+                className="p-4 rounded-2xl border border-[var(--glass-border)] bg-[var(--background)]/5 flex items-center justify-between gap-4 hover:bg-[var(--glass-border)]/10 transition-all"
+              >
+                <div className="min-w-0 flex-1">
+                  <span className="text-sm font-bold text-[var(--text-main)]">{item.term}</span>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-[10px] text-[var(--text-muted)] font-mono">{item.date}</span>
+                    <a 
+                      href={item.file} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-[10px] font-bold text-primary hover:underline"
+                    >
+                      PDF
+                    </a>
+                  </div>
+                </div>
+                
+                <button
+                  type="button"
+                  onClick={() => handleDeleteDocument(item.term)}
+                  className="p-2 rounded-xl border border-red-500/20 hover:border-red-500 bg-red-500/5 hover:bg-red-500 text-red-500 hover:text-white transition-all cursor-pointer active:scale-95"
+                  title="Löschen / Sil / Delete"
+                >
+                  <FiTrash2 className="text-base" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
       </form>
 
       {/* Fallback Modal */}

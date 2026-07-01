@@ -373,18 +373,6 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
 
                               {/* Right actions: Period & Chevron */}
                               <div className="flex items-center gap-3 flex-shrink-0">
-                                {isAdmin && (
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleDelete(item.company, item.period);
-                                    }}
-                                    title="Löschen / Sil / Delete"
-                                    className="p-1.5 rounded-full border border-red-500/20 hover:border-red-500 bg-red-500/5 hover:bg-red-500 text-red-500 hover:text-white transition-all cursor-pointer active:scale-90"
-                                  >
-                                    <FiTrash2 className="text-xs" />
-                                  </button>
-                                )}
                                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-body)] whitespace-nowrap">
                                   {item.period}
                                 </span>
