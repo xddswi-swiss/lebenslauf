@@ -341,7 +341,7 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
                                         <img 
                                           src={item.imageUrl} 
                                           alt={item.company} 
-                                          className="w-24 h-32 md:w-36 md:h-48 rounded-2xl object-cover shadow-lg border border-[var(--glass-border)] absolute inset-0 z-10"
+                                          className="w-24 h-32 md:w-36 md:h-48 rounded-2xl object-cover shadow-lg absolute inset-0 z-10"
                                           onError={(e) => {
                                             (e.target as HTMLElement).style.display = 'none';
                                           }}
