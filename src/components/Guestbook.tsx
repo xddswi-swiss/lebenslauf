@@ -21,6 +21,39 @@ export const Guestbook: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
+  // Captcha states
+  const [captcha, setCaptcha] = useState<{ text: string; expectedHash: string } | null>(null);
+  const [userCaptchaAnswer, setUserCaptchaAnswer] = useState('');
+  const [captchaError, setCaptchaError] = useState(false);
+
+  const generateCaptcha = () => {
+    const operators = ['+', '-', '*'];
+    const op = operators[Math.floor(Math.random() * operators.length)];
+    let n1 = 0, n2 = 0, ans = 0;
+
+    if (op === '+') {
+      n1 = Math.floor(Math.random() * 10) + 1;
+      n2 = Math.floor(Math.random() * 10) + 1;
+      ans = n1 + n2;
+    } else if (op === '-') {
+      n1 = Math.floor(Math.random() * 10) + 5;
+      n2 = Math.floor(Math.random() * n1);
+      ans = n1 - n2;
+    } else {
+      n1 = Math.floor(Math.random() * 8) + 2;
+      n2 = Math.floor(Math.random() * 8) + 2;
+      ans = n1 * n2;
+    }
+
+    const opSymbol = op === '*' ? '×' : op;
+    const text = `${n1} ${opSymbol} ${n2} = ?`;
+    const expectedHash = String(ans * 43 + 17);
+
+    setCaptcha({ text, expectedHash });
+    setUserCaptchaAnswer('');
+    setCaptchaError(false);
+  };
+
   const translations = {
     de: {
       title: "Gästebuch",
@@ -32,7 +65,12 @@ export const Guestbook: React.FC = () => {
       placeholderMessage: "Nachricht eingeben...",
       emptyFeed: "Noch keine Nachrichten vorhanden. Schreiben Sie die erste!",
       successMsg: "Nachricht erfolgreich hinzugefügt! Vielen Dank.",
-      errFields: "Bitte alle Felder ausfüllen."
+      errFields: "Bitte alle Felder ausfüllen.",
+      captchaTitle: "Spamschutz-Sicherheitsfrage",
+      captchaPlaceholder: "Ergebnis eingeben...",
+      captchaInstruction: "Geben Sie das mathematische Ergebnis ein, um Spam zu verhindern.",
+      captchaError: "Das Rechenergebnis ist falsch. Bitte versuchen Sie es erneut.",
+      errCaptcha: "Spamschutz-Antwort fehlt oder ist falsch."
     },
     tr: {
       title: "Ziyaretçi Defteri",
@@ -44,7 +82,12 @@ export const Guestbook: React.FC = () => {
       placeholderMessage: "Mesajınızı yazın...",
       emptyFeed: "Henüz mesaj yazılmamış. İlk mesajı siz yazın!",
       successMsg: "Mesajınız başarıyla eklendi! Teşekkürler.",
-      errFields: "Lütfen tüm alanları doldurun."
+      errFields: "Lütfen tüm alanları doldurun.",
+      captchaTitle: "Spam Koruması Güvenlik Sorusu",
+      captchaPlaceholder: "Sonucu girin...",
+      captchaInstruction: "Spam mesajları engellemek için lütfen yukarıdaki işlemi yapın.",
+      captchaError: "İşlem sonucu yanlış, lütfen tekrar deneyin.",
+      errCaptcha: "Spam koruması cevabı eksik veya hatalı."
     },
     en: {
       title: "Guestbook",
@@ -56,7 +99,12 @@ export const Guestbook: React.FC = () => {
       placeholderMessage: "Enter your message...",
       emptyFeed: "No messages yet. Be the first to write one!",
       successMsg: "Message successfully posted! Thank you.",
-      errFields: "Please fill in all fields."
+      errFields: "Please fill in all fields.",
+      captchaTitle: "Anti-Spam Security Question",
+      captchaPlaceholder: "Enter result...",
+      captchaInstruction: "Solve the math problem above to prevent automated spam.",
+      captchaError: "The math result is incorrect. Please try again.",
+      errCaptcha: "Spam protection answer is missing or incorrect."
     }
   };
 
@@ -76,6 +124,7 @@ export const Guestbook: React.FC = () => {
 
   useEffect(() => {
     fetchMessages();
+    generateCaptcha();
 
     // Listen to updates from other pages
     const handleRefresh = () => fetchMessages();
@@ -87,6 +136,15 @@ export const Guestbook: React.FC = () => {
     e.preventDefault();
     if (!name.trim() || !message.trim()) {
       setErrorMsg(t.errFields);
+      return;
+    }
+
+    // Verify Captcha
+    const parsedUserAnswer = parseInt(userCaptchaAnswer.trim(), 10);
+    const calculatedHash = String(parsedUserAnswer * 43 + 17);
+    if (!captcha || calculatedHash !== captcha.expectedHash) {
+      setCaptchaError(true);
+      setErrorMsg(t.errCaptcha);
       return;
     }
 
@@ -106,10 +164,12 @@ export const Guestbook: React.FC = () => {
         setName('');
         setMessage('');
         fetchMessages();
+        generateCaptcha();
         setTimeout(() => setSuccess(false), 4000);
       } else {
         const errData = await res.json();
-        setErrorMsg(errData.error || 'Failed to submit message.');
+        setErrorMsg(errData.error || 'Failed to submit.');
+        generateCaptcha();
       }
     } catch (err: any) {
       setErrorMsg(err.message || 'Error occurred.');
@@ -193,6 +253,34 @@ export const Guestbook: React.FC = () => {
               placeholder={t.placeholderMessage}
               className="w-full px-4 py-3 rounded-xl bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all min-h-[100px] leading-relaxed resize-none"
             />
+          </div>
+
+          {/* Math Captcha Box */}
+          <div className="p-5 glass-card rounded-2xl border border-[var(--glass-border)] bg-zinc-900/10 space-y-4">
+            <div className="flex items-center gap-2 text-sm font-bold text-[var(--text-main)]">
+              <span>🔢</span>
+              <span>{t.captchaTitle}: {captcha?.text}</span>
+            </div>
+            <input
+              type="text"
+              required
+              placeholder={t.captchaPlaceholder}
+              value={userCaptchaAnswer}
+              onChange={(e) => {
+                setUserCaptchaAnswer(e.target.value);
+                setCaptchaError(false);
+              }}
+              disabled={isSubmitting}
+              className="w-full px-4 py-3 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:border-primary transition-all text-sm disabled:opacity-50"
+            />
+            {captchaError && (
+              <p className="text-xs text-rose-400 font-bold mt-1">
+                ❌ {t.captchaError}
+              </p>
+            )}
+            <p className="text-xs text-[var(--text-muted)] font-medium">
+              {t.captchaInstruction}
+            </p>
           </div>
 
           <button
