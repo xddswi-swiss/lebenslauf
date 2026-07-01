@@ -197,7 +197,6 @@ export const Guestbook: React.FC = () => {
     <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       {/* Form Area */}
       <div className="lg:col-span-5 glass-card p-6 md:p-8 rounded-3xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] relative overflow-hidden shadow-lg space-y-6">
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-secondary opacity-60" />
         <div>
           <h3 className="text-xl font-black text-[var(--text-main)] flex items-center gap-2">
             <FiMessageSquare className="text-primary text-xl" />
