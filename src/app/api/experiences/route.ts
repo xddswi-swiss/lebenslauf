@@ -90,8 +90,8 @@ export async function GET() {
         type: item.type,
         role: item.de?.role || '',
         tasks: item.de?.tasks || [],
-        logo: item.logo_path || '',
-        pdf: item.pdf_path || ''
+        imageUrl: item.logo_path || '',
+        pdfReport: item.pdf_path || ''
       });
       tr.push({
         company: item.company,
@@ -100,8 +100,8 @@ export async function GET() {
         type: item.type,
         role: item.tr?.role || '',
         tasks: item.tr?.tasks || [],
-        logo: item.logo_path || '',
-        pdf: item.pdf_path || ''
+        imageUrl: item.logo_path || '',
+        pdfReport: item.pdf_path || ''
       });
       en.push({
         company: item.company,
@@ -110,8 +110,8 @@ export async function GET() {
         type: item.type,
         role: item.en?.role || '',
         tasks: item.en?.tasks || [],
-        logo: item.logo_path || '',
-        pdf: item.pdf_path || ''
+        imageUrl: item.logo_path || '',
+        pdfReport: item.pdf_path || ''
       });
     }
 
