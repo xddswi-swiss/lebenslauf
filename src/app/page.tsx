@@ -6,6 +6,7 @@ import { useTheme } from './contexts/ThemeContext';
 import { Timeline } from '@/components/Timeline';
 import { SkillsGrid } from '@/components/SkillsGrid';
 import { ContactForm } from '@/components/ContactForm';
+import { Guestbook } from '@/components/Guestbook';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { RecruiterWidget } from '@/components/RecruiterWidget';
@@ -747,6 +748,19 @@ const MainContent: React.FC = () => {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Guestbook Section */}
+        <section id="guestbook" className="scroll-mt-24">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
+              {language === 'tr' ? 'Ziyaretçi Defteri' : language === 'de' ? 'Gästebuch' : 'Guestbook'}
+            </h2>
+            <p className="text-[var(--text-muted)] text-sm md:text-base">
+              {language === 'tr' ? 'Bana bir mesaj, geri bildirim veya güzel bir söz bırakın!' : language === 'de' ? 'Hinterlassen Sie mir eine Nachricht, ein Feedback oder ein nettes Wort!' : 'Leave me a message, feedback, or just say hello!'}
+            </p>
+          </div>
+          <Guestbook />
         </section>
 
         {/* Contact Section */}

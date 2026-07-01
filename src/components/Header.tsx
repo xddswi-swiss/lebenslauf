@@ -19,7 +19,8 @@ import {
   FiMail, 
   FiChevronRight, 
   FiGithub, 
-  FiInstagram 
+  FiInstagram,
+  FiMessageSquare
 } from 'react-icons/fi';
 
 // --- NAVİGASYON (HEADER) DİNAMİK RENK AYARI ---
@@ -33,7 +34,7 @@ export interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [headerStyle, setHeaderStyle] = useState<React.CSSProperties>({});
@@ -45,6 +46,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
     { href: "#experience", label: t.nav.experience, icon: <FiBriefcase className="text-lg" /> },
     { href: "#skills", label: t.nav.skills, icon: <FiAward className="text-lg" /> },
     { href: "#details", label: t.nav.details, icon: <FiSliders className="text-lg" /> },
+    { href: "#guestbook", label: language === 'tr' ? 'Defter' : language === 'de' ? 'Gästebuch' : 'Guestbook', icon: <FiMessageSquare className="text-lg" /> },
     { href: "#contact", label: t.nav.contact, icon: <FiMail className="text-lg" /> }
   ];
 

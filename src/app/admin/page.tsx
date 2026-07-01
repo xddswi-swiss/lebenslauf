@@ -4,10 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { AdminExperienceForm } from '@/components/AdminExperienceForm';
 import { AdminDocumentForm } from '@/components/AdminDocumentForm';
+import { AdminGuestbookTab } from '@/components/AdminGuestbookTab';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
-import { FiArrowLeft, FiLock, FiUnlock, FiAlertCircle, FiChevronRight, FiBriefcase, FiLogOut, FiFileText } from 'react-icons/fi';
+import { FiArrowLeft, FiLock, FiUnlock, FiAlertCircle, FiChevronRight, FiBriefcase, FiLogOut, FiFileText, FiMessageSquare } from 'react-icons/fi';
 import Link from 'next/link';
 
 export default function AdminPage() {
@@ -30,7 +31,8 @@ export default function AdminPage() {
       logout: "Abmelden",
       menuTitle: "Menü / Sektionen",
       tabExperiences: "Neue Schnupperlehre",
-      tabDocuments: "Bewerbungsunterlagen"
+      tabDocuments: "Bewerbungsunterlagen",
+      tabGuestbook: "Ziyaretçi Defteri (Gästebuch)"
     },
     tr: {
       back: "Ana Sayfaya Dön",
@@ -44,7 +46,8 @@ export default function AdminPage() {
       logout: "Çıkış Yap",
       menuTitle: "Menü / Bölümler",
       tabExperiences: "Yeni Deneyim Ekle",
-      tabDocuments: "Başvuru Belgeleri"
+      tabDocuments: "Başvuru Belgeleri",
+      tabGuestbook: "Ziyaretçi Defteri"
     },
     en: {
       back: "Back to Home",
@@ -58,7 +61,8 @@ export default function AdminPage() {
       logout: "Logout",
       menuTitle: "Menu / Sections",
       tabExperiences: "Add New Experience",
-      tabDocuments: "Application Docs"
+      tabDocuments: "Application Docs",
+      tabGuestbook: "Guestbook Entries"
     }
   };
 
@@ -198,7 +202,7 @@ export default function AdminPage() {
                     <FiChevronRight className={`text-base transition-transform ${activeTab === 'experiences' ? 'rotate-90' : ''}`} />
                   </button>
 
-                  <button
+                   <button
                     onClick={() => setActiveTab('documents')}
                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all cursor-pointer ${
                       activeTab === 'documents'
@@ -211,6 +215,21 @@ export default function AdminPage() {
                       <span>{activeT.tabDocuments}</span>
                     </span>
                     <FiChevronRight className={`text-base transition-transform ${activeTab === 'documents' ? 'rotate-90' : ''}`} />
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab('guestbook')}
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all cursor-pointer ${
+                      activeTab === 'guestbook'
+                        ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]'
+                        : 'hover:bg-zinc-800/10 text-[var(--text-body)]'
+                    }`}
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <FiMessageSquare className="text-base" />
+                      <span>{activeT.tabGuestbook}</span>
+                    </span>
+                    <FiChevronRight className={`text-base transition-transform ${activeTab === 'guestbook' ? 'rotate-90' : ''}`} />
                   </button>
                 </div>
               </div>
@@ -225,6 +244,11 @@ export default function AdminPage() {
                 {activeTab === 'documents' && (
                   <div className="space-y-6 animate-fade-in">
                     <AdminDocumentForm />
+                  </div>
+                )}
+                {activeTab === 'guestbook' && (
+                  <div className="space-y-6 animate-fade-in">
+                    <AdminGuestbookTab />
                   </div>
                 )}
               </div>
