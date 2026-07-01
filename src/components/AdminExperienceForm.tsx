@@ -525,7 +525,7 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 15 }}
-            className="mt-6 glass-card rounded-3xl p-6 md:p-8 relative overflow-hidden"
+            className="mt-0 relative overflow-hidden"
           >
             {/* Background blur decorative element */}
             <div className="absolute -top-12 -right-12 w-32 h-32 bg-primary/5 blur-2xl rounded-full" />
