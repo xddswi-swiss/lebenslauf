@@ -318,27 +318,32 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
       return text;
     };
 
-    // Determine source language based on which one has input
-    let srcLang = 'de';
-    if (roles.de.trim() || tasksText.de.trim()) {
-      srcLang = 'de';
-    } else if (roles.tr.trim() || tasksText.tr.trim()) {
-      srcLang = 'tr';
-    } else if (roles.en.trim() || tasksText.en.trim()) {
-      srcLang = 'en';
-    }
+    // Decouple source language determination for role and tasks fields independently
+    const fallbackRole = roles.de.trim() || roles.tr.trim() || roles.en.trim();
+    const fallbackTasks = tasksText.de.trim() || tasksText.tr.trim() || tasksText.en.trim();
 
-    const srcRole = roles[srcLang as 'de' | 'tr' | 'en'].trim();
-    const srcTasks = tasksText[srcLang as 'de' | 'tr' | 'en'].trim();
+    const getRoleSrcLang = () => {
+      if (roles.de.trim()) return 'de';
+      if (roles.tr.trim()) return 'tr';
+      return 'en';
+    };
+    const getTasksSrcLang = () => {
+      if (tasksText.de.trim()) return 'de';
+      if (tasksText.tr.trim()) return 'tr';
+      return 'en';
+    };
+
+    const roleSrcLang = getRoleSrcLang();
+    const tasksSrcLang = getTasksSrcLang();
 
     try {
       const [finalDeRole, finalTrRole, finalEnRole, finalDeTasksText, finalTrTasksText, finalEnTasksText] = await Promise.all([
-        roles.de.trim() ? Promise.resolve(roles.de.trim()) : translateText(srcRole, srcLang, 'de'),
-        roles.tr.trim() ? Promise.resolve(roles.tr.trim()) : translateText(srcRole, srcLang, 'tr'),
-        roles.en.trim() ? Promise.resolve(roles.en.trim()) : translateText(srcRole, srcLang, 'en'),
-        tasksText.de.trim() ? Promise.resolve(tasksText.de.trim()) : translateText(srcTasks, srcLang, 'de'),
-        tasksText.tr.trim() ? Promise.resolve(tasksText.tr.trim()) : translateText(srcTasks, srcLang, 'tr'),
-        tasksText.en.trim() ? Promise.resolve(tasksText.en.trim()) : translateText(srcTasks, srcLang, 'en')
+        roles.de.trim() ? Promise.resolve(roles.de.trim()) : translateText(fallbackRole, roleSrcLang, 'de'),
+        roles.tr.trim() ? Promise.resolve(roles.tr.trim()) : translateText(fallbackRole, roleSrcLang, 'tr'),
+        roles.en.trim() ? Promise.resolve(roles.en.trim()) : translateText(fallbackRole, roleSrcLang, 'en'),
+        tasksText.de.trim() ? Promise.resolve(tasksText.de.trim()) : translateText(fallbackTasks, tasksSrcLang, 'de'),
+        tasksText.tr.trim() ? Promise.resolve(tasksText.tr.trim()) : translateText(fallbackTasks, tasksSrcLang, 'tr'),
+        tasksText.en.trim() ? Promise.resolve(tasksText.en.trim()) : translateText(fallbackTasks, tasksSrcLang, 'en')
       ]);
 
       const payload = {
@@ -395,10 +400,10 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({ forceOp
           en: 'New entry successfully added! 🎉'
         };
         
+        resetForm();
         setSuccessMsg(successAlertMsg[language as 'de' | 'tr' | 'en'] || successAlertMsg.tr);
         setTimeout(() => setSuccessMsg(''), 5000);
 
-        resetForm();
         fetchExperiences();
         
         // Trigger custom event to notify Timeline component to reload and do optimistic update
