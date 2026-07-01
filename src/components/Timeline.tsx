@@ -176,66 +176,7 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
-  const handleDelete = async (company: string, period: string) => {
-    const confirmMsg = {
-      de: `Sind Sie sicher, dass Sie die Schnupperlehre bei "${company}" (${period}) löschen möchten?`,
-      tr: `"${company}" (${period}) stajını silmek istediğinize emin misiniz?`,
-      en: `Are you sure you want to delete the trial apprenticeship at "${company}" (${period})?`
-    };
-    
-    const msg = confirmMsg[language as 'de' | 'tr' | 'en'] || confirmMsg.de;
-    if (!window.confirm(msg)) return;
 
-    try {
-      const passcode = localStorage.getItem('admin_passcode');
-      const response = await fetch('/api/experiences', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ passcode, company, period })
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Delete failed');
-      }
-
-      if (result.readOnly) {
-        const backupJson = JSON.stringify(result.jsonBackup, null, 2);
-        alert(
-          language === 'tr'
-            ? 'Sunucu salt okunur modda. Silme işlemi tamamlandı ancak dosya güncellenemedi. JSON kodu konsola yazdırıldı.'
-            : 'Server ist schreibgeschützt. Löschen war erfolgreich, aber Datei wurde nicht aktualisiert. JSON-Code wurde in die Konsole gedruckt.'
-        );
-        console.log("Experiences JSON Backup after deletion:", backupJson);
-      } else {
-        const deleteAlertMsg = {
-          tr: `"${company}" başarıyla silindi! Değişiklikler sisteme kaydedildi. Sitenin tamamen güncellenmesi ve değişikliğin herkes tarafından görünür olması yaklaşık 30-40 saniye sürecektir (Vercel arka planda yeniden derleniyor).`,
-          de: `"${company}" erfolgreich gelöscht! Die Änderungen wurden gespeichert. Es dauert ca. 30-40 Sekunden, bis die Website vollständig aktualisiert und für alle sichtbar ist (Vercel wird im Hintergrund neu gebaut).`,
-          en: `"${company}" successfully deleted! Changes saved to the system. It will take about 30-40 seconds for the website to be fully updated and visible to everyone (Vercel is rebuilding in the background).`
-        };
-
-        window.dispatchEvent(new CustomEvent('experiences-updated', {
-          detail: {
-            action: 'delete',
-            data: result.data || result.jsonBackup
-          }
-        }));
-
-        // Automatically log out admin for security and cleaner UX flow
-        localStorage.removeItem('admin_unlocked');
-        localStorage.removeItem('admin_passcode');
-        window.dispatchEvent(new Event('admin-state-changed'));
-
-        alert(deleteAlertMsg[language as 'de' | 'tr' | 'en'] || deleteAlertMsg.tr);
-      }
-    } catch (err: any) {
-      console.error(err);
-      alert(err.message || 'Error deleting experience');
-    }
-  };
 
   // Helper to get initials of company names (ignores AG, Co, GmbH, Bank, etc.)
   const getCompanyInitials = (company: string) => {
@@ -529,18 +470,6 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
                               </p>
                             </div>
                             <div className="flex items-center gap-3">
-                              {isAdmin && (
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleDelete(item.company, item.period);
-                                  }}
-                                  title="Löschen / Sil / Delete"
-                                  className="p-1.5 rounded-full border border-red-500/20 hover:border-red-500 bg-red-500/5 hover:bg-red-500 text-red-500 hover:text-white transition-all cursor-pointer active:scale-90"
-                                >
-                                  <FiTrash2 className="text-xs" />
-                                </button>
-                              )}
                               <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-body)] w-fit">
                                 {item.period}
                               </span>

@@ -123,34 +123,7 @@ const MainContent: React.FC = () => {
     };
   }, [language]);
 
-  const handleDeleteDocument = async (term: string) => {
-    const confirmMsg = {
-      de: `Sind Sie sicher, dass Sie das Dokument "${term}" löschen möchten?`,
-      tr: `"${term}" belgesini silmek istediğinize emin misiniz?`,
-      en: `Are you sure you want to delete the document "${term}"?`
-    };
-    const msg = confirmMsg[language as 'de' | 'tr' | 'en'] || confirmMsg.de;
-    if (!window.confirm(msg)) return;
 
-    try {
-      const passcode = localStorage.getItem('admin_passcode') || 'eren2026';
-      const response = await fetch('/api/documents', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ passcode, term })
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        window.dispatchEvent(new Event('documents-updated'));
-      } else {
-        alert(data.error || 'Delete failed');
-      }
-    } catch (err: any) {
-      console.error(err);
-      alert(err.message || 'Error occurred');
-    }
-  };
 
   const handleMatcherClick = (type: 'kaufmann' | 'elektro') => {
     const nextVal = selectedMatcher === type ? null : type;
