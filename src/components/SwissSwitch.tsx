@@ -48,32 +48,27 @@ export const SwissSwitch: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center gap-2 select-none z-30">
-      <span className="text-[10px] tracking-wider text-[var(--text-muted)] font-extrabold uppercase">
-        COLOR
-      </span>
-      <div className="flex gap-0.5 p-0.5 rounded-full bg-zinc-800/10 dark:bg-zinc-200/5 border border-[var(--glass-border)] text-[10px] font-extrabold tracking-wider w-fit">
-        <button
-          onClick={() => setMode(false)}
-          className={`px-2.5 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-            !bwMode
-              ? 'bg-primary text-white shadow-sm'
-              : 'text-[var(--text-body)] hover:text-[var(--text-main)]'
-          }`}
-        >
-          ON
-        </button>
-        <button
-          onClick={() => setMode(true)}
-          className={`px-2.5 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-            bwMode
-              ? 'bg-primary text-white shadow-sm'
-              : 'text-[var(--text-body)] hover:text-[var(--text-main)]'
-          }`}
-        >
-          OFF
-        </button>
-      </div>
+    <div className="flex gap-0.5 p-0.5 rounded-full bg-zinc-800/10 dark:bg-zinc-200/5 border border-[var(--glass-border)] text-[10px] font-extrabold tracking-wider w-fit select-none z-30">
+      <button
+        onClick={() => setMode(false)}
+        className={`px-2.5 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+          !bwMode
+            ? 'bg-primary text-white shadow-sm'
+            : 'text-[var(--text-body)] hover:text-[var(--text-main)]'
+        }`}
+      >
+        ON
+      </button>
+      <button
+        onClick={() => setMode(true)}
+        className={`px-2.5 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+          bwMode
+            ? 'bg-primary text-white shadow-sm'
+            : 'text-[var(--text-body)] hover:text-[var(--text-main)]'
+        }`}
+      >
+        OFF
+      </button>
     </div>
   );
 };

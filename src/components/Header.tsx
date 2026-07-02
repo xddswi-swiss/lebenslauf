@@ -153,10 +153,10 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
             </nav>
 
             <div className="hidden lg:flex items-center gap-4">
-              <LanguageSwitcher />
-
-              {/* Swiss Light Switch (B&W Mode) */}
-              <SwissSwitch />
+              <div className="flex items-center gap-1">
+                <LanguageSwitcher />
+                <SwissSwitch />
+              </div>
 
               {/* Theme Toggle Button */}
               <button
@@ -260,9 +260,12 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
 
               {/* Drawer Footer */}
               <div className="pt-6 border-t border-[var(--glass-border)] mt-auto space-y-6">
-                {/* Language Switcher */}
-                <div className="flex justify-center w-full">
-                  <LanguageSwitcher inline />
+                {/* Language & B&W Switcher */}
+                <div className="flex items-center justify-center gap-2 w-full">
+                  <div className="flex-1">
+                    <LanguageSwitcher inline />
+                  </div>
+                  <SwissSwitch />
                 </div>
 
                 {/* Social media shortcuts */}
