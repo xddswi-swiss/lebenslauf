@@ -18,7 +18,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ inline = fal
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className={`flex gap-1 p-0.5 rounded-full bg-zinc-800/10 dark:bg-zinc-200/5 border border-[var(--glass-border)] text-[10px] font-extrabold tracking-wider w-fit ${inline ? 'w-full justify-between' : ''}`}>
+    <div className={`flex gap-1 text-[10px] font-extrabold tracking-wider w-fit ${inline ? 'w-full justify-between' : ''}`}>
       {languages.map((lang) => (
         <button
           key={lang.code}

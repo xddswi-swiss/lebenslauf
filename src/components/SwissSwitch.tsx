@@ -48,7 +48,7 @@ export const SwissSwitch: React.FC = () => {
   };
 
   return (
-    <div className="flex gap-0.5 p-0.5 rounded-full bg-zinc-800/10 dark:bg-zinc-200/5 border border-[var(--glass-border)] text-[10px] font-extrabold tracking-wider w-fit select-none z-30">
+    <div className="flex gap-0.5 text-[10px] font-extrabold tracking-wider w-fit select-none z-30">
       <button
         onClick={() => setMode(false)}
         className={`px-2.5 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${

@@ -152,31 +152,32 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               ))}
             </nav>
 
-            <div className="hidden lg:flex items-center gap-4">
-              <div className="flex items-center gap-1">
-                <LanguageSwitcher />
-                <SwissSwitch />
-              </div>
+            <div className="hidden lg:flex items-center gap-2.5">
+              <LanguageSwitcher />
+              <div className="w-[1px] h-3 bg-[var(--glass-border)] opacity-50" />
+              <SwissSwitch />
+              <div className="w-[1px] h-3 bg-[var(--glass-border)] opacity-50" />
 
               {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
                 aria-label="Toggle Theme"
-                className="p-2.5 rounded-full glass-card text-[var(--text-body)] hover:text-[var(--text-main)] transition-all cursor-pointer"
+                className="p-1.5 text-[var(--text-body)] hover:text-[var(--text-main)] transition-all cursor-pointer hover:scale-115 flex items-center justify-center"
               >
-                {theme === 'dark' ? <FiSun className="text-lg" /> : <FiMoon className="text-lg" />}
+                {theme === 'dark' ? <FiSun className="text-base" /> : <FiMoon className="text-base" />}
               </button>
             </div>
 
             {/* Mobile Menu Actions */}
-            <div className="flex lg:hidden items-center gap-2">
+            <div className="flex lg:hidden items-center gap-3">
               {/* Swiss Light Switch (B&W Mode) */}
               <SwissSwitch />
 
+              {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
                 aria-label="Toggle Theme"
-                className="p-2.5 rounded-full glass-card text-[var(--text-body)] hover:text-[var(--text-main)] transition-all cursor-pointer"
+                className="p-1.5 text-[var(--text-body)] hover:text-[var(--text-main)] transition-all cursor-pointer hover:scale-115 flex items-center justify-center"
               >
                 {theme === 'dark' ? <FiSun className="text-base" /> : <FiMoon className="text-base" />}
               </button>
@@ -187,7 +188,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                 aria-label="Open Mobile Menu"
                 className="p-2.5 rounded-full glass-card text-[var(--text-body)] hover:text-[var(--text-main)] transition-all cursor-pointer"
               >
-                <FiMenu className="text-lg" />
+                <FiMenu className="text-base" />
               </button>
             </div>
           </div>
