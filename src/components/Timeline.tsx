@@ -91,12 +91,20 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
           throw new Error('Failed to fetch');
         })
         .then(data => {
-          if (isMounted && data && data[language]) {
+          if (isMounted && data && data[language] && data[language].length > 0) {
             setWorkItems(data[language]);
+          } else {
+            console.warn('API returned empty or no data, falling back to local JSON data');
+            if (isMounted) {
+              setWorkItems(experienceItems[language] || []);
+            }
           }
         })
         .catch(err => {
           console.warn('Fallback to static local experience data:', err);
+          if (isMounted) {
+            setWorkItems(experienceItems[language] || []);
+          }
         });
     };
 
@@ -106,7 +114,7 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
       const customEvent = e as CustomEvent;
       if (customEvent.detail && customEvent.detail.data) {
         const updatedData = customEvent.detail.data;
-        if (isMounted && updatedData && updatedData[language]) {
+        if (isMounted && updatedData && updatedData[language] && updatedData[language].length > 0) {
           setWorkItems(updatedData[language]);
           return;
         }
