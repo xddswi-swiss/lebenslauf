@@ -790,7 +790,7 @@ const PageLoader: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
           className="flex flex-col items-start"
         >
           <span className="text-[10px] uppercase tracking-[0.3em] text-zinc-500 font-bold mb-1">Portfolio</span>
-          <h2 className="text-xl md:text-2xl font-black tracking-[0.25em] bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent font-sans">
+          <h2 className="text-xl md:text-2xl font-black tracking-[0.25em] bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent font-sans font-logo">
             EREN AYDIN
           </h2>
         </m.div>

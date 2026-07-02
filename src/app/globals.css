@@ -753,3 +753,10 @@ body {
 :root.bw-mode .mobile-drawer .border-t {
   border-color: rgba(0, 0, 0, 0.2) !important;
 }
+
+/* Custom distinctive logo font */
+.font-logo {
+  font-family: var(--font-logo), sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.18em !important;
+}

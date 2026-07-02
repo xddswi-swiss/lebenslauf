@@ -74,7 +74,7 @@ export const Footer: React.FC<FooterProps> = ({ activeColorIndex }) => {
         {/* Column 1: Eren Portfolio */}
         <div className="md:col-span-4 space-y-6 text-left">
           <div>
-            <h3 className="text-xl font-black text-[var(--text-main)] tracking-wider">
+            <h3 className="text-xl font-black text-[var(--text-main)] tracking-wider font-logo">
               EREN AYDIN
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-[var(--text-body)]">

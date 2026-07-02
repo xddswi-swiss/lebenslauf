@@ -148,7 +148,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
             href="#" 
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-xl font-black bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent"
+            className="text-xl font-black bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent font-logo"
           >
             EREN AYDIN
           </m.a>
@@ -247,7 +247,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
             >
               {/* Drawer Header */}
               <div className="flex items-center justify-between pb-5 border-b border-[var(--glass-border)] mb-6">
-                <span className="text-lg font-black bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent">
+                <span className="text-lg font-black bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent font-logo">
                   EREN AYDIN
                 </span>
 

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Roboto_Flex, PT_Serif } from "next/font/google";
+import { Roboto_Flex, PT_Serif, Syne } from "next/font/google";
 import "./globals.css";
 import "./bw-mode.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -14,6 +14,12 @@ const robotoFlex = Roboto_Flex({
 const ptSerif = PT_Serif({
   variable: "--font-serif",
   weight: ["400", "700"],
+  subsets: ["latin"],
+});
+
+const syne = Syne({
+  variable: "--font-logo",
+  weight: ["800"],
   subsets: ["latin"],
 });
 
@@ -37,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${robotoFlex.variable} ${ptSerif.variable} h-full antialiased bw-mode`}
+      className={`${robotoFlex.variable} ${ptSerif.variable} ${syne.variable} h-full antialiased bw-mode`}
       suppressHydrationWarning
     >
       <head />
@@ -52,4 +58,3 @@ export default function RootLayout({
     </html>
   );
 }
-
