@@ -30,7 +30,7 @@
 }
 
 /* Override borders, background, shadow and border radius for all UI elements to look like a draft drawing */
-.bw-mode .glass-card,
+.bw-mode .glass-card:not(.mobile-drawer *),
 .bw-mode header,
 .bw-mode footer,
 .bw-mode button:not(.bw-switch-container *),
