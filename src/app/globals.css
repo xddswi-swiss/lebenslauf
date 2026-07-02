@@ -360,52 +360,60 @@ body {
   color: #ffffff !important;
 }
 
-/* Light Theme Footer Override: Black Background, Yellow Text */
-:root:not(.dark) footer {
-  background-color: #000000 !important;
+/* Light Theme Footer Override: Yellow Background, Black Text */
+:root:not(.dark):not(.bw-mode) footer {
+  background-color: #eef200 !important; /* Pure solid yellow background */
   background-image: none !important;
-  border-top-color: rgba(238, 242, 0, 0.2) !important;
+  border-top-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-:root:not(.dark) footer a,
-:root:not(.dark) footer h3,
-:root:not(.dark) footer h4,
-:root:not(.dark) footer p,
-:root:not(.dark) footer span,
-:root:not(.dark) footer svg {
-  color: #eef200 !important;
+:root:not(.dark):not(.bw-mode) footer h3,
+:root:not(.dark):not(.bw-mode) footer h4,
+:root:not(.dark):not(.bw-mode) footer p,
+:root:not(.dark):not(.bw-mode) footer span {
+  color: #000000 !important;
 }
 
-:root:not(.dark) footer a:hover {
-  opacity: 0.8;
+:root:not(.dark):not(.bw-mode) footer a {
+  color: #000000 !important;
+  transition: opacity 0.2s ease !important;
 }
 
-/* Glass-cards (badges/socials) in footer */
-:root:not(.dark) footer .glass-card {
-  background-color: rgba(255, 255, 255, 0.05) !important;
-  border-color: rgba(238, 242, 0, 0.2) !important;
+:root:not(.dark):not(.bw-mode) footer a:hover {
+  opacity: 0.7 !important;
 }
 
-:root:not(.dark) footer .glass-card:hover {
-  border-color: #eef200 !important;
-  background-color: rgba(255, 255, 255, 0.1) !important;
+:root:not(.dark):not(.bw-mode) footer svg {
+  color: #000000 !important;
+}
+
+/* Glass-cards (badges/socials) in yellow footer */
+:root:not(.dark):not(.bw-mode) footer .glass-card {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #000000 !important;
+}
+
+:root:not(.dark):not(.bw-mode) footer .glass-card:hover {
+  border-color: #000000 !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
 /* Inner borders and dividers in footer */
-:root:not(.dark) footer .border-t {
-  border-color: rgba(238, 242, 0, 0.2) !important;
+:root:not(.dark):not(.bw-mode) footer .border-t {
+  border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Badge bullet points in footer */
-:root:not(.dark) footer span.rounded-full {
-  background: #eef200 !important;
+:root:not(.dark):not(.bw-mode) footer span.rounded-full {
+  background: #000000 !important;
 }
 
 /* Footer main logo bullet */
-:root:not(.dark) footer .rounded-full.bg-gradient-to-br {
-  background: #eef200 !important;
-  color: #000000 !important;
-  box-shadow: 0 4px 12px rgba(238, 242, 0, 0.2) !important;
+:root:not(.dark):not(.bw-mode) footer .rounded-full.bg-gradient-to-br {
+  background: #000000 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Dark Theme Footer Override: Navy Blue Background, White Text, Black EREN AYDIN Title */
@@ -469,6 +477,61 @@ body {
   background: #000000 !important;
   color: #ffffff !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Light Theme Header Override: Solid Yellow Background, Black Logo, Black Links */
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient {
+  background: #eef200 !important;
+  background-color: #eef200 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Make header logo EREN AYDIN black */
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient a.text-transparent {
+  background: none !important;
+  -webkit-text-fill-color: #000000 !important;
+  color: #000000 !important;
+}
+
+/* Make header navigation links black, hovering to opacity-70 */
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient nav a {
+  color: #000000 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient nav a:hover {
+  opacity: 0.7 !important;
+}
+
+/* Active language button in yellow header (black background, white text) */
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient button.bg-primary {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Inactive language buttons in yellow header (black text, hover to transparent black) */
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient button:not(.bg-primary):not(.bw-switch-container button):not(.glass-card) {
+  color: #000000 !important;
+  background-color: transparent !important;
+}
+
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient button:not(.bg-primary):not(.bw-switch-container button):not(.glass-card):hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  color: #000000 !important;
+}
+
+/* Mobile hamburger menu button in yellow header */
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient button.glass-card {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.4) !important;
+  color: #000000 !important;
+}
+
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient button.glass-card:hover {
+  border-color: #000000 !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  color: #000000 !important;
 }
 
 /* Dark Theme Header Override: Navy Blue Background, Black EREN AYDIN Logo, White Links */
