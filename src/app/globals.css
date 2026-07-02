@@ -408,14 +408,17 @@ body {
   box-shadow: 0 4px 12px rgba(238, 242, 0, 0.2) !important;
 }
 
-/* Dark Theme Footer Override: Black Background, White Text, Blue Accents */
+/* Dark Theme Footer Override: Electric Blue Background, White Text, Black EREN AYDIN Title */
 :root.dark footer {
-  background-color: #000000 !important;
+  background-color: #2563eb !important; /* Vibrant electric blue background */
   background-image: none !important;
-  border-top-color: rgba(59, 130, 246, 0.2) !important;
+  border-top-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-:root.dark footer h3,
+:root.dark footer h3 {
+  color: #000000 !important; /* "EREN AYDIN" logo text is black */
+}
+
 :root.dark footer h4,
 :root.dark footer p,
 :root.dark footer span {
@@ -428,37 +431,42 @@ body {
 }
 
 :root.dark footer a:hover {
-  color: #94a3b8 !important;
+  color: #000000 !important; /* Links turn black on hover */
 }
 
 :root.dark footer svg {
-  color: #3b82f6 !important;
+  color: #ffffff !important;
 }
 
-/* Glass-cards (badges/socials) in footer */
+/* Glass-cards (badges/socials) in dark blue footer */
 :root.dark footer .glass-card {
-  background-color: rgba(255, 255, 255, 0.05) !important;
-  border-color: rgba(59, 130, 246, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
 }
 
 :root.dark footer .glass-card:hover {
-  border-color: #3b82f6 !important;
-  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: #000000 !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+:root.dark footer .glass-card:hover svg,
+:root.dark footer .glass-card:hover span {
+  color: #000000 !important;
 }
 
 /* Inner borders and dividers in footer */
 :root.dark footer .border-t {
-  border-color: rgba(59, 130, 246, 0.2) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Badge bullet points in footer */
 :root.dark footer span.rounded-full {
-  background: #3b82f6 !important;
+  background: #ffffff !important;
 }
 
 /* Footer main logo bullet */
 :root.dark footer .rounded-full.bg-gradient-to-br {
-  background: #3b82f6 !important;
+  background: #000000 !important;
   color: #ffffff !important;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
 }
