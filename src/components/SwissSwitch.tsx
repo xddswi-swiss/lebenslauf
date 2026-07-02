@@ -43,25 +43,21 @@ export const SwissSwitch: React.FC = () => {
     }
   };
 
-  const toggleBwMode = () => {
-    const nextMode = !bwMode;
-    setBwMode(nextMode);
-    if (typeof window !== 'undefined') {
-      if (nextMode) {
+  const activateBwMode = () => {
+    if (!bwMode) {
+      setBwMode(true);
+      if (typeof window !== 'undefined') {
         document.documentElement.classList.add('bw-mode');
         localStorage.setItem('bw-mode', 'true');
-      } else {
-        document.documentElement.classList.remove('bw-mode');
-        localStorage.setItem('bw-mode', 'false');
+        window.dispatchEvent(new Event('bwModeChange'));
       }
-      window.dispatchEvent(new Event('bwModeChange'));
+      playClickSound(true);
     }
-    playClickSound(!nextMode);
   };
 
   return (
     <button
-      onClick={toggleBwMode}
+      onClick={activateBwMode}
       aria-label="Toggle Black and White Mode"
       className={`w-7 h-7 rounded-lg bg-white border transition-all cursor-pointer hover:scale-110 flex-shrink-0 ${
         bwMode
