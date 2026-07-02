@@ -46,7 +46,6 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
     { href: "#experience", label: t.nav.experience, icon: <FiBriefcase className="text-lg" /> },
     { href: "#skills", label: t.nav.skills, icon: <FiAward className="text-lg" /> },
     { href: "#details", label: t.nav.details, icon: <FiSliders className="text-lg" /> },
-    { href: "#guestbook", label: language === 'tr' ? 'Defter' : language === 'de' ? 'Gästebuch' : 'Guestbook', icon: <FiMessageSquare className="text-lg" /> },
     { href: "#contact", label: t.nav.contact, icon: <FiMail className="text-lg" /> }
   ];
 
