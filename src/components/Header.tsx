@@ -157,7 +157,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               <SwissSwitch />
 
               {/* Theme Selector (Yellow / Blue Squares) */}
-              <div className="flex gap-1 items-center">
+              <div className="flex gap-1 items-center bw-switch-container">
                 <button
                   onClick={() => theme !== 'light' && toggleTheme()}
                   aria-label="Light Theme"
@@ -181,7 +181,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               <SwissSwitch />
 
               {/* Theme Selector (Yellow / Blue Squares) */}
-              <div className="flex gap-1 items-center">
+              <div className="flex gap-1 items-center bw-switch-container">
                 <button
                   onClick={() => theme !== 'light' && toggleTheme()}
                   aria-label="Light Theme"
