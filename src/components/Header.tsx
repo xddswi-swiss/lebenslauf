@@ -169,10 +169,10 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
 
             <div className="hidden lg:flex items-center gap-1">
               <LanguageSwitcher />
-              <SwissSwitch />
 
-              {/* Theme Selector (Yellow / Blue Squares) */}
+              {/* Theme Selector (White / Yellow / Blue Squares) */}
               <div className="flex gap-1 items-center bw-switch-container">
+                <SwissSwitch />
                 <button
                   onClick={() => handleThemeSelect('light')}
                   aria-label="Light Theme"
@@ -192,11 +192,9 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
 
             {/* Mobile Menu Actions */}
             <div className="flex lg:hidden items-center gap-1">
-              {/* Swiss Light Switch (B&W Mode) */}
-              <SwissSwitch />
-
-              {/* Theme Selector (Yellow / Blue Squares) */}
+              {/* Theme Selector (White / Yellow / Blue Squares) */}
               <div className="flex gap-1 items-center bw-switch-container">
+                <SwissSwitch />
                 <button
                   onClick={() => handleThemeSelect('light')}
                   aria-label="Light Theme"

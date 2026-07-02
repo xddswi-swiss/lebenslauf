@@ -62,7 +62,7 @@ export const SwissSwitch: React.FC = () => {
       className={`w-7 h-7 rounded-lg bg-white border transition-all cursor-pointer hover:scale-110 flex-shrink-0 ${
         bwMode
           ? 'border-black dark:border-white border-2 scale-105 shadow-sm'
-          : 'border-zinc-300 dark:border-zinc-700 opacity-60'
+          : 'border-zinc-300 dark:border-zinc-700'
       }`}
     />
   );
