@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useLanguage } from '@/app/contexts/LanguageContext';
 import { Language } from '@/data/translations';
-import { FiGlobe, FiChevronDown } from 'react-icons/fi';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const languages = [
-  { code: 'de' as Language, label: 'Deutsch', flag: '🇩🇪' },
-  { code: 'tr' as Language, label: 'Türkçe', flag: '🇹🇷' },
-  { code: 'en' as Language, label: 'English', flag: '🇬🇧' }
+  { code: 'de' as Language, label: 'DE' },
+  { code: 'tr' as Language, label: 'TR' },
+  { code: 'en' as Language, label: 'EN' }
 ];
 
 interface LanguageSwitcherProps {
@@ -18,76 +16,24 @@ interface LanguageSwitcherProps {
 
 export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ inline = false }) => {
   const { language, setLanguage } = useLanguage();
-  const [isOpen, setIsOpen] = useState(false);
-
-  const currentLang = languages.find(lang => lang.code === language) || languages[0];
-
-  if (inline) {
-    return (
-      <div className="flex gap-1 rounded-2xl glass-card p-1 border border-[var(--glass-border)] w-full justify-between">
-        {languages.map((lang) => (
-          <button
-            key={lang.code}
-            onClick={() => setLanguage(lang.code)}
-            className={`flex items-center justify-center gap-1 px-2.5 py-2 rounded-xl text-xs font-bold transition-all flex-1 cursor-pointer ${
-              language === lang.code
-                ? 'bg-primary text-white shadow-sm'
-                : 'text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-violet-600/10'
-            }`}
-          >
-            <span className="text-sm md:text-base">{lang.flag}</span>
-            <span>{lang.code.toUpperCase()}</span>
-          </button>
-        ))}
-      </div>
-    );
-  }
 
   return (
-    <div className="relative">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full glass-card text-[var(--text-body)] hover:text-[var(--text-main)] transition-all cursor-pointer"
-      >
-        <FiGlobe className="text-violet-400 text-base" />
-        <span>{currentLang.flag} {currentLang.label}</span>
-        <FiChevronDown className={`text-[var(--text-muted)] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-      </button>
-
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Backdrop to close dropdown */}
-            <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
-            
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.15 }}
-              className="absolute right-0 mt-2 w-40 rounded-2xl glass-panel border border-[var(--glass-border)] shadow-2xl z-20 overflow-hidden"
-            >
-              <div className="py-1">
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => {
-                      setLanguage(lang.code);
-                      setIsOpen(false);
-                    }}
-                    className={`flex items-center w-full px-4 py-3 text-left text-sm transition-all hover:bg-violet-600/20 cursor-pointer ${
-                      language === lang.code ? 'text-violet-400 font-semibold bg-violet-600/10' : 'text-[var(--text-body)] hover:text-[var(--text-main)]'
-                    }`}
-                  >
-                    <span className="mr-2 text-base">{lang.flag}</span>
-                    <span>{lang.label}</span>
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+    <div className={`flex gap-1 p-0.5 rounded-full bg-zinc-800/10 dark:bg-zinc-200/5 border border-[var(--glass-border)] text-[10px] font-extrabold tracking-wider w-fit ${inline ? 'w-full justify-between' : ''}`}>
+      {languages.map((lang) => (
+        <button
+          key={lang.code}
+          onClick={() => setLanguage(lang.code)}
+          className={`px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+            inline ? 'flex-1 justify-center flex' : ''
+          } ${
+            language === lang.code
+              ? 'bg-primary text-white shadow-sm'
+              : 'text-[var(--text-body)] hover:text-[var(--text-main)]'
+          }`}
+        >
+          {lang.label}
+        </button>
+      ))}
     </div>
   );
 };
