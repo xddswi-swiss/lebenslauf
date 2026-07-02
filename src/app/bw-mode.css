@@ -307,6 +307,17 @@
   filter: none !important;
 }
 
+/* Progress Bar in B&W mode (white theme) */
+.bw-mode .h-2\.5.rounded-full {
+  background-color: #ffffff !important;
+  border: 1px solid #000000 !important;
+}
+
+.bw-mode .h-2\.5.rounded-full > div {
+  background: #000000 !important;
+  background-color: #000000 !important;
+}
+
 
 
 
