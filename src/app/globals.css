@@ -149,7 +149,7 @@
 
 :root {
   /* Default: Light Theme variables mapping (Yellow, White, Black) */
-  --background: #eef200;
+  --background: #e6ea00;
   --foreground: #000000;
   --card: #ffffff;
   --card-border: rgba(0, 0, 0, 0.08);
