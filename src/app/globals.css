@@ -409,64 +409,119 @@ body {
 }
 
 /* Dark Theme Footer Override: Electric Blue Background, White Text, Black EREN AYDIN Title */
-:root.dark footer {
+:root.dark:not(.bw-mode) footer {
   background-color: #2563eb !important; /* Vibrant electric blue background */
   background-image: none !important;
   border-top-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-:root.dark footer h3 {
+:root.dark:not(.bw-mode) footer h3 {
   color: #000000 !important; /* "EREN AYDIN" logo text is black */
 }
 
-:root.dark footer h4,
-:root.dark footer p,
-:root.dark footer span {
+:root.dark:not(.bw-mode) footer h4,
+:root.dark:not(.bw-mode) footer p,
+:root.dark:not(.bw-mode) footer span {
   color: #ffffff !important;
 }
 
-:root.dark footer a {
+:root.dark:not(.bw-mode) footer a {
   color: #ffffff !important;
   transition: color 0.2s ease !important;
 }
 
-:root.dark footer a:hover {
+:root.dark:not(.bw-mode) footer a:hover {
   color: #000000 !important; /* Links turn black on hover */
 }
 
-:root.dark footer svg {
+:root.dark:not(.bw-mode) footer svg {
   color: #ffffff !important;
 }
 
 /* Glass-cards (badges/socials) in dark blue footer */
-:root.dark footer .glass-card {
+:root.dark:not(.bw-mode) footer .glass-card {
   background-color: rgba(255, 255, 255, 0.1) !important;
   border-color: rgba(0, 0, 0, 0.15) !important;
 }
 
-:root.dark footer .glass-card:hover {
+:root.dark:not(.bw-mode) footer .glass-card:hover {
   border-color: #000000 !important;
   background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
-:root.dark footer .glass-card:hover svg,
-:root.dark footer .glass-card:hover span {
+:root.dark:not(.bw-mode) footer .glass-card:hover svg,
+:root.dark:not(.bw-mode) footer .glass-card:hover span {
   color: #000000 !important;
 }
 
 /* Inner borders and dividers in footer */
-:root.dark footer .border-t {
+:root.dark:not(.bw-mode) footer .border-t {
   border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Badge bullet points in footer */
-:root.dark footer span.rounded-full {
+:root.dark:not(.bw-mode) footer span.rounded-full {
   background: #ffffff !important;
 }
 
 /* Footer main logo bullet */
-:root.dark footer .rounded-full.bg-gradient-to-br {
+:root.dark:not(.bw-mode) footer .rounded-full.bg-gradient-to-br {
   background: #000000 !important;
   color: #ffffff !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Dark Theme Header Override: Electric Blue Background, Black EREN AYDIN Logo, White Links */
+:root.dark:not(.bw-mode) header.header-glass-gradient {
+  background: #2563eb !important;
+  background-color: #2563eb !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Make header logo EREN AYDIN black */
+:root.dark:not(.bw-mode) header.header-glass-gradient a.text-transparent {
+  background: none !important;
+  -webkit-text-fill-color: #000000 !important;
+  color: #000000 !important;
+}
+
+/* Make header navigation links white, hovering to black */
+:root.dark:not(.bw-mode) header.header-glass-gradient nav a {
+  color: #ffffff !important;
+  transition: color 0.2s ease !important;
+}
+
+:root.dark:not(.bw-mode) header.header-glass-gradient nav a:hover {
+  color: #000000 !important;
+}
+
+/* Active language button in dark blue header (black background, white text) */
+:root.dark:not(.bw-mode) header.header-glass-gradient button.bg-primary {
+  background-color: #000000 !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Inactive language buttons in dark blue header (white text, turns black on hover) */
+:root.dark:not(.bw-mode) header.header-glass-gradient button:not(.bg-primary):not(.bw-switch-container button):not(.glass-card) {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+:root.dark:not(.bw-mode) header.header-glass-gradient button:not(.bg-primary):not(.bw-switch-container button):not(.glass-card):hover {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  color: #000000 !important;
+}
+
+/* Mobile hamburger menu button in dark blue header */
+:root.dark:not(.bw-mode) header.header-glass-gradient button.glass-card {
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+:root.dark:not(.bw-mode) header.header-glass-gradient button.glass-card:hover {
+  border-color: #000000 !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  color: #000000 !important;
 }
