@@ -261,9 +261,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               <div className="pt-6 border-t border-[var(--glass-border)] mt-auto space-y-6">
                 {/* Language & B&W Switcher */}
                 <div className="flex items-center justify-center gap-1 w-full">
-                  <div className="flex-1">
-                    <LanguageSwitcher inline />
-                  </div>
+                  <LanguageSwitcher />
                   <SwissSwitch />
                 </div>
 

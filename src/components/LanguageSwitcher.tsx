@@ -18,14 +18,12 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ inline = fal
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className={`flex gap-1 text-[10px] font-extrabold tracking-wider w-fit ${inline ? 'w-full justify-between' : ''}`}>
+    <div className="flex gap-1 text-[10px] font-extrabold tracking-wider w-fit select-none">
       {languages.map((lang) => (
         <button
           key={lang.code}
           onClick={() => setLanguage(lang.code)}
           className={`w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-300 cursor-pointer ${
-            inline ? 'flex-1' : ''
-          } ${
             language === lang.code
               ? 'bg-primary text-white shadow-sm font-black'
               : 'text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-zinc-800/5 dark:hover:bg-zinc-200/5'
