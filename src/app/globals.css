@@ -608,48 +608,54 @@ body {
 :root.dark:not(.bw-mode) .mobile-drawer h3,
 :root.dark:not(.bw-mode) .mobile-drawer p,
 :root.dark:not(.bw-mode) .mobile-drawer span:not(.text-transparent) {
-  color: #ffffff !important;
+  color: #000000 !important;
 }
 
 :root.dark:not(.bw-mode) .mobile-drawer a {
-  color: #ffffff !important;
-  transition: color 0.2s ease !important;
+  color: #000000 !important;
+  transition: opacity 0.2s ease !important;
 }
 
 :root.dark:not(.bw-mode) .mobile-drawer a:hover {
-  color: #000000 !important;
+  opacity: 0.7 !important;
 }
 
 :root.dark:not(.bw-mode) .mobile-drawer svg {
-  color: #ffffff !important;
+  color: #000000 !important;
 }
 
+/* Make link cards transparent (just text & icons on blue) */
 :root.dark:not(.bw-mode) .mobile-drawer .glass-card {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  border-color: rgba(0, 0, 0, 0.15) !important;
-  color: #ffffff !important;
+  background-color: transparent !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  color: #000000 !important;
 }
 
 :root.dark:not(.bw-mode) .mobile-drawer .glass-card:hover {
-  border-color: #000000 !important;
   background-color: rgba(0, 0, 0, 0.05) !important;
+  border-color: transparent !important;
 }
 
-:root.dark:not(.bw-mode) .mobile-drawer .glass-card:hover svg,
-:root.dark:not(.bw-mode) .mobile-drawer .glass-card:hover span {
-  color: #000000 !important;
-}
-
+/* Close button and other buttons inside drawer */
 :root.dark:not(.bw-mode) .mobile-drawer button.glass-card {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  border-color: rgba(0, 0, 0, 0.15) !important;
-  color: #ffffff !important;
+  background-color: transparent !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  color: #000000 !important;
 }
 
 :root.dark:not(.bw-mode) .mobile-drawer button.glass-card:hover {
-  border-color: #000000 !important;
   background-color: rgba(0, 0, 0, 0.05) !important;
   color: #000000 !important;
+}
+
+/* Dividers */
+:root.dark:not(.bw-mode) .mobile-drawer .border-b,
+:root.dark:not(.bw-mode) .mobile-drawer .border-t {
+  border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Mobile Drawer - Black & White Theme Override */
@@ -662,4 +668,32 @@ body {
 :root.bw-mode .mobile-drawer * {
   color: #000000 !important;
   border-color: #000000 !important;
+}
+
+:root.bw-mode .mobile-drawer .glass-card {
+  background-color: transparent !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+:root.bw-mode .mobile-drawer .glass-card:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  border-color: transparent !important;
+}
+
+:root.bw-mode .mobile-drawer button.glass-card {
+  background-color: transparent !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+:root.bw-mode .mobile-drawer button.glass-card:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+:root.bw-mode .mobile-drawer .border-b,
+:root.bw-mode .mobile-drawer .border-t {
+  border-color: rgba(0, 0, 0, 0.2) !important;
 }
