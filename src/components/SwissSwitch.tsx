@@ -9,6 +9,16 @@ export const SwissSwitch: React.FC = () => {
     if (typeof window !== 'undefined') {
       const active = document.documentElement.classList.contains('bw-mode');
       setBwMode(active);
+
+      const handleBwChange = () => {
+        const currentActive = document.documentElement.classList.contains('bw-mode');
+        setBwMode(currentActive);
+      };
+
+      window.addEventListener('bwModeChange', handleBwChange);
+      return () => {
+        window.removeEventListener('bwModeChange', handleBwChange);
+      };
     }
   }, []);
 
@@ -44,6 +54,7 @@ export const SwissSwitch: React.FC = () => {
         document.documentElement.classList.remove('bw-mode');
         localStorage.setItem('bw-mode', 'false');
       }
+      window.dispatchEvent(new Event('bwModeChange'));
     }
     playClickSound(!nextMode);
   };

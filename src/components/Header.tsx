@@ -36,6 +36,21 @@ export interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
   const { t, language } = useLanguage();
   const { theme, toggleTheme } = useTheme();
+
+  const handleThemeSelect = (targetTheme: 'light' | 'dark') => {
+    if (typeof window !== 'undefined') {
+      const isBw = document.documentElement.classList.contains('bw-mode');
+      if (isBw) {
+        document.documentElement.classList.remove('bw-mode');
+        localStorage.setItem('bw-mode', 'false');
+        window.dispatchEvent(new Event('bwModeChange'));
+      }
+    }
+    if (theme !== targetTheme) {
+      toggleTheme();
+    }
+  };
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [headerStyle, setHeaderStyle] = useState<React.CSSProperties>({});
   const [drawerStyle, setDrawerStyle] = useState<React.CSSProperties>({});
@@ -159,14 +174,14 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               {/* Theme Selector (Yellow / Blue Squares) */}
               <div className="flex gap-1 items-center bw-switch-container">
                 <button
-                  onClick={() => theme !== 'light' && toggleTheme()}
+                  onClick={() => handleThemeSelect('light')}
                   aria-label="Light Theme"
                   className={`w-7 h-7 rounded-lg bg-[#eef200] border transition-all cursor-pointer hover:scale-110 ${
                     theme === 'light' ? 'border-black border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700 opacity-60'
                   }`}
                 />
                 <button
-                  onClick={() => theme !== 'dark' && toggleTheme()}
+                  onClick={() => handleThemeSelect('dark')}
                   aria-label="Dark Theme"
                   className={`w-7 h-7 rounded-lg bg-[#2563eb] border transition-all cursor-pointer hover:scale-110 ${
                     theme === 'dark' ? 'border-white border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700 opacity-60'
@@ -183,14 +198,14 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               {/* Theme Selector (Yellow / Blue Squares) */}
               <div className="flex gap-1 items-center bw-switch-container">
                 <button
-                  onClick={() => theme !== 'light' && toggleTheme()}
+                  onClick={() => handleThemeSelect('light')}
                   aria-label="Light Theme"
                   className={`w-7 h-7 rounded-lg bg-[#eef200] border transition-all cursor-pointer hover:scale-110 ${
                     theme === 'light' ? 'border-black border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700 opacity-60'
                   }`}
                 />
                 <button
-                  onClick={() => theme !== 'dark' && toggleTheme()}
+                  onClick={() => handleThemeSelect('dark')}
                   aria-label="Dark Theme"
                   className={`w-7 h-7 rounded-lg bg-[#2563eb] border transition-all cursor-pointer hover:scale-110 ${
                     theme === 'dark' ? 'border-white border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700 opacity-60'
