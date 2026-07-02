@@ -624,18 +624,18 @@ body {
 
 :root.dark:not(.bw-mode) .mobile-drawer span.text-transparent {
   background: none !important;
-  -webkit-text-fill-color: #000000 !important;
-  color: #000000 !important;
+  -webkit-text-fill-color: #ffffff !important;
+  color: #ffffff !important;
 }
 
 :root.dark:not(.bw-mode) .mobile-drawer h3,
 :root.dark:not(.bw-mode) .mobile-drawer p,
 :root.dark:not(.bw-mode) .mobile-drawer span:not(.text-transparent) {
-  color: #000000 !important;
+  color: #ffffff !important;
 }
 
 :root.dark:not(.bw-mode) .mobile-drawer a {
-  color: #000000 !important;
+  color: #ffffff !important;
   transition: opacity 0.2s ease !important;
 }
 
@@ -644,12 +644,30 @@ body {
 }
 
 :root.dark:not(.bw-mode) .mobile-drawer svg {
-  color: #000000 !important;
+  color: #ffffff !important;
 }
 
 :root.dark:not(.bw-mode) .mobile-drawer .border-b,
 :root.dark:not(.bw-mode) .mobile-drawer .border-t {
-  border-color: rgba(0, 0, 0, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Active language button in dark blue mobile drawer */
+:root.dark:not(.bw-mode) .mobile-drawer button.bg-primary {
+  background-color: #172554 !important; /* Darker navy blue (blue-950) */
+  background: #172554 !important;
+  color: #ffffff !important;
+}
+
+/* Inactive language buttons in dark blue mobile drawer */
+:root.dark:not(.bw-mode) .mobile-drawer button:not(.bg-primary):not(.bw-switch-container button) {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+:root.dark:not(.bw-mode) .mobile-drawer button:not(.bg-primary):not(.bw-switch-container button):hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
 }
 
 /* Mobile Drawer - Black & White Theme Overrides */
