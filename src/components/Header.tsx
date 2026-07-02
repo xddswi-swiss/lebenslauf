@@ -243,7 +243,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 280, damping: 28 }}
               style={drawerStyle}
-              className="fixed right-0 top-0 bottom-0 w-[85%] max-w-[340px] z-[70] h-full shadow-2xl flex flex-col p-6 border-l border-[var(--glass-border)] lg:hidden"
+              className="mobile-drawer fixed right-0 top-0 bottom-0 w-[85%] max-w-[340px] z-[70] h-full shadow-2xl flex flex-col p-6 border-l border-[var(--glass-border)] lg:hidden"
             >
               {/* Drawer Header */}
               <div className="flex items-center justify-between pb-5 border-b border-[var(--glass-border)] mb-6">

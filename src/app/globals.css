@@ -525,3 +525,118 @@ body {
   background-color: rgba(0, 0, 0, 0.05) !important;
   color: #000000 !important;
 }
+
+/* Mobile Drawer - Yellow Theme Override */
+:root:not(.dark):not(.bw-mode) .mobile-drawer {
+  background: #eef200 !important;
+  background-color: #eef200 !important;
+  border-left-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+:root:not(.dark):not(.bw-mode) .mobile-drawer span.text-transparent {
+  background: none !important;
+  -webkit-text-fill-color: #000000 !important;
+  color: #000000 !important;
+}
+
+:root:not(.dark):not(.bw-mode) .mobile-drawer h3,
+:root:not(.dark):not(.bw-mode) .mobile-drawer p,
+:root:not(.dark):not(.bw-mode) .mobile-drawer span:not(.text-transparent) {
+  color: #000000 !important;
+}
+
+:root:not(.dark):not(.bw-mode) .mobile-drawer a {
+  color: #000000 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+:root:not(.dark):not(.bw-mode) .mobile-drawer a:hover {
+  opacity: 0.7 !important;
+}
+
+:root:not(.dark):not(.bw-mode) .mobile-drawer svg {
+  color: #000000 !important;
+}
+
+:root:not(.dark):not(.bw-mode) .mobile-drawer .glass-card {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #000000 !important;
+}
+
+:root:not(.dark):not(.bw-mode) .mobile-drawer button.glass-card {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Mobile Drawer - Dark Blue Theme Override */
+:root.dark:not(.bw-mode) .mobile-drawer {
+  background: #2563eb !important;
+  background-color: #2563eb !important;
+  border-left-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+:root.dark:not(.bw-mode) .mobile-drawer span.text-transparent {
+  background: none !important;
+  -webkit-text-fill-color: #000000 !important;
+  color: #000000 !important;
+}
+
+:root.dark:not(.bw-mode) .mobile-drawer h3,
+:root.dark:not(.bw-mode) .mobile-drawer p,
+:root.dark:not(.bw-mode) .mobile-drawer span:not(.text-transparent) {
+  color: #ffffff !important;
+}
+
+:root.dark:not(.bw-mode) .mobile-drawer a {
+  color: #ffffff !important;
+  transition: color 0.2s ease !important;
+}
+
+:root.dark:not(.bw-mode) .mobile-drawer a:hover {
+  color: #000000 !important;
+}
+
+:root.dark:not(.bw-mode) .mobile-drawer svg {
+  color: #ffffff !important;
+}
+
+:root.dark:not(.bw-mode) .mobile-drawer .glass-card {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  color: #ffffff !important;
+}
+
+:root.dark:not(.bw-mode) .mobile-drawer .glass-card:hover {
+  border-color: #000000 !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+:root.dark:not(.bw-mode) .mobile-drawer .glass-card:hover svg,
+:root.dark:not(.bw-mode) .mobile-drawer .glass-card:hover span {
+  color: #000000 !important;
+}
+
+:root.dark:not(.bw-mode) .mobile-drawer button.glass-card {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  color: #ffffff !important;
+}
+
+:root.dark:not(.bw-mode) .mobile-drawer button.glass-card:hover {
+  border-color: #000000 !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  color: #000000 !important;
+}
+
+/* Mobile Drawer - Black & White Theme Override */
+:root.bw-mode .mobile-drawer {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border-left: 2px solid #000000 !important;
+}
+
+:root.bw-mode .mobile-drawer * {
+  color: #000000 !important;
+  border-color: #000000 !important;
+}
