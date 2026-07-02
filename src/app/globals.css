@@ -359,3 +359,51 @@ body {
   background-color: #f43f5e !important;
   color: #ffffff !important;
 }
+
+/* Light Theme Footer Override: Black Background, Yellow Text */
+:root:not(.dark) footer {
+  background-color: #000000 !important;
+  background-image: none !important;
+  border-top-color: rgba(238, 242, 0, 0.2) !important;
+}
+
+:root:not(.dark) footer a,
+:root:not(.dark) footer h3,
+:root:not(.dark) footer h4,
+:root:not(.dark) footer p,
+:root:not(.dark) footer span,
+:root:not(.dark) footer svg {
+  color: #eef200 !important;
+}
+
+:root:not(.dark) footer a:hover {
+  opacity: 0.8;
+}
+
+/* Glass-cards (badges/socials) in footer */
+:root:not(.dark) footer .glass-card {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(238, 242, 0, 0.2) !important;
+}
+
+:root:not(.dark) footer .glass-card:hover {
+  border-color: #eef200 !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Inner borders and dividers in footer */
+:root:not(.dark) footer .border-t {
+  border-color: rgba(238, 242, 0, 0.2) !important;
+}
+
+/* Badge bullet points in footer */
+:root:not(.dark) footer span.rounded-full {
+  background: #eef200 !important;
+}
+
+/* Footer main logo bullet */
+:root:not(.dark) footer .rounded-full.bg-gradient-to-br {
+  background: #eef200 !important;
+  color: #000000 !important;
+  box-shadow: 0 4px 12px rgba(238, 242, 0, 0.2) !important;
+}
