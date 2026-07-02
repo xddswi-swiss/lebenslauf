@@ -33,7 +33,7 @@
 .bw-mode .glass-card,
 .bw-mode header,
 .bw-mode footer,
-.bw-mode button,
+.bw-mode button:not(.bw-switch-container *),
 .bw-mode input,
 .bw-mode textarea,
 .bw-mode .timeline-card {
@@ -94,7 +94,7 @@
 }
 
 /* Inactive buttons default state (white background with black text) */
-.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white) {
+.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):not(.bw-switch-container *) {
   color: #000000 !important;
   background: #ffffff !important;
   background-color: #ffffff !important;
@@ -102,7 +102,7 @@
 }
 
 /* Inactive buttons hover state (invert to black background, white text) */
-.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover {
+.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):not(.bw-switch-container *):hover {
   color: #ffffff !important;
   background: #000000 !important;
   background-color: #000000 !important;
