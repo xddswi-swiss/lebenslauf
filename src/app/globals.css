@@ -176,31 +176,31 @@
 }
 
 :root.dark {
-  /* Dark Theme variables - User config: black, crimson, maroon */
-  --background: var(--color-user-dark-bg);
-  --foreground: var(--color-user-dark-fg);
-  --card: #0a0a0a;
-  --card-border: rgba(255, 59, 92, 0.12);
-  --primary: #FF3B5C;
-  --primary-glow: rgba(255, 59, 92, 0.15);
-  --secondary: var(--color-user-dark-maroon);
-  --secondary-glow: rgba(104, 2, 15, 0.20);
-  --accent: var(--color-user-dark-red);
-  --muted: #b0b0b0;
+  /* Dark Theme variables - Dark Blue, Slate, Electric Blue */
+  --background: #020617;
+  --foreground: #f8fafc;
+  --card: #0b0f19;
+  --card-border: rgba(59, 130, 246, 0.12);
+  --primary: #2563eb;
+  --primary-glow: rgba(37, 99, 235, 0.15);
+  --secondary: #1e3a8a;
+  --secondary-glow: rgba(30, 58, 138, 0.20);
+  --accent: #3b82f6;
+  --muted: #94a3b8;
   
-  --text-main: var(--color-user-dark-fg);
-  --text-body: #e5e5e5;
-  --text-muted: var(--muted);
+  --text-main: #f8fafc;
+  --text-body: #e2e8f0;
+  --text-muted: #94a3b8;
   
-  --glass-bg: rgba(3, 3, 3, 0.82);
-  --glass-card-bg: rgba(12, 12, 12, 0.5);
-  --glass-border: rgba(255, 59, 92, 0.50);
-  --grid-color: rgba(255, 59, 92, 0.03);
-  --badge-bg: rgba(255, 59, 92, 0.10);
-  --badge-border: rgba(255, 59, 92, 0.20);
+  --glass-bg: rgba(2, 6, 23, 0.85);
+  --glass-card-bg: rgba(11, 15, 25, 0.70);
+  --glass-border: rgba(59, 130, 246, 0.40);
+  --grid-color: rgba(59, 130, 246, 0.03);
+  --badge-bg: rgba(59, 130, 246, 0.10);
+  --badge-border: rgba(59, 130, 246, 0.15);
 
-  --title-gradient-from: #FF3B5C;
-  --title-gradient-to: #FFA3B1;
+  --title-gradient-from: #3b82f6;
+  --title-gradient-to: #60a5fa;
 }
 
 body {
@@ -406,4 +406,52 @@ body {
   background: #eef200 !important;
   color: #000000 !important;
   box-shadow: 0 4px 12px rgba(238, 242, 0, 0.2) !important;
+}
+
+/* Dark Theme Footer Override: Black Background, Electric Blue Text */
+:root.dark footer {
+  background-color: #000000 !important;
+  background-image: none !important;
+  border-top-color: rgba(59, 130, 246, 0.2) !important;
+}
+
+:root.dark footer a,
+:root.dark footer h3,
+:root.dark footer h4,
+:root.dark footer p,
+:root.dark footer span,
+:root.dark footer svg {
+  color: #3b82f6 !important;
+}
+
+:root.dark footer a:hover {
+  opacity: 0.8;
+}
+
+/* Glass-cards (badges/socials) in footer */
+:root.dark footer .glass-card {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(59, 130, 246, 0.2) !important;
+}
+
+:root.dark footer .glass-card:hover {
+  border-color: #3b82f6 !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Inner borders and dividers in footer */
+:root.dark footer .border-t {
+  border-color: rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Badge bullet points in footer */
+:root.dark footer span.rounded-full {
+  background: #3b82f6 !important;
+}
+
+/* Footer main logo bullet */
+:root.dark footer .rounded-full.bg-gradient-to-br {
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2) !important;
 }
