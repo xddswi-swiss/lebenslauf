@@ -155,12 +155,12 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
 
           {/* Desktop Navigation & Actions */}
           <div className="flex items-center gap-4">
-            <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold text-[var(--text-muted)]">
+            <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold">
               {navLinks.map((link) => (
                 <a 
                   key={link.href} 
                   href={link.href} 
-                  className="hover:text-[var(--text-main)] transition-colors"
+                  className="text-[var(--text-main)] hover:text-[var(--text-muted)] transition-colors"
                 >
                   {link.label}
                 </a>
