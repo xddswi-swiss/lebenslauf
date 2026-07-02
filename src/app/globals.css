@@ -408,24 +408,31 @@ body {
   box-shadow: 0 4px 12px rgba(238, 242, 0, 0.2) !important;
 }
 
-/* Dark Theme Footer Override: Black Background, Electric Blue Text */
+/* Dark Theme Footer Override: Black Background, White Text, Blue Accents */
 :root.dark footer {
   background-color: #000000 !important;
   background-image: none !important;
   border-top-color: rgba(59, 130, 246, 0.2) !important;
 }
 
-:root.dark footer a,
 :root.dark footer h3,
 :root.dark footer h4,
 :root.dark footer p,
-:root.dark footer span,
-:root.dark footer svg {
-  color: #3b82f6 !important;
+:root.dark footer span {
+  color: #ffffff !important;
+}
+
+:root.dark footer a {
+  color: #ffffff !important;
+  transition: color 0.2s ease !important;
 }
 
 :root.dark footer a:hover {
-  opacity: 0.8;
+  color: #3b82f6 !important;
+}
+
+:root.dark footer svg {
+  color: #3b82f6 !important;
 }
 
 /* Glass-cards (badges/socials) in footer */
