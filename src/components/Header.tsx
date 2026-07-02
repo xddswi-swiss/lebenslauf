@@ -177,14 +177,14 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                   onClick={() => handleThemeSelect('light')}
                   aria-label="Light Theme"
                   className={`w-7 h-7 rounded-lg bg-[#eef200] border transition-all cursor-pointer hover:scale-110 ${
-                    theme === 'light' ? 'border-black border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700 opacity-60'
+                    theme === 'light' ? 'border-black border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700'
                   }`}
                 />
                 <button
                   onClick={() => handleThemeSelect('dark')}
                   aria-label="Dark Theme"
                   className={`w-7 h-7 rounded-lg bg-[#2563eb] border transition-all cursor-pointer hover:scale-110 ${
-                    theme === 'dark' ? 'border-white border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700 opacity-60'
+                    theme === 'dark' ? 'border-white border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700'
                   }`}
                 />
               </div>
@@ -199,14 +199,14 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                   onClick={() => handleThemeSelect('light')}
                   aria-label="Light Theme"
                   className={`w-7 h-7 rounded-lg bg-[#eef200] border transition-all cursor-pointer hover:scale-110 ${
-                    theme === 'light' ? 'border-black border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700 opacity-60'
+                    theme === 'light' ? 'border-black border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700'
                   }`}
                 />
                 <button
                   onClick={() => handleThemeSelect('dark')}
                   aria-label="Dark Theme"
                   className={`w-7 h-7 rounded-lg bg-[#2563eb] border transition-all cursor-pointer hover:scale-110 ${
-                    theme === 'dark' ? 'border-white border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700 opacity-60'
+                    theme === 'dark' ? 'border-white border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700'
                   }`}
                 />
               </div>
