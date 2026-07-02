@@ -181,7 +181,7 @@
   --foreground: #f8fafc;
   --card: #0b0f19;
   --card-border: rgba(59, 130, 246, 0.12);
-  --primary: #2563eb;
+  --primary: #1e3a8a;
   --primary-glow: rgba(37, 99, 235, 0.15);
   --secondary: #1e3a8a;
   --secondary-glow: rgba(30, 58, 138, 0.20);
@@ -408,9 +408,9 @@ body {
   box-shadow: 0 4px 12px rgba(238, 242, 0, 0.2) !important;
 }
 
-/* Dark Theme Footer Override: Electric Blue Background, White Text, Black EREN AYDIN Title */
+/* Dark Theme Footer Override: Navy Blue Background, White Text, Black EREN AYDIN Title */
 :root.dark:not(.bw-mode) footer {
-  background-color: #2563eb !important; /* Vibrant electric blue background */
+  background-color: #1e3a8a !important; /* Premium navy blue background */
   background-image: none !important;
   border-top-color: rgba(0, 0, 0, 0.1) !important;
 }
@@ -471,10 +471,10 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Dark Theme Header Override: Electric Blue Background, Black EREN AYDIN Logo, White Links */
+/* Dark Theme Header Override: Navy Blue Background, Black EREN AYDIN Logo, White Links */
 :root.dark:not(.bw-mode) header.header-glass-gradient {
-  background: #2563eb !important;
-  background-color: #2563eb !important;
+  background: #1e3a8a !important; /* Deeper navy blue background */
+  background-color: #1e3a8a !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
@@ -495,10 +495,10 @@ body {
   color: #000000 !important;
 }
 
-/* Active language button in dark blue header (black background, white text) */
+/* Active language button in dark blue header (darker navy background, white text) */
 :root.dark:not(.bw-mode) header.header-glass-gradient button.bg-primary {
-  background-color: #000000 !important;
-  background: #000000 !important;
+  background-color: #172554 !important; /* Darker navy blue (blue-950) */
+  background: #172554 !important;
   color: #ffffff !important;
 }
 
@@ -616,8 +616,8 @@ body {
 
 /* Mobile Drawer - Dark Blue Theme Overrides */
 :root.dark:not(.bw-mode) .mobile-drawer {
-  background: #2563eb !important;
-  background-color: #2563eb !important;
+  background: #1e3a8a !important;
+  background-color: #1e3a8a !important;
   border-left: none !important;
   border-left-width: 0px !important;
 }
