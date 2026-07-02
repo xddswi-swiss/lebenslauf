@@ -152,24 +152,22 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               ))}
             </nav>
 
-            <div className="hidden lg:flex items-center gap-2.5">
+            <div className="hidden lg:flex items-center gap-1">
               <LanguageSwitcher />
-              <div className="w-[1px] h-3 bg-[var(--glass-border)] opacity-50" />
               <SwissSwitch />
-              <div className="w-[1px] h-3 bg-[var(--glass-border)] opacity-50" />
 
               {/* Theme Toggle Button */}
               <button
                 onClick={toggleTheme}
                 aria-label="Toggle Theme"
-                className="p-1.5 text-[var(--text-body)] hover:text-[var(--text-main)] transition-all cursor-pointer hover:scale-115 flex items-center justify-center"
+                className="w-7 h-7 flex items-center justify-center rounded-lg text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-zinc-800/5 dark:hover:bg-zinc-200/5 transition-all cursor-pointer hover:scale-110"
               >
                 {theme === 'dark' ? <FiSun className="text-base" /> : <FiMoon className="text-base" />}
               </button>
             </div>
 
             {/* Mobile Menu Actions */}
-            <div className="flex lg:hidden items-center gap-3">
+            <div className="flex lg:hidden items-center gap-1">
               {/* Swiss Light Switch (B&W Mode) */}
               <SwissSwitch />
 
@@ -177,7 +175,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               <button
                 onClick={toggleTheme}
                 aria-label="Toggle Theme"
-                className="p-1.5 text-[var(--text-body)] hover:text-[var(--text-main)] transition-all cursor-pointer hover:scale-115 flex items-center justify-center"
+                className="w-7 h-7 flex items-center justify-center rounded-lg text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-zinc-800/5 dark:hover:bg-zinc-200/5 transition-all cursor-pointer hover:scale-110"
               >
                 {theme === 'dark' ? <FiSun className="text-base" /> : <FiMoon className="text-base" />}
               </button>
@@ -186,7 +184,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
                 aria-label="Open Mobile Menu"
-                className="p-2.5 rounded-full glass-card text-[var(--text-body)] hover:text-[var(--text-main)] transition-all cursor-pointer"
+                className="p-2.5 rounded-full glass-card text-[var(--text-body)] hover:text-[var(--text-main)] transition-all cursor-pointer ml-1"
               >
                 <FiMenu className="text-base" />
               </button>
@@ -262,7 +260,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               {/* Drawer Footer */}
               <div className="pt-6 border-t border-[var(--glass-border)] mt-auto space-y-6">
                 {/* Language & B&W Switcher */}
-                <div className="flex items-center justify-center gap-2 w-full">
+                <div className="flex items-center justify-center gap-1 w-full">
                   <div className="flex-1">
                     <LanguageSwitcher inline />
                   </div>

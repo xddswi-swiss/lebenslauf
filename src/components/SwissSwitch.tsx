@@ -51,20 +51,20 @@ export const SwissSwitch: React.FC = () => {
     <div className="flex gap-0.5 text-[10px] font-extrabold tracking-wider w-fit select-none z-30">
       <button
         onClick={() => setMode(false)}
-        className={`px-2.5 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+        className={`w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-300 cursor-pointer ${
           !bwMode
-            ? 'bg-primary text-white shadow-sm'
-            : 'text-[var(--text-body)] hover:text-[var(--text-main)]'
+            ? 'bg-primary text-white shadow-sm font-black'
+            : 'text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-zinc-800/5 dark:hover:bg-zinc-200/5'
         }`}
       >
         ON
       </button>
       <button
         onClick={() => setMode(true)}
-        className={`px-2.5 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+        className={`w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-300 cursor-pointer ${
           bwMode
-            ? 'bg-primary text-white shadow-sm'
-            : 'text-[var(--text-body)] hover:text-[var(--text-main)]'
+            ? 'bg-primary text-white shadow-sm font-black'
+            : 'text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-zinc-800/5 dark:hover:bg-zinc-200/5'
         }`}
       >
         OFF

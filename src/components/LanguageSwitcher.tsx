@@ -23,12 +23,12 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ inline = fal
         <button
           key={lang.code}
           onClick={() => setLanguage(lang.code)}
-          className={`px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-            inline ? 'flex-1 justify-center flex' : ''
+          className={`w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-300 cursor-pointer ${
+            inline ? 'flex-1' : ''
           } ${
             language === lang.code
-              ? 'bg-primary text-white shadow-sm'
-              : 'text-[var(--text-body)] hover:text-[var(--text-main)]'
+              ? 'bg-primary text-white shadow-sm font-black'
+              : 'text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-zinc-800/5 dark:hover:bg-zinc-200/5'
           }`}
         >
           {lang.label}
