@@ -149,7 +149,7 @@
 
 :root {
   /* Default: Light Theme variables mapping (Yellow, White, Black) */
-  --background: #e6ea00;
+  --background: #d9dc00;
   --foreground: #000000;
   --card: #ffffff;
   --card-border: rgba(0, 0, 0, 0.08);
@@ -320,6 +320,10 @@ body {
   background-image: 
     linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+}
+
+:root:not(.dark):not(.bw-mode) .bg-grid-mesh {
+  background-image: none !important;
 }
 
 /* Highlight style */
