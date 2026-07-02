@@ -33,10 +33,11 @@ export const SwissSwitch: React.FC = () => {
     }
   };
 
-  const setMode = (active: boolean) => {
-    setBwMode(active);
+  const toggleBwMode = () => {
+    const nextMode = !bwMode;
+    setBwMode(nextMode);
     if (typeof window !== 'undefined') {
-      if (active) {
+      if (nextMode) {
         document.documentElement.classList.add('bw-mode');
         localStorage.setItem('bw-mode', 'true');
       } else {
@@ -44,31 +45,18 @@ export const SwissSwitch: React.FC = () => {
         localStorage.setItem('bw-mode', 'false');
       }
     }
-    playClickSound(!active);
+    playClickSound(!nextMode);
   };
 
   return (
-    <div className="flex gap-0.5 text-[10px] font-extrabold tracking-wider w-fit select-none z-30">
-      <button
-        onClick={() => setMode(false)}
-        className={`w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-300 cursor-pointer ${
-          !bwMode
-            ? 'bg-primary text-white shadow-sm font-black'
-            : 'text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-zinc-800/5 dark:hover:bg-zinc-200/5'
-        }`}
-      >
-        ON
-      </button>
-      <button
-        onClick={() => setMode(true)}
-        className={`w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-300 cursor-pointer ${
-          bwMode
-            ? 'bg-primary text-white shadow-sm font-black'
-            : 'text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-zinc-800/5 dark:hover:bg-zinc-200/5'
-        }`}
-      >
-        OFF
-      </button>
-    </div>
+    <button
+      onClick={toggleBwMode}
+      aria-label="Toggle Black and White Mode"
+      className={`w-7 h-7 rounded-lg bg-white border transition-all cursor-pointer hover:scale-110 flex-shrink-0 ${
+        bwMode
+          ? 'border-black dark:border-white border-2 scale-105 shadow-sm'
+          : 'border-zinc-300 dark:border-zinc-700 opacity-60'
+      }`}
+    />
   );
 };
