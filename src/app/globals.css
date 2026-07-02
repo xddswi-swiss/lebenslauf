@@ -558,15 +558,38 @@ body {
   color: #000000 !important;
 }
 
+/* Make link cards transparent (just text & icons on yellow) */
 :root:not(.dark):not(.bw-mode) .mobile-drawer .glass-card {
-  background-color: rgba(255, 255, 255, 0.9) !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
+  background-color: transparent !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
   color: #000000 !important;
 }
 
+:root:not(.dark):not(.bw-mode) .mobile-drawer .glass-card:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  border-color: transparent !important;
+}
+
+/* Close button and other buttons inside drawer */
 :root:not(.dark):not(.bw-mode) .mobile-drawer button.glass-card {
-  background-color: rgba(255, 255, 255, 0.9) !important;
-  border-color: rgba(0, 0, 0, 0.15) !important;
+  background-color: transparent !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  color: #000000 !important;
+}
+
+:root:not(.dark):not(.bw-mode) .mobile-drawer button.glass-card:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  color: #000000 !important;
+}
+
+/* Dividers */
+:root:not(.dark):not(.bw-mode) .mobile-drawer .border-b,
+:root:not(.dark):not(.bw-mode) .mobile-drawer .border-t {
+  border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Mobile Drawer - Dark Blue Theme Override */
