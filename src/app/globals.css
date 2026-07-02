@@ -559,44 +559,67 @@ body {
 }
 
 /* Make link cards transparent (just text & icons on yellow) */
-:root:not(.dark):not(.bw-mode) .mobile-drawer .glass-card {
+/* Mobile Drawer - Strip all link cards, borders, outlines & shadow globally for all themes */
+.mobile-drawer .glass-card,
+.mobile-drawer button.glass-card {
   background-color: transparent !important;
   background: transparent !important;
-  border-color: transparent !important;
+  border: none !important;
+  border-width: 0px !important;
   box-shadow: none !important;
-  color: #000000 !important;
 }
 
-:root:not(.dark):not(.bw-mode) .mobile-drawer .glass-card:hover {
+.mobile-drawer .glass-card:hover,
+.mobile-drawer button.glass-card:hover {
   background-color: rgba(0, 0, 0, 0.05) !important;
-  border-color: transparent !important;
+  border: none !important;
+  border-width: 0px !important;
 }
 
-/* Close button and other buttons inside drawer */
-:root:not(.dark):not(.bw-mode) .mobile-drawer button.glass-card {
-  background-color: transparent !important;
-  background: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
+/* Mobile Drawer - Yellow Theme Overrides */
+:root:not(.dark):not(.bw-mode) .mobile-drawer {
+  background: #eef200 !important;
+  background-color: #eef200 !important;
+  border-left: none !important;
+  border-left-width: 0px !important;
+}
+
+:root:not(.dark):not(.bw-mode) .mobile-drawer span.text-transparent {
+  background: none !important;
+  -webkit-text-fill-color: #000000 !important;
   color: #000000 !important;
 }
 
-:root:not(.dark):not(.bw-mode) .mobile-drawer button.glass-card:hover {
-  background-color: rgba(0, 0, 0, 0.05) !important;
+:root:not(.dark):not(.bw-mode) .mobile-drawer h3,
+:root:not(.dark):not(.bw-mode) .mobile-drawer p,
+:root:not(.dark):not(.bw-mode) .mobile-drawer span:not(.text-transparent) {
   color: #000000 !important;
 }
 
-/* Dividers */
+:root:not(.dark):not(.bw-mode) .mobile-drawer a {
+  color: #000000 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+:root:not(.dark):not(.bw-mode) .mobile-drawer a:hover {
+  opacity: 0.7 !important;
+}
+
+:root:not(.dark):not(.bw-mode) .mobile-drawer svg {
+  color: #000000 !important;
+}
+
 :root:not(.dark):not(.bw-mode) .mobile-drawer .border-b,
 :root:not(.dark):not(.bw-mode) .mobile-drawer .border-t {
   border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Mobile Drawer - Dark Blue Theme Override */
+/* Mobile Drawer - Dark Blue Theme Overrides */
 :root.dark:not(.bw-mode) .mobile-drawer {
   background: #2563eb !important;
   background-color: #2563eb !important;
-  border-left-color: rgba(0, 0, 0, 0.15) !important;
+  border-left: none !important;
+  border-left-width: 0px !important;
 }
 
 :root.dark:not(.bw-mode) .mobile-drawer span.text-transparent {
@@ -624,41 +647,12 @@ body {
   color: #000000 !important;
 }
 
-/* Make link cards transparent (just text & icons on blue) */
-:root.dark:not(.bw-mode) .mobile-drawer .glass-card {
-  background-color: transparent !important;
-  background: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-  color: #000000 !important;
-}
-
-:root.dark:not(.bw-mode) .mobile-drawer .glass-card:hover {
-  background-color: rgba(0, 0, 0, 0.05) !important;
-  border-color: transparent !important;
-}
-
-/* Close button and other buttons inside drawer */
-:root.dark:not(.bw-mode) .mobile-drawer button.glass-card {
-  background-color: transparent !important;
-  background: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-  color: #000000 !important;
-}
-
-:root.dark:not(.bw-mode) .mobile-drawer button.glass-card:hover {
-  background-color: rgba(0, 0, 0, 0.05) !important;
-  color: #000000 !important;
-}
-
-/* Dividers */
 :root.dark:not(.bw-mode) .mobile-drawer .border-b,
 :root.dark:not(.bw-mode) .mobile-drawer .border-t {
   border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Mobile Drawer - Black & White Theme Override */
+/* Mobile Drawer - Black & White Theme Overrides */
 :root.bw-mode .mobile-drawer {
   background: #ffffff !important;
   background-color: #ffffff !important;
@@ -668,29 +662,6 @@ body {
 :root.bw-mode .mobile-drawer * {
   color: #000000 !important;
   border-color: #000000 !important;
-}
-
-:root.bw-mode .mobile-drawer .glass-card {
-  background-color: transparent !important;
-  background: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-}
-
-:root.bw-mode .mobile-drawer .glass-card:hover {
-  background-color: rgba(0, 0, 0, 0.05) !important;
-  border-color: transparent !important;
-}
-
-:root.bw-mode .mobile-drawer button.glass-card {
-  background-color: transparent !important;
-  background: transparent !important;
-  border-color: transparent !important;
-  box-shadow: none !important;
-}
-
-:root.bw-mode .mobile-drawer button.glass-card:hover {
-  background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
 :root.bw-mode .mobile-drawer .border-b,
