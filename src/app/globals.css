@@ -147,33 +147,32 @@
   }
 }
 
-/* Day & Night Custom Theme Variables mapping */
 :root {
-  /* Default: Light Theme variables mapping */
-  --background: var(--color-user-bg);
-  --foreground: var(--color-gray-900);
-  --card: var(--color-white);
-  --card-border: rgba(90, 129, 0, 0.08);
-  --primary: var(--color-user-orange-dark);
-  --primary-glow: rgba(212, 86, 0, 0.1);
-  --secondary: var(--color-user-green);
-  --secondary-glow: rgba(90, 129, 0, 0.1);
-  --accent: var(--color-user-orange);
-  --muted: #5a5a5a;
+  /* Default: Light Theme variables mapping (Yellow, White, Black) */
+  --background: #eef200;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.08);
+  --primary: #000000;
+  --primary-glow: rgba(0, 0, 0, 0.05);
+  --secondary: #3f3f46;
+  --secondary-glow: rgba(63, 63, 70, 0.05);
+  --accent: #000000;
+  --muted: #4b5563;
   
-  --text-main: var(--color-gray-900);
-  --text-body: var(--color-gray-800);
-  --text-muted: var(--muted);
+  --text-main: #000000;
+  --text-body: #1f2937;
+  --text-muted: #4b5563;
   
-  --glass-bg: rgba(255, 249, 233, 0.85);
-  --glass-card-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(212, 86, 0, 0.45);
-  --grid-color: rgba(90, 129, 0, 0.03);
-  --badge-bg: rgba(255, 108, 2, 0.08);
-  --badge-border: rgba(255, 108, 2, 0.15);
+  --glass-bg: rgba(238, 242, 0, 0.90);
+  --glass-card-bg: rgba(255, 255, 255, 0.95);
+  --glass-border: rgba(0, 0, 0, 0.15);
+  --grid-color: rgba(0, 0, 0, 0.03);
+  --badge-bg: rgba(0, 0, 0, 0.05);
+  --badge-border: rgba(0, 0, 0, 0.10);
 
-  --title-gradient-from: var(--color-user-orange-dark);
-  --title-gradient-to: #354c2d;
+  --title-gradient-from: #000000;
+  --title-gradient-to: #18181b;
 }
 
 :root.dark {

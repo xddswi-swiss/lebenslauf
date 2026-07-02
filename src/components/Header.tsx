@@ -93,7 +93,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
 
     setHeaderStyle({
       backgroundImage: activeGradient,
-      backgroundColor: theme === 'dark' ? 'rgba(9, 9, 11, 0.90)' : 'rgba(255, 249, 233, 0.90)'
+      backgroundColor: 'var(--glass-bg)'
     });
     setDrawerStyle({ background: activeDrawer });
   }, [theme, activeColorIndex]);
