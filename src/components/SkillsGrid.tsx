@@ -22,6 +22,11 @@ interface SkillsGridProps {
 
 export const SkillsGrid: React.FC<SkillsGridProps> = ({ selectedMatcher = null }) => {
   const { t } = useLanguage();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
   
   const isSkillMatching = (skillId: string) => {
     if (!selectedMatcher) return true;
@@ -145,18 +150,20 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({ selectedMatcher = null }
                     {/* Right: Progress bar + Percentage */}
                     <div className="flex-1 flex items-center gap-3.5 min-w-0">
                       <div className="flex-1 h-2.5 bg-[var(--background)] rounded-full overflow-hidden border border-[var(--glass-border)]">
-                        <m.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
-                          className={`h-full rounded-full bg-gradient-to-r ${
-                            category.key === 'personal' ? 'from-orange-600 to-orange-400' :
-                            category.key === 'school' ? 'from-navy-700 to-navy-500' :
-                            category.key === 'digital' ? 'from-green-600 to-green-400' :
-                            'from-orange-600 to-navy-600'
-                          }`}
-                        />
+                        {mounted && (
+                          <m.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.level}%` }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
+                            className={`h-full rounded-full bg-gradient-to-r ${
+                              category.key === 'personal' ? 'from-orange-600 to-orange-400' :
+                              category.key === 'school' ? 'from-navy-700 to-navy-500' :
+                              category.key === 'digital' ? 'from-green-600 to-green-400' :
+                              'from-orange-600 to-navy-600'
+                            }`}
+                          />
+                        )}
                       </div>
                       <span className="w-10 text-right text-xs md:text-sm font-bold text-[var(--text-muted)] flex-shrink-0">
                         {skill.level}%

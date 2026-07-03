@@ -79,6 +79,11 @@ const MainContent: React.FC = () => {
   const [selectedMatcher, setSelectedMatcher] = useState<'kaufmann' | 'elektro' | null>(null);
   const [docs, setDocs] = useState<any[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     // Set initial static items immediately to prevent hydration mismatches during server rendering
@@ -638,13 +643,15 @@ const MainContent: React.FC = () => {
                         <span className="text-[var(--text-muted)] font-semibold">{lang.level}%</span>
                       </div>
                       <div className="h-2 w-full bg-[var(--background)] rounded-full overflow-hidden border border-[var(--glass-border)]">
-                        <m.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${lang.level}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1.2, ease: "easeOut", delay: idx * 0.1 }}
-                          className="h-full rounded-full bg-gradient-to-r from-primary to-secondary"
-                        />
+                        {mounted && (
+                          <m.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${lang.level}%` }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.2, ease: "easeOut", delay: idx * 0.1 }}
+                            className="h-full rounded-full bg-gradient-to-r from-primary to-secondary"
+                          />
+                        )}
                       </div>
                     </div>
                   ))}
