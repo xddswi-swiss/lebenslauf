@@ -767,10 +767,11 @@ body {
 }
 
 .status-badge-core {
-  background-color: #22c55e !important;
-  box-shadow: 0 0 12px #22c55e, 0 0 4px #22c55e !important;
+  background-color: #15803d !important; /* Rich Dark Green */
+  border: 1px solid #14532d !important; /* Deep Forest Green Border for crisp detail */
+  box-shadow: 0 0 10px rgba(21, 128, 61, 0.6), 0 0 4px rgba(21, 128, 61, 0.4) !important;
 }
 
 .status-badge-pulse {
-  background-color: #22c55e !important;
+  background-color: #16a34a !important; /* Slightly lighter pulse green */
 }
