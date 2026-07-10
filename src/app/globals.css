@@ -749,6 +749,11 @@ body {
   border-color: #000000 !important;
 }
 
+:root.bw-mode .mobile-drawer button.bg-primary,
+:root.bw-mode .mobile-drawer button.bg-primary * {
+  color: #ffffff !important;
+}
+
 :root.bw-mode .mobile-drawer .border-b,
 :root.bw-mode .mobile-drawer .border-t {
   border-color: rgba(0, 0, 0, 0.2) !important;
