@@ -316,8 +316,16 @@
 /* Ensure the status-badge-dot remains perfectly green and bright in B&W mode */
 .bw-mode .status-badge-dot {
   filter: none !important;
-  background-color: #22c55e !important;
-  box-shadow: 0 0 12px #22c55e, 0 0 4px #22c55e !important;
+}
+
+.bw-mode .status-badge-core {
+  background-color: #15803d !important;
+  border: 1px solid #14532d !important;
+  box-shadow: 0 0 10px rgba(21, 128, 61, 0.6), 0 0 4px rgba(21, 128, 61, 0.4) !important;
+}
+
+.bw-mode .status-badge-pulse {
+  background-color: #16a34a !important;
 }
 
 /* Explicitly protect switch container and its kids from any parent filters */
