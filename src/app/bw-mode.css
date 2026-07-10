@@ -293,12 +293,31 @@
   -webkit-text-fill-color: #000000 !important;
 }
 
-/* Grayscale main content, footer, and language switcher in B&W mode to strip color from emojis and flags */
-.bw-mode main,
+/* Grayscale main content (excluding hero section), footer, and language switcher in B&W mode to strip color from emojis and flags */
+.bw-mode main > *:not(#hero),
 .bw-mode footer,
 .bw-mode header .relative:not(.bw-switch-container):not(.bw-switch-container *),
 .bw-mode [style*="drawer"] .relative:not(.bw-switch-container):not(.bw-switch-container *) {
   filter: grayscale(100%) !important;
+}
+
+/* Grayscale specific colored elements inside the hero section to keep the page monochrome,
+   while preserving the bright green pulse dot! */
+.bw-mode #hero img,
+.bw-mode #hero a,
+.bw-mode #hero button,
+.bw-mode #hero svg:not(.status-badge-dot *),
+.bw-mode #hero [class*="bg-primary"],
+.bw-mode #hero [class*="text-primary"],
+.bw-mode #hero [class*="bg-cyan-600/10"] {
+  filter: grayscale(100%) !important;
+}
+
+/* Ensure the status-badge-dot remains perfectly green and bright in B&W mode */
+.bw-mode .status-badge-dot {
+  filter: none !important;
+  background-color: #22c55e !important;
+  box-shadow: 0 0 12px #22c55e, 0 0 4px #22c55e !important;
 }
 
 /* Explicitly protect switch container and its kids from any parent filters */
