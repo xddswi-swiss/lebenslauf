@@ -14,6 +14,7 @@ import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import Strands from '@/components/Strands';
 import { motion as m, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import confetti from 'canvas-confetti';
 import { 
   FiDownload, 
   FiArrowRight, 
@@ -83,6 +84,30 @@ const MainContent: React.FC = () => {
 
   useEffect(() => {
     setMounted(true);
+    
+    // Trigger confetti explosion to celebrate the apprenticeship!
+    const duration = 4 * 1000;
+    const end = Date.now() + duration;
+
+    const frame = () => {
+      confetti({
+        particleCount: 4,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0, y: 0.85 }
+      });
+      confetti({
+        particleCount: 4,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1, y: 0.85 }
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    };
+    frame();
   }, []);
 
   useEffect(() => {
@@ -277,7 +302,7 @@ const MainContent: React.FC = () => {
               transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-bg)] border border-[var(--badge-border)] text-primary text-xs font-bold"
             >
-              <span className="w-2 h-2 rounded-full bg-violet-400 animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-ping" />
               <span>{t.hero.statusBadge}</span>
             </m.div>
 

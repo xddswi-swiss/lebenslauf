@@ -256,16 +256,16 @@ export const translations: Record<Language, TranslationSchema> = {
     },
     hero: {
       greeting: "Hallo, ich bin Eren",
-      role: "Schüler & Lehrstellensuchender",
-      subtitle: "Ich besuche die 3. Sekundarstufe an der Sekundarschule Zürich Rebhügel und suche eine Lehrstelle als Kaufmann EFZ oder Elektroinstallateur EFZ.",
+      role: "Zukünftiger Elektroinstallateur EFZ",
+      subtitle: "Gute Nachrichten! Die Suche hat ein Ende: Ab August 2026 bringe ich als angehender Elektroinstallateur EFZ bei der Firma Elektro Götz Spannung in die Leitungen. Stromkreis geschlossen! ⚡🔌",
       downloadCv: "Lebenslauf herunterladen",
       emailMe: "Kontakt aufnehmen",
-      statusBadge: "SUCHE EINE LEHRSTELLE"
+      statusBadge: "LEHRSTELLE GEFUNDEN! 🎉"
     },
     about: {
       title: "Persönliches Profil",
       intro: "Wer bin ich & was mach ich? 🤔",
-      description: "Ich heisse <span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">Eren</span>, bin <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">16 Jahre alt</span> und besuche die dritte Sekundarstufe an der <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">Sekundarschule Zürich Rebhügel</span>. Meine Freunde und Lehrer beschreiben mich als <span class=\"text-user-green dark:text-green-400 font-semibold\">hilfsbereit</span>, <span class=\"text-user-green dark:text-green-400 font-semibold\">zuverlässig</span> und <span class=\"text-user-green dark:text-green-400 font-semibold\">offen für Neues</span>. Besonders im <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">Team</span> arbeite ich gerne, aber ich kann auch <span class=\"text-user-green dark:text-green-400 font-semibold\">eigenständig</span> Aufgaben gut organisieren und <span class=\"text-user-green dark:text-green-400 font-semibold\">Verantwortung</span> übernehmen. Zurzeit absolviere ich <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">Schnupperlehren</span>, um verschiedene <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">Berufe</span> und <span class=\"text-user-green dark:text-green-400 font-semibold\">Arbeitsumfelder</span> kennenzulernen. Besonders interessieren mich die <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">KV-Branche</span> sowie eine <span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">Lehrstelle als Kaufmann EFZ</span>. Alternativ interessiert mich auch eine <span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">Lehrstelle als Elektroinstallateur EFZ</span>, ein handwerklicher Beruf, der <span class=\"text-user-green dark:text-green-400 font-semibold\">technisches Verständnis</span> und <span class=\"text-user-green dark:text-green-400 font-semibold\">praktische Fähigkeiten</span> erfordert.",
+      description: "Ich heisse <span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">Eren</span>, bin <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">16 Jahre alt</span>. Ich habe meine absolute Wunschlehrstelle gefunden! Ab August 2026 starte ich meine Ausbildung als <span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">Elektroinstallateur EFZ</span> bei der Firma <span class=\"text-user-green dark:text-green-400 font-semibold\">Elektro Götz</span>. Ich freue mich riesig auf diese handwerkliche und technische Herausforderung, bei der ich mein technisches Verständnis und meine praktischen Fähigkeiten täglich unter Beweis stellen kann. Vielen Dank an alle, die mich auf diesem Weg unterstützt haben!",
       quickFactsTitle: "Meine Bewerbungsstatistiken",
       statsSchnupperLabel: "Schnupperlehren",
       statsSchnupperDesc: "so viele Schnupperlehren habe ich bisher besucht.",
@@ -417,16 +417,16 @@ export const translations: Record<Language, TranslationSchema> = {
     },
     hero: {
       greeting: "Merhaba, ben Eren",
-      role: "Öğrenci & Stajyer Adayı",
-      subtitle: "Zürih Rebhügel Ortaokulu'nda 3. sınıf öğrencisiyim. Ticaret (Kaufmann EFZ) veya Elektrik Tesisatçılığı (Elektroinstallateur EFZ) alanında çıraklık eğitimi (Lehrstelle) arıyorum.",
+      role: "Geleceğin Elektroinstallateur EFZ Adayı",
+      subtitle: "Harika haber! Arama sona erdi: Ağustos 2026'dan itibaren Elektro Götz firmasında Elektroinstallateur EFZ (Elektrik Tesisatçısı) olarak kablolara gerilim katmaya başlıyorum. Devre tamamlandı! ⚡🔌",
       downloadCv: "Özgeçmişi İndir",
       emailMe: "İletişime Geç",
-      statusBadge: "ÇIRAKLIK YERİ ARIYORUM"
+      statusBadge: "ÇIRAKLIK YERİ BULUNDU! 🎉"
     },
     about: {
       title: "Kişisel Profil",
       intro: "Ben kimim ve ne yapıyorum? 🤔",
-      description: "Adım <span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">Eren</span>, <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">16 yaşındayım</span> ve <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">Zürih Rebhügel Ortaokulu</span>'nda üçüncü sınıf öğrencisiyim. Arkadaşlarım ve öğretmenlerim beni <span class=\"text-user-green dark:text-green-400 font-semibold\">yardımsever</span>, <span class=\"text-user-green dark:text-green-400 font-semibold\">güvenilir</span> ve <span class=\"text-user-green dark:text-green-400 font-semibold\">yeniliklere açık</span> biri olarak tanımlar. Özellikle <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">ekip</span> halinde çalışmayı severim ancak görevleri <span class=\"text-user-green dark:text-green-400 font-semibold\">bağımsız</span> olarak organize edip <span class=\"text-user-green dark:text-green-400 font-semibold\">sorumluluk</span> da üstlenebilirim. Şu anda farklı meslekleri ve çalışma ortamlarını tanımak için <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">stajlar (Schnupperlehren)</span> yapıyorum. Özellikle ticaret sektörü ve <span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">ticari çıraklık eğitimi (Kaufmann EFZ)</span> ile ilgileniyorum. Alternatif olarak, teknik anlayış ve pratik beceriler gerektiren bir el sanatı mesleği olan <span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">elektrik tesisatçılığı (Elektroinstallateur EFZ)</span> çıraklık eğitimi de ilgimi çekiyor.",
+      description: "Adım <span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">Eren</span>, <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">16 yaşındayım</span>. Hayalimdeki çıraklık yerini buldum! Ağustos 2026'dan itibaren <span class=\"text-user-green dark:text-green-400 font-semibold\">Elektro Götz</span> firmasında <span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">Elektroinstallateur EFZ (Elektrik Tesisatçısı)</span> olarak eğitimime başlıyorum. Teknik anlayışımı ve pratik becerilerimi her gün sergileyebileceğim bu teknik ve el becerisi gerektiren yolculuk için çok heyecanlıyım. Bu süreçte beni destekleyen herkese çok teşekkür ederim!",
       quickFactsTitle: "Başvuru İstatistiklerim",
       statsSchnupperLabel: "Staj Deneyimleri",
       statsSchnupperDesc: "şimdiye kadar katıldığım staj sayısı.",
@@ -578,16 +578,16 @@ export const translations: Record<Language, TranslationSchema> = {
     },
     hero: {
       greeting: "Hi, I'm Eren",
-      role: "Student & Apprenticeship Seeker",
-      subtitle: "I attend the 3rd secondary level at Sekundarschule Zurich Rebhügel and am looking for an apprenticeship as Kaufmann EFZ (Commercial) or Elektroinstallateur EFZ (Electrical Installer).",
+      role: "Future Electrical Installer EFZ",
+      subtitle: "Great news! The search is officially over: Starting August 2026, I'll be bringing positive energy and wiring skills to Elektro Götz as a future Electrical Installer EFZ. Circuit complete! ⚡🔌",
       downloadCv: "Download Resume",
       emailMe: "Get in Touch",
-      statusBadge: "APPRENTICESHIP SEEKER"
+      statusBadge: "APPRENTICESHIP FOUND! 🎉"
     },
     about: {
       title: "Personal Profile",
       intro: "Who am I & what do I do? 🤔",
-      description: "My name is <span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">Eren</span>, I am <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">16 years old</span> and attend the third secondary stage at <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">Sekundarschule Zurich Rebhügel</span>. My friends and teachers describe me as <span class=\"text-user-green dark:text-green-400 font-semibold\">helpful</span>, <span class=\"text-user-green dark:text-green-400 font-semibold\">reliable</span>, and <span class=\"text-user-green dark:text-green-400 font-semibold\">open to new things</span>. I especially enjoy working in a <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">team</span>, but I can also organize tasks well <span class=\"text-user-green dark:text-green-400 font-semibold\">independently</span> and take <span class=\"text-user-green dark:text-green-400 font-semibold\">responsibility</span>. Currently, I am doing <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">trial apprenticeships</span> to explore different professions and working environments. I am particularly interested in the commercial sector (<span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">Kaufmann EFZ</span>). Alternatively, I am interested in an apprenticeship as an electrical installer (<span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">Elektroinstallateur EFZ</span>), a handcraft profession requiring <span class=\"text-user-green dark:text-green-400 font-semibold\">technical understanding</span> and <span class=\"text-user-green dark:text-green-400 font-semibold\">practical skills</span>.",
+      description: "My name is <span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">Eren</span>, I am <span class=\"text-user-yellow-dark dark:text-navy-300 font-semibold\">16 years old</span>. I have officially found my dream apprenticeship! Starting August 2026, I will begin my training as an <span class=\"text-user-orange-dark dark:text-orange-400 font-bold\">Electrical Installer EFZ</span> at <span class=\"text-user-green dark:text-green-400 font-semibold\">Elektro Götz</span>. I am incredibly excited about this technical and hands-on challenge where I can apply my technical understanding and practical skills daily. Huge thanks to everyone who supported me along the way!",
       quickFactsTitle: "Application Statistics",
       statsSchnupperLabel: "Trial Apprenticeships",
       statsSchnupperDesc: "trial apprenticeships I have completed so far.",
