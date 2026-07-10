@@ -337,8 +337,8 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
             onClick={() => setLanguage(code)}
             className={`w-[36px] h-[36px] flex items-center justify-center rounded-xl text-[10px] font-extrabold tracking-wider transition-all duration-300 cursor-pointer ${
               language === code
-                ? 'bg-primary text-white shadow-md scale-105 font-black'
-                : 'text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/10'
+                ? 'active-language-btn bg-primary text-white shadow-md scale-105 font-black'
+                : 'inactive-language-btn text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/10'
             }`}
           >
             {code.toUpperCase()}

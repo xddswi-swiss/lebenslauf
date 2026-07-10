@@ -25,8 +25,8 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ inline = fal
           onClick={() => setLanguage(lang.code)}
           className={`w-7 h-7 flex items-center justify-center rounded-lg transition-all duration-300 cursor-pointer ${
             language === lang.code
-              ? 'bg-primary text-white shadow-sm font-black'
-              : 'text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-zinc-800/5 dark:hover:bg-zinc-200/5'
+              ? 'active-language-btn bg-primary text-white shadow-sm font-black'
+              : 'inactive-language-btn text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-zinc-800/5 dark:hover:bg-zinc-200/5'
           }`}
         >
           {lang.label}
