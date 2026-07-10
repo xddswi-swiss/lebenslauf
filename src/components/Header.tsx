@@ -295,6 +295,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                   <LanguageSwitcher />
                 </div>
 
+
                 {/* Social media shortcuts */}
                 <div className="flex justify-center gap-4 text-[var(--text-muted)]">
                   <a 
