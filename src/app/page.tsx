@@ -482,7 +482,7 @@ const MainContent: React.FC = () => {
             <m.div 
               whileHover={{ scale: 1.01 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="lg:col-span-7 glass-card p-6 md:p-8 rounded-3xl space-y-6 border border-[var(--glass-border)] hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 cursor-default"
+              className="lg:col-span-7 glass-card p-6 md:p-8 rounded-3xl flex flex-col justify-center space-y-6 border border-[var(--glass-border)] hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 cursor-default"
             >
               <h2 className="text-3xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block mb-2">
                 {t.about.title}
