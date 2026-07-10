@@ -348,6 +348,30 @@
   background-color: #000000 !important;
 }
 
+/* Explicit override for active language switcher buttons to be solid black with white text */
+.bw-mode button.active-language-btn:not(.bw-switch-container *) {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+}
+
+.bw-mode button.active-language-btn:not(.bw-switch-container *) * {
+  color: #ffffff !important;
+}
+
+/* Explicit override for inactive language switcher buttons to be solid white with black text */
+.bw-mode button.inactive-language-btn:not(.bw-switch-container *) {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+}
+
+.bw-mode button.inactive-language-btn:not(.bw-switch-container *) * {
+  color: #000000 !important;
+}
+
 
 
 
