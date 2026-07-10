@@ -760,3 +760,17 @@ body {
   font-weight: 800 !important;
   letter-spacing: 0.18em !important;
 }
+
+/* Universal Status Badge Green Dot Glow (All Themes) */
+.status-badge-dot {
+  filter: none !important;
+}
+
+.status-badge-core {
+  background-color: #22c55e !important;
+  box-shadow: 0 0 12px #22c55e, 0 0 4px #22c55e !important;
+}
+
+.status-badge-pulse {
+  background-color: #22c55e !important;
+}
