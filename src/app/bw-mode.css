@@ -308,7 +308,7 @@
 .bw-mode #hero button,
 .bw-mode #hero svg:not(.status-badge-dot *),
 .bw-mode #hero [class*="bg-primary"],
-.bw-mode #hero [class*="text-primary"],
+.bw-mode #hero [class*="text-primary"]:not([class*="badge-bg"]),
 .bw-mode #hero [class*="bg-cyan-600/10"] {
   filter: grayscale(100%) !important;
 }
