@@ -34,7 +34,7 @@ export interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
-  const { t, language } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
   const { theme, toggleTheme } = useTheme();
 
   const handleThemeSelect = (targetTheme: 'light' | 'dark') => {
@@ -329,6 +329,22 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
           </>
         )}
       </AnimatePresence>
+      {/* Floating Vertical Language Switcher for Mobile (Right Side, vertically stacked) */}
+      <div className="fixed right-1 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-2 p-1.5 rounded-2xl bg-[var(--glass-card-bg)]/80 shadow-2xl lg:hidden">
+        {(['de', 'tr', 'en'] as const).map((code) => (
+          <button
+            key={code}
+            onClick={() => setLanguage(code)}
+            className={`w-[36px] h-[36px] flex items-center justify-center rounded-xl text-[10px] font-extrabold tracking-wider transition-all duration-300 cursor-pointer ${
+              language === code
+                ? 'bg-primary text-white shadow-md scale-105 font-black'
+                : 'text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/10'
+            }`}
+          >
+            {code.toUpperCase()}
+          </button>
+        ))}
+      </div>
     </>
   );
 };
