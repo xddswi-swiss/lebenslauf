@@ -97,7 +97,7 @@ const MainContent: React.FC = () => {
           throw new Error('Failed to fetch documents');
         })
         .then(data => {
-          if (isMounted && data && data[language]) {
+          if (isMounted && data && data[language] && data[language].length > 0) {
             setDocs(data[language]);
           }
         })
