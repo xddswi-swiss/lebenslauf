@@ -62,6 +62,8 @@
 
 /* Fix active and selected buttons (solid black background with white text) */
 .bw-mode button.bg-primary,
+.bw-mode button.bg-primary:not(.bw-switch-container *),
+.bw-mode button[class*="bg-primary"]:not(.bw-switch-container *),
 .bw-mode button[class*="bg-primary"],
 .bw-mode .bg-primary {
   background: #000000 !important;
@@ -71,6 +73,7 @@
 }
 
 .bw-mode button.bg-primary *,
+.bw-mode button.bg-primary:not(.bw-switch-container *) *,
 .bw-mode button[class*="bg-primary"] *,
 .bw-mode .bg-primary *,
 .bw-mode .text-white {
