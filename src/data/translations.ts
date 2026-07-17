@@ -185,7 +185,7 @@ export const reportItems: Record<Language, ReportItem[]> = {
   tr: [
     { term: '1. Sek Okul Karneleri', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
     { term: '2. Sek Okul Karneleri', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
-    { term: 'Zeugnisse 3. Sek', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
+    { term: '3. Sek Okul Karneleri', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
     { term: 'Stellwerk 8 Sınav Sonucu', date: '2025', file: '/assets/pdfs/Stellwerk.pdf' },
     { term: 'Multicheck Sınav Sonucu', date: '2026', file: '/assets/pdfs/Multicheck.pdf' },
     { term: 'Meslek Seçim Analizi Sertifikası', date: '2025', file: '/assets/pdfs/Berufswahlanalyse_Zertifikat.pdf' }
@@ -193,7 +193,7 @@ export const reportItems: Record<Language, ReportItem[]> = {
   en: [
     { term: 'School Reports 1. Sek', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
     { term: 'School Reports 2. Sek', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
-    { term: 'Zeugnisse 3. Sek', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
+    { term: 'School Reports 3. Sek', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
     { term: 'Stellwerk 8 Test Report', date: '2025', file: '/assets/pdfs/Stellwerk.pdf' },
     { term: 'Multicheck Certificate', date: '2026', file: '/assets/pdfs/Multicheck.pdf' },
     { term: 'Career Choice Analysis Certificate', date: '2025', file: '/assets/pdfs/Berufswahlanalyse_Zertifikat.pdf' }
