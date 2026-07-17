@@ -372,10 +372,13 @@
   color: #000000 !important;
 }
 
-/* Fix icon visibility inside button badge wrappers on hover in B&W mode */
-.bw-mode button:hover span.rounded-2xl *,
-.bw-mode button:hover span.p-3 * {
+/* Fix icon visibility inside button badge wrappers on hover in B&W mode by using higher specificity matching the button hover rule */
+.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover span.rounded-2xl *,
+.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover span.p-3 *,
+.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover span.rounded-2xl svg,
+.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover span.p-3 svg {
   color: #000000 !important;
+  stroke: #000000 !important;
 }
 
 
