@@ -397,6 +397,24 @@
   stroke: #000000 !important;
 }
 
+/* Fix chevron arrow visibility inside circle button wrapper in B&W mode */
+.bw-mode button .rounded-full,
+.bw-mode button:hover .rounded-full {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+}
+
+.bw-mode button .rounded-full *,
+.bw-mode button:hover .rounded-full *,
+.bw-mode button:hover .rounded-full svg,
+.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover .rounded-full *,
+.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover .rounded-full svg {
+  color: #000000 !important;
+  stroke: #000000 !important;
+}
+
 
 
 
