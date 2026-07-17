@@ -372,6 +372,12 @@
   color: #000000 !important;
 }
 
+/* Fix icon visibility inside button badge wrappers on hover in B&W mode */
+.bw-mode button:hover span.rounded-2xl *,
+.bw-mode button:hover span.p-3 * {
+  color: #000000 !important;
+}
+
 
 
 
