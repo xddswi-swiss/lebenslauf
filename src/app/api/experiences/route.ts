@@ -3,6 +3,8 @@ import fs from 'fs/promises';
 import path from 'path';
 import { supabaseAdmin } from '@/lib/supabase';
 
+export const dynamic = 'force-dynamic';
+
 // Helper to slugify names for file saving
 function slugify(text: string): string {
   return text
