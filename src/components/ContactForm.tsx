@@ -165,9 +165,14 @@ export const ContactForm: React.FC = () => {
 
           {/* Math Captcha Box */}
           <div className="p-5 glass-card rounded-2xl border border-[var(--glass-border)] bg-zinc-900/10 space-y-4">
-            <div className="flex items-center gap-2 text-sm font-bold text-[var(--text-main)]">
-              <span>🔢</span>
-              <span>{t.contact.captchaTitle}: {captcha?.text}</span>
+            <div className="flex flex-col gap-1.5 text-sm font-bold text-[var(--text-main)]">
+              <div className="flex items-center gap-2">
+                <span>🔢</span>
+                <span>{t.contact.captchaTitle}</span>
+              </div>
+              <div className="pl-7 text-lg font-black text-primary tracking-wide">
+                {captcha?.text}
+              </div>
             </div>
             <input
               type="text"
