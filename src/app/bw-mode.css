@@ -372,7 +372,23 @@
   color: #000000 !important;
 }
 
-/* Fix icon visibility inside button badge wrappers on hover in B&W mode by using higher specificity matching the button hover rule */
+/* Fix icon and badge wrapper visibility inside accordion headers (Erfahrungen & Ausbildung) in B&W mode (normal and hover states) */
+.bw-mode button span.rounded-2xl,
+.bw-mode button span.p-3,
+.bw-mode button:hover span.rounded-2xl,
+.bw-mode button:hover span.p-3 {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+}
+
+.bw-mode button span.rounded-2xl *,
+.bw-mode button span.p-3 *,
+.bw-mode button:hover span.rounded-2xl *,
+.bw-mode button:hover span.p-3 *,
+.bw-mode button:hover span.rounded-2xl svg,
+.bw-mode button:hover span.p-3 svg,
 .bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover span.rounded-2xl *,
 .bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover span.p-3 *,
 .bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover span.rounded-2xl svg,
