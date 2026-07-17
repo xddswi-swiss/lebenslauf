@@ -110,11 +110,11 @@ export const ContactForm: React.FC = () => {
         </p>
       </div>
 
-      <div className="glass-card p-6 md:p-8 rounded-3xl relative overflow-hidden">
+      <div className="glass-card p-5 md:p-6 rounded-2xl relative overflow-hidden">
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-orange-500/10 blur-2xl rounded-full" />
         <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-navy-500/10 blur-2xl rounded-full" />
 
-        <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+        <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-[var(--text-body)] mb-2">
               {t.contact.name}

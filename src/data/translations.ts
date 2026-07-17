@@ -175,25 +175,25 @@ export const experienceItems: Record<Language, ExperienceItem[]> = experiencesDa
 
 export const reportItems: Record<Language, ReportItem[]> = {
   de: [
-    { term: 'Zeugnisse 1. Sek (Gesamt)', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
-    { term: 'Zeugnisse 2. Sek (Gesamt)', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
-    { term: 'Semesterzeugnis 3. Sek – 1. Semester', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
+    { term: 'Zeugnisse 1. Sek', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
+    { term: 'Zeugnisse 2. Sek', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
+    { term: 'Zeugnisse 3. Sek', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
     { term: 'Stellwerk 8 Testbericht', date: '2025', file: '/assets/pdfs/Stellwerk.pdf' },
     { term: 'Multicheck Zertifikat', date: '2026', file: '/assets/pdfs/Multicheck.pdf' },
     { term: 'Berufswahlanalyse Zertifikat', date: '2025', file: '/assets/pdfs/Berufswahlanalyse_Zertifikat.pdf' }
   ],
   tr: [
-    { term: '1. Sek Okul Karneleri (Tümü)', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
-    { term: '2. Sek Okul Karneleri (Tümü)', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
-    { term: '3. Sek Güz Dönemi Karnesi', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
+    { term: '1. Sek Okul Karneleri', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
+    { term: '2. Sek Okul Karneleri', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
+    { term: 'Zeugnisse 3. Sek', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
     { term: 'Stellwerk 8 Sınav Sonucu', date: '2025', file: '/assets/pdfs/Stellwerk.pdf' },
     { term: 'Multicheck Sınav Sonucu', date: '2026', file: '/assets/pdfs/Multicheck.pdf' },
     { term: 'Meslek Seçim Analizi Sertifikası', date: '2025', file: '/assets/pdfs/Berufswahlanalyse_Zertifikat.pdf' }
   ],
   en: [
-    { term: 'School Reports 1. Sek (All)', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
-    { term: 'School Reports 2. Sek (All)', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
-    { term: 'School Report 3. Sek – 1st Semester', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
+    { term: 'School Reports 1. Sek', date: '2024', file: '/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf' },
+    { term: 'School Reports 2. Sek', date: '2025', file: '/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf' },
+    { term: 'Zeugnisse 3. Sek', date: '2026', file: '/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf' },
     { term: 'Stellwerk 8 Test Report', date: '2025', file: '/assets/pdfs/Stellwerk.pdf' },
     { term: 'Multicheck Certificate', date: '2026', file: '/assets/pdfs/Multicheck.pdf' },
     { term: 'Career Choice Analysis Certificate', date: '2025', file: '/assets/pdfs/Berufswahlanalyse_Zertifikat.pdf' }

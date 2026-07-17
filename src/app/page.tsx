@@ -549,7 +549,7 @@ const MainContent: React.FC = () => {
             <p className="text-[var(--text-muted)] text-sm md:text-base">{t.documents.subtitle}</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
             {(() => {
               const docColors = [
                 {
@@ -595,7 +595,7 @@ const MainContent: React.FC = () => {
                 return (
                   <div 
                     key={index} 
-                    className="glass-card p-6 rounded-3xl flex flex-col justify-between h-full relative group overflow-hidden"
+                    className="glass-card p-5 rounded-2xl flex flex-col justify-between h-full relative group overflow-hidden"
                   >
                     <div className={`absolute top-0 right-0 w-16 h-16 ${colors.glow} blur-xl rounded-full`} />
                     <div className="flex items-start gap-4 mb-4">

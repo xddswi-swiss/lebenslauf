@@ -165,7 +165,7 @@ export const RecruiterWidget: React.FC = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 30 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="glass-card max-w-lg w-full p-6 md:p-8 rounded-3xl shadow-2xl relative overflow-hidden border border-[var(--glass-border)] z-10 bg-[var(--glass-card-bg)] max-h-[90vh] overflow-y-auto"
+              className="glass-card max-w-md w-full p-5 md:p-6 rounded-2xl shadow-2xl relative overflow-hidden border border-[var(--glass-border)] z-10 bg-[var(--glass-card-bg)] max-h-[90vh] overflow-y-auto"
             >
               {/* Top Accent glow */}
               <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary to-secondary" />
@@ -180,7 +180,7 @@ export const RecruiterWidget: React.FC = () => {
               </button>
 
               {!success ? (
-                <form onSubmit={handleSubmit} className="space-y-4 pt-2">
+                <form onSubmit={handleSubmit} className="space-y-3 pt-1">
                   <div className="space-y-1">
                     <h3 className="text-xl md:text-2xl font-serif font-bold text-[var(--text-main)] flex items-center gap-2">
                       <FiBriefcase className="text-primary text-xl md:text-2xl" />

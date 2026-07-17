@@ -1,17 +1,17 @@
 {
   "de": [
     {
-      "term": "Zeugnisse 1. Sek (Gesamt)",
+      "term": "Zeugnisse 1. Sek",
       "date": "2024",
       "file": "/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf"
     },
     {
-      "term": "Zeugnisse 2. Sek (Gesamt)",
+      "term": "Zeugnisse 2. Sek",
       "date": "2025",
       "file": "/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf"
     },
     {
-      "term": "Semesterzeugnis 3. Sek – 1. Semester",
+      "term": "Zeugnisse 3. Sek",
       "date": "2026",
       "file": "/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf"
     },
@@ -33,17 +33,17 @@
   ],
   "tr": [
     {
-      "term": "1. Sek Okul Karneleri (Tümü)",
+      "term": "1. Sek Okul Karneleri",
       "date": "2024",
       "file": "/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf"
     },
     {
-      "term": "2. Sek Okul Karneleri (Tümü)",
+      "term": "2. Sek Okul Karneleri",
       "date": "2025",
       "file": "/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf"
     },
     {
-      "term": "3. Sek Güz Dönemi Karnesi",
+      "term": "Zeugnisse 3. Sek",
       "date": "2026",
       "file": "/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf"
     },
@@ -65,17 +65,17 @@
   ],
   "en": [
     {
-      "term": "School Reports 1. Sek (All)",
+      "term": "School Reports 1. Sek",
       "date": "2024",
       "file": "/assets/pdfs/SekundarSchuleZeugnisse1sek.pdf"
     },
     {
-      "term": "School Reports 2. Sek (All)",
+      "term": "School Reports 2. Sek",
       "date": "2025",
       "file": "/assets/pdfs/SekundarSchuleZeugnisse2sek.pdf"
     },
     {
-      "term": "School Report 3. Sek – 1st Semester",
+      "term": "Zeugnisse 3. Sek",
       "date": "2026",
       "file": "/assets/pdfs/SekundarSchuleZeugnisse3sek.pdf"
     },
