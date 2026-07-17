@@ -11,6 +11,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { RecruiterWidget } from '@/components/RecruiterWidget';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
+import { DownloadButton } from '@/components/DownloadButton';
 import Strands from '@/components/Strands';
 import { motion as m, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
@@ -587,16 +588,12 @@ const MainContent: React.FC = () => {
                     </div>
 
                     <div className="flex gap-2 items-center w-full mt-4">
-                      <a 
-                        href={doc.file}
-                        download
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border ${colors.button} text-sm font-semibold transition-all cursor-pointer`}
-                      >
-                        <FiDownload className="text-xs" />
-                        {t.documents.download}
-                      </a>
+                      <DownloadButton
+                        fileUrl={doc.file}
+                        fileName={`${doc.term}.pdf`}
+                        downloadLabel={t.documents.download}
+                        completeLabel={t.documents.complete}
+                      />
                     </div>
                   </div>
                 );

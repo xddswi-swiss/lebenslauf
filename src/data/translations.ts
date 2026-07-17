@@ -67,6 +67,7 @@ export interface TranslationSchema {
     title: string;
     subtitle: string;
     download: string;
+    complete: string;
   };
   experience: {
     title: string;
@@ -276,7 +277,8 @@ export const translations: Record<Language, TranslationSchema> = {
     documents: {
       title: "Bewerbungsunterlagen",
       subtitle: "Hier finden Sie meine aktuellen Zeugnisse, Stellwerk- und Multicheck-Testergebnisse zum Download.",
-      download: "PDF Herunterladen"
+      download: "PDF Herunterladen",
+      complete: "Abgeschlossen"
     },
     experience: {
       title: "Schnupperlehren & Erfahrungen",
@@ -437,7 +439,8 @@ export const translations: Record<Language, TranslationSchema> = {
     documents: {
       title: "Başvuru Belgeleri",
       subtitle: "Güncel karne, Stellwerk ve Multicheck sınav sonuçlarımı buradan indirebilirsiniz.",
-      download: "PDF İndir"
+      download: "PDF İndir",
+      complete: "Tamamlandı"
     },
     experience: {
       title: "Stajlar ve Deneyimler",
@@ -598,7 +601,8 @@ export const translations: Record<Language, TranslationSchema> = {
     documents: {
       title: "Application Documents",
       subtitle: "Here you can download my current school reports, Stellwerk, and Multicheck test results.",
-      download: "Download PDF"
+      download: "Download PDF",
+      complete: "Complete"
     },
     experience: {
       title: "Trial Apprenticeships & Experiences",
