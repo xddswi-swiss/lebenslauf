@@ -90,7 +90,13 @@ export async function GET() {
       en.push({ term: item.en_term, date: item.date, file: item.file_path });
     }
 
-    return NextResponse.json({ de, tr, en });
+    return NextResponse.json({ de, tr, en }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    });
   } catch (error: any) {
     console.error('Error fetching documents from Supabase:', error);
     return NextResponse.json({ error: `Database Error: ${error.message}` }, { status: 500 });

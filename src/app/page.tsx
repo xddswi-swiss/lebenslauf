@@ -116,7 +116,7 @@ const MainContent: React.FC = () => {
 
     let isMounted = true;
     const fetchDocuments = () => {
-      fetch('/api/documents')
+      fetch('/api/documents', { cache: 'no-store' })
         .then(res => {
           if (res.ok) return res.json();
           throw new Error('Failed to fetch documents');
