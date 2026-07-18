@@ -522,25 +522,28 @@ class HobbiesAndInterests {
 
           if (cardLeft < scannerX && cardRight > scannerX) {
             anyCardIntersecting = true;
-            const scannerIntersectLeft = Math.max(scannerX - cardLeft, 0);
-            const scannerIntersectRight = Math.min(scannerX - cardLeft, cardWidth);
+            const intersectX = scannerX - cardLeft;
+            const percentLeft = (intersectX / cardWidth) * 100;
 
-            // Clip paths:
-            // Left of scanner (passed) = ASCII (clip normal left, show ASCII right)
-            // Right of scanner (not passed) = Normal Card (show normal left, clip ASCII right)
-            const normalClipLeft = (scannerIntersectLeft / cardWidth) * 100;
-            const asciiClipRight = (scannerIntersectRight / cardWidth) * 100;
+            // Since cards slide left-to-right (to the right):
+            // - The left side (already passed scanner) is Normal (progress bars)
+            // - The right side (not yet passed scanner) is ASCII (code)
+            // So:
+            // Normal card is visible on left, clipped on right: clip-path inset(0 P% 0 0)
+            // ASCII card is visible on right, clipped on left: clip-path inset(0 0 0 P%)
+            const normalClipRight = 100 - percentLeft;
+            const asciiClipLeft = percentLeft;
 
-            htmlCard.style.setProperty('--clip-right', `${normalClipLeft}%`);
-            htmlCard.style.setProperty('--clip-left', `${asciiClipRight}%`);
+            htmlCard.style.setProperty('--clip-right', `${normalClipRight}%`);
+            htmlCard.style.setProperty('--clip-left', `${asciiClipLeft}%`);
           } else {
             if (cardRight <= scannerX) {
-              // Card fully to the left (fully scanned/converted to ASCII)
-              htmlCard.style.setProperty('--clip-right', '100%');
+              // Card fully to the left of scanner: fully normal (progress bars)
+              htmlCard.style.setProperty('--clip-right', '0%');
               htmlCard.style.setProperty('--clip-left', '100%');
             } else if (cardLeft >= scannerX) {
-              // Card fully to the right (normal card styling)
-              htmlCard.style.setProperty('--clip-right', '0%');
+              // Card fully to the right of scanner: fully ASCII (code)
+              htmlCard.style.setProperty('--clip-right', '100%');
               htmlCard.style.setProperty('--clip-left', '0%');
             }
           }
@@ -701,7 +704,7 @@ class HobbiesAndInterests {
             {/* 2. LAYER: Encoded ASCII Code Layout (Left side of scanner - clipped from right) */}
             <div 
               className="skills-card skills-card-ascii"
-              style={{ clipPath: 'inset(0 calc(100% - var(--clip-left, 0%)) 0 0)' }}
+              style={{ clipPath: 'inset(0 0 0 var(--clip-left, 0%))' }}
             >
               <div className="skills-ascii-content">
                 {category.code}
