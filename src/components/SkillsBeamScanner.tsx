@@ -57,7 +57,7 @@ class ParticleScanner {
     this.w = canvas.offsetWidth;
     this.h = canvas.offsetHeight;
     this.lightBarX = this.w / 2;
-    this.lightBarY = this.h / 2;
+    this.lightBarY = this.isVertical ? (this.h / 2 - 25) : (this.h / 2);
     this.lightBarLength = cardWidth > 0 ? cardWidth : this.w;
 
     this.setupCanvas();
@@ -78,7 +78,8 @@ class ParticleScanner {
     this.w = width;
     this.h = height;
     this.lightBarX = this.w / 2;
-    this.lightBarY = this.h / 2;
+    // Shift laser slightly upwards on mobile to visually center it with the cards
+    this.lightBarY = this.isVertical ? (this.h / 2 - 25) : (this.h / 2);
     if (cardWidth > 0) this.lightBarLength = cardWidth;
     this.setupCanvas();
   }
@@ -133,10 +134,13 @@ class ParticleScanner {
     const intensityRatio = this.intensity / this.baseIntensity;
     const speedMultiplier = 1 + (intensityRatio - 1) * 1.2;
     const sizeMultiplier = 1 + (intensityRatio - 1) * 0.7;
+    const barLen = Math.min(this.lightBarLength, this.isVertical ? this.w : this.h);
+    const barStart = (this.isVertical ? this.w : this.h) / 2 - barLen / 2;
+    const barEnd = barStart + barLen;
 
     if (this.isVertical) {
        return {
-         x: this.randomFloat(0, this.w),
+         x: this.randomFloat(barStart, barEnd),
          y: this.lightBarY + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2),
          vx: this.randomFloat(-0.18, 0.18) * speedMultiplier,
          vy: this.randomFloat(0.3, 1.2) * speedMultiplier,
@@ -152,7 +156,7 @@ class ParticleScanner {
     } else {
        return {
          x: this.lightBarX + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2),
-         y: this.randomFloat(0, this.h),
+         y: this.randomFloat(barStart, barEnd),
          vx: this.randomFloat(0.3, 1.2) * speedMultiplier,
          vy: this.randomFloat(-0.18, 0.18) * speedMultiplier,
          radius: this.randomFloat(0.5, 1.2) * sizeMultiplier,
@@ -198,14 +202,17 @@ class ParticleScanner {
   }
 
   resetParticle(p: any) {
+    const barLen = Math.min(this.lightBarLength, this.isVertical ? this.w : this.h);
+    const barStart = (this.isVertical ? this.w : this.h) / 2 - barLen / 2;
+    const barEnd = barStart + barLen;
     if (this.isVertical) {
-      p.x = this.randomFloat(0, this.w);
+      p.x = this.randomFloat(barStart, barEnd);
       p.y = this.lightBarY + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2);
       p.vx = this.randomFloat(-0.18, 0.18);
       p.vy = this.randomFloat(0.3, 1.2);
     } else {
       p.x = this.lightBarX + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2);
-      p.y = this.randomFloat(0, this.h);
+      p.y = this.randomFloat(barStart, barEnd);
       p.vx = this.randomFloat(0.3, 1.2);
       p.vy = this.randomFloat(-0.18, 0.18);
     }
@@ -317,19 +324,25 @@ class ParticleScanner {
 
     } else {
       // ── VERTICAL LASER BAR (desktop) ──
+      // ── VERTICAL LASER BAR (desktop) — height capped to card height ──
+      const barLen = Math.min(this.lightBarLength, this.h);
+      const barStartY = (this.h - barLen) / 2;
+      const barEndY = barStartY + barLen;
+      const fadePx = 28;
+
       if (isBw) {
         this.ctx.globalCompositeOperation = 'source-over';
         this.ctx.globalAlpha = 1;
         this.ctx.fillStyle = "#000000";
-        this.ctx.fillRect(this.lightBarX - lineWidth / 2, 0, lineWidth, this.h);
+        this.ctx.fillRect(this.lightBarX - lineWidth / 2, barStartY, lineWidth, barLen);
         return;
       }
 
-      // Fade mask: fade top and bottom edges
-      const verticalGradient = this.ctx.createLinearGradient(0, 0, 0, this.h);
+      // Fade mask: fade top and bottom edges within bar range only
+      const verticalGradient = this.ctx.createLinearGradient(0, barStartY, 0, barEndY);
       verticalGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-      verticalGradient.addColorStop(this.fadeZone / this.h, 'rgba(255, 255, 255, 1)');
-      verticalGradient.addColorStop(1 - this.fadeZone / this.h, 'rgba(255, 255, 255, 1)');
+      verticalGradient.addColorStop(Math.min(fadePx / barLen, 0.3), 'rgba(255, 255, 255, 1)');
+      verticalGradient.addColorStop(Math.max(1 - fadePx / barLen, 0.7), 'rgba(255, 255, 255, 1)');
       verticalGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
       // Core line
@@ -341,9 +354,7 @@ class ParticleScanner {
       coreGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
       this.ctx.globalAlpha = 1;
       this.ctx.fillStyle = coreGradient;
-      this.ctx.beginPath();
-      this.ctx.rect(this.lightBarX - lineWidth / 2, 0, lineWidth, this.h);
-      this.ctx.fill();
+      this.ctx.fillRect(this.lightBarX - lineWidth / 2, barStartY, lineWidth, barLen);
 
       // Outer Glow 1
       const glow1Gradient = this.ctx.createLinearGradient(this.lightBarX - lineWidth * 2, 0, this.lightBarX + lineWidth * 2, 0);
@@ -352,9 +363,7 @@ class ParticleScanner {
       glow1Gradient.addColorStop(1, `rgba(${colorPrimary}, 0)`);
       this.ctx.globalAlpha = glow1Alpha;
       this.ctx.fillStyle = glow1Gradient;
-      this.ctx.beginPath();
-      this.ctx.rect(this.lightBarX - lineWidth * 2, 0, lineWidth * 4, this.h);
-      this.ctx.fill();
+      this.ctx.fillRect(this.lightBarX - lineWidth * 2, barStartY, lineWidth * 4, barLen);
 
       // Outer Glow 2
       const glow2Gradient = this.ctx.createLinearGradient(this.lightBarX - lineWidth * 4, 0, this.lightBarX + lineWidth * 4, 0);
@@ -363,15 +372,13 @@ class ParticleScanner {
       glow2Gradient.addColorStop(1, `rgba(${colorPrimary}, 0)`);
       this.ctx.globalAlpha = glow2Alpha;
       this.ctx.fillStyle = glow2Gradient;
-      this.ctx.beginPath();
-      this.ctx.rect(this.lightBarX - lineWidth * 4, 0, lineWidth * 8, this.h);
-      this.ctx.fill();
+      this.ctx.fillRect(this.lightBarX - lineWidth * 4, barStartY, lineWidth * 8, barLen);
 
-      // Mask with vertical gradient
+      // Mask: fade top/bottom within bar bounds only
       this.ctx.globalCompositeOperation = 'destination-in';
       this.ctx.globalAlpha = 1;
       this.ctx.fillStyle = verticalGradient;
-      this.ctx.fillRect(0, 0, this.w, this.h);
+      this.ctx.fillRect(0, barStartY, this.w, barLen);
     }
   }
 
@@ -738,8 +745,10 @@ class HobbiesAndInterests {
   useEffect(() => {
     if (!mounted || !canvasRef.current || !containerRef.current) return;
 
-    // Instantiate Canvas particles
-    const cardW = isMobileRef.current ? 300 : 400;
+    // Instantiate Canvas particles — pass the card dimension that constrains the laser bar
+    // Mobile: horizontal laser limited to card width (300px)
+    // Desktop: vertical laser limited to card height (250px)
+    const cardW = isMobileRef.current ? 300 : 250;
     const scanner = new ParticleScanner(canvasRef.current, isMobileRef.current, cardW);
     scannerInstance.current = scanner;
 
@@ -987,7 +996,6 @@ track.removeEventListener('touchstart', onTouchStart);
       <canvas 
         ref={canvasRef} 
         className="absolute top-0 bottom-0 left-0 right-0 w-full h-full pointer-events-none z-10"
-        style={{ height: '400px' }}
       />
 
       {/* Slider Draggable Track */}
