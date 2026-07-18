@@ -75,9 +75,12 @@ class ParticleScanner {
     this.ctx.clearRect(0, 0, this.w, this.h);
   }
 
-  onResize(width: number, height: number, cardWidth: number = 0) {
+  onResize(width: number, height: number, cardWidth: number = 0, isVertical?: boolean) {
     this.w = width;
     this.h = height;
+    if (isVertical !== undefined) {
+      this.isVertical = isVertical;
+    }
     this.lightBarX = this.w / 2;
     // Lower laser to 80% of height on mobile so content is fully visible
     this.lightBarY = this.isVertical ? (this.h * 0.8) : (this.h / 2);
@@ -926,7 +929,9 @@ class HobbiesAndInterests {
     // Track resize
     const handleResize = () => {
       if (canvasRef.current && containerRef.current) {
-        scanner.onResize(containerRef.current.offsetWidth, containerRef.current.offsetHeight || 320);
+        const isMob = window.innerWidth < 768;
+        const cardW = isMob ? 300 : 250;
+        scanner.onResize(containerRef.current.offsetWidth, containerRef.current.offsetHeight || 320, cardW, isMob);
       }
     };
     window.addEventListener('resize', handleResize);
