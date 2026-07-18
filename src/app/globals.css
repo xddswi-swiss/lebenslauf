@@ -953,7 +953,7 @@ html, body {
   align-items: center;
   will-change: transform;
   cursor: grab;
-  touch-action: pan-y;
+  touch-action: none; /* Prevents all pinch-zoom and page scroll while dragging */
 }
 
 .skills-slider-track.dragging {
