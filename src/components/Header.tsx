@@ -55,6 +55,38 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
   const [headerStyle, setHeaderStyle] = useState<React.CSSProperties>({});
   const [drawerStyle, setDrawerStyle] = useState<React.CSSProperties>({});
 
+  // Sync mobile status bar color (theme-color meta tag) with current theme
+  useEffect(() => {
+    const updateThemeColor = () => {
+      const isBw = document.documentElement.classList.contains('bw-mode');
+      const isDark = document.documentElement.classList.contains('dark');
+      
+      let color = '#ffffff'; // BW Mode (White)
+      if (!isBw) {
+        color = isDark ? '#020617' : '#d9dc00'; // Dark Blue or Yellow
+      }
+
+      let meta = document.querySelector('meta[name="theme-color"]');
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute('name', 'theme-color');
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', color);
+    };
+
+    updateThemeColor();
+
+    const observer = new MutationObserver(updateThemeColor);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    window.addEventListener('bwModeChange', updateThemeColor);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('bwModeChange', updateThemeColor);
+    };
+  }, []);
+
   const navLinks = [
     { href: "#about", label: t.nav.about, icon: <FiUser className="text-lg" /> },
     { href: "#documents", label: t.nav.documents, icon: <FiFileText className="text-lg" /> },
