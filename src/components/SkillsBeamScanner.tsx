@@ -925,6 +925,7 @@ track.removeEventListener('touchstart', onTouchStart);
   }, [mounted]);
 
   return (
+    <>
     <div
       className="skills-scanner-container w-full relative overflow-hidden"
       style={{ height: isMobile ? '320px' : '400px' }}
@@ -1041,36 +1042,37 @@ track.removeEventListener('touchstart', onTouchStart);
           </div>
         ))}
       </div>
+    </div>{/* end skills-scanner-container */}
 
-      {/* Control Buttons (Play/Pause, Reset, Direction) */}
-      <div className="flex justify-center gap-3 mt-6 relative z-30 select-none flex-wrap">
-        <button 
-          onClick={() => setIsAnimating(!isAnimating)}
-          className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
-        >
-          {isAnimating ? "⏸️ Pause" : "▶️ Play"}
-        </button>
-        <button 
-          onClick={() => {
-            positionRef.current = -300;
-            const isMob = window.innerWidth < 768;
-            velocityRef.current = isMob ? 45 : 100;
-            directionRef.current = isMob ? 1 : -1;
-            setIsAnimating(true);
-          }}
-          className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
-        >
-          🔄 Reset
-        </button>
-        <button 
-          onClick={() => {
-            directionRef.current = directionRef.current === 1 ? -1 : 1;
-          }}
-          className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
-        >
-          {isMobile ? "↕️ Yön" : "↔️ Yön"}
-        </button>
-      </div>
+    {/* Control Buttons (Play/Pause, Reset, Direction) - OUTSIDE overflow:hidden container */}
+    <div className="flex justify-center gap-3 mt-6 relative z-30 select-none flex-wrap">
+      <button 
+        onClick={() => setIsAnimating(!isAnimating)}
+        className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
+      >
+        {isAnimating ? "⏸️ Pause" : "▶️ Play"}
+      </button>
+      <button 
+        onClick={() => {
+          positionRef.current = -300;
+          const isMob = window.innerWidth < 768;
+          velocityRef.current = isMob ? 45 : 100;
+          directionRef.current = isMob ? 1 : -1;
+          setIsAnimating(true);
+        }}
+        className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
+      >
+        🔄 Reset
+      </button>
+      <button 
+        onClick={() => {
+          directionRef.current = directionRef.current === 1 ? -1 : 1;
+        }}
+        className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
+      >
+        {isMobile ? "↕️ Yön" : "↔️ Yön"}
+      </button>
     </div>
+    </>
   );
 };
