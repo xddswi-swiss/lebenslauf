@@ -415,52 +415,6 @@
   stroke: #000000 !important;
 }
 
-/* B&W Theme overrides for Skills Beam Scanner */
-.bw-mode .skills-scanner-line {
-  background: #000000 !important;
-  background-color: #000000 !important;
-  box-shadow: none !important;
-  width: 2px !important;
-}
-
-.bw-mode .skills-card-wrapper {
-  height: 360px !important;
-}
-
-.bw-mode .skills-card {
-  border-radius: 4px !important;
-}
-
-.bw-mode .skills-card-normal {
-  background-color: #ffffff !important;
-  background: #ffffff !important;
-  border: 2px solid #000000 !important;
-  border-radius: 4px !important;
-}
-
-.bw-mode .skills-card-normal::before {
-  display: none !important;
-}
-
-.bw-mode .skills-card-ascii {
-  background-color: #ffffff !important;
-  background: #ffffff !important;
-  border: 2px solid #000000 !important;
-  border-radius: 4px !important;
-  color: #000000 !important;
-}
-
-.bw-mode .skills-ascii-content {
-  background: none !important;
-  background-color: transparent !important;
-  color: #000000 !important;
-  opacity: 1 !important;
-}
-
-.bw-mode .scan-glow {
-  display: none !important;
-}
-
 
 
 
