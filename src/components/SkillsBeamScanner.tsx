@@ -57,7 +57,8 @@ class ParticleScanner {
     this.w = canvas.offsetWidth;
     this.h = canvas.offsetHeight;
     this.lightBarX = this.w / 2;
-    this.lightBarY = this.isVertical ? (this.h / 2 - 25) : (this.h / 2);
+    // Lower laser to 80% of height on mobile so content is fully visible
+    this.lightBarY = this.isVertical ? (this.h * 0.8) : (this.h / 2);
     this.lightBarLength = cardWidth > 0 ? cardWidth : this.w;
 
     this.setupCanvas();
@@ -78,8 +79,8 @@ class ParticleScanner {
     this.w = width;
     this.h = height;
     this.lightBarX = this.w / 2;
-    // Shift laser slightly upwards on mobile to visually center it with the cards
-    this.lightBarY = this.isVertical ? (this.h / 2 - 25) : (this.h / 2);
+    // Lower laser to 80% of height on mobile so content is fully visible
+    this.lightBarY = this.isVertical ? (this.h * 0.8) : (this.h / 2);
     if (cardWidth > 0) this.lightBarLength = cardWidth;
     this.setupCanvas();
   }
@@ -821,7 +822,8 @@ class HobbiesAndInterests {
         const cards = track.querySelectorAll('.skills-card-wrapper');
 
         if (activeIsMobile) {
-          const scannerY = containerRect.top + containerRect.height / 2;
+          // Align clipping boundary with the laser line at 80% of container height
+          const scannerY = containerRect.top + containerRect.height * 0.8;
           cards.forEach((card) => {
             const htmlCard = card as HTMLElement;
             const rect = htmlCard.getBoundingClientRect();
