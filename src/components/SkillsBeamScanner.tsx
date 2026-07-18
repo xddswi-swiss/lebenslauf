@@ -311,7 +311,7 @@ export const SkillsBeamScanner: React.FC<SkillsBeamScannerProps> = ({ selectedMa
   // Position, drag, and velocity refs (high-performance rendering, zero-re-renders)
   const positionRef = useRef(0);
   const velocityRef = useRef(100); // px/s
-  const directionRef = useRef(1); // 1 = right, -1 = left (auto-slides to the right!)
+  const directionRef = useRef(-1); // -1 = left, 1 = right (auto-slides to the left!)
   const isDraggingRef = useRef(false);
   const startMouseXRef = useRef(0);
   const startPositionRef = useRef(0);
@@ -519,31 +519,27 @@ class HobbiesAndInterests {
           const rect = htmlCard.getBoundingClientRect();
           const cardLeft = rect.left;
           const cardRight = rect.right;
-
           if (cardLeft < scannerX && cardRight > scannerX) {
             anyCardIntersecting = true;
             const intersectX = scannerX - cardLeft;
             const percentLeft = (intersectX / cardWidth) * 100;
 
-            // Since cards slide left-to-right (to the right):
-            // - The left side (already passed scanner) is Normal (progress bars)
-            // - The right side (not yet passed scanner) is ASCII (code)
+            // Since cards slide to the left:
+            // - The left side (already passed scanner) is ASCII (code)
+            // - The right side (not yet passed scanner) is Normal (progress bars)
             // So:
-            // Normal card is visible on left, clipped on right: clip-path inset(0 P% 0 0)
-            // ASCII card is visible on right, clipped on left: clip-path inset(0 0 0 P%)
-            const normalClipRight = 100 - percentLeft;
-            const asciiClipLeft = percentLeft;
-
-            htmlCard.style.setProperty('--clip-right', `${normalClipRight}%`);
-            htmlCard.style.setProperty('--clip-left', `${asciiClipLeft}%`);
+            // Normal card is visible on right, clipped on left: clip-path inset(0 0 0 P%)
+            // ASCII card is visible on left, clipped on right: clip-path inset(0 (100-P)% 0 0)
+            htmlCard.style.setProperty('--clip-right', `${percentLeft}%`);
+            htmlCard.style.setProperty('--clip-left', `${percentLeft}%`);
           } else {
             if (cardRight <= scannerX) {
-              // Card fully to the left of scanner: fully normal (progress bars)
-              htmlCard.style.setProperty('--clip-right', '0%');
+              // Card fully to the left of scanner: fully ASCII (code)
+              htmlCard.style.setProperty('--clip-right', '100%');
               htmlCard.style.setProperty('--clip-left', '100%');
             } else if (cardLeft >= scannerX) {
-              // Card fully to the right of scanner: fully ASCII (code)
-              htmlCard.style.setProperty('--clip-right', '100%');
+              // Card fully to the right of scanner: fully normal (progress bars)
+              htmlCard.style.setProperty('--clip-right', '0%');
               htmlCard.style.setProperty('--clip-left', '0%');
             }
           }
@@ -704,7 +700,7 @@ class HobbiesAndInterests {
             {/* 2. LAYER: Encoded ASCII Code Layout (Left side of scanner - clipped from right) */}
             <div 
               className="skills-card skills-card-ascii"
-              style={{ clipPath: 'inset(0 0 0 var(--clip-left, 0%))' }}
+              style={{ clipPath: 'inset(0 calc(100% - var(--clip-left, 0%)) 0 0)' }}
             >
               <div className="skills-ascii-content">
                 {category.code}
