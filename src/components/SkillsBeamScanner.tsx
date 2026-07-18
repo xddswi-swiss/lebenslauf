@@ -1001,8 +1001,8 @@ track.removeEventListener('touchstart', onTouchStart);
       {/* Slider Draggable Track */}
       <div 
         ref={trackRef} 
-        className={`skills-slider-track select-none flex items-center will-change-transform pt-4 ${isMobile ? 'flex-col h-max w-full' : 'flex-row w-max'}`}
-        style={{ height: isMobile ? 'max-content' : '320px' }}
+        className={`skills-slider-track select-none flex items-center will-change-transform ${isMobile ? 'flex-col h-max w-full pt-4' : 'flex-row w-max h-full'}`}
+        style={{ height: isMobile ? 'max-content' : '100%' }}
       >
         {categories.map((category, index) => (
           <div 
