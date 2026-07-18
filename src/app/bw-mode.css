@@ -414,10 +414,53 @@
   color: #000000 !important;
   stroke: #000000 !important;
 }
+/* Black & White Blueprint Mode overrides for Skills Scanner Carousel */
+.bw-mode .skills-card-normal {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 1) !important;
+  border-radius: 4px !important;
+  color: #000000 !important;
+}
 
+.bw-mode .skills-card-ascii {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 1) !important;
+  border-radius: 4px !important;
+  color: #000000 !important;
+}
 
+.bw-mode .skills-ascii-content {
+  color: #000000 !important;
+  text-shadow: none !important;
+}
 
+.bw-mode .skill-track {
+  background: rgba(0, 0, 0, 0.08) !important;
+  border: 1.5px solid #000000 !important;
+  border-radius: 2px !important;
+}
 
+.bw-mode .skill-fill {
+  background: #000000 !important;
+  border-radius: 1px !important;
+}
 
+.bw-mode .skills-header {
+  border-bottom: 2px solid #000000 !important;
+}
+
+.bw-mode .skills-title {
+  color: #000000 !important;
+}
+
+.bw-mode .skill-label {
+  color: #000000 !important;
+}
+
+.bw-mode .skill-percent {
+  color: #000000 !important;
+}
 
 

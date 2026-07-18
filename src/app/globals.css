@@ -933,3 +933,204 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .cb-btn.is-loading .cb-arrow { animation: none; }
 }
+
+/* Horizontal Skills Beam Scanner Layout */
+.skills-scanner-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.skills-slider-track {
+  display: flex;
+  align-items: center;
+  will-change: transform;
+  cursor: grab;
+}
+
+.skills-slider-track.dragging {
+  cursor: grabbing;
+}
+
+.skills-card-wrapper {
+  position: relative;
+  width: 400px;
+  height: 250px;
+  flex-shrink: 0;
+  margin-right: 32px;
+}
+
+.skills-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 250px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.skills-card-normal {
+  background: var(--glass-card-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 14px 18px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  z-index: 2;
+  clip-path: inset(0 0 0 var(--clip-right, 0%));
+}
+
+.skills-card-ascii {
+  background: rgba(8, 10, 18, 0.98) !important;
+  z-index: 1;
+  clip-path: inset(0 calc(100% - var(--clip-left, 0%)) 0 0);
+}
+
+.dark .skills-card-ascii {
+  border: 1px solid rgba(0, 220, 255, 0.15) !important;
+}
+
+html:not(.dark):not(.bw-mode) .skills-card-ascii {
+  background: rgba(18, 16, 8, 0.98) !important;
+  border: 1px solid rgba(234, 179, 8, 0.3) !important;
+}
+
+.skills-ascii-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.65;
+  font-family: "Courier New", monospace !important;
+  font-size: 11px !important;
+  line-height: 13px !important;
+  overflow: hidden;
+  white-space: pre !important;
+  margin: 0;
+  padding: 16px 20px;
+  text-align: left;
+  vertical-align: top;
+  box-sizing: border-box;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.8) 30%,
+    rgba(0, 0, 0, 0.6) 50%,
+    rgba(0, 0, 0, 0.4) 80%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.8) 30%,
+    rgba(0, 0, 0, 0.6) 50%,
+    rgba(0, 0, 0, 0.4) 80%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  animation: glitch-anim 0.1s infinite linear alternate-reverse;
+}
+
+.dark .skills-ascii-content {
+  color: #00dcff !important;
+}
+
+html:not(.dark):not(.bw-mode) .skills-ascii-content {
+  color: #eab308 !important;
+  text-shadow: 0 0 4px rgba(234, 179, 8, 0.4);
+}
+
+@keyframes glitch-anim {
+  0% { opacity: 0.98; transform: skewX(-0.5deg); }
+  100% { opacity: 1; transform: skewX(0.5deg); }
+}
+
+.skill-fill {
+  width: 0%;
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.skills-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 6px;
+  height: 32px;
+}
+
+.skills-icon {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.skills-title {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--text-main) !important;
+}
+
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 100%;
+  flex: 1;
+  justify-content: center;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  height: 18px;
+}
+
+.skill-label {
+  width: 48%;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-body) !important;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.skill-bar-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.skill-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  border: none;
+}
+
+.skill-percent {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-muted) !important;
+  font-family: monospace;
+  width: 28px;
+  text-align: right;
+  flex-shrink: 0;
+}
