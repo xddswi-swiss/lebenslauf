@@ -48,8 +48,9 @@ class ParticleScanner {
   transitionSpeed: number = 0.05;
   isVertical: boolean = false;
   lightBarY: number = 0;
+  lightBarLength: number = 0; // width of horizontal laser on mobile (= card width)
 
-  constructor(canvas: HTMLCanvasElement, isVertical: boolean = false) {
+  constructor(canvas: HTMLCanvasElement, isVertical: boolean = false, cardWidth: number = 0) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d')!;
     this.isVertical = isVertical;
@@ -57,6 +58,7 @@ class ParticleScanner {
     this.h = canvas.offsetHeight;
     this.lightBarX = this.w / 2;
     this.lightBarY = this.h / 2;
+    this.lightBarLength = cardWidth > 0 ? cardWidth : this.w;
 
     this.setupCanvas();
     this.createGradientCache();
@@ -72,11 +74,12 @@ class ParticleScanner {
     this.ctx.clearRect(0, 0, this.w, this.h);
   }
 
-  onResize(width: number, height: number) {
+  onResize(width: number, height: number, cardWidth: number = 0) {
     this.w = width;
     this.h = height;
     this.lightBarX = this.w / 2;
     this.lightBarY = this.h / 2;
+    if (cardWidth > 0) this.lightBarLength = cardWidth;
     this.setupCanvas();
   }
 
@@ -256,23 +259,28 @@ class ParticleScanner {
     const lineWidth = this.lightBarWidth;
 
     if (this.isVertical) {
-      // ── HORIZONTAL LASER BAR (mobile) ──
+      // ── HORIZONTAL LASER BAR (mobile) — width capped to card width ──
+      const barLen = Math.min(this.lightBarLength, this.w);
+      const barStartX = (this.w - barLen) / 2;
+      const barEndX = barStartX + barLen;
+      const fadePx = 28; // px fade at each end
+
       if (isBw) {
         this.ctx.globalCompositeOperation = 'source-over';
         this.ctx.globalAlpha = 1;
         this.ctx.fillStyle = "#000000";
-        this.ctx.fillRect(0, this.lightBarY - lineWidth / 2, this.w, lineWidth);
+        this.ctx.fillRect(barStartX, this.lightBarY - lineWidth / 2, barLen, lineWidth);
         return;
       }
 
-      // Fade mask: fade left and right edges
-      const hFade = this.ctx.createLinearGradient(0, 0, this.w, 0);
+      // Fade mask: fade left and right edges of the bar only
+      const hFade = this.ctx.createLinearGradient(barStartX, 0, barEndX, 0);
       hFade.addColorStop(0, 'rgba(255,255,255,0)');
-      hFade.addColorStop(this.fadeZone / this.w, 'rgba(255,255,255,1)');
-      hFade.addColorStop(1 - this.fadeZone / this.w, 'rgba(255,255,255,1)');
+      hFade.addColorStop(Math.min(fadePx / barLen, 0.3), 'rgba(255,255,255,1)');
+      hFade.addColorStop(Math.max(1 - fadePx / barLen, 0.7), 'rgba(255,255,255,1)');
       hFade.addColorStop(1, 'rgba(255,255,255,0)');
 
-      // Core line (horizontal)
+      // Core line (horizontal, card width only)
       const coreG = this.ctx.createLinearGradient(0, this.lightBarY - lineWidth / 2, 0, this.lightBarY + lineWidth / 2);
       coreG.addColorStop(0, 'rgba(255,255,255,0)');
       coreG.addColorStop(0.3, `rgba(255,255,255,${0.9 * glowIntensity})`);
@@ -281,31 +289,31 @@ class ParticleScanner {
       coreG.addColorStop(1, 'rgba(255,255,255,0)');
       this.ctx.globalAlpha = 1;
       this.ctx.fillStyle = coreG;
-      this.ctx.fillRect(0, this.lightBarY - lineWidth / 2, this.w, lineWidth);
+      this.ctx.fillRect(barStartX, this.lightBarY - lineWidth / 2, barLen, lineWidth);
 
-      // Glow 1 (horizontal)
+      // Glow 1
       const g1 = this.ctx.createLinearGradient(0, this.lightBarY - lineWidth * 2, 0, this.lightBarY + lineWidth * 2);
       g1.addColorStop(0, `rgba(${colorPrimary},0)`);
       g1.addColorStop(0.5, `rgba(${colorSecondary},${0.8 * glowIntensity})`);
       g1.addColorStop(1, `rgba(${colorPrimary},0)`);
       this.ctx.globalAlpha = glow1Alpha;
       this.ctx.fillStyle = g1;
-      this.ctx.fillRect(0, this.lightBarY - lineWidth * 2, this.w, lineWidth * 4);
+      this.ctx.fillRect(barStartX, this.lightBarY - lineWidth * 2, barLen, lineWidth * 4);
 
-      // Glow 2 (horizontal)
+      // Glow 2
       const g2 = this.ctx.createLinearGradient(0, this.lightBarY - lineWidth * 4, 0, this.lightBarY + lineWidth * 4);
       g2.addColorStop(0, `rgba(${colorPrimary},0)`);
       g2.addColorStop(0.5, `rgba(${colorPrimary},${0.4 * glowIntensity})`);
       g2.addColorStop(1, `rgba(${colorPrimary},0)`);
       this.ctx.globalAlpha = glow2Alpha;
       this.ctx.fillStyle = g2;
-      this.ctx.fillRect(0, this.lightBarY - lineWidth * 4, this.w, lineWidth * 8);
+      this.ctx.fillRect(barStartX, this.lightBarY - lineWidth * 4, barLen, lineWidth * 8);
 
-      // Mask: fade left/right edges
+      // Mask: apply horizontal fade only within bar bounds
       this.ctx.globalCompositeOperation = 'destination-in';
       this.ctx.globalAlpha = 1;
       this.ctx.fillStyle = hFade;
-      this.ctx.fillRect(0, 0, this.w, this.h);
+      this.ctx.fillRect(barStartX, 0, barLen, this.h);
 
     } else {
       // ── VERTICAL LASER BAR (desktop) ──
@@ -731,7 +739,8 @@ class HobbiesAndInterests {
     if (!mounted || !canvasRef.current || !containerRef.current) return;
 
     // Instantiate Canvas particles
-    const scanner = new ParticleScanner(canvasRef.current, isMobileRef.current);
+    const cardW = isMobileRef.current ? 300 : 400;
+    const scanner = new ParticleScanner(canvasRef.current, isMobileRef.current, cardW);
     scannerInstance.current = scanner;
 
     // Set up MutationObserver to detect when theme changes on document.documentElement (dark or bw-mode)
@@ -768,7 +777,7 @@ class HobbiesAndInterests {
         const activeIsMobile = isMobileRef.current;
 
         // Constants depend on mobile vs desktop mode
-        const cardSize = activeIsMobile ? 250 : 400; // height on mobile, width on desktop
+        const cardSize = activeIsMobile ? 300 : 400; // height on mobile (300px), width on desktop (400px)
         const gap = activeIsMobile ? 20 : 32;
         const totalSize = (cardSize + gap) * categories.length;
 
