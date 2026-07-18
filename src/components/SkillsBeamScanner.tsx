@@ -521,8 +521,10 @@ export const SkillsBeamScanner: React.FC<SkillsBeamScannerProps> = ({ selectedMa
 
   useEffect(() => {
     setMounted(true);
-    // Start starting position centered or offset
+    const isMob = window.innerWidth < 768;
     positionRef.current = -300;
+    directionRef.current = isMob ? 1 : -1; // starts downwards on mobile, left on desktop
+    velocityRef.current = isMob ? 45 : 100;
   }, []);
 
   // Periodic ASCII matrix glitch updates
@@ -672,11 +674,12 @@ class HobbiesAndInterests {
       trackRef.current.classList.remove('dragging');
     }
 
+    const baseSpeed = isMobileRef.current ? 45 : 100;
     if (Math.abs(mouseVelocityRef.current) > 30) {
       velocityRef.current = Math.min(Math.abs(mouseVelocityRef.current), 500);
       directionRef.current = mouseVelocityRef.current > 0 ? 1 : -1;
     } else {
-      velocityRef.current = 100;
+      velocityRef.current = baseSpeed;
     }
   };
 
@@ -728,10 +731,11 @@ class HobbiesAndInterests {
 
         // Auto-Scroll physics (constant velocity slide if not dragging)
         if (!isDraggingRef.current && isAnimatingRef.current) {
-          if (velocityRef.current > 100) {
+          const baseSpeed = activeIsMobile ? 45 : 100;
+          if (velocityRef.current > baseSpeed) {
             velocityRef.current *= 0.96; // friction decelerate
           } else {
-            velocityRef.current = 100; // constant base speed
+            velocityRef.current = baseSpeed; // constant base speed
           }
 
           positionRef.current += velocityRef.current * directionRef.current * deltaTime;
@@ -921,7 +925,11 @@ track.removeEventListener('touchstart', onTouchStart);
   }, [mounted]);
 
   return (
-    <div className="skills-scanner-container w-full h-[400px] relative overflow-hidden" ref={containerRef}>
+    <div
+      className="skills-scanner-container w-full relative overflow-hidden"
+      style={{ height: isMobile ? '320px' : '400px' }}
+      ref={containerRef}
+    >
       {/* 2D Canvas Sparks/Dust Particle Overlay */}
       <canvas 
         ref={canvasRef} 
@@ -1035,7 +1043,7 @@ track.removeEventListener('touchstart', onTouchStart);
       </div>
 
       {/* Control Buttons (Play/Pause, Reset, Direction) */}
-      <div className="flex justify-center gap-4 mt-6 relative z-30 select-none">
+      <div className="flex justify-center gap-3 mt-6 relative z-30 select-none flex-wrap">
         <button 
           onClick={() => setIsAnimating(!isAnimating)}
           className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
@@ -1045,8 +1053,9 @@ track.removeEventListener('touchstart', onTouchStart);
         <button 
           onClick={() => {
             positionRef.current = -300;
-            velocityRef.current = 100;
-            directionRef.current = -1;
+            const isMob = window.innerWidth < 768;
+            velocityRef.current = isMob ? 45 : 100;
+            directionRef.current = isMob ? 1 : -1;
             setIsAnimating(true);
           }}
           className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
@@ -1059,7 +1068,7 @@ track.removeEventListener('touchstart', onTouchStart);
           }}
           className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
         >
-          ↔️ Direction
+          {isMobile ? "↕️ Yön" : "↔️ Yön"}
         </button>
       </div>
     </div>
