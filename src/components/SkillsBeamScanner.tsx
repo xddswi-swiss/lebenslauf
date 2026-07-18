@@ -926,21 +926,29 @@ class HobbiesAndInterests {
 
     animId = requestAnimationFrame(loop);
 
-    // Track resize
-    const handleResize = () => {
-      if (canvasRef.current && containerRef.current) {
-        const isMob = window.innerWidth < 768;
-        const cardW = isMob ? 300 : 250;
-        scanner.onResize(containerRef.current.offsetWidth, containerRef.current.offsetHeight || 320, cardW, isMob);
+    // Track resize with ResizeObserver for accurate dimensions after React layout shifts
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === containerRef.current) {
+          const isMob = window.innerWidth < 768;
+          const cardW = isMob ? 300 : 250;
+          // Use offsetWidth/offsetHeight to include borders and padding if any
+          const width = containerRef.current.offsetWidth;
+          const height = containerRef.current.offsetHeight || 320;
+          scanner.onResize(width, height, cardW, isMob);
+        }
       }
-    };
-    window.addEventListener('resize', handleResize);
+    });
+
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
 
     return () => {
       observer.disconnect();
       window.removeEventListener('bwModeChange', handleBwChange);
       cancelAnimationFrame(animId);
-      window.removeEventListener('resize', handleResize);
+      resizeObserver.disconnect();
       scanner.destroy();
     };
   }, [mounted]);
