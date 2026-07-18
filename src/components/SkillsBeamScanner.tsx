@@ -46,13 +46,17 @@ class ParticleScanner {
   currentFadeZone: number = 40;
   currentGlowIntensity: number = 1;
   transitionSpeed: number = 0.05;
+  isVertical: boolean = false;
+  lightBarY: number = 0;
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, isVertical: boolean = false) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d')!;
+    this.isVertical = isVertical;
     this.w = canvas.offsetWidth;
     this.h = canvas.offsetHeight;
     this.lightBarX = this.w / 2;
+    this.lightBarY = this.h / 2;
 
     this.setupCanvas();
     this.createGradientCache();
@@ -72,6 +76,7 @@ class ParticleScanner {
     this.w = width;
     this.h = height;
     this.lightBarX = this.w / 2;
+    this.lightBarY = this.h / 2;
     this.setupCanvas();
   }
 
@@ -126,21 +131,37 @@ class ParticleScanner {
     const speedMultiplier = 1 + (intensityRatio - 1) * 1.2;
     const sizeMultiplier = 1 + (intensityRatio - 1) * 0.7;
 
-    return {
-      x: this.lightBarX + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2),
-      y: this.randomFloat(0, this.h),
-      // Particles shoot mostly to the right to reveal code
-      vx: this.randomFloat(0.3, 1.2) * speedMultiplier,
-      vy: this.randomFloat(-0.18, 0.18) * speedMultiplier,
-      radius: this.randomFloat(0.5, 1.2) * sizeMultiplier,
-      alpha: this.randomFloat(0.6, 1),
-      decay: this.randomFloat(0.008, 0.035) * (2 - intensityRatio * 0.5),
-      originalAlpha: 0,
-      life: 1.0,
-      time: 0,
-      twinkleSpeed: this.randomFloat(0.02, 0.08) * speedMultiplier,
-      twinkleAmount: this.randomFloat(0.1, 0.25)
-    };
+    if (this.isVertical) {
+       return {
+         x: this.randomFloat(0, this.w),
+         y: this.lightBarY + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2),
+         vx: this.randomFloat(-0.18, 0.18) * speedMultiplier,
+         vy: this.randomFloat(0.3, 1.2) * speedMultiplier,
+         radius: this.randomFloat(0.5, 1.2) * sizeMultiplier,
+         alpha: this.randomFloat(0.6, 1),
+         decay: this.randomFloat(0.008, 0.035) * (2 - intensityRatio * 0.5),
+         originalAlpha: 0,
+         life: 1.0,
+         time: 0,
+         twinkleSpeed: this.randomFloat(0.02, 0.08) * speedMultiplier,
+         twinkleAmount: this.randomFloat(0.1, 0.25)
+       };
+    } else {
+       return {
+         x: this.lightBarX + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2),
+         y: this.randomFloat(0, this.h),
+         vx: this.randomFloat(0.3, 1.2) * speedMultiplier,
+         vy: this.randomFloat(-0.18, 0.18) * speedMultiplier,
+         radius: this.randomFloat(0.5, 1.2) * sizeMultiplier,
+         alpha: this.randomFloat(0.6, 1),
+         decay: this.randomFloat(0.008, 0.035) * (2 - intensityRatio * 0.5),
+         originalAlpha: 0,
+         life: 1.0,
+         time: 0,
+         twinkleSpeed: this.randomFloat(0.02, 0.08) * speedMultiplier,
+         twinkleAmount: this.randomFloat(0.1, 0.25)
+       };
+    }
   }
 
   initParticles() {
@@ -162,16 +183,29 @@ class ParticleScanner {
     p.alpha = p.originalAlpha * p.life + Math.sin(p.time * p.twinkleSpeed) * p.twinkleAmount;
     p.life -= p.decay;
 
-    if (p.x > this.w + 10 || p.life <= 0) {
-      this.resetParticle(p);
+    if (this.isVertical) {
+      if (p.y > this.h + 10 || p.life <= 0) {
+        this.resetParticle(p);
+      }
+    } else {
+      if (p.x > this.w + 10 || p.life <= 0) {
+        this.resetParticle(p);
+      }
     }
   }
 
   resetParticle(p: any) {
-    p.x = this.lightBarX + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2);
-    p.y = this.randomFloat(0, this.h);
-    p.vx = this.randomFloat(0.3, 1.2);
-    p.vy = this.randomFloat(-0.18, 0.18);
+    if (this.isVertical) {
+      p.x = this.randomFloat(0, this.w);
+      p.y = this.lightBarY + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2);
+      p.vx = this.randomFloat(-0.18, 0.18);
+      p.vy = this.randomFloat(0.3, 1.2);
+    } else {
+      p.x = this.lightBarX + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2);
+      p.y = this.randomFloat(0, this.h);
+      p.vx = this.randomFloat(0.3, 1.2);
+      p.vy = this.randomFloat(-0.18, 0.18);
+    }
     p.alpha = this.randomFloat(0.6, 1);
     p.originalAlpha = p.alpha;
     p.life = 1.0;
@@ -182,10 +216,18 @@ class ParticleScanner {
     if (p.life <= 0 || !this.gradientCanvas) return;
 
     let fadeAlpha = 1;
-    if (p.y < this.fadeZone) {
-      fadeAlpha = p.y / this.fadeZone;
-    } else if (p.y > this.h - this.fadeZone) {
-      fadeAlpha = (this.h - p.y) / this.fadeZone;
+    if (this.isVertical) {
+      if (p.x < this.fadeZone) {
+        fadeAlpha = p.x / this.fadeZone;
+      } else if (p.x > this.w - this.fadeZone) {
+        fadeAlpha = (this.w - p.x) / this.fadeZone;
+      }
+    } else {
+      if (p.y < this.fadeZone) {
+        fadeAlpha = p.y / this.fadeZone;
+      } else if (p.y > this.h - this.fadeZone) {
+        fadeAlpha = (this.h - p.y) / this.fadeZone;
+      }
     }
     fadeAlpha = Math.max(0, Math.min(1, fadeAlpha));
 
@@ -452,6 +494,18 @@ export const SkillsBeamScanner: React.FC<SkillsBeamScannerProps> = ({ selectedMa
 
   const [mounted, setMounted] = useState(false);
   const [isAnimating, setIsAnimating] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const isMobileRef = useRef(false);
+  isMobileRef.current = isMobile;
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Position, drag, and velocity refs (high-performance rendering, zero-re-renders)
   const positionRef = useRef(0);
@@ -586,11 +640,12 @@ class HobbiesAndInterests {
   // ----------------------------------------------------
   // Drag & Mouse Event Handlers for Slider (Vanilla JS style)
   // ----------------------------------------------------
-  const handleDragStart = (clientX: number) => {
+  const handleDragStart = (clientX: number, clientY: number) => {
     isDraggingRef.current = true;
-    startMouseXRef.current = clientX;
+    const currentCoord = isMobileRef.current ? clientY : clientX;
+    startMouseXRef.current = currentCoord;
     startPositionRef.current = positionRef.current;
-    lastMouseXRef.current = clientX;
+    lastMouseXRef.current = currentCoord;
     mouseVelocityRef.current = 0;
 
     if (trackRef.current) {
@@ -598,14 +653,15 @@ class HobbiesAndInterests {
     }
   };
 
-  const handleDragMove = (clientX: number) => {
+  const handleDragMove = (clientX: number, clientY: number) => {
     if (!isDraggingRef.current) return;
-    const deltaX = clientX - startMouseXRef.current;
-    positionRef.current = startPositionRef.current + deltaX;
+    const currentCoord = isMobileRef.current ? clientY : clientX;
+    const delta = currentCoord - startMouseXRef.current;
+    positionRef.current = startPositionRef.current + delta;
 
-    const instantDelta = clientX - lastMouseXRef.current;
+    const instantDelta = currentCoord - lastMouseXRef.current;
     mouseVelocityRef.current = instantDelta * 60; // scale to velocity px/s
-    lastMouseXRef.current = clientX;
+    lastMouseXRef.current = currentCoord;
   };
 
   const handleDragEnd = () => {
@@ -629,7 +685,7 @@ class HobbiesAndInterests {
     if (!mounted || !canvasRef.current || !containerRef.current) return;
 
     // Instantiate Canvas particles
-    const scanner = new ParticleScanner(canvasRef.current);
+    const scanner = new ParticleScanner(canvasRef.current, isMobileRef.current);
     scannerInstance.current = scanner;
 
     // Set up MutationObserver to detect when theme changes on document.documentElement (dark or bw-mode)
@@ -663,17 +719,15 @@ class HobbiesAndInterests {
 
       if (track && container) {
         const containerRect = container.getBoundingClientRect();
-        // Central scanner line coordinates (middle of viewport)
-        const scannerX = containerRect.left + containerRect.width / 2;
+        const activeIsMobile = isMobileRef.current;
 
-        // Total width of the carousel cards: 8 cards of 400px + 32px gaps
-        const cardWidth = 400;
-        const gap = 32;
-        const totalTrackWidth = (cardWidth + gap) * categories.length;
+        // Constants depend on mobile vs desktop mode
+        const cardSize = activeIsMobile ? 250 : 400; // height on mobile, width on desktop
+        const gap = activeIsMobile ? 20 : 32;
+        const totalSize = (cardSize + gap) * categories.length;
 
         // Auto-Scroll physics (constant velocity slide if not dragging)
         if (!isDraggingRef.current && isAnimatingRef.current) {
-          // Slide slowly with slight friction deceleration if let go fast
           if (velocityRef.current > 100) {
             velocityRef.current *= 0.96; // friction decelerate
           } else {
@@ -684,64 +738,114 @@ class HobbiesAndInterests {
         }
 
         // Loop boundaries for infinite carousel scrolling
-        // If moving right (direction = 1) and exceeds viewport limit: loop back
         if (positionRef.current > 0) {
-          positionRef.current = -totalTrackWidth / 2;
-        }
-        // If moving left (direction = -1) and scrolls off-screen: loop forward
-        else if (positionRef.current < -totalTrackWidth / 2) {
+          positionRef.current = -totalSize / 2;
+        } else if (positionRef.current < -totalSize / 2) {
           positionRef.current = 0;
         }
 
         // Update DOM transform directly for high performance
-        track.style.transform = `translateX(${positionRef.current}px)`;
+        if (activeIsMobile) {
+          track.style.transform = `translateY(${positionRef.current}px)`;
+        } else {
+          track.style.transform = `translateX(${positionRef.current}px)`;
+        }
 
         // Calculate card intersections & clipping boundaries
         let anyCardIntersecting = false;
         const cards = track.querySelectorAll('.skills-card-wrapper');
 
-        cards.forEach((card) => {
-          const htmlCard = card as HTMLElement;
-          const rect = htmlCard.getBoundingClientRect();
-          const cardLeft = rect.left;
-          const cardRight = rect.right;
-          if (cardLeft < scannerX && cardRight > scannerX) {
-            anyCardIntersecting = true;
-            const intersectX = scannerX - cardLeft;
-            const percentLeft = (intersectX / cardWidth) * 100;
+        if (activeIsMobile) {
+          const scannerY = containerRect.top + containerRect.height / 2;
+          cards.forEach((card) => {
+            const htmlCard = card as HTMLElement;
+            const rect = htmlCard.getBoundingClientRect();
+            const cardTop = rect.top;
+            const cardBottom = rect.bottom;
 
-            htmlCard.style.setProperty('--clip-right', `${percentLeft}%`);
-            htmlCard.style.setProperty('--clip-left', `${percentLeft}%`);
+            if (cardTop < scannerY && cardBottom > scannerY) {
+              anyCardIntersecting = true;
+              const intersectY = scannerY - cardTop;
+              const percentTop = (intersectY / cardSize) * 100;
 
-            // Fill up progress bars since it is crossing the scanner
-            htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
-              const htmlFill = fill as HTMLElement;
-              htmlFill.style.width = htmlFill.getAttribute('data-level') + '%';
-            });
-          } else {
-            if (cardRight <= scannerX) {
-              // Card fully to the left of scanner: fully ASCII (code)
-              htmlCard.style.setProperty('--clip-right', '100%');
-              htmlCard.style.setProperty('--clip-left', '100%');
+              htmlCard.style.setProperty('--clip-bottom', `${percentTop}%`);
+              htmlCard.style.setProperty('--clip-top', `${percentTop}%`);
 
-              // Reset progress bars to 0% when card is in fully-code (left) state
-              htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
-                const htmlFill = fill as HTMLElement;
-                htmlFill.style.width = '0%';
-              });
-            } else if (cardLeft >= scannerX) {
-              // Card fully to the right of scanner: fully normal (progress bars)
-              htmlCard.style.setProperty('--clip-right', '0%');
-              htmlCard.style.setProperty('--clip-left', '0%');
-
-              // Fill up progress bars since it is in fully-normal (right) state
+              // Fill up progress bars since it is crossing the scanner
               htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
                 const htmlFill = fill as HTMLElement;
                 htmlFill.style.width = htmlFill.getAttribute('data-level') + '%';
               });
+            } else {
+              if (cardBottom <= scannerY) {
+                // Card fully above scanner: fully ASCII (code)
+                htmlCard.style.setProperty('--clip-bottom', '100%');
+                htmlCard.style.setProperty('--clip-top', '100%');
+
+                // Reset progress bars to 0% when card is in fully-code state
+                htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
+                  const htmlFill = fill as HTMLElement;
+                  htmlFill.style.width = '0%';
+                });
+              } else if (cardTop >= scannerY) {
+                // Card fully below scanner: fully normal (progress bars)
+                htmlCard.style.setProperty('--clip-bottom', '0%');
+                htmlCard.style.setProperty('--clip-top', '0%');
+
+                // Fill up progress bars since it is in fully-normal state
+                htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
+                  const htmlFill = fill as HTMLElement;
+                  htmlFill.style.width = htmlFill.getAttribute('data-level') + '%';
+                });
+              }
             }
-          }
-        });
+          });
+        } else {
+          const scannerX = containerRect.left + containerRect.width / 2;
+          cards.forEach((card) => {
+            const htmlCard = card as HTMLElement;
+            const rect = htmlCard.getBoundingClientRect();
+            const cardLeft = rect.left;
+            const cardRight = rect.right;
+
+            if (cardLeft < scannerX && cardRight > scannerX) {
+              anyCardIntersecting = true;
+              const intersectX = scannerX - cardLeft;
+              const percentLeft = (intersectX / cardSize) * 100;
+
+              htmlCard.style.setProperty('--clip-right', `${percentLeft}%`);
+              htmlCard.style.setProperty('--clip-left', `${percentLeft}%`);
+
+              // Fill up progress bars since it is crossing the scanner
+              htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
+                const htmlFill = fill as HTMLElement;
+                htmlFill.style.width = htmlFill.getAttribute('data-level') + '%';
+              });
+            } else {
+              if (cardRight <= scannerX) {
+                // Card fully to the left of scanner: fully ASCII (code)
+                htmlCard.style.setProperty('--clip-right', '100%');
+                htmlCard.style.setProperty('--clip-left', '100%');
+
+                // Reset progress bars to 0% when card is in fully-code state
+                htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
+                  const htmlFill = fill as HTMLElement;
+                  htmlFill.style.width = '0%';
+                });
+              } else if (cardLeft >= scannerX) {
+                // Card fully to the right of scanner: fully normal (progress bars)
+                htmlCard.style.setProperty('--clip-right', '0%');
+                htmlCard.style.setProperty('--clip-left', '0%');
+
+                // Fill up progress bars since it is in fully-normal state
+                htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
+                  const htmlFill = fill as HTMLElement;
+                  htmlFill.style.width = htmlFill.getAttribute('data-level') + '%';
+                });
+              }
+            }
+          });
+        }
 
         // Set scanning particle intensity active
         scanner.setScanningActive(anyCardIntersecting);
@@ -755,7 +859,7 @@ class HobbiesAndInterests {
     // Track resize
     const handleResize = () => {
       if (canvasRef.current && containerRef.current) {
-        scanner.onResize(containerRef.current.offsetWidth, 320);
+        scanner.onResize(containerRef.current.offsetWidth, containerRef.current.offsetHeight || 320);
       }
     };
     window.addEventListener('resize', handleResize);
@@ -775,11 +879,11 @@ class HobbiesAndInterests {
     if (!track) return;
 
     const onMouseDown = (e: MouseEvent) => {
-      handleDragStart(e.clientX);
+      handleDragStart(e.clientX, e.clientY);
     };
 
     const onMouseMove = (e: MouseEvent) => {
-      handleDragMove(e.clientX);
+      handleDragMove(e.clientX, e.clientY);
     };
 
     const onMouseUp = () => {
@@ -787,11 +891,11 @@ class HobbiesAndInterests {
     };
 
     const onTouchStart = (e: TouchEvent) => {
-      handleDragStart(e.touches[0].clientX);
+      handleDragStart(e.touches[0].clientX, e.touches[0].clientY);
     };
 
     const onTouchMove = (e: TouchEvent) => {
-      handleDragMove(e.touches[0].clientX);
+      handleDragMove(e.touches[0].clientX, e.touches[0].clientY);
     };
 
     const onTouchEnd = () => {
@@ -810,8 +914,7 @@ class HobbiesAndInterests {
       track.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseup', onMouseUp);
-
-      track.removeEventListener('touchstart', onTouchStart);
+track.removeEventListener('touchstart', onTouchStart);
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('touchend', onTouchEnd);
     };
@@ -823,22 +926,36 @@ class HobbiesAndInterests {
       <canvas 
         ref={canvasRef} 
         className="absolute top-0 bottom-0 left-0 right-0 w-full h-full pointer-events-none z-10"
-        style={{ height: '320px' }}
+        style={{ height: '400px' }}
       />
 
       {/* Slider Draggable Track */}
       <div 
         ref={trackRef} 
-        className="skills-slider-track select-none flex items-center will-change-transform pt-4"
-        style={{ height: '320px' }}
+        className={`skills-slider-track select-none flex items-center will-change-transform pt-4 ${isMobile ? 'flex-col h-max w-full' : 'flex-row w-max'}`}
+        style={{ height: isMobile ? 'max-content' : '320px' }}
       >
         {categories.map((category, index) => (
-          <div key={index} className="skills-card-wrapper relative">
+          <div 
+            key={index} 
+            className="skills-card-wrapper relative"
+            style={{
+              width: isMobile ? '320px' : '400px',
+              height: '250px',
+              flexShrink: 0,
+              marginRight: isMobile ? '0' : '32px',
+              marginBottom: isMobile ? '20px' : '0'
+            }}
+          >
             
             {/* 1. LAYER: Decoded Normal Card Layout (Right side of scanner - clipped from left) */}
             <div 
               className="skills-card skills-card-normal"
-              style={{ clipPath: 'inset(0 0 0 var(--clip-right, 0%))' }}
+              style={{
+                clipPath: isMobile 
+                  ? 'inset(var(--clip-bottom, 0%) 0 0 0)' 
+                  : 'inset(0 0 0 var(--clip-right, 0%))'
+              }}
             >
               <div className="skills-header">
                 <div className="skills-icon p-1.5 bg-[var(--background)] rounded-xl border border-[var(--glass-border)] flex items-center justify-center">
@@ -902,7 +1019,11 @@ class HobbiesAndInterests {
             {/* 2. LAYER: Encoded ASCII Code Layout (Left side of scanner - clipped from right) */}
             <div 
               className="skills-card skills-card-ascii"
-              style={{ clipPath: 'inset(0 calc(100% - var(--clip-left, 0%)) 0 0)' }}
+              style={{
+                clipPath: isMobile 
+                  ? 'inset(0 0 calc(100% - var(--clip-top, 0%)) 0)' 
+                  : 'inset(0 calc(100% - var(--clip-left, 0%)) 0 0)'
+              }}
             >
               <div className="skills-ascii-content">
                 {mounted ? generateRandomCode(60, 16) : ""}
