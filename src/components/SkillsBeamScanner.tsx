@@ -962,7 +962,7 @@ track.removeEventListener('touchstart', onTouchStart);
               className="skills-card skills-card-normal"
               style={{
                 clipPath: isMobile 
-                  ? 'inset(var(--clip-bottom, 0%) 0 0 0)' 
+                  ? 'inset(0 0 calc(100% - var(--clip-bottom, 0%)) 0)' 
                   : 'inset(0 0 0 var(--clip-right, 0%))'
               }}
             >
@@ -1030,7 +1030,7 @@ track.removeEventListener('touchstart', onTouchStart);
               className="skills-card skills-card-ascii"
               style={{
                 clipPath: isMobile 
-                  ? 'inset(0 0 calc(100% - var(--clip-top, 0%)) 0)' 
+                  ? 'inset(var(--clip-top, 0%) 0 0 0)' 
                   : 'inset(0 calc(100% - var(--clip-left, 0%)) 0 0)'
               }}
             >
