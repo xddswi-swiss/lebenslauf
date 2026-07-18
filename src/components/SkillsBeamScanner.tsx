@@ -1110,7 +1110,7 @@ track.removeEventListener('touchstart', onTouchStart);
         onClick={() => setIsAnimating(!isAnimating)}
         className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
       >
-        {isAnimating ? "⏸️ Pause" : "▶️ Play"}
+        {isAnimating ? `⏸️ ${t.skills.scanner.pause}` : `▶️ ${t.skills.scanner.play}`}
       </button>
       <button 
         onClick={() => {
@@ -1122,7 +1122,7 @@ track.removeEventListener('touchstart', onTouchStart);
         }}
         className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
       >
-        🔄 Reset
+        🔄 {t.skills.scanner.reset}
       </button>
       <button 
         onClick={() => {
@@ -1130,7 +1130,7 @@ track.removeEventListener('touchstart', onTouchStart);
         }}
         className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
       >
-        {isMobile ? "↕️ Yön" : "↔️ Yön"}
+        {isMobile ? `↕️ ${t.skills.scanner.direction}` : `↔️ ${t.skills.scanner.direction}`}
       </button>
     </div>
     </>

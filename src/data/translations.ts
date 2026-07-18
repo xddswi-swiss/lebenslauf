@@ -78,6 +78,12 @@ export interface TranslationSchema {
   skills: {
     title: string;
     subtitle: string;
+    scanner: {
+      pause: string;
+      play: string;
+      reset: string;
+      direction: string;
+    };
     categories: {
       personal: string;
       school: string;
@@ -289,6 +295,12 @@ export const translations: Record<Language, TranslationSchema> = {
     skills: {
       title: "Kompetenzen",
       subtitle: "Fähigkeiten, die ich in der Schule und bei Schnupperlehren erlernt habe",
+      scanner: {
+        pause: "Pause",
+        play: "Play",
+        reset: "Reset",
+        direction: "Richtung"
+      },
       categories: {
         personal: "Persönliche Stärken",
         school: "Schulische Stärken",
@@ -451,6 +463,12 @@ export const translations: Record<Language, TranslationSchema> = {
     skills: {
       title: "Beceriler & Yetkinlikler",
       subtitle: "Okulda ve stajlarımda edindiğim kişisel ve pratik yetenekler",
+      scanner: {
+        pause: "Durdur",
+        play: "Oynat",
+        reset: "Sıfırla",
+        direction: "Yön"
+      },
       categories: {
         personal: "Kişisel Güçlü Yönler",
         school: "Okul Başarıları",
@@ -613,6 +631,12 @@ export const translations: Record<Language, TranslationSchema> = {
     skills: {
       title: "Competencies",
       subtitle: "Skills acquired in school and during trial apprenticeships",
+      scanner: {
+        pause: "Pause",
+        play: "Play",
+        reset: "Reset",
+        direction: "Direction"
+      },
       categories: {
         personal: "Personal Strengths",
         school: "Academic Strengths",
