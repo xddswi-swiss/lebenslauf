@@ -933,3 +933,122 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .cb-btn.is-loading .cb-arrow { animation: none; }
 }
+
+/* Skills Beam Scanner Styles */
+.skills-scanner-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 30px 0;
+  border-radius: 24px;
+}
+
+.skills-scanner-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  transform: translateX(-50%);
+  background: var(--primary);
+  z-index: 20;
+  pointer-events: none;
+  box-shadow: 0 0 15px 4px color-mix(in srgb, var(--primary) 70%, transparent),
+              0 0 6px 1px #ffffff;
+}
+
+/* Draggable Track */
+.skills-slider-track {
+  display: flex;
+  align-items: stretch;
+  gap: 32px;
+  cursor: grab;
+  padding-left: calc(50% - 200px);
+  padding-right: calc(50% - 200px);
+  width: max-content;
+}
+
+.skills-slider-track:active {
+  cursor: grabbing;
+}
+
+/* Card Wrapper with clipping variables */
+.skills-card-wrapper {
+  position: relative;
+  width: 400px;
+  height: 380px;
+  flex-shrink: 0;
+  user-select: none;
+  --clip-right: 0%;
+  --clip-left: 0%;
+}
+
+.skills-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+/* Normal Progress Bars Layer */
+.skills-card-normal {
+  z-index: 2;
+  clip-path: inset(0 var(--clip-right) 0 0);
+  background-color: var(--glass-card-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.skills-card-normal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  opacity: 0.6;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Encoded Code/ASCII Layer */
+.skills-card-ascii {
+  z-index: 1;
+  clip-path: inset(0 0 0 var(--clip-left));
+  background-color: rgba(3, 7, 18, 0.95);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #3b82f6;
+  font-family: monospace;
+}
+
+.skills-ascii-content {
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  font-size: 11px;
+  line-height: 14px;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-break: break-all;
+  user-select: none;
+  opacity: 0.85;
+  background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 80%);
+}
+
+/* Floating Scanning Particle Glow */
+.scan-glow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: linear-gradient(to right, 
+    transparent, 
+    color-mix(in srgb, var(--primary) 15%, transparent), 
+    transparent
+  );
+  z-index: 15;
+  pointer-events: none;
+  mix-blend-mode: plus-lighter;
+}
