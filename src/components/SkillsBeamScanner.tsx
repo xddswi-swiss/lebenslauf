@@ -243,85 +243,128 @@ class ParticleScanner {
 
   drawLightBar() {
     const isBw = document.documentElement.classList.contains('bw-mode');
-    if (isBw) {
-      // B&W theme: simple solid black bar, no glowing composition or composite operations
-      this.ctx.globalAlpha = 1;
-      this.ctx.fillStyle = "#000000";
-      this.ctx.fillRect(this.lightBarX - this.lightBarWidth / 2, 0, this.lightBarWidth, this.h);
-      return;
-    }
-
     const isDark = document.documentElement.classList.contains('dark');
     const colorPrimary = isDark ? "0, 220, 255" : "234, 179, 8";
     const colorSecondary = isDark ? "170, 245, 255" : "253, 224, 71";
 
-    const verticalGradient = this.ctx.createLinearGradient(0, 0, 0, this.h);
-    verticalGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-    verticalGradient.addColorStop(this.fadeZone / this.h, 'rgba(255, 255, 255, 1)');
-    verticalGradient.addColorStop(1 - this.fadeZone / this.h, 'rgba(255, 255, 255, 1)');
-    verticalGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-
     this.ctx.globalCompositeOperation = 'lighter';
     const targetGlowIntensity = this.scanningActive ? 3.5 : 1;
     this.currentGlowIntensity += (targetGlowIntensity - this.currentGlowIntensity) * this.transitionSpeed;
-
     const glowIntensity = this.currentGlowIntensity;
-    const lineWidth = this.lightBarWidth;
     const glow1Alpha = this.scanningActive ? 1.0 : 0.8;
     const glow2Alpha = this.scanningActive ? 0.8 : 0.6;
+    const lineWidth = this.lightBarWidth;
 
-    // Core scanner line
-    const coreGradient = this.ctx.createLinearGradient(
-      this.lightBarX - lineWidth / 2, 0,
-      this.lightBarX + lineWidth / 2, 0
-    );
-    coreGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-    coreGradient.addColorStop(0.3, `rgba(255, 255, 255, ${0.9 * glowIntensity})`);
-    coreGradient.addColorStop(0.5, `rgba(255, 255, 255, ${1.0 * glowIntensity})`);
-    coreGradient.addColorStop(0.7, `rgba(255, 255, 255, ${0.9 * glowIntensity})`);
-    coreGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    if (this.isVertical) {
+      // ── HORIZONTAL LASER BAR (mobile) ──
+      if (isBw) {
+        this.ctx.globalCompositeOperation = 'source-over';
+        this.ctx.globalAlpha = 1;
+        this.ctx.fillStyle = "#000000";
+        this.ctx.fillRect(0, this.lightBarY - lineWidth / 2, this.w, lineWidth);
+        return;
+      }
 
-    this.ctx.globalAlpha = 1;
-    this.ctx.fillStyle = coreGradient;
-    this.ctx.beginPath();
-    this.ctx.rect(this.lightBarX - lineWidth / 2, 0, lineWidth, this.h);
-    this.ctx.fill();
+      // Fade mask: fade left and right edges
+      const hFade = this.ctx.createLinearGradient(0, 0, this.w, 0);
+      hFade.addColorStop(0, 'rgba(255,255,255,0)');
+      hFade.addColorStop(this.fadeZone / this.w, 'rgba(255,255,255,1)');
+      hFade.addColorStop(1 - this.fadeZone / this.w, 'rgba(255,255,255,1)');
+      hFade.addColorStop(1, 'rgba(255,255,255,0)');
 
-    // Outer Glow 1
-    const glow1Gradient = this.ctx.createLinearGradient(
-      this.lightBarX - lineWidth * 2, 0,
-      this.lightBarX + lineWidth * 2, 0
-    );
-    glow1Gradient.addColorStop(0, `rgba(${colorPrimary}, 0)`);
-    glow1Gradient.addColorStop(0.5, `rgba(${colorSecondary}, ${0.8 * glowIntensity})`);
-    glow1Gradient.addColorStop(1, `rgba(${colorPrimary}, 0)`);
+      // Core line (horizontal)
+      const coreG = this.ctx.createLinearGradient(0, this.lightBarY - lineWidth / 2, 0, this.lightBarY + lineWidth / 2);
+      coreG.addColorStop(0, 'rgba(255,255,255,0)');
+      coreG.addColorStop(0.3, `rgba(255,255,255,${0.9 * glowIntensity})`);
+      coreG.addColorStop(0.5, `rgba(255,255,255,${1.0 * glowIntensity})`);
+      coreG.addColorStop(0.7, `rgba(255,255,255,${0.9 * glowIntensity})`);
+      coreG.addColorStop(1, 'rgba(255,255,255,0)');
+      this.ctx.globalAlpha = 1;
+      this.ctx.fillStyle = coreG;
+      this.ctx.fillRect(0, this.lightBarY - lineWidth / 2, this.w, lineWidth);
 
-    this.ctx.globalAlpha = glow1Alpha;
-    this.ctx.fillStyle = glow1Gradient;
-    this.ctx.beginPath();
-    this.ctx.rect(this.lightBarX - lineWidth * 2, 0, lineWidth * 4, this.h);
-    this.ctx.fill();
+      // Glow 1 (horizontal)
+      const g1 = this.ctx.createLinearGradient(0, this.lightBarY - lineWidth * 2, 0, this.lightBarY + lineWidth * 2);
+      g1.addColorStop(0, `rgba(${colorPrimary},0)`);
+      g1.addColorStop(0.5, `rgba(${colorSecondary},${0.8 * glowIntensity})`);
+      g1.addColorStop(1, `rgba(${colorPrimary},0)`);
+      this.ctx.globalAlpha = glow1Alpha;
+      this.ctx.fillStyle = g1;
+      this.ctx.fillRect(0, this.lightBarY - lineWidth * 2, this.w, lineWidth * 4);
 
-    // Outer Glow 2
-    const glow2Gradient = this.ctx.createLinearGradient(
-      this.lightBarX - lineWidth * 4, 0,
-      this.lightBarX + lineWidth * 4, 0
-    );
-    glow2Gradient.addColorStop(0, `rgba(${colorPrimary}, 0)`);
-    glow2Gradient.addColorStop(0.5, `rgba(${colorPrimary}, ${0.4 * glowIntensity})`);
-    glow2Gradient.addColorStop(1, `rgba(${colorPrimary}, 0)`);
+      // Glow 2 (horizontal)
+      const g2 = this.ctx.createLinearGradient(0, this.lightBarY - lineWidth * 4, 0, this.lightBarY + lineWidth * 4);
+      g2.addColorStop(0, `rgba(${colorPrimary},0)`);
+      g2.addColorStop(0.5, `rgba(${colorPrimary},${0.4 * glowIntensity})`);
+      g2.addColorStop(1, `rgba(${colorPrimary},0)`);
+      this.ctx.globalAlpha = glow2Alpha;
+      this.ctx.fillStyle = g2;
+      this.ctx.fillRect(0, this.lightBarY - lineWidth * 4, this.w, lineWidth * 8);
 
-    this.ctx.globalAlpha = glow2Alpha;
-    this.ctx.fillStyle = glow2Gradient;
-    this.ctx.beginPath();
-    this.ctx.rect(this.lightBarX - lineWidth * 4, 0, lineWidth * 8, this.h);
-    this.ctx.fill();
+      // Mask: fade left/right edges
+      this.ctx.globalCompositeOperation = 'destination-in';
+      this.ctx.globalAlpha = 1;
+      this.ctx.fillStyle = hFade;
+      this.ctx.fillRect(0, 0, this.w, this.h);
 
-    // Mask with vertical gradient
-    this.ctx.globalCompositeOperation = 'destination-in';
-    this.ctx.globalAlpha = 1;
-    this.ctx.fillStyle = verticalGradient;
-    this.ctx.fillRect(0, 0, this.w, this.h);
+    } else {
+      // ── VERTICAL LASER BAR (desktop) ──
+      if (isBw) {
+        this.ctx.globalCompositeOperation = 'source-over';
+        this.ctx.globalAlpha = 1;
+        this.ctx.fillStyle = "#000000";
+        this.ctx.fillRect(this.lightBarX - lineWidth / 2, 0, lineWidth, this.h);
+        return;
+      }
+
+      // Fade mask: fade top and bottom edges
+      const verticalGradient = this.ctx.createLinearGradient(0, 0, 0, this.h);
+      verticalGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+      verticalGradient.addColorStop(this.fadeZone / this.h, 'rgba(255, 255, 255, 1)');
+      verticalGradient.addColorStop(1 - this.fadeZone / this.h, 'rgba(255, 255, 255, 1)');
+      verticalGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+      // Core line
+      const coreGradient = this.ctx.createLinearGradient(this.lightBarX - lineWidth / 2, 0, this.lightBarX + lineWidth / 2, 0);
+      coreGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
+      coreGradient.addColorStop(0.3, `rgba(255, 255, 255, ${0.9 * glowIntensity})`);
+      coreGradient.addColorStop(0.5, `rgba(255, 255, 255, ${1.0 * glowIntensity})`);
+      coreGradient.addColorStop(0.7, `rgba(255, 255, 255, ${0.9 * glowIntensity})`);
+      coreGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      this.ctx.globalAlpha = 1;
+      this.ctx.fillStyle = coreGradient;
+      this.ctx.beginPath();
+      this.ctx.rect(this.lightBarX - lineWidth / 2, 0, lineWidth, this.h);
+      this.ctx.fill();
+
+      // Outer Glow 1
+      const glow1Gradient = this.ctx.createLinearGradient(this.lightBarX - lineWidth * 2, 0, this.lightBarX + lineWidth * 2, 0);
+      glow1Gradient.addColorStop(0, `rgba(${colorPrimary}, 0)`);
+      glow1Gradient.addColorStop(0.5, `rgba(${colorSecondary}, ${0.8 * glowIntensity})`);
+      glow1Gradient.addColorStop(1, `rgba(${colorPrimary}, 0)`);
+      this.ctx.globalAlpha = glow1Alpha;
+      this.ctx.fillStyle = glow1Gradient;
+      this.ctx.beginPath();
+      this.ctx.rect(this.lightBarX - lineWidth * 2, 0, lineWidth * 4, this.h);
+      this.ctx.fill();
+
+      // Outer Glow 2
+      const glow2Gradient = this.ctx.createLinearGradient(this.lightBarX - lineWidth * 4, 0, this.lightBarX + lineWidth * 4, 0);
+      glow2Gradient.addColorStop(0, `rgba(${colorPrimary}, 0)`);
+      glow2Gradient.addColorStop(0.5, `rgba(${colorPrimary}, ${0.4 * glowIntensity})`);
+      glow2Gradient.addColorStop(1, `rgba(${colorPrimary}, 0)`);
+      this.ctx.globalAlpha = glow2Alpha;
+      this.ctx.fillStyle = glow2Gradient;
+      this.ctx.beginPath();
+      this.ctx.rect(this.lightBarX - lineWidth * 4, 0, lineWidth * 8, this.h);
+      this.ctx.fill();
+
+      // Mask with vertical gradient
+      this.ctx.globalCompositeOperation = 'destination-in';
+      this.ctx.globalAlpha = 1;
+      this.ctx.fillStyle = verticalGradient;
+      this.ctx.fillRect(0, 0, this.w, this.h);
+    }
   }
 
   setScanningActive(active: boolean) {
@@ -949,8 +992,8 @@ track.removeEventListener('touchstart', onTouchStart);
             key={index} 
             className="skills-card-wrapper relative"
             style={{
-              width: isMobile ? '320px' : '400px',
-              height: '250px',
+              width: isMobile ? '300px' : '400px',
+              height: isMobile ? '300px' : '250px',
               flexShrink: 0,
               marginRight: isMobile ? '0' : '32px',
               marginBottom: isMobile ? '20px' : '0'
