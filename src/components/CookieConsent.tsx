@@ -52,13 +52,12 @@ export default function CookieConsent() {
 
   return (
     <div
-      className={`fixed bottom-4 left-4 right-4 md:bottom-6 md:left-auto md:right-6 md:w-[450px] lg:w-[500px] z-[99999] pointer-events-none transition-all duration-500 ease-out transform ${
-        isVisible ? "translate-y-0 opacity-100" : "translate-y-24 opacity-0"
+      className={`fixed bottom-4 left-4 right-4 md:bottom-6 md:left-auto md:right-6 md:w-[450px] lg:w-[500px] z-[99999] transition-all duration-500 ease-out transform ${
+        isVisible ? "translate-y-0 opacity-100 pointer-events-auto" : "translate-y-24 opacity-0 pointer-events-none"
       }`}
     >
-        <div className="pointer-events-auto">
-          {/* Main Card adapting to current theme */}
-          <div className="glass-card rounded-2xl md:rounded-3xl overflow-hidden border border-white/20 shadow-2xl relative">
+      {/* Main Card adapting to current theme */}
+      <div className="glass-card rounded-2xl md:rounded-3xl overflow-hidden border border-white/20 shadow-2xl relative">
             
             {/* The multi-theme line removed, now relies on glass-card and theme variables */}
             <div className="relative z-10">
@@ -168,6 +167,5 @@ export default function CookieConsent() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
