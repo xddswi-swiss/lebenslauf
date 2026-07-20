@@ -975,9 +975,6 @@ body {
   touch-action: pan-y;
   overscroll-behavior-x: none;
   overscroll-behavior-y: none;
-  overflow-x: hidden;
-  position: relative;
-  max-width: 100%;
 }
 
 /* Horizontal Skills Beam Scanner Layout */
