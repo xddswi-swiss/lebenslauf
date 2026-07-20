@@ -292,9 +292,11 @@ const MainContent: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-grid-mesh relative text-[var(--text-body)] bg-[var(--background)] transition-colors duration-300 flex flex-col">
-      {/* Background gradients */}
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-violet-600/10 blur-[150px] rounded-full -z-10" />
-      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-cyan-600/10 blur-[150px] rounded-full -z-10" />
+      {/* Background gradients wrapped to prevent horizontal overflow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-[-10]">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-violet-600/10 blur-[150px] rounded-full" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-cyan-600/10 blur-[150px] rounded-full" />
+      </div>
 
       <Header activeColorIndex={randomColorIndex} />
 
