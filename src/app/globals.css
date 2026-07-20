@@ -713,6 +713,12 @@ body {
   color: #ffffff !important;
 }
 
+/* Make active menu item visible in dark blue theme */
+:root.dark:not(.bw-mode) .mobile-drawer a.bg-primary\/10 {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(59, 130, 246, 0.6) !important;
+}
+
 :root.dark:not(.bw-mode) .mobile-drawer .border-b,
 :root.dark:not(.bw-mode) .mobile-drawer .border-t {
   border-color: rgba(255, 255, 255, 0.15) !important;
