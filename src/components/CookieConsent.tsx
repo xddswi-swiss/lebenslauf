@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/app/contexts/LanguageContext";
 import { translations } from "@/data/translations";
-import { Cookie, Check, ChevronRight, Info } from "lucide-react";
+import { FaCookieBite } from "react-icons/fa";
+import { FiCheck, FiInfo } from "react-icons/fi";
 
 export default function CookieConsent() {
   const { language } = useLanguage();
@@ -64,12 +65,12 @@ export default function CookieConsent() {
                   {/* Functional (Required) */}
                   <div className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
                     <div className="mt-1 w-6 h-6 rounded-md bg-gray-600 flex items-center justify-center flex-shrink-0 cursor-not-allowed">
-                      <Check className="w-4 h-4 text-white" />
+                      <FiCheck className="w-4 h-4 text-white" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
                         <h3 className="font-semibold">{t.functional}</h3>
-                        <Info className="w-4 h-4 text-gray-400" />
+                        <FiInfo className="w-4 h-4 text-gray-400" />
                       </div>
                       <p className="text-xs text-gray-400 mt-1">
                         {t.functionalDesc}
@@ -87,7 +88,7 @@ export default function CookieConsent() {
                       }`}
                     >
                       {trackingEnabled && (
-                        <Check className="w-4 h-4 text-white" />
+                        <FiCheck className="w-4 h-4 text-white" />
                       )}
                     </div>
                     {/* Hidden actual checkbox */}
@@ -100,7 +101,7 @@ export default function CookieConsent() {
                     <div>
                       <div className="flex items-center gap-2">
                         <h3 className="font-semibold">{t.tracking}</h3>
-                        <Info className="w-4 h-4 text-gray-400" />
+                        <FiInfo className="w-4 h-4 text-gray-400" />
                       </div>
                       <p className="text-xs text-gray-400 mt-1">
                         {t.trackingDesc}
@@ -128,7 +129,7 @@ export default function CookieConsent() {
               /* Banner View */
               <div className="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center">
                 <div className="flex-shrink-0 hidden md:flex items-center justify-center w-14 h-14 rounded-full bg-white/10">
-                  <Cookie className="w-7 h-7 text-white" />
+                  <FaCookieBite className="w-7 h-7 text-white" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm md:text-base text-gray-300 leading-relaxed">
