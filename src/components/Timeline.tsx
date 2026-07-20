@@ -70,7 +70,8 @@ export const Timeline: React.FC<TimelineProps> = ({
 
   useEffect(() => {
     if (selectedMatcher) {
-      setIsWorkExpanded(true);
+      const timer = setTimeout(() => setIsWorkExpanded(true), 0);
+      return () => clearTimeout(timer);
     }
   }, [selectedMatcher]);
 
@@ -89,8 +90,10 @@ export const Timeline: React.FC<TimelineProps> = ({
   }, []);
 
   useEffect(() => {
-    // Set initial static items immediately to prevent hydration mismatches during server rendering
-    setWorkItems(experienceItems[language] || []);
+    // Defer initial static items set to avoid synchronous setState cascading renders
+    const timer = setTimeout(() => {
+      setWorkItems(experienceItems[language] || []);
+    }, 0);
 
     let isMounted = true;
     const fetchExperiences = () => {
@@ -149,6 +152,7 @@ export const Timeline: React.FC<TimelineProps> = ({
     );
     return () => {
       isMounted = false;
+      clearTimeout(timer);
       window.removeEventListener(
         "experiences-updated",
         handleRefresh as EventListener,
