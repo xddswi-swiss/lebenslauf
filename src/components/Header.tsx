@@ -54,6 +54,31 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [headerStyle, setHeaderStyle] = useState<React.CSSProperties>({});
   const [drawerStyle, setDrawerStyle] = useState<React.CSSProperties>({});
+  const [activeSection, setActiveSection] = useState<string>('');
+
+  // Track active section on scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find the first intersecting entry
+        const visibleEntry = entries.find((entry) => entry.isIntersecting);
+        if (visibleEntry) {
+          setActiveSection(visibleEntry.target.id);
+        }
+      },
+      {
+        rootMargin: '-20% 0px -70% 0px', // Trigger when section is in the top 20-30% of viewport
+      }
+    );
+
+    navLinks.forEach((link) => {
+      const sectionId = link.href.substring(1);
+      const element = document.getElementById(sectionId);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [language]); // Re-bind observer if language changes (though IDs remain same, safe measure)
 
   // Sync mobile status bar color (theme-color meta tag) with current theme
   useEffect(() => {
@@ -188,15 +213,32 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
           {/* Desktop Navigation & Actions */}
           <div className="flex items-center gap-4">
             <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold">
-              {navLinks.map((link) => (
-                <a 
-                  key={link.href} 
-                  href={link.href} 
-                  className="text-[var(--text-main)] hover:text-[var(--text-muted)] transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                const sectionId = link.href.substring(1);
+                const isActive = activeSection === sectionId;
+                
+                return (
+                  <a 
+                    key={link.href} 
+                    href={link.href} 
+                    onClick={() => setActiveSection(sectionId)}
+                    className={`relative py-1.5 transition-colors duration-300 ${
+                      isActive ? 'text-[var(--text-main)]' : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
+                    }`}
+                  >
+                    {link.label}
+                    {isActive && (
+                      <m.span
+                        layoutId="activeNavIndicator"
+                        className="absolute left-0 bottom-0 w-full h-[2px] bg-primary rounded-full"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                  </a>
+                );
+              })}
             </nav>
 
             <div className="hidden lg:flex items-center gap-1">
@@ -299,25 +341,39 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                 animate="show"
                 className="flex flex-col gap-3.5 flex-1 overflow-y-auto pr-1"
               >
-                {navLinks.map((link) => (
-                  <m.a
-                    variants={itemVariants}
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-between p-3.5 rounded-2xl glass-card border border-[var(--glass-border)] hover:border-primary/20 text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-primary/5 transition-all group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="p-2 rounded-xl bg-[var(--badge-bg)] text-primary group-hover:scale-110 transition-transform">
-                        {link.icon}
-                      </span>
-                      <span className="text-sm font-bold tracking-wide">
-                        {link.label}
-                      </span>
-                    </div>
-                    <FiChevronRight className="text-[var(--text-muted)] group-hover:translate-x-1 transition-transform" />
-                  </m.a>
-                ))}
+                {navLinks.map((link) => {
+                  const sectionId = link.href.substring(1);
+                  const isActive = activeSection === sectionId;
+                  
+                  return (
+                    <m.a
+                      variants={itemVariants}
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => {
+                        setActiveSection(sectionId);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`flex items-center justify-between p-3.5 rounded-2xl glass-card border transition-all group ${
+                        isActive 
+                          ? 'border-primary/50 bg-primary/10 text-[var(--text-main)]' 
+                          : 'border-[var(--glass-border)] hover:border-primary/20 text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-primary/5'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`p-2 rounded-xl transition-transform ${
+                          isActive ? 'bg-primary text-white scale-110' : 'bg-[var(--badge-bg)] text-primary group-hover:scale-110'
+                        }`}>
+                          {link.icon}
+                        </span>
+                        <span className="text-sm font-bold tracking-wide">
+                          {link.label}
+                        </span>
+                      </div>
+                      <FiChevronRight className={`transition-transform ${isActive ? 'text-primary translate-x-1' : 'text-[var(--text-muted)] group-hover:translate-x-1'}`} />
+                    </m.a>
+                  );
+                })}
               </m.nav>
 
               {/* Drawer Footer */}
