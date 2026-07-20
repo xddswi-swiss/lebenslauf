@@ -134,7 +134,6 @@ export interface TranslationSchema {
       description: string;
       configure: string;
       acceptAll: string;
-      save: string;
       confirm: string;
       functional: string;
       functionalDesc: string;
