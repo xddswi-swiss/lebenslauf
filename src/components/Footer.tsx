@@ -87,6 +87,20 @@ export const Footer: React.FC<FooterProps> = ({ activeColorIndex }) => {
             <p className="mt-3 text-sm leading-relaxed text-[var(--text-body)]">
               {t.footer.description}
             </p>
+            
+            {/* Additional Links like Cookie Settings */}
+            <div className="flex items-center gap-4 mt-4 text-sm text-[var(--text-muted)]">
+              <button
+                onClick={() => {
+                  if (typeof window !== 'undefined' && (window as any).showCookieSettings) {
+                    (window as any).showCookieSettings();
+                  }
+                }}
+                className="hover:text-[var(--text-main)] transition-colors underline decoration-[var(--text-muted)] underline-offset-4"
+              >
+                Cookie Settings
+              </button>
+            </div>
           </div>
 
           <div className="space-y-3">

@@ -16,6 +16,14 @@ export default function CookieConsent() {
   const [trackingEnabled, setTrackingEnabled] = useState(false);
 
   useEffect(() => {
+    // Expose a global method to manually trigger the cookie banner
+    if (typeof window !== "undefined") {
+      (window as any).showCookieSettings = () => {
+        setShowSettings(true);
+        setIsVisible(true);
+      };
+    }
+
     // Check if user already made a choice
     const consent = localStorage.getItem("cookie_consent");
     if (!consent) {
@@ -38,11 +46,15 @@ export default function CookieConsent() {
     setIsVisible(false);
   };
 
-  if (!isVisible) return null;
+  // We must not return null early because AnimatePresence needs to be rendered to track enter/exit
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
 
   return (
     <AnimatePresence>
-      <motion.div
+      {isVisible && (
+        <motion.div
         initial={{ y: 150, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 150, opacity: 0 }}
@@ -161,7 +173,8 @@ export default function CookieConsent() {
             </div>
           </div>
         </div>
-      </motion.div>
+        </motion.div>
+      )}
     </AnimatePresence>
   );
 }
