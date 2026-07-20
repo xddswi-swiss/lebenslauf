@@ -7,6 +7,7 @@ import "./bw-mode.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { ThemeInitializer } from "@/components/ThemeInitializer";
+import CookieConsent from "@/components/CookieConsent";
 
 const robotoFlex = Roboto_Flex({
   variable: "--font-sans",
@@ -51,7 +52,10 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <ThemeInitializer />
         <ThemeProvider>
-          <LanguageProvider>{children}</LanguageProvider>
+          <LanguageProvider>
+            {children}
+            <CookieConsent />
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

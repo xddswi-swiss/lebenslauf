@@ -518,6 +518,17 @@ export const translations: Record<Language, TranslationSchema> = {
       captchaInstruction:
         "Bitte lösen Sie diese einfache Rechenaufgabe, um Spam zu verhindern.",
       captchaError: "Falsche Sicherheitsantwort",
+      cookie: {
+        title: "Cookie-Einstellungen",
+        description: "Diese Website benutzt Cookies, die für den technischen Betrieb der Website erforderlich sind und stets gesetzt werden. Andere Cookies, die den Komfort bei Benutzung dieser Website erhöhen, werden nur mit Ihrer Zustimmung gesetzt.",
+        configure: "Konfigurieren",
+        acceptAll: "Alle akzeptieren",
+        confirm: "Auswahl bestätigen",
+        functional: "Funktionale Cookies",
+        functionalDesc: "Diese Cookies sind für die Funktionalität der Webseite unbedingt erforderlich und können nicht deaktiviert werden.",
+        tracking: "Tracking & Analytics",
+        trackingDesc: "Helfen uns zu verstehen, wie Besucher mit der Webseite interagieren, indem Informationen anonym gesammelt werden."
+      }
     },
     footer: {
       description:
@@ -699,6 +710,17 @@ export const translations: Record<Language, TranslationSchema> = {
       captchaInstruction:
         "Spamı önlemek için lütfen bu basit matematik işlemini çözün.",
       captchaError: "Yanlış güvenlik yanıtı",
+      cookie: {
+        title: "Çerez Ayarları",
+        description: "Bu web sitesi, sitenin teknik olarak çalışması için gerekli olan ve her zaman ayarlanan çerezleri kullanır. Bu web sitesinin kullanım konforunu artıran diğer çerezler yalnızca izninizle ayarlanacaktır.",
+        configure: "Yapılandır",
+        acceptAll: "Tümünü Kabul Et",
+        confirm: "Seçimi Onayla",
+        functional: "Zorunlu Çerezler",
+        functionalDesc: "Bu çerezler web sitesinin çalışması için kesinlikle gereklidir ve devre dışı bırakılamaz.",
+        tracking: "Takip ve Analiz",
+        trackingDesc: "Bilgileri anonim olarak toplayarak ziyaretçilerin web sitesiyle nasıl etkileşime girdiğini anlamamıza yardımcı olur."
+      }
     },
     footer: {
       description:
@@ -885,6 +907,17 @@ export const translations: Record<Language, TranslationSchema> = {
       captchaInstruction:
         "Please solve this simple math problem to prevent spam.",
       captchaError: "Incorrect security answer",
+      cookie: {
+        title: "Cookie Settings",
+        description: "This website uses cookies that are necessary for the technical operation of the website and are always set. Other cookies that increase the comfort of using this website will only be set with your consent.",
+        configure: "Configure",
+        acceptAll: "Accept All",
+        confirm: "Confirm Selection",
+        functional: "Functional Cookies",
+        functionalDesc: "These cookies are strictly necessary for the functionality of the website and cannot be deactivated.",
+        tracking: "Tracking & Analytics",
+        trackingDesc: "Help us understand how visitors interact with the website by collecting information anonymously."
+      }
     },
     footer: {
       description:
