@@ -129,6 +129,18 @@ export interface TranslationSchema {
     captchaPlaceholder: string;
     captchaInstruction: string;
     captchaError: string;
+    cookie: {
+      title: string;
+      description: string;
+      configure: string;
+      acceptAll: string;
+      save: string;
+      confirm: string;
+      functional: string;
+      functionalDesc: string;
+      tracking: string;
+      trackingDesc: string;
+    };
   };
   footer: {
     description: string;
