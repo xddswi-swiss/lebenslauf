@@ -134,6 +134,14 @@
   filter: grayscale(100%) contrast(150%) !important;
   border: 2px solid #000000 !important;
   border-radius: 4px !important;
+  transition: filter 0.3s ease !important;
+}
+
+/* Allow images (like profile picture) to become colorful on hover/focus/active in B&W mode */
+.bw-mode .group:hover img,
+.bw-mode .group:focus img,
+.bw-mode .group:active img {
+  filter: grayscale(0%) contrast(100%) !important;
 }
 
 /* Switch styling itself shouldn't be fully B&W to remain usable/tactile */

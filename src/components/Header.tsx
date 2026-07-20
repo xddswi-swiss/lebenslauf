@@ -362,7 +362,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                     >
                       <div className="flex items-center gap-3">
                         <span className={`p-2 rounded-xl transition-transform ${
-                          isActive ? 'bg-primary text-white scale-110' : 'bg-[var(--badge-bg)] text-primary group-hover:scale-110'
+                          isActive ? 'bg-primary/20 text-primary scale-110 ring-1 ring-primary/30' : 'bg-[var(--badge-bg)] text-primary group-hover:scale-110'
                         }`}>
                           {link.icon}
                         </span>

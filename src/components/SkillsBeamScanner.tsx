@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import { useLanguage } from '@/app/contexts/LanguageContext';
-import { FiUserCheck, FiBookOpen, FiMonitor, FiHeart } from 'react-icons/fi';
+import { FiUserCheck, FiBookOpen, FiMonitor, FiHeart, FiPlay, FiPause, FiRefreshCw, FiChevronsRight, FiChevronsDown } from 'react-icons/fi';
 
 interface Skill {
   id: string;
@@ -1125,7 +1125,7 @@ track.removeEventListener('touchstart', onTouchStart);
         onClick={() => setIsAnimating(!isAnimating)}
         className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
       >
-        {isAnimating ? `⏸️ ${t.skills.scanner.pause}` : `▶️ ${t.skills.scanner.play}`}
+        {isAnimating ? <><FiPause className="text-[var(--primary)]" /> {t.skills.scanner.pause}</> : <><FiPlay className="text-[var(--primary)]" /> {t.skills.scanner.play}</>}
       </button>
       <button 
         onClick={() => {
@@ -1137,7 +1137,7 @@ track.removeEventListener('touchstart', onTouchStart);
         }}
         className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
       >
-        🔄 {t.skills.scanner.reset}
+        <FiRefreshCw className="text-[var(--primary)]" /> {t.skills.scanner.reset}
       </button>
       <button 
         onClick={() => {
@@ -1145,7 +1145,7 @@ track.removeEventListener('touchstart', onTouchStart);
         }}
         className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
       >
-        {isMobile ? `↕️ ${t.skills.scanner.direction}` : `↔️ ${t.skills.scanner.direction}`}
+        {isMobile ? <FiChevronsDown className="text-[var(--primary)]" /> : <FiChevronsRight className="text-[var(--primary)]" />} {t.skills.scanner.direction}
       </button>
     </div>
     </>
