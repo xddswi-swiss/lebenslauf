@@ -47,13 +47,20 @@ export default function CookieConsent() {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 150, opacity: 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
-        className="fixed bottom-0 left-0 right-0 z-[9999] p-4 md:p-6 pointer-events-none"
+        className="fixed bottom-0 left-0 right-0 z-[9999] p-4 pb-8 sm:pb-4 md:p-6 pointer-events-none"
       >
         <div className="max-w-6xl mx-auto pointer-events-auto">
-          {/* Main Card with multi-theme gradient border on top */}
-          <div className="relative bg-[#0f0f0f] text-white rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden border border-white/10">
-            {/* The Multi-Theme Colored Line */}
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 via-[#eef200] to-white/80" />
+          {/* Main Card with colorful gradient background combining all themes */}
+          <div className="relative bg-white/10 backdrop-blur-2xl text-white rounded-2xl md:rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden border border-white/20">
+            {/* Colorful Background glow effects */}
+            <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
+              <div className="absolute -top-24 -left-24 w-64 h-64 bg-blue-500 rounded-full mix-blend-screen filter blur-[80px]"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#eef200] rounded-full mix-blend-screen filter blur-[100px]"></div>
+              <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-white rounded-full mix-blend-screen filter blur-[80px]"></div>
+            </div>
+
+            {/* Content wrapper to stay above the blur */}
+            <div className="relative z-10">
 
             {showSettings ? (
               /* Settings View */
@@ -113,13 +120,13 @@ export default function CookieConsent() {
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={() => setShowSettings(false)}
-                    className="px-6 py-3 rounded-xl border border-white/20 hover:bg-white/10 transition-colors text-sm font-medium"
+                    className="px-6 py-3 rounded-xl border-2 border-white/30 hover:bg-white/20 transition-colors text-sm font-bold shadow-lg"
                   >
                     Zurück
                   </button>
                   <button
                     onClick={handleSaveSettings}
-                    className="px-6 py-3 rounded-xl bg-white text-black hover:bg-gray-200 transition-colors text-sm font-bold flex-1"
+                    className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 via-[#eef200] to-white text-black hover:opacity-90 transition-opacity text-sm font-bold flex-1 shadow-[0_0_20px_rgba(238,242,0,0.4)]"
                   >
                     {t.confirm}
                   </button>
@@ -128,24 +135,27 @@ export default function CookieConsent() {
             ) : (
               /* Banner View */
               <div className="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center">
-                <div className="flex-shrink-0 hidden md:flex items-center justify-center w-14 h-14 rounded-full bg-white/10">
-                  <FaCookieBite className="w-7 h-7 text-white" />
+                <div className="flex-shrink-0 hidden md:flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-[#eef200] shadow-lg">
+                  <FaCookieBite className="w-7 h-7 text-black" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm md:text-base text-gray-300 leading-relaxed">
+                  <h3 className="text-xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-[#eef200] to-white">
+                    {t.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-gray-100 leading-relaxed drop-shadow-md">
                     {t.description}
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
                   <button
                     onClick={() => setShowSettings(true)}
-                    className="whitespace-nowrap px-6 py-3 rounded-xl border border-white/20 hover:bg-white/10 transition-colors text-sm font-medium"
+                    className="whitespace-nowrap px-6 py-3 rounded-xl border-2 border-white/30 hover:bg-white/20 transition-colors text-sm font-bold shadow-lg"
                   >
                     {t.configure}
                   </button>
                   <button
                     onClick={handleAcceptAll}
-                    className="whitespace-nowrap px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-[#eef200] text-black hover:opacity-90 transition-opacity text-sm font-bold"
+                    className="whitespace-nowrap px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 via-[#eef200] to-white text-black hover:opacity-90 transition-opacity text-sm font-bold shadow-[0_0_20px_rgba(238,242,0,0.4)]"
                   >
                     {t.acceptAll}
                   </button>
