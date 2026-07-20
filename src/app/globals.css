@@ -969,10 +969,12 @@ body {
   }
 }
 
-/* Global touch interaction config to prevent double-tap zoom delay */
+/* Global touch interaction config to prevent pinch-zoom and horizontal scroll */
 html,
 body {
-  touch-action: manipulation;
+  touch-action: pan-y;
+  overscroll-behavior-x: none;
+  overscroll-behavior-y: none;
 }
 
 /* Horizontal Skills Beam Scanner Layout */
