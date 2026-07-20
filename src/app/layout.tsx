@@ -8,7 +8,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { ThemeInitializer } from "@/components/ThemeInitializer";
 import CookieConsent from "@/components/CookieConsent";
-
+import ZoomBlocker from "@/components/ZoomBlocker";
 const robotoFlex = Roboto_Flex({
   variable: "--font-sans",
   subsets: ["latin"],
@@ -50,42 +50,14 @@ export default function RootLayout({
       className={`${robotoFlex.variable} ${ptSerif.variable} ${syne.variable} h-full antialiased bw-mode`}
       suppressHydrationWarning
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Block multi-touch on capture phase
-              const blockZoom = function(e) {
-                if (e.touches && e.touches.length > 1) {
-                  e.preventDefault();
-                }
-              };
-              document.addEventListener('touchstart', blockZoom, { passive: false, capture: true });
-              document.addEventListener('touchmove', blockZoom, { passive: false, capture: true });
-              
-              // Block Safari gestures
-              document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false, capture: true });
-              document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false, capture: true });
-              
-              // Block double-tap zoom
-              let lastTouchEnd = 0;
-              document.addEventListener('touchend', function(e) {
-                const now = (new Date()).getTime();
-                if (now - lastTouchEnd <= 300) {
-                  e.preventDefault();
-                }
-                lastTouchEnd = now;
-              }, { passive: false, capture: true });
-            `,
-          }}
-        />
-      </head>
+      <head />
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <ThemeInitializer />
         <ThemeProvider>
           <LanguageProvider>
             {children}
             <CookieConsent />
+            <ZoomBlocker />
           </LanguageProvider>
         </ThemeProvider>
       </body>
