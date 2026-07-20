@@ -12,6 +12,7 @@ import { Footer } from '@/components/Footer';
 import { RecruiterWidget } from '@/components/RecruiterWidget';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import { DownloadButton } from '@/components/DownloadButton';
+import { AnimatedCounter } from '@/components/AnimatedCounter';
 import Strands from '@/components/Strands';
 import { motion as m, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
@@ -269,7 +270,7 @@ const MainContent: React.FC = () => {
       <Header activeColorIndex={randomColorIndex} />
 
       {/* Main Container */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-6 py-12 md:py-24 space-y-32">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-6 py-12 md:py-20 space-y-16 md:space-y-20">
         {/* Hero Section */}
         <section id="hero" className="min-h-[50vh] flex flex-col-reverse lg:flex-row items-center justify-between gap-12 relative pt-12 pb-0">
           <div className="max-w-3xl space-y-6 flex-1">
@@ -333,7 +334,7 @@ const MainContent: React.FC = () => {
                 download
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3.5 rounded-full glass-card hover:bg-zinc-800/10 text-[var(--text-body)] hover:text-[var(--text-main)] font-semibold transition-all duration-300 cursor-pointer"
+                className="flex items-center gap-2 px-6 py-3.5 rounded-full bg-primary hover:opacity-90 text-white font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/35 transition-all duration-300 cursor-pointer group"
               >
                 <FiDownload />
                 {t.hero.downloadCv}
@@ -387,7 +388,6 @@ const MainContent: React.FC = () => {
           className="scroll-mt-24 max-w-2xl mx-auto w-full"
         >
           <div className="glass-card p-6 md:p-8 rounded-3xl text-center border border-[var(--glass-border)] bg-[var(--glass-card-bg)] backdrop-blur-md relative overflow-hidden shadow-lg">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-secondary opacity-60" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] mb-4">
               {t.matcher.title}
             </h3>
@@ -478,30 +478,30 @@ const MainContent: React.FC = () => {
                 </h3>
                 <div className="space-y-4">
                   {/* Schnupperlehren Card */}
-                  <div className="bg-gradient-to-br from-blue-600 to-indigo-600 dark:from-blue-600/90 dark:to-indigo-700/90 text-white p-6 rounded-2xl shadow-lg shadow-blue-500/10 hover:scale-[1.02] transition-transform duration-300 flex flex-col justify-between min-h-[140px]">
-                    <div className="text-5xl font-extrabold tracking-tight">
-                      {STATS_SCHNUPPERLEHREN}
+                  <div className="stat-card-1 p-6 rounded-2xl hover:scale-[1.02] transition-transform duration-300 flex flex-col justify-between min-h-[140px]">
+                    <div className="text-5xl font-extrabold tracking-tight stat-number">
+                      <AnimatedCounter value={STATS_SCHNUPPERLEHREN} />
                     </div>
                     <div>
-                      <div className="text-lg font-bold mt-2">
+                      <div className="text-lg font-bold mt-2 stat-label">
                         {t.about.statsSchnupperLabel}
                       </div>
-                      <div className="text-xs text-blue-100/80 mt-0.5">
+                      <div className="text-xs mt-0.5 opacity-80 stat-desc">
                         {t.about.statsSchnupperDesc}
                       </div>
                     </div>
                   </div>
 
                   {/* Lehrstellenbewerbungen Card */}
-                  <div className="bg-gradient-to-br from-emerald-600 to-teal-600 dark:from-emerald-600/90 dark:to-teal-700/90 text-white p-6 rounded-2xl shadow-lg shadow-emerald-500/10 hover:scale-[1.02] transition-transform duration-300 flex flex-col justify-between min-h-[140px]">
-                    <div className="text-5xl font-extrabold tracking-tight">
-                      {STATS_BEWERBUNGEN}
+                  <div className="stat-card-2 p-6 rounded-2xl hover:scale-[1.02] transition-transform duration-300 flex flex-col justify-between min-h-[140px]">
+                    <div className="text-5xl font-extrabold tracking-tight stat-number">
+                      <AnimatedCounter value={STATS_BEWERBUNGEN} />
                     </div>
                     <div>
-                      <div className="text-lg font-bold mt-2">
+                      <div className="text-lg font-bold mt-2 stat-label">
                         {t.about.statsBewerbungLabel}
                       </div>
-                      <div className="text-xs text-emerald-100/80 mt-0.5">
+                      <div className="text-xs mt-0.5 opacity-80 stat-desc">
                         {t.about.statsBewerbungDesc}
                       </div>
                     </div>
@@ -519,7 +519,7 @@ const MainContent: React.FC = () => {
 
         {/* School Documents (Zeugnisse) Section */}
         <section id="documents" className="scroll-mt-24">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
               {t.documents.title}
             </h2>
@@ -576,7 +576,7 @@ const MainContent: React.FC = () => {
                   >
                     <div className={`absolute top-0 right-0 w-16 h-16 ${colors.glow} blur-xl rounded-full`} />
                     <div className="flex items-start gap-4 mb-4">
-                      <div className={`p-3 glass-card ${colors.icon} ${colors.iconHoverBg} transition-all duration-300`}>
+                      <div className={`p-3 glass-card rounded-xl ${colors.icon} ${colors.iconHoverBg} transition-all duration-300`}>
                         <FiFileText className="text-xl" />
                       </div>
                       <div>
@@ -604,7 +604,7 @@ const MainContent: React.FC = () => {
 
         {/* Experience Section */}
         <section id="experience" className="scroll-mt-24">
-          <div className="text-center mb-10">
+          <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
               {t.experience.title}
             </h2>
@@ -619,7 +619,7 @@ const MainContent: React.FC = () => {
 
         {/* Languages, Hobbies & References Section */}
         <section id="details" className="scroll-mt-24 max-w-5xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
               {t.details.title}
             </h2>
@@ -724,7 +724,7 @@ const MainContent: React.FC = () => {
 
         {/* Guestbook Section */}
         <section id="guestbook" className="scroll-mt-24">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
               {language === 'tr' ? 'Ziyaretçi Defteri' : language === 'de' ? 'Gästebuch' : 'Guestbook'}
             </h2>

@@ -237,26 +237,26 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
           onClick={() => setIsWorkExpanded(!isWorkExpanded)}
           className="w-full flex items-center justify-between p-6 md:p-8 cursor-pointer select-none text-left bg-gradient-to-r from-primary/5 to-transparent hover:from-primary/10 transition-all duration-300"
         >
-          <div className="flex items-center gap-4">
+          <span className="flex items-center gap-4">
             <span className="p-3 rounded-2xl bg-[var(--badge-bg)] text-primary">
               <FiBriefcase className="text-xl md:text-2xl" />
             </span>
-            <div>
-              <h2 className="text-lg md:text-2xl font-black text-[var(--text-main)]">
+            <span className="block">
+              <span className="block text-lg md:text-2xl font-black text-[var(--text-main)]">
                 {t.experience.workTitle}
-              </h2>
-              <p className="text-xs text-[var(--text-muted)] mt-1 font-semibold">
+              </span>
+              <span className="block text-xs text-[var(--text-muted)] mt-1 font-semibold">
                 {language === 'tr' 
                   ? 'Tüm stajları ve detayları görmek için tıklayın' 
                   : language === 'en' 
                     ? 'Click to view all apprenticeships and details' 
                     : 'Klicken Sie, um alle Lehrstellen und Details anzuzeigen'}
-              </p>
-            </div>
-          </div>
-          <div className={`p-2 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] transition-transform duration-300 ${isWorkExpanded ? 'rotate-180 text-primary border-primary/30' : ''}`}>
+              </span>
+            </span>
+          </span>
+          <span className={`p-2 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] transition-transform duration-300 ${isWorkExpanded ? 'rotate-180 text-primary border-primary/30' : ''}`}>
             <FiChevronDown className="text-xl" />
-          </div>
+          </span>
         </button>
 
         <AnimatePresence initial={false}>
@@ -410,26 +410,26 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
           onClick={() => setIsEducationExpanded(!isEducationExpanded)}
           className="w-full flex items-center justify-between p-6 md:p-8 cursor-pointer select-none text-left bg-gradient-to-r from-cyan-500/5 to-transparent hover:from-cyan-500/10 transition-all duration-300"
         >
-          <div className="flex items-center gap-4">
+          <span className="flex items-center gap-4">
             <span className="p-3 rounded-2xl bg-cyan-500/10 text-cyan-700 dark:text-cyan-300">
               <FiBookOpen className="text-xl md:text-2xl" />
             </span>
-            <div>
-              <h2 className="text-lg md:text-2xl font-black text-[var(--text-main)]">
+            <span className="block">
+              <span className="block text-lg md:text-2xl font-black text-[var(--text-main)]">
                 {t.experience.educationTitle}
-              </h2>
-              <p className="text-xs text-[var(--text-muted)] mt-1 font-semibold">
+              </span>
+              <span className="block text-xs text-[var(--text-muted)] mt-1 font-semibold">
                 {language === 'tr' 
                   ? 'Tüm eğitim geçmişini görmek için tıklayın' 
                   : language === 'en' 
                     ? 'Click to view all education history' 
                     : 'Klicken Sie, um den gesamten Bildungsverlauf anzuzeigen'}
-              </p>
-            </div>
-          </div>
-          <div className={`p-2 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] transition-transform duration-300 ${isEducationExpanded ? 'rotate-180 text-cyan-600 border-cyan-500/30' : ''}`}>
+              </span>
+            </span>
+          </span>
+          <span className={`p-2 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] transition-transform duration-300 ${isEducationExpanded ? 'rotate-180 text-cyan-600 border-cyan-500/30' : ''}`}>
             <FiChevronDown className="text-xl" />
-          </div>
+          </span>
         </button>
 
         <AnimatePresence initial={false}>

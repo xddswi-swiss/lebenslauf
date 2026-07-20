@@ -1,0 +1,216 @@
+/* 
+  Sunlit Yellow Theme
+  Color Palette based on: #FFC72C (RGB: 255, 199, 44)
+*/
+
+:root:not(.dark):not(.bw-mode) {
+  /* Core Variables */
+  --background: #FFC72C;
+  --foreground: #000000;
+  --card: rgba(255, 255, 255, 0.6);
+  --card-border: rgba(255, 255, 255, 0.8);
+  --primary: #000000;
+  --primary-glow: rgba(0, 0, 0, 0.15);
+  --secondary: #B37D00;
+  --secondary-glow: rgba(179, 125, 0, 0.15);
+  --accent: #FF6C02;
+  --muted: #4d4d4d;
+  
+  --text-main: #000000;
+  --text-body: #1a1a1a;
+  --text-muted: #333333;
+  
+  /* Glassmorphism Variables for Yellow */
+  --glass-bg: rgba(255, 199, 44, 0.85);
+  --glass-card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 100%);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --grid-color: rgba(0, 0, 0, 0.04);
+  --badge-bg: rgba(255, 255, 255, 0.5);
+  --badge-border: rgba(255, 255, 255, 0.8);
+
+  --title-gradient-from: #000000;
+  --title-gradient-to: #4d4d4d;
+}
+
+/* Beautiful Gradient Backgrounds and Glass Cards for Yellow Theme */
+:root:not(.dark):not(.bw-mode) body {
+  background: radial-gradient(circle at top left, #FFD54F, #FFC72C 60%, #FFA000);
+}
+
+:root:not(.dark):not(.bw-mode) .glass-card {
+  box-shadow: 0 8px 32px 0 rgba(179, 125, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+:root:not(.dark):not(.bw-mode) .glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 15px 35px -10px rgba(179, 125, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+:root:not(.dark):not(.bw-mode) .glass-card:not(.rounded-full):not(button):not(a)::before {
+  background: linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));
+}
+
+/* Header Override */
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient {
+  background: linear-gradient(to right, rgba(255, 213, 79, 0.95), rgba(255, 199, 44, 0.85)) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 4px 30px rgba(179, 125, 0, 0.1) !important;
+}
+
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient a.text-transparent {
+  background: none !important;
+  -webkit-text-fill-color: #000000 !important;
+  color: #000000 !important;
+}
+
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient nav a {
+  color: #000000 !important;
+}
+
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient button.bg-primary {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient button:not(.bg-primary):not(.bw-switch-container button):not(.glass-card) {
+  color: #000000 !important;
+}
+
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient button.glass-card {
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  color: #000000 !important;
+}
+
+/* Footer Override */
+:root:not(.dark):not(.bw-mode) footer {
+  background: linear-gradient(to bottom, #FFC72C, #FFA000) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+:root:not(.dark):not(.bw-mode) footer * {
+  color: #000000 !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+:root:not(.dark):not(.bw-mode) footer .glass-card {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+:root:not(.dark):not(.bw-mode) footer .glass-card:hover {
+  background-color: rgba(255, 255, 255, 0.6) !important;
+  border-color: #ffffff !important;
+}
+
+:root:not(.dark):not(.bw-mode) footer .rounded-full.bg-gradient-to-br {
+  background: #000000 !important;
+  color: #FFC72C !important;
+}
+
+/* Mobile Drawer Override */
+:root:not(.dark):not(.bw-mode) .mobile-drawer {
+  background: linear-gradient(135deg, #FFC72C, #FFB300) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+:root:not(.dark):not(.bw-mode) .mobile-drawer * {
+  color: #000000 !important;
+}
+
+:root:not(.dark):not(.bw-mode) .mobile-drawer .border-b,
+:root:not(.dark):not(.bw-mode) .mobile-drawer .border-t {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ASCII and Code blocks */
+html:not(.dark):not(.bw-mode) .skills-card-ascii {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+}
+
+html:not(.dark):not(.bw-mode) .skills-ascii-content {
+  color: #B37D00 !important;
+  text-shadow: none !important;
+}
+
+/* Forms (Inputs & Textareas) Override */
+:root:not(.dark):not(.bw-mode) input,
+:root:not(.dark):not(.bw-mode) textarea {
+  background: rgba(255, 255, 255, 0.35) !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  color: #000000 !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s ease !important;
+}
+
+:root:not(.dark):not(.bw-mode) input::placeholder,
+:root:not(.dark):not(.bw-mode) textarea::placeholder {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+:root:not(.dark):not(.bw-mode) input:focus,
+:root:not(.dark):not(.bw-mode) textarea:focus {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4) !important;
+  outline: none !important;
+}
+
+/* Unified Button Styling (Glass + Orange Hover) */
+:root:not(.dark):not(.bw-mode) button.bg-primary,
+:root:not(.dark):not(.bw-mode) a.bg-primary,
+:root:not(.dark):not(.bw-mode) button[type="submit"],
+:root:not(.dark):not(.bw-mode) .cb-btn {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  color: #000000 !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+}
+
+:root:not(.dark):not(.bw-mode) button.bg-primary:hover,
+:root:not(.dark):not(.bw-mode) a.bg-primary:hover,
+:root:not(.dark):not(.bw-mode) button[type="submit"]:hover,
+:root:not(.dark):not(.bw-mode) .cb-btn:hover {
+  background: rgba(0, 0, 0, 0.1) !important; /* The slight orange/dark hover effect */
+  border-color: rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-1px);
+}
+
+:root:not(.dark):not(.bw-mode) .cb-fill {
+  background: rgba(0, 0, 0, 0.15) !important;
+}
+
+:root:not(.dark):not(.bw-mode) .cb-label {
+  color: #000000 !important;
+}
+
+/* Theme specific Stat Cards */
+:root:not(.dark):not(.bw-mode) .stat-card-1 {
+  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.75)) !important;
+  color: #FFC72C !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
+}
+:root:not(.dark):not(.bw-mode) .stat-card-1 .stat-number,
+:root:not(.dark):not(.bw-mode) .stat-card-1 .stat-label,
+:root:not(.dark):not(.bw-mode) .stat-card-1 .stat-desc {
+  color: #FFC72C !important;
+}
+
+:root:not(.dark):not(.bw-mode) .stat-card-2 {
+  background: linear-gradient(to bottom right, #E65C00, #B34700) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 10px 20px rgba(230, 92, 0, 0.2) !important;
+}
+:root:not(.dark):not(.bw-mode) .stat-card-2 .stat-number,
+:root:not(.dark):not(.bw-mode) .stat-card-2 .stat-label,
+:root:not(.dark):not(.bw-mode) .stat-card-2 .stat-desc {
+  color: #ffffff !important;
+}

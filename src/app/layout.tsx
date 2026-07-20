@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Roboto_Flex, PT_Serif, Syne } from "next/font/google";
 import "./globals.css";
+import "./theme-yellow.css";
+import "./theme-dark.css";
 import "./bw-mode.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -31,8 +33,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export default function RootLayout({

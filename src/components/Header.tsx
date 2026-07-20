@@ -208,7 +208,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                 <button
                   onClick={() => handleThemeSelect('light')}
                   aria-label="Light Theme"
-                  className={`w-7 h-7 rounded-lg bg-[#eef200] border transition-all cursor-pointer hover:scale-110 ${
+                  className={`w-7 h-7 rounded-lg bg-[#FFC72C] border transition-all cursor-pointer hover:scale-110 ${
                     theme === 'light' ? 'border-black border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700'
                   }`}
                 />
@@ -230,7 +230,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                 <button
                   onClick={() => handleThemeSelect('light')}
                   aria-label="Light Theme"
-                  className={`w-7 h-7 rounded-lg bg-[#eef200] border transition-all cursor-pointer hover:scale-110 ${
+                  className={`w-7 h-7 rounded-lg bg-[#FFC72C] border transition-all cursor-pointer hover:scale-110 ${
                     theme === 'light' ? 'border-black border-2 scale-105' : 'border-zinc-300 dark:border-zinc-700'
                   }`}
                 />

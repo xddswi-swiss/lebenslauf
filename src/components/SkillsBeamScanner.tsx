@@ -1004,7 +1004,7 @@ track.removeEventListener('touchstart', onTouchStart);
     <>
     <div
       className="skills-scanner-container w-full relative overflow-hidden"
-      style={{ height: isMobile ? '320px' : '400px' }}
+      style={{ height: isMobile ? '320px' : '280px' }}
       ref={containerRef}
     >
       {/* 2D Canvas Sparks/Dust Particle Overlay */}

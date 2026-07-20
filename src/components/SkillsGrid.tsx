@@ -96,7 +96,7 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({ selectedMatcher = null }
 
   return (
     <div className="w-full max-w-5xl mx-auto py-0">
-      <div className="text-center mb-12">
+      <div className="text-center mb-8">
         <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
           {t.skills.title}
         </h2>

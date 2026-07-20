@@ -284,7 +284,6 @@ body {
   );
 }
 
-
 .glass-card {
   position: relative;
   overflow: hidden;
@@ -886,13 +885,13 @@ body {
 
 :root.bw-mode .cb-btn {
   border: 2px solid #000000 !important;
-  border-radius: 4px !important;
+  border-radius: 22px !important;
   box-shadow: none !important;
 }
 
 :root.bw-mode .cb-fill {
   background: #000000 !important;
-  border-radius: 2px !important;
+  border-radius: 20px !important;
 }
 
 .cb-btn.is-loading .cb-fill {
@@ -1140,4 +1139,17 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
   width: 28px;
   text-align: right;
   flex-shrink: 0;
+}
+
+/* Default Stat Cards (Fallback / B&W Mode base) */
+.stat-card-1 {
+  background: linear-gradient(to bottom right, #2563eb, #4f46e5); /* blue-600 to indigo-600 */
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1);
+}
+
+.stat-card-2 {
+  background: linear-gradient(to bottom right, #059669, #0f766e); /* emerald-600 to teal-600 */
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1);
 }

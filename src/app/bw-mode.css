@@ -42,7 +42,6 @@
   border: 2px solid #000000 !important;
   box-shadow: none !important;
   text-shadow: none !important;
-  border-radius: 4px !important; /* Blocky technical layout */
 }
 
 /* Fix statistics cards in B&W mode (solid black background with white text) */
@@ -52,7 +51,6 @@
   background-color: #000000 !important;
   color: #ffffff !important;
   border: 2px solid #000000 !important;
-  border-radius: 4px !important;
 }
 
 .bw-mode .from-blue-600 *,
@@ -204,6 +202,7 @@
   background-color: #ffffff !important;
   color: #000000 !important;
   border: 2px solid #000000 !important;
+  border-radius: 0.5rem !important;
 }
 
 .bw-mode #documents a.border * {
@@ -285,7 +284,8 @@
 /* Keep all elements that are rounded-full in color mode rounded-full in B&W mode too */
 .bw-mode .rounded-full,
 .bw-mode button.rounded-full,
-.bw-mode a.rounded-full {
+.bw-mode a.rounded-full,
+.bw-mode .cb-btn {
   border-radius: 9999px !important;
 }
 
@@ -463,4 +463,84 @@
   color: #000000 !important;
 }
 
+/* B&W Theme Stat Cards */
+:root.bw-mode .stat-card-1 {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+:root.bw-mode .stat-card-1 .stat-number,
+:root.bw-mode .stat-card-1 .stat-label,
+:root.bw-mode .stat-card-1 .stat-desc {
+  color: #ffffff !important;
+}
 
+:root.bw-mode .stat-card-2 {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+:root.bw-mode .stat-card-2 .stat-number,
+:root.bw-mode .stat-card-2 .stat-label,
+:root.bw-mode .stat-card-2 .stat-desc {
+  color: #000000 !important;
+}
+
+/* --- B&W Hover & Transition Effects --- */
+
+/* Smooth Transitions for interactive elements */
+.bw-mode .glass-card,
+.bw-mode button,
+.bw-mode a,
+.bw-mode .stat-card-1,
+.bw-mode .stat-card-2 {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Brutalist hover for standard cards */
+.bw-mode .glass-card:not(.mobile-drawer *):hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 6px 6px 0px 0px #000000 !important;
+}
+
+/* Brutalist hover for stat cards */
+:root.bw-mode .stat-card-1:hover {
+  transform: translateY(-4px) !important;
+  /* Card 1 is black, so on hover it casts a white shadow (if background was grey) but since page is white, a thick white shadow with black border offset looks cool, but standard black shadow is safer. Let's do a double border shadow by using a grey or solid outline, actually box-shadow: 6px 6px 0px 0px #555555 looks nice on black. Let's use a stark offset shadow */
+  box-shadow: 6px 6px 0px 0px #000000 !important;
+  /* Since card 1 is black on white bg, the black shadow won't be distinguishable unless we translate it and leave a white gap. Wait, a black card translating -4px up will show white page under it, and then a black shadow. That works! */
+}
+
+:root.bw-mode .stat-card-2:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 6px 6px 0px 0px #000000 !important;
+}
+
+/* Brutalist hover for buttons */
+.bw-mode button:not(.bw-switch-container *):hover,
+.bw-mode a.bg-primary:hover,
+.bw-mode .cb-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 4px 4px 0px 0px #000000 !important;
+}
+
+/* Button Active/Pressed state */
+.bw-mode button:not(.bw-switch-container *):active,
+.bw-mode a.bg-primary:active,
+.bw-mode .cb-btn:active {
+  transform: translateY(2px) !important;
+  box-shadow: 0px 0px 0px 0px #000000 !important;
+}
+
+/* Force border-radius on ALL buttons in B&W mode to ensure they are never square */
+.bw-mode button,
+.bw-mode .cb-btn,
+.bw-mode button:not(.bw-switch-container *),
+:root.bw-mode .cb-btn,
+:root.bw-mode button {
+  border-radius: 22px !important;
+}
