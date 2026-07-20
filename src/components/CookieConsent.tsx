@@ -47,51 +47,45 @@ export default function CookieConsent() {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 150, opacity: 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
-        className="fixed bottom-0 left-0 right-0 z-[9999] p-4 pb-8 sm:pb-4 md:p-6 pointer-events-none"
+        className="fixed bottom-4 left-4 right-4 md:bottom-6 md:left-auto md:right-6 md:w-[450px] lg:w-[500px] z-[9999] pointer-events-none"
       >
-        <div className="max-w-6xl mx-auto pointer-events-auto">
-          {/* Main Card with colorful gradient background combining all themes */}
-          <div className="relative bg-white/10 backdrop-blur-2xl text-white rounded-2xl md:rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden border border-white/20">
-            {/* Colorful Background glow effects */}
-            <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
-              <div className="absolute -top-24 -left-24 w-64 h-64 bg-blue-500 rounded-full mix-blend-screen filter blur-[80px]"></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#eef200] rounded-full mix-blend-screen filter blur-[100px]"></div>
-              <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-white rounded-full mix-blend-screen filter blur-[80px]"></div>
-            </div>
-
-            {/* Content wrapper to stay above the blur */}
+        <div className="pointer-events-auto">
+          {/* Main Card adapting to current theme */}
+          <div className="glass-card rounded-2xl md:rounded-3xl overflow-hidden border border-white/20 shadow-2xl relative">
+            
+            {/* The multi-theme line removed, now relies on glass-card and theme variables */}
             <div className="relative z-10">
 
             {showSettings ? (
               /* Settings View */
-              <div className="p-6 md:p-8">
-                <h2 className="text-2xl font-bold mb-4">{t.title}</h2>
-                <p className="text-gray-400 text-sm mb-8">{t.description}</p>
+              <div className="p-5">
+                <h2 className="text-xl font-bold mb-3 text-[var(--text-main)]">{t.title}</h2>
+                <p className="text-[var(--text-body)] text-sm mb-6">{t.description}</p>
 
-                <div className="space-y-4 mb-8">
+                <div className="space-y-3 mb-6">
                   {/* Functional (Required) */}
-                  <div className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
-                    <div className="mt-1 w-6 h-6 rounded-md bg-gray-600 flex items-center justify-center flex-shrink-0 cursor-not-allowed">
+                  <div className="flex items-start gap-4 p-4 rounded-xl bg-white/10 border border-white/20 text-[var(--text-main)]">
+                    <div className="mt-1 w-6 h-6 rounded-md bg-gray-500 flex items-center justify-center flex-shrink-0 cursor-not-allowed">
                       <FiCheck className="w-4 h-4 text-white" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
                         <h3 className="font-semibold">{t.functional}</h3>
-                        <FiInfo className="w-4 h-4 text-gray-400" />
+                        <FiInfo className="w-4 h-4 opacity-70" />
                       </div>
-                      <p className="text-xs text-gray-400 mt-1">
+                      <p className="text-xs opacity-80 mt-1">
                         {t.functionalDesc}
                       </p>
                     </div>
                   </div>
 
                   {/* Tracking (Optional) */}
-                  <label className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                  <label className="flex items-start gap-4 p-4 rounded-xl bg-white/10 border border-white/20 cursor-pointer hover:bg-white/20 transition-colors text-[var(--text-main)]">
                     <div
                       className={`mt-1 w-6 h-6 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
                         trackingEnabled
-                          ? "bg-blue-500 border-blue-500"
-                          : "border-gray-500"
+                          ? "bg-primary border-primary"
+                          : "border-[var(--text-main)]"
                       }`}
                     >
                       {trackingEnabled && (
@@ -108,9 +102,9 @@ export default function CookieConsent() {
                     <div>
                       <div className="flex items-center gap-2">
                         <h3 className="font-semibold">{t.tracking}</h3>
-                        <FiInfo className="w-4 h-4 text-gray-400" />
+                        <FiInfo className="w-4 h-4 opacity-70" />
                       </div>
-                      <p className="text-xs text-gray-400 mt-1">
+                      <p className="text-xs opacity-80 mt-1">
                         {t.trackingDesc}
                       </p>
                     </div>
@@ -120,13 +114,13 @@ export default function CookieConsent() {
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={() => setShowSettings(false)}
-                    className="px-6 py-3 rounded-xl border-2 border-white/30 hover:bg-white/20 transition-colors text-sm font-bold shadow-lg"
+                    className="px-4 py-2.5 rounded-xl border-2 border-[var(--text-main)] hover:bg-[var(--text-main)] hover:text-[var(--background)] text-[var(--text-main)] transition-colors text-sm font-bold"
                   >
                     Zurück
                   </button>
                   <button
                     onClick={handleSaveSettings}
-                    className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 via-[#eef200] to-white text-black hover:opacity-90 transition-opacity text-sm font-bold flex-1 shadow-[0_0_20px_rgba(238,242,0,0.4)]"
+                    className="px-4 py-2.5 rounded-xl bg-primary text-white transition-opacity text-sm font-bold flex-1"
                   >
                     {t.confirm}
                   </button>
@@ -134,28 +128,30 @@ export default function CookieConsent() {
               </div>
             ) : (
               /* Banner View */
-              <div className="p-6 md:p-8 flex flex-col md:flex-row gap-6 items-center">
-                <div className="flex-shrink-0 hidden md:flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-[#eef200] shadow-lg">
-                  <FaCookieBite className="w-7 h-7 text-black" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-[#eef200] to-white">
+              <div className="p-5 flex flex-col gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white shadow-lg">
+                    <FaCookieBite className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-bold text-[var(--text-main)]">
                     {t.title}
                   </h3>
-                  <p className="text-sm md:text-base text-gray-100 leading-relaxed drop-shadow-md">
-                    {t.description}
-                  </p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                
+                <p className="text-sm text-[var(--text-body)] leading-relaxed">
+                  {t.description}
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-3 mt-2">
                   <button
                     onClick={() => setShowSettings(true)}
-                    className="whitespace-nowrap px-6 py-3 rounded-xl border-2 border-white/30 hover:bg-white/20 transition-colors text-sm font-bold shadow-lg"
+                    className="whitespace-nowrap px-4 py-2.5 rounded-xl border-2 border-[var(--text-main)] hover:bg-[var(--text-main)] hover:text-[var(--background)] text-[var(--text-main)] transition-colors text-sm font-bold flex-1"
                   >
                     {t.configure}
                   </button>
                   <button
                     onClick={handleAcceptAll}
-                    className="whitespace-nowrap px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 via-[#eef200] to-white text-black hover:opacity-90 transition-opacity text-sm font-bold shadow-[0_0_20px_rgba(238,242,0,0.4)]"
+                    className="whitespace-nowrap px-4 py-2.5 rounded-xl bg-primary text-white hover:opacity-90 transition-opacity text-sm font-bold flex-1 shadow-lg"
                   >
                     {t.acceptAll}
                   </button>
