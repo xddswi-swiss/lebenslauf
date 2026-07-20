@@ -54,20 +54,28 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              document.addEventListener('touchstart', function(event) {
-                if (event.touches.length > 1) {
-                  event.preventDefault();
+              // Block multi-touch on capture phase
+              const blockZoom = function(e) {
+                if (e.touches && e.touches.length > 1) {
+                  e.preventDefault();
                 }
-              }, { passive: false });
+              };
+              document.addEventListener('touchstart', blockZoom, { passive: false, capture: true });
+              document.addEventListener('touchmove', blockZoom, { passive: false, capture: true });
               
+              // Block Safari gestures
+              document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false, capture: true });
+              document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false, capture: true });
+              
+              // Block double-tap zoom
               let lastTouchEnd = 0;
-              document.addEventListener('touchend', function(event) {
+              document.addEventListener('touchend', function(e) {
                 const now = (new Date()).getTime();
                 if (now - lastTouchEnd <= 300) {
-                  event.preventDefault();
+                  e.preventDefault();
                 }
                 lastTouchEnd = now;
-              }, { passive: false });
+              }, { passive: false, capture: true });
             `,
           }}
         />
