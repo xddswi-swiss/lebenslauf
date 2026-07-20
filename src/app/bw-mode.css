@@ -132,7 +132,8 @@
 /* Make image elements look drawn or strictly black & white */
 .bw-mode img {
   filter: grayscale(100%) contrast(150%) !important;
-  border: 2px solid #000000 !important;
+  outline: 2px solid #000000 !important;
+  outline-offset: -2px !important;
   border-radius: 4px !important;
   transition: filter 0.3s ease !important;
 }
