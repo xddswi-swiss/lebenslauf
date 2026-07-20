@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/app/contexts/LanguageContext";
 import { translations } from "@/data/translations";
 import { FaCookieBite } from "react-icons/fa";
@@ -46,21 +45,17 @@ export default function CookieConsent() {
     setIsVisible(false);
   };
 
-  // We must not return null early because AnimatePresence needs to be rendered to track enter/exit
+  // We must not return null early because we need the component mounted to expose the window function
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-        initial={{ y: 150, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 150, opacity: 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 20 }}
-        className="fixed bottom-4 left-4 right-4 md:bottom-6 md:left-auto md:right-6 md:w-[450px] lg:w-[500px] z-[9999] pointer-events-none"
-      >
+    <div
+      className={`fixed bottom-4 left-4 right-4 md:bottom-6 md:left-auto md:right-6 md:w-[450px] lg:w-[500px] z-[99999] pointer-events-none transition-all duration-500 ease-out transform ${
+        isVisible ? "translate-y-0 opacity-100" : "translate-y-24 opacity-0"
+      }`}
+    >
         <div className="pointer-events-auto">
           {/* Main Card adapting to current theme */}
           <div className="glass-card rounded-2xl md:rounded-3xl overflow-hidden border border-white/20 shadow-2xl relative">
@@ -170,11 +165,9 @@ export default function CookieConsent() {
                 </div>
               </div>
             )}
-            </div>
           </div>
         </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+      </div>
+    </div>
   );
 }
