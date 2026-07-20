@@ -138,9 +138,9 @@
 }
 
 /* Allow images (like profile picture) to become colorful on hover/focus/active in B&W mode */
-.bw-mode .group:hover img,
-.bw-mode .group:focus img,
-.bw-mode .group:active img {
+.bw-mode #hero .group:hover img,
+.bw-mode #hero .group:focus img,
+.bw-mode #hero .group:active img {
   filter: grayscale(0%) contrast(100%) !important;
 }
 
