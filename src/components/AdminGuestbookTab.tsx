@@ -1,8 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useLanguage } from '@/app/contexts/LanguageContext';
-import { FiTrash2, FiLoader, FiMessageSquare, FiCalendar, FiUser } from 'react-icons/fi';
+import React, { useState, useEffect } from "react";
+import { useLanguage } from "@/app/contexts/LanguageContext";
+import {
+  FiTrash2,
+  FiLoader,
+  FiMessageSquare,
+  FiCalendar,
+  FiUser,
+} from "react-icons/fi";
 
 interface GuestbookMessage {
   id: string;
@@ -26,9 +32,10 @@ export const AdminGuestbookTab: React.FC = () => {
       colMessage: "Nachricht",
       colDate: "Datum",
       colActions: "Aktionen",
-      confirmDelete: "Sind Sie sicher, dass Sie diese Nachricht löschen möchten?",
+      confirmDelete:
+        "Sind Sie sicher, dass Sie diese Nachricht löschen möchten?",
       empty: "Keine Beiträge im Gästebuch vorhanden.",
-      deleteSuccess: "Nachricht gelöscht!"
+      deleteSuccess: "Nachricht gelöscht!",
     },
     tr: {
       title: "Ziyaretçi Defteri Yönetimi",
@@ -39,7 +46,7 @@ export const AdminGuestbookTab: React.FC = () => {
       colActions: "İşlemler",
       confirmDelete: "Bu mesajı tamamen silmek istediğinize emin misiniz?",
       empty: "Ziyaretçi defterinde henüz mesaj yok.",
-      deleteSuccess: "Mesaj başarıyla silindi!"
+      deleteSuccess: "Mesaj başarıyla silindi!",
     },
     en: {
       title: "Manage Guestbook Entries",
@@ -50,23 +57,23 @@ export const AdminGuestbookTab: React.FC = () => {
       colActions: "Actions",
       confirmDelete: "Are you sure you want to delete this message?",
       empty: "No guestbook entries found.",
-      deleteSuccess: "Message deleted!"
-    }
+      deleteSuccess: "Message deleted!",
+    },
   };
 
-  const t = translations[language as 'de' | 'tr' | 'en'] || translations.de;
+  const t = translations[language as "de" | "tr" | "en"] || translations.de;
 
   const fetchAllMessages = async () => {
     try {
       setIsLoading(true);
-      const passcode = localStorage.getItem('admin_passcode') || 'eren2026';
+      const passcode = localStorage.getItem("admin_passcode") || "eren2026";
       const res = await fetch(`/api/guestbook?passcode=${passcode}`);
       if (res.ok) {
         const data = await res.json();
         setMessages(data);
       }
     } catch (err) {
-      console.error('Error fetching guestbook:', err);
+      console.error("Error fetching guestbook:", err);
     } finally {
       setIsLoading(false);
     }
@@ -80,25 +87,25 @@ export const AdminGuestbookTab: React.FC = () => {
     if (!window.confirm(t.confirmDelete)) return;
 
     setDeletingId(id);
-    const passcode = localStorage.getItem('admin_passcode') || 'eren2026';
+    const passcode = localStorage.getItem("admin_passcode") || "eren2026";
 
     try {
-      const res = await fetch('/api/guestbook', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ passcode, id })
+      const res = await fetch("/api/guestbook", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ passcode, id }),
       });
 
       if (res.ok) {
-        setMessages(prev => prev.filter(msg => msg.id !== id));
+        setMessages((prev) => prev.filter((msg) => msg.id !== id));
         // Trigger event to sync any open pages
-        window.dispatchEvent(new Event('guestbook-updated'));
+        window.dispatchEvent(new Event("guestbook-updated"));
       } else {
         const errData = await res.json();
-        alert(errData.error || 'Failed to delete message.');
+        alert(errData.error || "Failed to delete message.");
       }
     } catch (err: any) {
-      alert(err.message || 'Error occurred.');
+      alert(err.message || "Error occurred.");
     } finally {
       setDeletingId(null);
     }
@@ -107,15 +114,18 @@ export const AdminGuestbookTab: React.FC = () => {
   const formatDate = (isoString: string) => {
     try {
       const date = new Date(isoString);
-      return date.toLocaleDateString(language === 'tr' ? 'tr-TR' : language === 'de' ? 'de-CH' : 'en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
+      return date.toLocaleDateString(
+        language === "tr" ? "tr-TR" : language === "de" ? "de-CH" : "en-US",
+        {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        },
+      );
     } catch (e) {
-      return '';
+      return "";
     }
   };
 
@@ -142,7 +152,7 @@ export const AdminGuestbookTab: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {messages.map((msg) => (
-            <div 
+            <div
               key={msg.id}
               className="p-5 glass-card rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4"
             >

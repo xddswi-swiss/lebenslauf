@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const ScrollToTopButton: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -18,13 +18,13 @@ export const ScrollToTopButton: React.FC = () => {
         }
       }
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [isClimbing]);
 
   const handleClick = () => {
     setIsClimbing(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleAnimationComplete = () => {
@@ -129,13 +129,13 @@ export const ScrollToTopButton: React.FC = () => {
         {isVisible && (
           <motion.button
             initial={{ opacity: 0, scale: 0.8, y: 0 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1, 
+            animate={{
+              opacity: 1,
+              scale: 1,
               y: isClimbing ? "-115vh" : 0,
-              transition: isClimbing 
-                ? { duration: 1.2, ease: [0.4, 0, 0.2, 1] } 
-                : { type: "spring", stiffness: 260, damping: 20 }
+              transition: isClimbing
+                ? { duration: 1.2, ease: [0.4, 0, 0.2, 1] }
+                : { type: "spring", stiffness: 260, damping: 20 },
             }}
             exit={{ opacity: 0, scale: 0.8 }}
             onAnimationComplete={handleAnimationComplete}
@@ -145,29 +145,86 @@ export const ScrollToTopButton: React.FC = () => {
             className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 p-3 rounded-full bg-primary hover:opacity-95 text-white shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300 cursor-pointer flex items-center justify-center w-14 h-14"
             aria-label="Scroll to top"
           >
-            <svg 
-              viewBox="0 0 24 24" 
-              className={`climbing-stickman ${isClimbing ? 'climbing' : ''} ${isHovered && !isClimbing ? 'hovered' : ''}`}
-              width="36" 
+            <svg
+              viewBox="0 0 24 24"
+              className={`climbing-stickman ${isClimbing ? "climbing" : ""} ${isHovered && !isClimbing ? "hovered" : ""}`}
+              width="36"
               height="36"
             >
               {/* Head with smile and eyes */}
               <g>
-                <circle cx="12" cy="6" r="3.5" stroke="currentColor" strokeWidth="1.8" fill="var(--primary)" />
+                <circle
+                  cx="12"
+                  cy="6"
+                  r="3.5"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  fill="var(--primary)"
+                />
                 <circle cx="10.8" cy="5.2" r="0.6" fill="currentColor" />
                 <circle cx="13.2" cy="5.2" r="0.6" fill="currentColor" />
-                <path d="M 10.5 7.2 Q 12 8.7 13.5 7.2" stroke="currentColor" strokeWidth="1" fill="none" strokeLinecap="round" />
+                <path
+                  d="M 10.5 7.2 Q 12 8.7 13.5 7.2"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                  fill="none"
+                  strokeLinecap="round"
+                />
               </g>
               {/* Spine */}
-              <line x1="12" y1="9.5" x2="12" y2="16.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              <line
+                x1="12"
+                y1="9.5"
+                x2="12"
+                y2="16.5"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
               {/* Left Arm */}
-              <line className="left-arm" x1="12" y1="11.5" x2="7.5" y2="14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              <line
+                className="left-arm"
+                x1="12"
+                y1="11.5"
+                x2="7.5"
+                y2="14"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
               {/* Right Arm */}
-              <line className="right-arm" x1="12" y1="11.5" x2="16.5" y2="9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              <line
+                className="right-arm"
+                x1="12"
+                y1="11.5"
+                x2="16.5"
+                y2="9"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
               {/* Left Leg */}
-              <line className="left-leg" x1="12" y1="16.5" x2="8.5" y2="22.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              <line
+                className="left-leg"
+                x1="12"
+                y1="16.5"
+                x2="8.5"
+                y2="22.5"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
               {/* Right Leg */}
-              <line className="right-leg" x1="12" y1="16.5" x2="15.5" y2="22.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              <line
+                className="right-leg"
+                x1="12"
+                y1="16.5"
+                x2="15.5"
+                y2="22.5"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
             </svg>
           </motion.button>
         )}

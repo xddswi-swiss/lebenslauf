@@ -1,54 +1,63 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useLanguage } from '@/app/contexts/LanguageContext';
-import { experienceItems } from '@/data/translations';
-import { motion as m, AnimatePresence } from 'framer-motion';
-import { FiBriefcase, FiBookOpen, FiMapPin, FiChevronDown, FiDownload, FiTrash2 } from 'react-icons/fi';
-import { ExperienceItem } from '@/data/translations';
+import React, { useState, useEffect } from "react";
+import { useLanguage } from "@/app/contexts/LanguageContext";
+import { experienceItems } from "@/data/translations";
+import { motion as m, AnimatePresence } from "framer-motion";
+import {
+  FiBriefcase,
+  FiBookOpen,
+  FiMapPin,
+  FiChevronDown,
+  FiDownload,
+  FiTrash2,
+} from "react-icons/fi";
+import { ExperienceItem } from "@/data/translations";
 
 interface TimelineProps {
-  selectedMatcher?: 'kaufmann' | 'elektro' | null;
+  selectedMatcher?: "kaufmann" | "elektro" | null;
 }
 
-export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) => {
+export const Timeline: React.FC<TimelineProps> = ({
+  selectedMatcher = null,
+}) => {
   const { t, language } = useLanguage();
-  
+
   const matchesPath = (role: string) => {
     if (!selectedMatcher) return true;
     const r = role.toLowerCase();
-    if (selectedMatcher === 'kaufmann') {
+    if (selectedMatcher === "kaufmann") {
       return (
-        r.includes('kaufmann') ||
-        r.includes('kaufmännische') ||
-        r.includes('kv') ||
-        r.includes('treuhand') ||
-        r.includes('bank') ||
-        r.includes('schüler') ||
-        r.includes('sekundarschule') ||
-        r.includes('ticari') ||
-        r.includes('ticaret') ||
-        r.includes('bankacılık') ||
-        r.includes('ortaokulu') ||
-        r.includes('sekundar') ||
-        r.includes('commercial') ||
-        r.includes('banking') ||
-        r.includes('apprentice') ||
-        r.includes('school')
+        r.includes("kaufmann") ||
+        r.includes("kaufmännische") ||
+        r.includes("kv") ||
+        r.includes("treuhand") ||
+        r.includes("bank") ||
+        r.includes("schüler") ||
+        r.includes("sekundarschule") ||
+        r.includes("ticari") ||
+        r.includes("ticaret") ||
+        r.includes("bankacılık") ||
+        r.includes("ortaokulu") ||
+        r.includes("sekundar") ||
+        r.includes("commercial") ||
+        r.includes("banking") ||
+        r.includes("apprentice") ||
+        r.includes("school")
       );
     }
-    if (selectedMatcher === 'elektro') {
+    if (selectedMatcher === "elektro") {
       return (
-        r.includes('elektro') ||
-        r.includes('netzelektriker') ||
-        r.includes('schüler') ||
-        r.includes('sekundarschule') ||
-        r.includes('elektrik') ||
-        r.includes('ortaokulu') ||
-        r.includes('sekundar') ||
-        r.includes('electrical') ||
-        r.includes('installer') ||
-        r.includes('school')
+        r.includes("elektro") ||
+        r.includes("netzelektriker") ||
+        r.includes("schüler") ||
+        r.includes("sekundarschule") ||
+        r.includes("elektrik") ||
+        r.includes("ortaokulu") ||
+        r.includes("sekundar") ||
+        r.includes("electrical") ||
+        r.includes("installer") ||
+        r.includes("school")
       );
     }
     return true;
@@ -67,15 +76,15 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
 
   useEffect(() => {
     const checkAdmin = () => {
-      if (typeof window !== 'undefined') {
-        setIsAdmin(localStorage.getItem('admin_unlocked') === 'true');
+      if (typeof window !== "undefined") {
+        setIsAdmin(localStorage.getItem("admin_unlocked") === "true");
       }
     };
-    
+
     checkAdmin();
-    window.addEventListener('admin-state-changed', checkAdmin);
+    window.addEventListener("admin-state-changed", checkAdmin);
     return () => {
-      window.removeEventListener('admin-state-changed', checkAdmin);
+      window.removeEventListener("admin-state-changed", checkAdmin);
     };
   }, []);
 
@@ -85,23 +94,30 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
 
     let isMounted = true;
     const fetchExperiences = () => {
-      fetch('/api/experiences')
-        .then(res => {
+      fetch("/api/experiences")
+        .then((res) => {
           if (res.ok) return res.json();
-          throw new Error('Failed to fetch');
+          throw new Error("Failed to fetch");
         })
-        .then(data => {
-          if (isMounted && data && data[language] && data[language].length > 0) {
+        .then((data) => {
+          if (
+            isMounted &&
+            data &&
+            data[language] &&
+            data[language].length > 0
+          ) {
             setWorkItems(data[language]);
           } else {
-            console.warn('API returned empty or no data, falling back to local JSON data');
+            console.warn(
+              "API returned empty or no data, falling back to local JSON data",
+            );
             if (isMounted) {
               setWorkItems(experienceItems[language] || []);
             }
           }
         })
-        .catch(err => {
-          console.warn('Fallback to static local experience data:', err);
+        .catch((err) => {
+          console.warn("Fallback to static local experience data:", err);
           if (isMounted) {
             setWorkItems(experienceItems[language] || []);
           }
@@ -114,7 +130,12 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
       const customEvent = e as CustomEvent;
       if (customEvent.detail && customEvent.detail.data) {
         const updatedData = customEvent.detail.data;
-        if (isMounted && updatedData && updatedData[language] && updatedData[language].length > 0) {
+        if (
+          isMounted &&
+          updatedData &&
+          updatedData[language] &&
+          updatedData[language].length > 0
+        ) {
           setWorkItems(updatedData[language]);
           return;
         }
@@ -122,10 +143,16 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
       fetchExperiences();
     };
 
-    window.addEventListener('experiences-updated', handleRefresh as EventListener);
+    window.addEventListener(
+      "experiences-updated",
+      handleRefresh as EventListener,
+    );
     return () => {
       isMounted = false;
-      window.removeEventListener('experiences-updated', handleRefresh as EventListener);
+      window.removeEventListener(
+        "experiences-updated",
+        handleRefresh as EventListener,
+      );
     };
   }, [language]);
 
@@ -134,14 +161,18 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.08
-      }
-    }
+        staggerChildren: 0.08,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 15 },
-    show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 100, damping: 15 } }
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring" as const, stiffness: 100, damping: 15 },
+    },
   };
 
   // Helper to parse period strings (like 06/2026, 6/2026, or 2023 - 2026) for chronological sorting
@@ -151,7 +182,10 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
     // 1. Try to match a single date first (e.g. 06/2026, 6/2026, 6-2026, 6.2026)
     const singleMatch = clean.match(/^(\d{1,2})[\/\.\-–](\d{4})$/);
     if (singleMatch) {
-      return new Date(parseInt(singleMatch[2], 10), parseInt(singleMatch[1], 10) - 1);
+      return new Date(
+        parseInt(singleMatch[2], 10),
+        parseInt(singleMatch[1], 10) - 1,
+      );
     }
 
     // 2. If it's not a single date, split by common range separators to get the start date first (e.g. "08/2024 - 2025" -> "08/2024")
@@ -171,25 +205,30 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
     return new Date(0);
   };
 
-
   const localizedWorkItems = workItems
-    .filter(item => item.type === 'work' || !item.type)
-    .sort((a, b) => parsePeriodToDate(b.period).getTime() - parsePeriodToDate(a.period).getTime());
+    .filter((item) => item.type === "work" || !item.type)
+    .sort(
+      (a, b) =>
+        parsePeriodToDate(b.period).getTime() -
+        parsePeriodToDate(a.period).getTime(),
+    );
 
   const localizedEducationItems = workItems
-    .filter(item => item.type === 'education')
-    .sort((a, b) => parsePeriodToDate(b.period).getTime() - parsePeriodToDate(a.period).getTime());
+    .filter((item) => item.type === "education")
+    .sort(
+      (a, b) =>
+        parsePeriodToDate(b.period).getTime() -
+        parsePeriodToDate(a.period).getTime(),
+    );
 
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
-
-
   // Helper to get initials of company names (ignores AG, Co, GmbH, Bank, etc.)
   const getCompanyInitials = (company: string) => {
-    const clean = company.replace(/\b(AG|Co|GmbH|Bank|Zürich)\b/gi, '').trim();
-    const words = clean.split(/\s+/).filter(w => w.length > 0);
+    const clean = company.replace(/\b(AG|Co|GmbH|Bank|Zürich)\b/gi, "").trim();
+    const words = clean.split(/\s+/).filter((w) => w.length > 0);
     if (words.length >= 2) {
       return (words[0][0] + words[1][0]).toUpperCase();
     }
@@ -199,38 +238,55 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
   // Helper to determine the company badge color theme
   const getCompanyGradient = (company: string) => {
     const lower = company.toLowerCase();
-    if (lower.includes('elektro') || lower.includes('sprecher') || lower.includes('etavis') || lower.includes('götz')) {
-      return 'from-orange-500 to-orange-700 shadow-orange-500/20';
+    if (
+      lower.includes("elektro") ||
+      lower.includes("sprecher") ||
+      lower.includes("etavis") ||
+      lower.includes("götz")
+    ) {
+      return "from-orange-500 to-orange-700 shadow-orange-500/20";
     }
-    if (lower.includes('bank') || lower.includes('kantonalbank') || lower.includes('ubs')) {
-      return 'from-navy-600 to-navy-800 shadow-navy-600/20';
+    if (
+      lower.includes("bank") ||
+      lower.includes("kantonalbank") ||
+      lower.includes("ubs")
+    ) {
+      return "from-navy-600 to-navy-800 shadow-navy-600/20";
     }
-    return 'from-green-500 to-green-700 shadow-green-500/20';
+    return "from-green-500 to-green-700 shadow-green-500/20";
   };
 
   // Helper to get bullet point color based on company
   const getBulletColor = (company: string) => {
     const lower = company.toLowerCase();
-    if (lower.includes('elektro') || lower.includes('sprecher') || lower.includes('etavis') || lower.includes('götz')) {
-      return 'text-user-orange-dark dark:text-orange-400';
+    if (
+      lower.includes("elektro") ||
+      lower.includes("sprecher") ||
+      lower.includes("etavis") ||
+      lower.includes("götz")
+    ) {
+      return "text-user-orange-dark dark:text-orange-400";
     }
-    if (lower.includes('bank') || lower.includes('kantonalbank') || lower.includes('ubs')) {
-      return 'text-user-yellow-dark dark:text-navy-300';
+    if (
+      lower.includes("bank") ||
+      lower.includes("kantonalbank") ||
+      lower.includes("ubs")
+    ) {
+      return "text-user-yellow-dark dark:text-navy-300";
     }
-    return 'text-user-green dark:text-green-400';
+    return "text-user-green dark:text-green-400";
   };
 
   const reportLabels = {
     de: "Bericht herunterladen",
     tr: "Staj Raporunu İndir",
-    en: "Download Report"
+    en: "Download Report",
   };
 
   const reportLabel = reportLabels[language] || reportLabels.de;
 
   return (
     <div className="w-full max-w-4xl mx-auto py-0 space-y-6">
-      
       {/* SECTION 1: ERFAHRUNGEN (WORK EXPERIENCES) */}
       <div className="glass-card rounded-3xl overflow-hidden border border-[var(--glass-border)] shadow-xl transition-all duration-300">
         <button
@@ -246,15 +302,17 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
                 {t.experience.workTitle}
               </span>
               <span className="block text-xs text-[var(--text-muted)] mt-1 font-semibold">
-                {language === 'tr' 
-                  ? 'Tüm stajları ve detayları görmek için tıklayın' 
-                  : language === 'en' 
-                    ? 'Click to view all apprenticeships and details' 
-                    : 'Klicken Sie, um alle Lehrstellen und Details anzuzeigen'}
+                {language === "tr"
+                  ? "Tüm stajları ve detayları görmek için tıklayın"
+                  : language === "en"
+                    ? "Click to view all apprenticeships and details"
+                    : "Klicken Sie, um alle Lehrstellen und Details anzuzeigen"}
               </span>
             </span>
           </span>
-          <span className={`p-2 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] transition-transform duration-300 ${isWorkExpanded ? 'rotate-180 text-primary border-primary/30' : ''}`}>
+          <span
+            className={`p-2 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] transition-transform duration-300 ${isWorkExpanded ? "rotate-180 text-primary border-primary/30" : ""}`}
+          >
             <FiChevronDown className="text-xl" />
           </span>
         </button>
@@ -286,21 +344,25 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
                           className="relative group pl-0"
                         >
                           {/* Timeline node */}
-                          <div className={`absolute -left-14 md:-left-[4.5rem] top-5 flex items-center justify-center w-8 h-8 rounded-full bg-[var(--background)] border border-[var(--glass-border)] group-hover:border-primary transition-all duration-300 ${
-                            selectedMatcher && !matchesPath(item.role)
-                              ? 'opacity-20 grayscale'
-                              : 'opacity-100'
-                          }`}>
+                          <div
+                            className={`absolute -left-14 md:-left-[4.5rem] top-5 flex items-center justify-center w-8 h-8 rounded-full bg-[var(--background)] border border-[var(--glass-border)] group-hover:border-primary transition-all duration-300 ${
+                              selectedMatcher && !matchesPath(item.role)
+                                ? "opacity-20 grayscale"
+                                : "opacity-100"
+                            }`}
+                          >
                             <FiBriefcase className="text-sm text-[var(--text-muted)] group-hover:text-primary transition-all duration-300" />
                           </div>
 
-                          <div className={`glass-card rounded-3xl overflow-hidden border border-[var(--glass-border)] transition-all duration-500 ${
-                            selectedMatcher && !matchesPath(item.role)
-                              ? 'opacity-20 grayscale scale-[0.98] pointer-events-none'
-                              : 'opacity-100'
-                          }`}>
+                          <div
+                            className={`glass-card rounded-3xl overflow-hidden border border-[var(--glass-border)] transition-all duration-500 ${
+                              selectedMatcher && !matchesPath(item.role)
+                                ? "opacity-20 grayscale scale-[0.98] pointer-events-none"
+                                : "opacity-100"
+                            }`}
+                          >
                             {/* Collapsible Header */}
-                            <div 
+                            <div
                               onClick={() => toggleExpand(index)}
                               className="p-6 md:p-8 cursor-pointer select-none flex items-center justify-between gap-4 hover:bg-[var(--glass-border)]/10 transition-colors duration-200"
                             >
@@ -311,7 +373,8 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
                                     {item.company}
                                   </h3>
                                   <span className="text-xs px-2 py-0.5 rounded bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] flex items-center gap-1 font-medium">
-                                    <FiMapPin className="text-[10px]" /> {item.city}
+                                    <FiMapPin className="text-[10px]" />{" "}
+                                    {item.city}
                                   </span>
                                 </div>
                                 {/* Row 2: Role */}
@@ -325,7 +388,9 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
                                 <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-body)] whitespace-nowrap">
                                   {item.period}
                                 </span>
-                                <div className={`p-1.5 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] transition-transform duration-300 ${isOpen ? 'rotate-180 text-primary border-primary/30' : ''}`}>
+                                <div
+                                  className={`p-1.5 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] transition-transform duration-300 ${isOpen ? "rotate-180 text-primary border-primary/30" : ""}`}
+                                >
                                   <FiChevronDown className="text-base" />
                                 </div>
                               </div>
@@ -339,23 +404,30 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
                                   initial={{ height: 0, opacity: 0 }}
                                   animate={{ height: "auto", opacity: 1 }}
                                   exit={{ height: 0, opacity: 0 }}
-                                  transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
+                                  transition={{
+                                    duration: 0.3,
+                                    ease: [0.04, 0.62, 0.23, 0.98],
+                                  }}
                                   className="overflow-hidden"
                                 >
                                   <div className="px-6 pb-6 md:px-8 md:pb-8 border-t border-[var(--glass-border)] pt-6 flex flex-col md:flex-row gap-6 md:gap-12 items-start">
                                     {/* Company Logo Badge */}
                                     <div className="relative w-24 h-32 md:w-36 md:h-48 flex-shrink-0">
                                       {item.imageUrl && (
-                                        <img 
-                                          src={item.imageUrl} 
-                                          alt={item.company} 
+                                        <img
+                                          src={item.imageUrl}
+                                          alt={item.company}
                                           className="w-24 h-32 md:w-36 md:h-48 rounded-2xl object-cover shadow-lg absolute inset-0 z-10"
                                           onError={(e) => {
-                                            (e.target as HTMLElement).style.display = 'none';
+                                            (
+                                              e.target as HTMLElement
+                                            ).style.display = "none";
                                           }}
                                         />
                                       )}
-                                      <div className={`w-24 h-32 md:w-36 md:h-48 rounded-2xl flex items-center justify-center font-black text-2xl md:text-4xl text-white bg-gradient-to-tr ${getCompanyGradient(item.company)} shadow-lg absolute inset-0`}>
+                                      <div
+                                        className={`w-24 h-32 md:w-36 md:h-48 rounded-2xl flex items-center justify-center font-black text-2xl md:text-4xl text-white bg-gradient-to-tr ${getCompanyGradient(item.company)} shadow-lg absolute inset-0`}
+                                      >
                                         {getCompanyInitials(item.company)}
                                       </div>
                                     </div>
@@ -364,8 +436,13 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
                                     <div className="flex-1 space-y-5 w-full">
                                       <div className="space-y-3">
                                         {item.tasks.map((task, idx) => (
-                                          <div key={idx} className="flex items-start gap-3">
-                                            <span className={`mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-current ${getBulletColor(item.company)}`} />
+                                          <div
+                                            key={idx}
+                                            className="flex items-start gap-3"
+                                          >
+                                            <span
+                                              className={`mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-current ${getBulletColor(item.company)}`}
+                                            />
                                             <p className="text-[var(--text-body)] text-sm md:text-base leading-relaxed">
                                               {task}
                                             </p>
@@ -419,15 +496,17 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
                 {t.experience.educationTitle}
               </span>
               <span className="block text-xs text-[var(--text-muted)] mt-1 font-semibold">
-                {language === 'tr' 
-                  ? 'Tüm eğitim geçmişini görmek için tıklayın' 
-                  : language === 'en' 
-                    ? 'Click to view all education history' 
-                    : 'Klicken Sie, um den gesamten Bildungsverlauf anzuzeigen'}
+                {language === "tr"
+                  ? "Tüm eğitim geçmişini görmek için tıklayın"
+                  : language === "en"
+                    ? "Click to view all education history"
+                    : "Klicken Sie, um den gesamten Bildungsverlauf anzuzeigen"}
               </span>
             </span>
           </span>
-          <span className={`p-2 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] transition-transform duration-300 ${isEducationExpanded ? 'rotate-180 text-cyan-600 border-cyan-500/30' : ''}`}>
+          <span
+            className={`p-2 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] transition-transform duration-300 ${isEducationExpanded ? "rotate-180 text-cyan-600 border-cyan-500/30" : ""}`}
+          >
             <FiChevronDown className="text-xl" />
           </span>
         </button>
@@ -463,7 +542,7 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
 
                         <div className="glass-card p-6 md:p-8 rounded-3xl relative overflow-hidden border border-[var(--glass-border)]">
                           <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 blur-2xl rounded-full" />
-                          
+
                           <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
                             <div>
                               <h3 className="text-xl font-bold text-[var(--text-main)] group-hover:text-cyan-700 dark:group-hover:text-cyan-300 transition-colors duration-300">
@@ -471,9 +550,12 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
                               </h3>
                               <p className="text-sm text-cyan-700 dark:text-cyan-300 font-medium mt-0.5 flex items-center gap-1.5">
                                 {item.role}
-                                <span className="text-[var(--glass-border)]">•</span>
+                                <span className="text-[var(--glass-border)]">
+                                  •
+                                </span>
                                 <span className="text-[var(--text-muted)] flex items-center gap-0.5 text-xs font-normal">
-                                  <FiMapPin className="text-[10px]" /> {item.city}
+                                  <FiMapPin className="text-[10px]" />{" "}
+                                  {item.city}
                                 </span>
                               </p>
                             </div>
@@ -499,7 +581,6 @@ export const Timeline: React.FC<TimelineProps> = ({ selectedMatcher = null }) =>
           )}
         </AnimatePresence>
       </div>
-
     </div>
   );
 };

@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect } from 'react';
-import Link from 'next/link';
-import { motion as m } from 'framer-motion';
-import { useLanguage } from '@/app/contexts/LanguageContext';
-import { useTheme } from '@/app/contexts/ThemeContext';
-import { FiHome, FiRefreshCw, FiAlertTriangle } from 'react-icons/fi';
+import React, { useEffect } from "react";
+import Link from "next/link";
+import { motion as m } from "framer-motion";
+import { useLanguage } from "@/app/contexts/LanguageContext";
+import { useTheme } from "@/app/contexts/ThemeContext";
+import { FiHome, FiRefreshCw, FiAlertTriangle } from "react-icons/fi";
 
 interface ErrorProps {
   error: Error & { digest?: string };
@@ -22,10 +22,42 @@ export default function ErrorBoundary({ error, reset }: ErrorProps) {
 
   // Floating background warning particles
   const particles = [
-    { id: 1, size: 140, x: "20%", y: "15%", color: "bg-red-500/10", delay: 0, duration: 9 },
-    { id: 2, size: 160, x: "75%", y: "20%", color: "bg-amber-500/10", delay: 2, duration: 11 },
-    { id: 3, size: 110, x: "65%", y: "70%", color: "bg-red-600/10", delay: 4, duration: 8 },
-    { id: 4, size: 130, x: "15%", y: "75%", color: "bg-amber-600/5", delay: 1, duration: 10 },
+    {
+      id: 1,
+      size: 140,
+      x: "20%",
+      y: "15%",
+      color: "bg-red-500/10",
+      delay: 0,
+      duration: 9,
+    },
+    {
+      id: 2,
+      size: 160,
+      x: "75%",
+      y: "20%",
+      color: "bg-amber-500/10",
+      delay: 2,
+      duration: 11,
+    },
+    {
+      id: 3,
+      size: 110,
+      x: "65%",
+      y: "70%",
+      color: "bg-red-600/10",
+      delay: 4,
+      duration: 8,
+    },
+    {
+      id: 4,
+      size: 130,
+      x: "15%",
+      y: "75%",
+      color: "bg-amber-600/5",
+      delay: 1,
+      duration: 10,
+    },
   ];
 
   return (
@@ -68,7 +100,7 @@ export default function ErrorBoundary({ error, reset }: ErrorProps) {
       >
         {/* Glow decoration */}
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-red-500/10 blur-2xl rounded-full" />
-        
+
         {/* Glowing Alert Badge */}
         <m.div
           initial={{ y: 0 }}
@@ -83,14 +115,14 @@ export default function ErrorBoundary({ error, reset }: ErrorProps) {
 
         {/* Language Switcher Tabs */}
         <div className="flex gap-2 justify-center mb-6">
-          {(['de', 'tr', 'en'] as const).map((lang) => (
+          {(["de", "tr", "en"] as const).map((lang) => (
             <button
               key={lang}
               onClick={() => setLanguage(lang)}
               className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer ${
                 language === lang
-                  ? 'bg-red-600 text-white border-red-600 shadow-md shadow-red-600/25 scale-105'
-                  : 'bg-transparent text-[var(--text-muted)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5'
+                  ? "bg-red-600 text-white border-red-600 shadow-md shadow-red-600/25 scale-105"
+                  : "bg-transparent text-[var(--text-muted)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5"
               }`}
             >
               {lang.toUpperCase()}

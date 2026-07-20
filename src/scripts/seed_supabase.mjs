@@ -1,23 +1,23 @@
-import { createClient } from '@supabase/supabase-js';
-import fs from 'fs/promises';
-import path from 'path';
+import { createClient } from "@supabase/supabase-js";
+import fs from "fs/promises";
+import path from "path";
 
 async function main() {
   try {
     // Load env variables manually from .env.local
-    let envContent = '';
+    let envContent = "";
     try {
-      envContent = await fs.readFile('.env.local', 'utf8');
+      envContent = await fs.readFile(".env.local", "utf8");
     } catch (e) {
       console.error("Could not read .env.local file");
       process.exit(1);
     }
 
     const env = {};
-    envContent.split('\n').forEach(line => {
+    envContent.split("\n").forEach((line) => {
       const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith('#')) return;
-      const index = trimmed.indexOf('=');
+      if (!trimmed || trimmed.startsWith("#")) return;
+      const index = trimmed.indexOf("=");
       if (index !== -1) {
         const key = trimmed.substring(0, index).trim();
         const val = trimmed.substring(index + 1).trim();
@@ -29,7 +29,9 @@ async function main() {
     const supabaseServiceKey = env.SUPABASE_SERVICE_ROLE_KEY;
 
     if (!supabaseUrl || !supabaseServiceKey) {
-      console.error("Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in .env.local");
+      console.error(
+        "Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in .env.local",
+      );
       process.exit(1);
     }
 
@@ -37,12 +39,17 @@ async function main() {
       auth: {
         persistSession: false,
         autoRefreshToken: false,
-      }
+      },
     });
 
     // === 1. SEED EXPERIENCES ===
-    const jsonPath = path.join(process.cwd(), 'src', 'data', 'experiences.json');
-    const rawData = await fs.readFile(jsonPath, 'utf8');
+    const jsonPath = path.join(
+      process.cwd(),
+      "src",
+      "data",
+      "experiences.json",
+    );
+    const rawData = await fs.readFile(jsonPath, "utf8");
     const data = JSON.parse(rawData);
 
     const deItems = data.de || [];
@@ -54,9 +61,9 @@ async function main() {
     // Clear existing records in Supabase
     console.log("Deleting existing experiences...");
     const { error: deleteError } = await supabase
-      .from('experiences')
+      .from("experiences")
       .delete()
-      .neq('company', 'DELETE_ALL_RECORDS'); // matches all rows
+      .neq("company", "DELETE_ALL_RECORDS"); // matches all rows
 
     if (deleteError) {
       console.error("Delete error:", deleteError);
@@ -72,18 +79,18 @@ async function main() {
         company: deItem.company,
         city: deItem.city,
         period: deItem.period,
-        type: deItem.type || 'work',
+        type: deItem.type || "work",
         de: { role: deItem.role, tasks: deItem.tasks },
         tr: { role: trItem.role, tasks: trItem.tasks },
         en: { role: enItem.role, tasks: enItem.tasks },
-        logo_path: deItem.imageUrl || '',
-        pdf_path: deItem.pdfReport || ''
+        logo_path: deItem.imageUrl || "",
+        pdf_path: deItem.pdfReport || "",
       };
     });
 
     console.log("Inserting new experiences into Supabase...");
     const { error: insertError } = await supabase
-      .from('experiences')
+      .from("experiences")
       .insert(insertData);
 
     if (insertError) {
@@ -94,8 +101,13 @@ async function main() {
     console.log("Supabase experiences database populated successfully!");
 
     // === 2. SEED DOCUMENTS ===
-    const docJsonPath = path.join(process.cwd(), 'src', 'data', 'documents.json');
-    const rawDocData = await fs.readFile(docJsonPath, 'utf8');
+    const docJsonPath = path.join(
+      process.cwd(),
+      "src",
+      "data",
+      "documents.json",
+    );
+    const rawDocData = await fs.readFile(docJsonPath, "utf8");
     const docData = JSON.parse(rawDocData);
 
     const deDocs = docData.de || [];
@@ -106,9 +118,9 @@ async function main() {
 
     console.log("Deleting existing documents...");
     const { error: deleteDocError } = await supabase
-      .from('documents')
+      .from("documents")
       .delete()
-      .neq('de_term', 'DELETE_ALL_RECORDS');
+      .neq("de_term", "DELETE_ALL_RECORDS");
 
     if (deleteDocError) {
       console.error("Delete doc error:", deleteDocError);
@@ -124,13 +136,13 @@ async function main() {
         tr_term: trDoc.term.trim(),
         en_term: enDoc.term.trim(),
         date: deDoc.date.trim(),
-        file_path: deDoc.file
+        file_path: deDoc.file,
       };
     });
 
     console.log("Inserting new documents into Supabase...");
     const { error: insertDocError } = await supabase
-      .from('documents')
+      .from("documents")
       .insert(insertDocs);
 
     if (insertDocError) {
@@ -139,7 +151,6 @@ async function main() {
     }
 
     console.log("Supabase documents database populated successfully!");
-
   } catch (error) {
     console.error("Error seeding data:", error);
   }

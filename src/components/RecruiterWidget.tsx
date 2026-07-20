@@ -1,43 +1,51 @@
 "use client";
 
-import React, { useState, useEffect, FormEvent } from 'react';
-import { useLanguage } from '@/app/contexts/LanguageContext';
-import { useTheme } from '@/app/contexts/ThemeContext';
-import { motion as m, AnimatePresence } from 'framer-motion';
-import { FiX, FiSend, FiBriefcase, FiCheckCircle, FiAlertTriangle } from 'react-icons/fi';
+import React, { useState, useEffect, FormEvent } from "react";
+import { useLanguage } from "@/app/contexts/LanguageContext";
+import { useTheme } from "@/app/contexts/ThemeContext";
+import { motion as m, AnimatePresence } from "framer-motion";
+import {
+  FiX,
+  FiSend,
+  FiBriefcase,
+  FiCheckCircle,
+  FiAlertTriangle,
+} from "react-icons/fi";
 
 export const RecruiterWidget: React.FC = () => {
   const { t } = useLanguage();
   const { theme } = useTheme();
-  
+
   const [isOpen, setIsOpen] = useState(false);
-  const [name, setName] = useState('');
-  const [company, setCompany] = useState('');
-  const [position, setPosition] = useState('Kaufmann EFZ');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  
+  const [name, setName] = useState("");
+  const [company, setCompany] = useState("");
+  const [position, setPosition] = useState("Kaufmann EFZ");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
   // Math Captcha states
-  const [captchaQuestion, setCaptchaQuestion] = useState('');
-  const [mathHash, setMathHash] = useState('');
-  const [mathAnswer, setMathAnswer] = useState('');
-  
+  const [captchaQuestion, setCaptchaQuestion] = useState("");
+  const [mathHash, setMathHash] = useState("");
+  const [mathAnswer, setMathAnswer] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
 
   // Generate a random math captcha
   const generateCaptcha = () => {
-    const operations = ['+', '-', '*'] as const;
+    const operations = ["+", "-", "*"] as const;
     const op = operations[Math.floor(Math.random() * operations.length)];
-    let n1 = 0, n2 = 0, ans = 0;
+    let n1 = 0,
+      n2 = 0,
+      ans = 0;
 
-    if (op === '+') {
+    if (op === "+") {
       n1 = Math.floor(Math.random() * 10) + 1;
       n2 = Math.floor(Math.random() * 10) + 1;
       ans = n1 + n2;
-    } else if (op === '-') {
+    } else if (op === "-") {
       n1 = Math.floor(Math.random() * 10) + 5;
       n2 = Math.floor(Math.random() * n1) + 1; // ensure positive result
       ans = n1 - n2;
@@ -47,49 +55,54 @@ export const RecruiterWidget: React.FC = () => {
       ans = n1 * n2;
     }
 
-    setCaptchaQuestion(`${n1} ${op === '*' ? '×' : op} ${n2} = ?`);
+    setCaptchaQuestion(`${n1} ${op === "*" ? "×" : op} ${n2} = ?`);
     setMathHash(String(ans * 43 + 17));
-    setMathAnswer('');
+    setMathAnswer("");
   };
 
   useEffect(() => {
     if (isOpen) {
       generateCaptcha();
       setSuccess(false);
-      setErrorMsg('');
+      setErrorMsg("");
     }
   }, [isOpen]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !company.trim() || !email.trim() || !mathAnswer.trim()) {
+    if (
+      !name.trim() ||
+      !company.trim() ||
+      !email.trim() ||
+      !mathAnswer.trim()
+    ) {
       setErrorMsg(t.contact.error);
       return;
     }
 
     setLoading(true);
-    setErrorMsg('');
+    setErrorMsg("");
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          type: 'recruiter',
+          type: "recruiter",
           name,
           company,
           position,
           phone,
           email,
-          message: message.trim() || '-',
+          message: message.trim() || "-",
           mathAnswer,
-          mathHash
-        })
+          mathHash,
+        }),
       });
 
       const resData = await response.json();
       if (!response.ok) {
-        if (resData.error === 'Incorrect security answer') {
+        if (resData.error === "Incorrect security answer") {
           setErrorMsg(t.contact.captchaError);
           generateCaptcha();
         } else {
@@ -98,14 +111,14 @@ export const RecruiterWidget: React.FC = () => {
       } else {
         setSuccess(true);
         // Clear form
-        setName('');
-        setCompany('');
-        setPhone('');
-        setEmail('');
-        setMessage('');
+        setName("");
+        setCompany("");
+        setPhone("");
+        setEmail("");
+        setMessage("");
       }
     } catch (err) {
-      console.error('Error submitting recruiter form:', err);
+      console.error("Error submitting recruiter form:", err);
       setErrorMsg(t.contact.error);
     } finally {
       setLoading(false);
@@ -120,17 +133,22 @@ export const RecruiterWidget: React.FC = () => {
           <m.button
             key="floating-btn"
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ 
-              opacity: 1, 
+            animate={{
+              opacity: 1,
               scale: 1,
               y: [-5, 5, -5],
-              x: [-2, 2, -2]
+              x: [-2, 2, -2],
             }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{
               y: { repeat: Infinity, duration: 6, ease: "easeInOut" },
-              x: { repeat: Infinity, duration: 6, ease: "easeInOut", delay: 1.5 },
-              default: { duration: 0.3 }
+              x: {
+                repeat: Infinity,
+                duration: 6,
+                ease: "easeInOut",
+                delay: 1.5,
+              },
+              default: { duration: 0.3 },
             }}
             onClick={() => setIsOpen(true)}
             className="fixed left-6 bottom-6 md:left-8 md:bottom-8 z-40 flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white font-bold shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all duration-300 cursor-pointer text-sm tracking-wide"
@@ -194,7 +212,9 @@ export const RecruiterWidget: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Name */}
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.recruiter.fieldName} *</label>
+                      <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                        {t.recruiter.fieldName} *
+                      </label>
                       <input
                         type="text"
                         required
@@ -207,7 +227,9 @@ export const RecruiterWidget: React.FC = () => {
 
                     {/* Company */}
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.recruiter.fieldCompany} *</label>
+                      <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                        {t.recruiter.fieldCompany} *
+                      </label>
                       <input
                         type="text"
                         required
@@ -222,21 +244,31 @@ export const RecruiterWidget: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Position Selection */}
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.recruiter.fieldPosition}</label>
+                      <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                        {t.recruiter.fieldPosition}
+                      </label>
                       <select
                         value={position}
                         onChange={(e) => setPosition(e.target.value)}
                         className="w-full px-4 py-3 rounded-2xl glass-card border border-[var(--glass-border)] focus:border-primary/50 text-[var(--text-main)] focus:outline-none transition-all duration-300 text-sm cursor-pointer"
                       >
-                        <option value="Kaufmann EFZ">{t.recruiter.posKaufmann}</option>
-                        <option value="Elektroinstallateur EFZ">{t.recruiter.posElektro}</option>
-                        <option value="Schnupperlehre / Anderes">{t.recruiter.posOther}</option>
+                        <option value="Kaufmann EFZ">
+                          {t.recruiter.posKaufmann}
+                        </option>
+                        <option value="Elektroinstallateur EFZ">
+                          {t.recruiter.posElektro}
+                        </option>
+                        <option value="Schnupperlehre / Anderes">
+                          {t.recruiter.posOther}
+                        </option>
                       </select>
                     </div>
 
                     {/* Phone */}
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.recruiter.fieldPhone}</label>
+                      <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                        {t.recruiter.fieldPhone}
+                      </label>
                       <input
                         type="tel"
                         placeholder="z.B. +41 79 123 45 67"
@@ -249,7 +281,9 @@ export const RecruiterWidget: React.FC = () => {
 
                   {/* Email */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.recruiter.fieldEmail} *</label>
+                    <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                      {t.recruiter.fieldEmail} *
+                    </label>
                     <input
                       type="email"
                       required
@@ -262,7 +296,9 @@ export const RecruiterWidget: React.FC = () => {
 
                   {/* Optional message */}
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.recruiter.fieldMessage}</label>
+                    <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                      {t.recruiter.fieldMessage}
+                    </label>
                     <textarea
                       placeholder="z.B. Termin-Vorschläge oder zusätzliche Details..."
                       value={message}
@@ -275,8 +311,12 @@ export const RecruiterWidget: React.FC = () => {
                   {/* Math Captcha Spam protection */}
                   <div className="p-4 rounded-2xl border border-[var(--glass-border)] bg-zinc-800/5 dark:bg-zinc-200/5 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.contact.captchaTitle}</span>
-                      <span className="text-sm font-extrabold text-[var(--primary)] px-2 py-0.5 rounded bg-[var(--badge-bg)]">{captchaQuestion}</span>
+                      <span className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                        {t.contact.captchaTitle}
+                      </span>
+                      <span className="text-sm font-extrabold text-[var(--primary)] px-2 py-0.5 rounded bg-[var(--badge-bg)]">
+                        {captchaQuestion}
+                      </span>
                     </div>
                     <p className="text-xs text-[var(--text-muted)]">
                       {t.contact.captchaInstruction}
@@ -293,7 +333,7 @@ export const RecruiterWidget: React.FC = () => {
 
                   {/* Error display */}
                   {errorMsg && (
-                    <m.div 
+                    <m.div
                       initial={{ opacity: 0, y: -5 }}
                       animate={{ opacity: 1, y: 0 }}
                       className="flex items-center gap-2 p-3.5 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-xs font-semibold"
@@ -309,8 +349,14 @@ export const RecruiterWidget: React.FC = () => {
                     disabled={loading}
                     className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-primary hover:opacity-90 disabled:opacity-50 text-white font-bold rounded-2xl transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-primary/30 cursor-pointer text-sm tracking-wide"
                   >
-                    <FiSend className={loading ? "animate-spin text-base" : "text-base"} />
-                    <span>{loading ? t.contact.sending : t.recruiter.btnSubmit}</span>
+                    <FiSend
+                      className={
+                        loading ? "animate-spin text-base" : "text-base"
+                      }
+                    />
+                    <span>
+                      {loading ? t.contact.sending : t.recruiter.btnSubmit}
+                    </span>
                   </button>
                 </form>
               ) : (
@@ -329,7 +375,9 @@ export const RecruiterWidget: React.FC = () => {
                     <FiCheckCircle />
                   </m.div>
                   <div className="space-y-2">
-                    <h3 className="text-2xl font-bold text-[var(--text-main)]">Dankeschön!</h3>
+                    <h3 className="text-2xl font-bold text-[var(--text-main)]">
+                      Dankeschön!
+                    </h3>
                     <p className="text-sm text-[var(--text-body)] max-w-sm mx-auto leading-relaxed">
                       {t.recruiter.successMessage}
                     </p>

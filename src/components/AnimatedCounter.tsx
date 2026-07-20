@@ -1,13 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 interface AnimatedCounterProps {
   value: number;
   duration?: number;
 }
 
-export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ value, duration = 2500 }) => {
+export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
+  value,
+  duration = 2500,
+}) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -18,7 +21,7 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ value, duratio
       // easeOutExpo for a nice fast start and slow end
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       setCount(Math.floor(easeProgress * value));
-      
+
       if (progress < 1) {
         window.requestAnimationFrame(step);
       } else {

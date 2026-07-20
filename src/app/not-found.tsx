@@ -1,20 +1,20 @@
 "use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { motion as m } from 'framer-motion';
-import { useLanguage } from '@/app/contexts/LanguageContext';
-import { useTheme } from '@/app/contexts/ThemeContext';
-import { 
-  FiHome, 
-  FiArrowLeft, 
-  FiUser, 
-  FiFileText, 
-  FiBriefcase, 
-  FiAward, 
-  FiSliders, 
-  FiMail 
-} from 'react-icons/fi';
+import React from "react";
+import Link from "next/link";
+import { motion as m } from "framer-motion";
+import { useLanguage } from "@/app/contexts/LanguageContext";
+import { useTheme } from "@/app/contexts/ThemeContext";
+import {
+  FiHome,
+  FiArrowLeft,
+  FiUser,
+  FiFileText,
+  FiBriefcase,
+  FiAward,
+  FiSliders,
+  FiMail,
+} from "react-icons/fi";
 
 export default function NotFound() {
   const { language, setLanguage, t } = useLanguage();
@@ -22,25 +22,81 @@ export default function NotFound() {
 
   // Navigation Sitemap links
   const sitemapLinks = [
-    { href: "/#about", label: t.nav.about, icon: <FiUser className="text-base" /> },
-    { href: "/#documents", label: t.nav.documents, icon: <FiFileText className="text-base" /> },
-    { href: "/#experience", label: t.nav.experience, icon: <FiBriefcase className="text-base" /> },
-    { href: "/#skills", label: t.nav.skills, icon: <FiAward className="text-base" /> },
-    { href: "/#details", label: t.nav.details, icon: <FiSliders className="text-base" /> },
-    { href: "/#contact", label: t.nav.contact, icon: <FiMail className="text-base" /> }
+    {
+      href: "/#about",
+      label: t.nav.about,
+      icon: <FiUser className="text-base" />,
+    },
+    {
+      href: "/#documents",
+      label: t.nav.documents,
+      icon: <FiFileText className="text-base" />,
+    },
+    {
+      href: "/#experience",
+      label: t.nav.experience,
+      icon: <FiBriefcase className="text-base" />,
+    },
+    {
+      href: "/#skills",
+      label: t.nav.skills,
+      icon: <FiAward className="text-base" />,
+    },
+    {
+      href: "/#details",
+      label: t.nav.details,
+      icon: <FiSliders className="text-base" />,
+    },
+    {
+      href: "/#contact",
+      label: t.nav.contact,
+      icon: <FiMail className="text-base" />,
+    },
   ];
 
   // Floating background particles
   const particles = [
-    { id: 1, size: 120, x: "15%", y: "20%", color: "bg-primary/10", delay: 0, duration: 8 },
-    { id: 2, size: 180, x: "80%", y: "15%", color: "bg-secondary/15", delay: 2, duration: 12 },
-    { id: 3, size: 100, x: "70%", y: "75%", color: "bg-primary/15", delay: 4, duration: 10 },
-    { id: 4, size: 140, x: "10%", y: "80%", color: "bg-secondary/10", delay: 1, duration: 9 },
+    {
+      id: 1,
+      size: 120,
+      x: "15%",
+      y: "20%",
+      color: "bg-primary/10",
+      delay: 0,
+      duration: 8,
+    },
+    {
+      id: 2,
+      size: 180,
+      x: "80%",
+      y: "15%",
+      color: "bg-secondary/15",
+      delay: 2,
+      duration: 12,
+    },
+    {
+      id: 3,
+      size: 100,
+      x: "70%",
+      y: "75%",
+      color: "bg-primary/15",
+      delay: 4,
+      duration: 10,
+    },
+    {
+      id: 4,
+      size: 140,
+      x: "10%",
+      y: "80%",
+      color: "bg-secondary/10",
+      delay: 1,
+      duration: 9,
+    },
   ];
 
   const goBack = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.history.back();
     }
   };
@@ -85,7 +141,7 @@ export default function NotFound() {
       >
         {/* Glow decoration */}
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 blur-2xl rounded-full" />
-        
+
         {/* Glowing 404 Badge */}
         <m.div
           initial={{ y: 0 }}
@@ -100,14 +156,14 @@ export default function NotFound() {
 
         {/* Language Switcher Tabs */}
         <div className="flex gap-2 justify-center mb-6">
-          {(['de', 'tr', 'en'] as const).map((lang) => (
+          {(["de", "tr", "en"] as const).map((lang) => (
             <button
               key={lang}
               onClick={() => setLanguage(lang)}
               className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer ${
                 language === lang
-                  ? 'bg-primary text-white border-primary shadow-md shadow-primary/25 scale-105'
-                  : 'bg-transparent text-[var(--text-muted)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5'
+                  ? "bg-primary text-white border-primary shadow-md shadow-primary/25 scale-105"
+                  : "bg-transparent text-[var(--text-muted)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5"
               }`}
             >
               {lang.toUpperCase()}

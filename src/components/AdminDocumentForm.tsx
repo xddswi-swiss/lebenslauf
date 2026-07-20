@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion as m, AnimatePresence } from 'framer-motion';
-import { 
-  FiFileText, 
-  FiPlus, 
-  FiCheck, 
-  FiAlertCircle, 
+import React, { useState, useEffect } from "react";
+import { motion as m, AnimatePresence } from "framer-motion";
+import {
+  FiFileText,
+  FiPlus,
+  FiCheck,
+  FiAlertCircle,
   FiLoader,
   FiX,
-  FiTrash2
-} from 'react-icons/fi';
-import { useLanguage } from '@/app/contexts/LanguageContext';
+  FiTrash2,
+} from "react-icons/fi";
+import { useLanguage } from "@/app/contexts/LanguageContext";
 
 interface FileData {
   name: string;
@@ -22,23 +22,23 @@ export const AdminDocumentForm: React.FC = () => {
   const { language } = useLanguage();
 
   // Form fields state
-  const [deTerm, setDeTerm] = useState('');
-  const [trTerm, setTrTerm] = useState('');
-  const [enTerm, setEnTerm] = useState('');
-  const [date, setDate] = useState('');
+  const [deTerm, setDeTerm] = useState("");
+  const [trTerm, setTrTerm] = useState("");
+  const [enTerm, setEnTerm] = useState("");
+  const [date, setDate] = useState("");
   const [pdfFile, setPdfFile] = useState<FileData | null>(null);
 
   // Submission states
   const [isLoading, setIsLoading] = useState(false);
-  const [successMsg, setSuccessMsg] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   // List of existing documents for deletion in admin
   const [existingDocuments, setExistingDocuments] = useState<any[]>([]);
 
   const fetchDocuments = async () => {
     try {
-      const res = await fetch('/api/documents');
+      const res = await fetch("/api/documents");
       if (res.ok) {
         const data = await res.json();
         setExistingDocuments(data.de || []);
@@ -49,34 +49,37 @@ export const AdminDocumentForm: React.FC = () => {
   };
 
   const handleDeleteDocument = async (term: string) => {
-    const confirmMsg = language === 'tr'
-      ? `"${term}" belgesini silmek istediğinize emin misiniz?`
-      : `Sind Sie sicher, dass Sie das Dokument "${term}" löschen möchten?`;
+    const confirmMsg =
+      language === "tr"
+        ? `"${term}" belgesini silmek istediğinize emin misiniz?`
+        : `Sind Sie sicher, dass Sie das Dokument "${term}" löschen möchten?`;
     if (!window.confirm(confirmMsg)) return;
 
     setIsLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setErrorMsg("");
+    setSuccessMsg("");
 
     try {
-      const passcode = localStorage.getItem('admin_passcode') || 'eren2026';
-      const res = await fetch('/api/documents', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ passcode, term })
+      const passcode = localStorage.getItem("admin_passcode") || "eren2026";
+      const res = await fetch("/api/documents", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ passcode, term }),
       });
 
       if (res.ok) {
-        setSuccessMsg(language === 'tr' ? 'Başarıyla silindi!' : 'Erfolgreich gelöscht!');
+        setSuccessMsg(
+          language === "tr" ? "Başarıyla silindi!" : "Erfolgreich gelöscht!",
+        );
         fetchDocuments();
         // Trigger event to refresh homepage
-        window.dispatchEvent(new Event('documents-updated'));
+        window.dispatchEvent(new Event("documents-updated"));
       } else {
         const errData = await res.json();
-        setErrorMsg(errData.error || 'Failed to delete.');
+        setErrorMsg(errData.error || "Failed to delete.");
       }
     } catch (err: any) {
-      setErrorMsg(err.message || 'Error occurred.');
+      setErrorMsg(err.message || "Error occurred.");
     } finally {
       setIsLoading(false);
     }
@@ -88,7 +91,7 @@ export const AdminDocumentForm: React.FC = () => {
 
   // Read-only serverless fallback states
   const [showFallbackModal, setShowFallbackModal] = useState(false);
-  const [fallbackJson, setFallbackJson] = useState('');
+  const [fallbackJson, setFallbackJson] = useState("");
   const [copied, setCopied] = useState(false);
 
   const labels = {
@@ -102,7 +105,8 @@ export const AdminDocumentForm: React.FC = () => {
       btnSubmit: "Dokument hinzufügen",
       success: "Dokument erfolgreich hinzugefügt! 🎉",
       fallbackTitle: "Server Schreibgeschützt",
-      fallbackDesc: "Dieses Projekt läuft auf einem schreibgeschützten Server (z.B. Vercel). Die Daten konnten nicht direkt gespeichert werden. Bitte kopieren Sie den folgenden JSON-Code und ersetzen Sie damit den Inhalt der Datei \"src/data/documents.json\" in Ihrem Projekt.",
+      fallbackDesc:
+        'Dieses Projekt läuft auf einem schreibgeschützten Server (z.B. Vercel). Die Daten konnten nicht direkt gespeichert werden. Bitte kopieren Sie den folgenden JSON-Code und ersetzen Sie damit den Inhalt der Datei "src/data/documents.json" in Ihrem Projekt.',
       btnCopy: "Code kopieren",
       btnCopied: "Kopiert!",
     },
@@ -116,7 +120,8 @@ export const AdminDocumentForm: React.FC = () => {
       btnSubmit: "Belgeyi Ekle",
       success: "Belge başarıyla eklendi! 🎉",
       fallbackTitle: "Salt Okunur Sunucu Uyarısı",
-      fallbackDesc: "Proje şu an salt okunur bir sunucuda (Vercel gibi) barındırılmaktadır. Bu sebeple veriler doğrudan kaydedilemedi. Lütfen aşağıdaki JSON kodunu kopyalayın ve projenizin içindeki \"src/data/documents.json\" dosyasının içeriği ile tamamen değiştirin.",
+      fallbackDesc:
+        'Proje şu an salt okunur bir sunucuda (Vercel gibi) barındırılmaktadır. Bu sebeple veriler doğrudan kaydedilemedi. Lütfen aşağıdaki JSON kodunu kopyalayın ve projenizin içindeki "src/data/documents.json" dosyasının içeriği ile tamamen değiştirin.',
       btnCopy: "Kodu Kopyala",
       btnCopied: "Kopyalandı!",
     },
@@ -130,20 +135,25 @@ export const AdminDocumentForm: React.FC = () => {
       btnSubmit: "Add Document",
       success: "Document successfully added! 🎉",
       fallbackTitle: "Server Read-Only",
-      fallbackDesc: "This project is running on a read-only host (e.g. Vercel). The files could not be updated directly. Please copy the JSON below and replace the content of your \"src/data/documents.json\" file with it.",
+      fallbackDesc:
+        'This project is running on a read-only host (e.g. Vercel). The files could not be updated directly. Please copy the JSON below and replace the content of your "src/data/documents.json" file with it.',
       btnCopy: "Copy Code",
       btnCopied: "Copied!",
-    }
+    },
   };
 
-  const t = labels[language as 'de' | 'tr' | 'en'] || labels.de;
+  const t = labels[language as "de" | "tr" | "en"] || labels.de;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.type !== 'application/pdf') {
-      setErrorMsg(language === 'tr' ? 'Lütfen sadece PDF dosyası yükleyin!' : 'Bitte laden Sie nur PDF-Dateien hoch!');
+    if (file.type !== "application/pdf") {
+      setErrorMsg(
+        language === "tr"
+          ? "Lütfen sadece PDF dosyası yükleyin!"
+          : "Bitte laden Sie nur PDF-Dateien hoch!",
+      );
       return;
     }
 
@@ -151,53 +161,63 @@ export const AdminDocumentForm: React.FC = () => {
     reader.onload = () => {
       setPdfFile({
         name: file.name,
-        base64: reader.result as string
+        base64: reader.result as string,
       });
-      setErrorMsg('');
+      setErrorMsg("");
     };
     reader.readAsDataURL(file);
   };
 
-  const handleAutoTranslate = async (sourceLang: 'de' | 'tr' | 'en') => {
-    let textToTranslate = '';
-    if (sourceLang === 'de') textToTranslate = deTerm;
-    else if (sourceLang === 'tr') textToTranslate = trTerm;
-    else if (sourceLang === 'en') textToTranslate = enTerm;
+  const handleAutoTranslate = async (sourceLang: "de" | "tr" | "en") => {
+    let textToTranslate = "";
+    if (sourceLang === "de") textToTranslate = deTerm;
+    else if (sourceLang === "tr") textToTranslate = trTerm;
+    else if (sourceLang === "en") textToTranslate = enTerm;
 
     if (!textToTranslate.trim()) return;
 
     setIsLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setErrorMsg("");
+    setSuccessMsg("");
 
     try {
-      const translateText = async (text: string, from: string, to: string): Promise<string> => {
+      const translateText = async (
+        text: string,
+        from: string,
+        to: string,
+      ): Promise<string> => {
         try {
-          const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`);
+          const res = await fetch(
+            `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`,
+          );
           if (res.ok) {
             const data = await res.json();
-            return data[0].map((x: any) => x[0]).join('');
+            return data[0].map((x: any) => x[0]).join("");
           }
         } catch (err) {
           console.error(err);
         }
-        return '';
+        return "";
       };
 
-      const targets: ('de' | 'tr' | 'en')[] = ['de', 'tr', 'en'];
+      const targets: ("de" | "tr" | "en")[] = ["de", "tr", "en"];
       const promises = targets.map(async (lang) => {
         if (lang === sourceLang) return;
-        const translated = await translateText(textToTranslate, sourceLang, lang);
+        const translated = await translateText(
+          textToTranslate,
+          sourceLang,
+          lang,
+        );
         if (translated) {
-          if (lang === 'de') setDeTerm(translated);
-          else if (lang === 'tr') setTrTerm(translated);
-          else if (lang === 'en') setEnTerm(translated);
+          if (lang === "de") setDeTerm(translated);
+          else if (lang === "tr") setTrTerm(translated);
+          else if (lang === "en") setEnTerm(translated);
         }
       });
       await Promise.all(promises);
     } catch (e) {
       console.error(e);
-      setErrorMsg('Translation failed.');
+      setErrorMsg("Translation failed.");
     } finally {
       setIsLoading(false);
     }
@@ -209,21 +229,31 @@ export const AdminDocumentForm: React.FC = () => {
     const fallbackTitle = deTerm.trim() || trTerm.trim() || enTerm.trim();
 
     if (!fallbackTitle || !date || !pdfFile) {
-      setErrorMsg(language === 'tr' ? 'Lütfen en az bir Başlık, Tarih ve PDF dosyası girin!' : 'Bitte geben Sie mindestens einen Titel, ein Datum und eine PDF-Datei an!');
+      setErrorMsg(
+        language === "tr"
+          ? "Lütfen en az bir Başlık, Tarih ve PDF dosyası girin!"
+          : "Bitte geben Sie mindestens einen Titel, ein Datum und eine PDF-Datei an!",
+      );
       return;
     }
 
     setIsLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setErrorMsg("");
+    setSuccessMsg("");
 
-    const translateText = async (text: string, from: string, to: string): Promise<string> => {
-      if (!text.trim()) return '';
+    const translateText = async (
+      text: string,
+      from: string,
+      to: string,
+    ): Promise<string> => {
+      if (!text.trim()) return "";
       try {
-        const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`);
+        const res = await fetch(
+          `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`,
+        );
         if (res.ok) {
           const data = await res.json();
-          return data[0].map((x: any) => x[0]).join('');
+          return data[0].map((x: any) => x[0]).join("");
         }
       } catch (err) {
         console.error(`Translation error from ${from} to ${to}:`, err);
@@ -232,66 +262,81 @@ export const AdminDocumentForm: React.FC = () => {
     };
 
     // Determine source language
-    let srcLang = 'de';
+    let srcLang = "de";
     if (deTerm.trim()) {
-      srcLang = 'de';
+      srcLang = "de";
     } else if (trTerm.trim()) {
-      srcLang = 'tr';
+      srcLang = "tr";
     } else if (enTerm.trim()) {
-      srcLang = 'en';
+      srcLang = "en";
     }
 
     const srcTitle = deTerm.trim() || trTerm.trim() || enTerm.trim();
 
     try {
       const [finalDeTerm, finalTrTerm, finalEnTerm] = await Promise.all([
-        deTerm.trim() ? Promise.resolve(deTerm.trim()) : translateText(srcTitle, srcLang, 'de'),
-        trTerm.trim() ? Promise.resolve(trTerm.trim()) : translateText(srcTitle, srcLang, 'tr'),
-        enTerm.trim() ? Promise.resolve(enTerm.trim()) : translateText(srcTitle, srcLang, 'en')
+        deTerm.trim()
+          ? Promise.resolve(deTerm.trim())
+          : translateText(srcTitle, srcLang, "de"),
+        trTerm.trim()
+          ? Promise.resolve(trTerm.trim())
+          : translateText(srcTitle, srcLang, "tr"),
+        enTerm.trim()
+          ? Promise.resolve(enTerm.trim())
+          : translateText(srcTitle, srcLang, "en"),
       ]);
 
-      const passcode = localStorage.getItem('admin_passcode') || 'eren2026';
+      const passcode = localStorage.getItem("admin_passcode") || "eren2026";
 
-      const response = await fetch('/api/documents', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/documents", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           passcode,
           deTerm: finalDeTerm,
           trTerm: finalTrTerm,
           enTerm: finalEnTerm,
           date,
-          pdfFile
-        })
+          pdfFile,
+        }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
         if (data.success) {
-          setSuccessMsg(language === 'tr' ? 'Belge başarıyla eklendi! 🎉' : 'Dokument erfolgreich hinzugefügt! 🎉');
-          window.dispatchEvent(new Event('documents-updated'));
+          setSuccessMsg(
+            language === "tr"
+              ? "Belge başarıyla eklendi! 🎉"
+              : "Dokument erfolgreich hinzugefügt! 🎉",
+          );
+          window.dispatchEvent(new Event("documents-updated"));
           // Reset form
-          setDeTerm('');
-          setTrTerm('');
-          setEnTerm('');
-          setDate('');
+          setDeTerm("");
+          setTrTerm("");
+          setEnTerm("");
+          setDate("");
           setPdfFile(null);
           // Reset file input element
-          const fileInput = document.getElementById('document-pdf-upload') as HTMLInputElement;
-          if (fileInput) fileInput.value = '';
+          const fileInput = document.getElementById(
+            "document-pdf-upload",
+          ) as HTMLInputElement;
+          if (fileInput) fileInput.value = "";
           fetchDocuments();
         } else {
           // If read-only mode locally or fails local writes, generate fallback JSON
-          if (data.errors && data.errors.some((err: string) => err.includes('local save failed'))) {
+          if (
+            data.errors &&
+            data.errors.some((err: string) => err.includes("local save failed"))
+          ) {
             // Fetch updated data to generate local JSON code
-            const currentRes = await fetch('/api/documents');
+            const currentRes = await fetch("/api/documents");
             const currentDocs = await currentRes.json();
 
             // Append new item mock
             const trTitle = trTerm.trim() || deTerm.trim();
             const enTitle = enTerm.trim() || deTerm.trim();
-            const mockPath = `/assets/pdfs/${deTerm.toLowerCase().replace(/\s+/g, '-')}.pdf`;
+            const mockPath = `/assets/pdfs/${deTerm.toLowerCase().replace(/\s+/g, "-")}.pdf`;
 
             currentDocs.de.push({ term: deTerm, date, file: mockPath });
             currentDocs.tr.push({ term: trTitle, date, file: mockPath });
@@ -300,15 +345,15 @@ export const AdminDocumentForm: React.FC = () => {
             setFallbackJson(JSON.stringify(currentDocs, null, 2));
             setShowFallbackModal(true);
           } else {
-            setErrorMsg(data.error || 'Server error occurred.');
+            setErrorMsg(data.error || "Server error occurred.");
           }
         }
       } else {
-        setErrorMsg(data.error || 'Failed to submit document.');
+        setErrorMsg(data.error || "Failed to submit document.");
       }
     } catch (err: any) {
-      console.error('Document submission error:', err);
-      setErrorMsg(err.message || 'Network error.');
+      console.error("Document submission error:", err);
+      setErrorMsg(err.message || "Network error.");
     } finally {
       setIsLoading(false);
     }
@@ -347,14 +392,20 @@ export const AdminDocumentForm: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.lblDeTitle}</label>
+              <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                {t.lblDeTitle}
+              </label>
               {deTerm.trim() && (
                 <button
                   type="button"
-                  onClick={() => handleAutoTranslate('de')}
+                  onClick={() => handleAutoTranslate("de")}
                   className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
                 >
-                  {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                  {language === "tr"
+                    ? "DİĞER DİLLERE ÇEVİR"
+                    : language === "de"
+                      ? "Übersetzen"
+                      : "Translate"}
                 </button>
               )}
             </div>
@@ -367,14 +418,20 @@ export const AdminDocumentForm: React.FC = () => {
           </div>
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.lblTrTitle}</label>
+              <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                {t.lblTrTitle}
+              </label>
               {trTerm.trim() && (
                 <button
                   type="button"
-                  onClick={() => handleAutoTranslate('tr')}
+                  onClick={() => handleAutoTranslate("tr")}
                   className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
                 >
-                  {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                  {language === "tr"
+                    ? "DİĞER DİLLERE ÇEVİR"
+                    : language === "de"
+                      ? "Übersetzen"
+                      : "Translate"}
                 </button>
               )}
             </div>
@@ -387,14 +444,20 @@ export const AdminDocumentForm: React.FC = () => {
           </div>
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.lblEnTitle}</label>
+              <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                {t.lblEnTitle}
+              </label>
               {enTerm.trim() && (
                 <button
                   type="button"
-                  onClick={() => handleAutoTranslate('en')}
+                  onClick={() => handleAutoTranslate("en")}
                   className="text-[10px] font-black text-amber-500 hover:text-amber-600 transition-colors uppercase tracking-wider cursor-pointer"
                 >
-                  {language === 'tr' ? 'DİĞER DİLLERE ÇEVİR' : language === 'de' ? 'Übersetzen' : 'Translate'}
+                  {language === "tr"
+                    ? "DİĞER DİLLERE ÇEVİR"
+                    : language === "de"
+                      ? "Übersetzen"
+                      : "Translate"}
                 </button>
               )}
             </div>
@@ -409,7 +472,9 @@ export const AdminDocumentForm: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.lblDate}</label>
+            <label className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-wider">
+              {t.lblDate}
+            </label>
             <input
               type="text"
               required
@@ -458,35 +523,43 @@ export const AdminDocumentForm: React.FC = () => {
         <div className="mt-12 pt-8 border-t border-[var(--glass-border)] space-y-4">
           <h4 className="text-base font-bold text-[var(--text-main)] flex items-center gap-2">
             <span className="w-1.5 h-5 bg-primary rounded-full" />
-            {language === 'tr' ? 'Mevcut Belgeleri Yönet' : language === 'de' ? 'Bewerbungsunterlagen verwalten' : 'Manage Existing Documents'}
+            {language === "tr"
+              ? "Mevcut Belgeleri Yönet"
+              : language === "de"
+                ? "Bewerbungsunterlagen verwalten"
+                : "Manage Existing Documents"}
           </h4>
           <p className="text-xs text-[var(--text-muted)]">
-            {language === 'tr' 
-              ? 'Listeden silmek istediğiniz karne veya sertifika kaydını çöp kutusu simgesine tıklayarak kaldırabilirsiniz.' 
-              : 'Klicken Sie auf das Papierkorb-Symbol, um ein Dokument zu löschen.'}
+            {language === "tr"
+              ? "Listeden silmek istediğiniz karne veya sertifika kaydını çöp kutusu simgesine tıklayarak kaldırabilirsiniz."
+              : "Klicken Sie auf das Papierkorb-Symbol, um ein Dokument zu löschen."}
           </p>
-          
+
           <div className="space-y-3 pt-2">
             {existingDocuments.map((item, idx) => (
-              <div 
+              <div
                 key={idx}
                 className="p-4 rounded-2xl border border-[var(--glass-border)] bg-[var(--background)]/5 flex items-center justify-between gap-4 hover:bg-[var(--glass-border)]/10 transition-all"
               >
                 <div className="min-w-0 flex-1">
-                  <span className="text-sm font-bold text-[var(--text-main)]">{item.term}</span>
+                  <span className="text-sm font-bold text-[var(--text-main)]">
+                    {item.term}
+                  </span>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="text-[10px] text-[var(--text-muted)] font-mono">{item.date}</span>
-                    <a 
-                      href={item.file} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+                    <span className="text-[10px] text-[var(--text-muted)] font-mono">
+                      {item.date}
+                    </span>
+                    <a
+                      href={item.file}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-[10px] font-bold text-primary hover:underline"
                     >
                       PDF
                     </a>
                   </div>
                 </div>
-                
+
                 <button
                   type="button"
                   onClick={() => handleDeleteDocument(item.term)}
@@ -530,7 +603,9 @@ export const AdminDocumentForm: React.FC = () => {
                 onClick={copyFallbackJson}
                 className="flex-1 py-3.5 rounded-xl bg-primary hover:opacity-90 text-white font-bold text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
               >
-                <FiCheck className={`text-base transition-transform ${copied ? 'scale-100' : 'scale-0 w-0'}`} />
+                <FiCheck
+                  className={`text-base transition-transform ${copied ? "scale-100" : "scale-0 w-0"}`}
+                />
                 {copied ? t.btnCopied : t.btnCopy}
               </button>
             </div>

@@ -1,57 +1,62 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useLanguage } from './contexts/LanguageContext';
-import { useTheme } from './contexts/ThemeContext';
-import { Timeline } from '@/components/Timeline';
-import { SkillsGrid } from '@/components/SkillsGrid';
-import { ContactForm } from '@/components/ContactForm';
-import { Guestbook } from '@/components/Guestbook';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
-import { ScrollToTopButton } from '@/components/ScrollToTopButton';
-import { DownloadButton } from '@/components/DownloadButton';
-import { AnimatedCounter } from '@/components/AnimatedCounter';
-import Strands from '@/components/Strands';
-import { motion as m, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
+import React, { useState, useEffect } from "react";
+import { useLanguage } from "./contexts/LanguageContext";
+import { useTheme } from "./contexts/ThemeContext";
+import { Timeline } from "@/components/Timeline";
+import { SkillsGrid } from "@/components/SkillsGrid";
+import { ContactForm } from "@/components/ContactForm";
+import { Guestbook } from "@/components/Guestbook";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { ScrollToTopButton } from "@/components/ScrollToTopButton";
+import { DownloadButton } from "@/components/DownloadButton";
+import { AnimatedCounter } from "@/components/AnimatedCounter";
+import Strands from "@/components/Strands";
+import { motion as m, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
-import { 
-  FiDownload, 
-  FiArrowRight, 
+import {
+  FiDownload,
+  FiArrowRight,
   FiGithub,
   FiInstagram,
   FiFileText,
   FiZap,
   FiX,
   FiBriefcase,
-  FiTrash2
-} from 'react-icons/fi';
-import { reportItems, languagesData, referencesData, experienceItems } from '@/data/translations';
-import { 
-  FaUtensils, 
-  FaFistRaised, 
-  FaSwimmer, 
-  FaMusic, 
-  FaLeaf, 
-  FaCamera, 
-  FaWalking, 
-  FaFileWord, 
-  FaFileExcel, 
-  FaCode 
-} from 'react-icons/fa';
+  FiTrash2,
+} from "react-icons/fi";
+import {
+  reportItems,
+  languagesData,
+  referencesData,
+  experienceItems,
+} from "@/data/translations";
+import {
+  FaUtensils,
+  FaFistRaised,
+  FaSwimmer,
+  FaMusic,
+  FaLeaf,
+  FaCamera,
+  FaWalking,
+  FaFileWord,
+  FaFileExcel,
+  FaCode,
+} from "react-icons/fa";
 
 const hobbiesWithIcons = [
-  { key: 'cook' as const, icon: <FaUtensils /> },
-  { key: 'kung-fu' as const, icon: <FaFistRaised /> },
-  { key: 'swim' as const, icon: <FaSwimmer /> },
-  { key: 'music' as const, icon: <FaMusic /> },
-  { key: 'nature' as const, icon: <FaLeaf /> },
-  { key: 'photography' as const, icon: <FaCamera /> },
-  { key: 'walk' as const, icon: <FaWalking /> },
-  { key: 'word' as const, icon: <FaFileWord /> },
-  { key: 'excel' as const, icon: <FaFileExcel /> },
-  { key: 'code' as const, icon: <FaCode /> }
+  { key: "cook" as const, icon: <FaUtensils /> },
+  { key: "kung-fu" as const, icon: <FaFistRaised /> },
+  { key: "swim" as const, icon: <FaSwimmer /> },
+  { key: "music" as const, icon: <FaMusic /> },
+  { key: "nature" as const, icon: <FaLeaf /> },
+  { key: "photography" as const, icon: <FaCamera /> },
+  { key: "walk" as const, icon: <FaWalking /> },
+  { key: "word" as const, icon: <FaFileWord /> },
+  { key: "excel" as const, icon: <FaFileExcel /> },
+  { key: "code" as const, icon: <FaCode /> },
 ];
 
 const getStrandsColors = (index: number) => {
@@ -62,23 +67,25 @@ const getStrandsColors = (index: number) => {
     ["#7C3AED", "#3B82F6", "#C084FC"], // 1. Deep Nebula
     ["#10B981", "#059669", "#A7F3D0"], // 2. Green / Mint
     ["#EC4899", "#8B5CF6", "#FBCFE8"], // 3. Cosmic Rose
-    ["#06B6D4", "#3B82F6", "#99F6E4"]  // 4. Electric Cyan / Blue
+    ["#06B6D4", "#3B82F6", "#99F6E4"], // 4. Electric Cyan / Blue
   ];
-  
+
   return palettes[index];
 };
 
 // --- MANUEL DEĞİŞTİREBİLECEĞİNİZ İSTATİSTİKLER ---
 // Buradaki sayıları ve tarihi dilediğiniz gibi güncelleyebilirsiniz:
 const STATS_SCHNUPPERLEHREN = 25; // Schnupperlehren (Staj) Sayısı
-const STATS_BEWERBUNGEN = 96;      // Lehrstellenbewerbungen (Çıraklık Başvurusu) Sayısı
+const STATS_BEWERBUNGEN = 96; // Lehrstellenbewerbungen (Çıraklık Başvurusu) Sayısı
 const STATS_LETZTE_AKTUALISIERUNG = "19.06.2026"; // Son Güncelleme Tarihi
 // ------------------------------------------------
 
 const MainContent: React.FC = () => {
   const { t, language } = useLanguage();
   const [randomColorIndex, setRandomColorIndex] = useState<number>(-1);
-  const [selectedMatcher, setSelectedMatcher] = useState<'kaufmann' | 'elektro' | null>(null);
+  const [selectedMatcher, setSelectedMatcher] = useState<
+    "kaufmann" | "elektro" | null
+  >(null);
   const [docs, setDocs] = useState<any[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -93,18 +100,23 @@ const MainContent: React.FC = () => {
 
     let isMounted = true;
     const fetchDocuments = () => {
-      fetch('/api/documents', { cache: 'no-store' })
-        .then(res => {
+      fetch("/api/documents", { cache: "no-store" })
+        .then((res) => {
           if (res.ok) return res.json();
-          throw new Error('Failed to fetch documents');
+          throw new Error("Failed to fetch documents");
         })
-        .then(data => {
-          if (isMounted && data && data[language] && data[language].length > 0) {
+        .then((data) => {
+          if (
+            isMounted &&
+            data &&
+            data[language] &&
+            data[language].length > 0
+          ) {
             setDocs(data[language]);
           }
         })
-        .catch(err => {
-          console.warn('Fallback to static local document data:', err);
+        .catch((err) => {
+          console.warn("Fallback to static local document data:", err);
         });
     };
 
@@ -115,32 +127,30 @@ const MainContent: React.FC = () => {
     };
 
     const checkAdmin = () => {
-      if (typeof window !== 'undefined') {
-        setIsAdmin(localStorage.getItem('admin_unlocked') === 'true');
+      if (typeof window !== "undefined") {
+        setIsAdmin(localStorage.getItem("admin_unlocked") === "true");
       }
     };
     checkAdmin();
 
-    window.addEventListener('documents-updated', handleRefresh);
-    window.addEventListener('admin-state-changed', checkAdmin);
+    window.addEventListener("documents-updated", handleRefresh);
+    window.addEventListener("admin-state-changed", checkAdmin);
     return () => {
       isMounted = false;
-      window.removeEventListener('documents-updated', handleRefresh);
-      window.removeEventListener('admin-state-changed', checkAdmin);
+      window.removeEventListener("documents-updated", handleRefresh);
+      window.removeEventListener("admin-state-changed", checkAdmin);
     };
   }, [language]);
 
-
-
-  const handleMatcherClick = (type: 'kaufmann' | 'elektro') => {
+  const handleMatcherClick = (type: "kaufmann" | "elektro") => {
     const nextVal = selectedMatcher === type ? null : type;
     setSelectedMatcher(nextVal);
     if (nextVal) {
       // Smooth scroll to the experience section after a brief delay to allow rendering/expansion
       setTimeout(() => {
-        const el = document.getElementById('experience');
+        const el = document.getElementById("experience");
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       }, 150);
     }
@@ -148,85 +158,105 @@ const MainContent: React.FC = () => {
 
   const getMatcherStats = () => {
     if (!selectedMatcher) return { experienceCount: 0, skillCount: 0 };
-    
+
     // Count experiences
     const items = experienceItems[language] || [];
-    const workItems = items.filter(item => item.type === 'work' || !item.type);
-    
+    const workItems = items.filter(
+      (item) => item.type === "work" || !item.type,
+    );
+
     const matchesRole = (role: string) => {
       const r = role.toLowerCase();
-      if (selectedMatcher === 'kaufmann') {
+      if (selectedMatcher === "kaufmann") {
         return (
-          r.includes('kaufmann') ||
-          r.includes('kaufmännische') ||
-          r.includes('kv') ||
-          r.includes('treuhand') ||
-          r.includes('bank') ||
-          r.includes('schüler') ||
-          r.includes('sekundarschule') ||
-          r.includes('ticari') ||
-          r.includes('ticaret') ||
-          r.includes('bankacılık') ||
-          r.includes('ortaokulu') ||
-          r.includes('sekundar') ||
-          r.includes('commercial') ||
-          r.includes('banking') ||
-          r.includes('apprentice') ||
-          r.includes('school')
+          r.includes("kaufmann") ||
+          r.includes("kaufmännische") ||
+          r.includes("kv") ||
+          r.includes("treuhand") ||
+          r.includes("bank") ||
+          r.includes("schüler") ||
+          r.includes("sekundarschule") ||
+          r.includes("ticari") ||
+          r.includes("ticaret") ||
+          r.includes("bankacılık") ||
+          r.includes("ortaokulu") ||
+          r.includes("sekundar") ||
+          r.includes("commercial") ||
+          r.includes("banking") ||
+          r.includes("apprentice") ||
+          r.includes("school")
         );
       }
-      if (selectedMatcher === 'elektro') {
+      if (selectedMatcher === "elektro") {
         return (
-          r.includes('elektro') ||
-          r.includes('netzelektriker') ||
-          r.includes('schüler') ||
-          r.includes('sekundarschule') ||
-          r.includes('elektrik') ||
-          r.includes('ortaokulu') ||
-          r.includes('sekundar') ||
-          r.includes('electrical') ||
-          r.includes('installer') ||
-          r.includes('school')
+          r.includes("elektro") ||
+          r.includes("netzelektriker") ||
+          r.includes("schüler") ||
+          r.includes("sekundarschule") ||
+          r.includes("elektrik") ||
+          r.includes("ortaokulu") ||
+          r.includes("sekundar") ||
+          r.includes("electrical") ||
+          r.includes("installer") ||
+          r.includes("school")
         );
       }
       return true;
     };
-    
-    const experienceCount = workItems.filter(item => matchesRole(item.role)).length;
+
+    const experienceCount = workItems.filter((item) =>
+      matchesRole(item.role),
+    ).length;
 
     // Count skills
     const skillsList = [
-      'reliability', 'teamwork', 'helpfulness', 'learning', 'responsibility',
-      'geometry', 'math', 'german', 'turkish', 'english',
-      'word', 'excel', 'powerpoint', 'web', 'hardware',
-      'kung-fu', 'swim', 'cook', 'photography', 'media'
+      "reliability",
+      "teamwork",
+      "helpfulness",
+      "learning",
+      "responsibility",
+      "geometry",
+      "math",
+      "german",
+      "turkish",
+      "english",
+      "word",
+      "excel",
+      "powerpoint",
+      "web",
+      "hardware",
+      "kung-fu",
+      "swim",
+      "cook",
+      "photography",
+      "media",
     ];
 
     const matchesSkill = (skillId: string) => {
       const s = skillId.toLowerCase();
-      if (selectedMatcher === 'kaufmann') {
+      if (selectedMatcher === "kaufmann") {
         return [
-          'teamwork',
-          'helpfulness',
-          'responsibility',
-          'german',
-          'turkish',
-          'english',
-          'word',
-          'excel',
-          'powerpoint',
-          'media'
+          "teamwork",
+          "helpfulness",
+          "responsibility",
+          "german",
+          "turkish",
+          "english",
+          "word",
+          "excel",
+          "powerpoint",
+          "media",
         ].includes(s);
       }
-      if (selectedMatcher === 'elektro') {
+      if (selectedMatcher === "elektro") {
         return [
-          'reliability',
-          'learning',
-          'responsibility',
-          'geometry',
-          'math',
-          'hardware',
-          'kung-fu'
+          "reliability",
+          "learning",
+          "responsibility",
+          "geometry",
+          "math",
+          "hardware",
+          "kung-fu",
         ].includes(s);
       }
       return true;
@@ -238,20 +268,20 @@ const MainContent: React.FC = () => {
   };
 
   const stats = getMatcherStats();
-  
+
   const getBannerText = () => {
-    if (language === 'tr') {
+    if (language === "tr") {
       return `✨ ${stats.experienceCount} uygun staj ve ${stats.skillCount} yetenek aşağıda vurgulandı!`;
     }
-    if (language === 'en') {
+    if (language === "en") {
       return `✨ ${stats.experienceCount} matching apprenticeships and ${stats.skillCount} skills highlighted!`;
     }
     return `✨ ${stats.experienceCount} passende Schnupperlehren und ${stats.skillCount} Fähigkeiten hervorgehoben!`;
   };
 
   const getBannerLinkText = () => {
-    if (language === 'tr') return "Sonuçları Gör ↓";
-    if (language === 'en') return "View Results ↓";
+    if (language === "tr") return "Sonuçları Gör ↓";
+    if (language === "en") return "View Results ↓";
     return "Ergebnisse ansehen ↓";
   };
 
@@ -271,7 +301,10 @@ const MainContent: React.FC = () => {
       {/* Main Container */}
       <main className="flex-1 max-w-6xl w-full mx-auto px-6 py-12 md:py-20 space-y-16 md:space-y-20">
         {/* Hero Section */}
-        <section id="hero" className="min-h-[50vh] flex flex-col-reverse lg:flex-row items-center justify-between gap-12 relative pt-12 pb-0">
+        <section
+          id="hero"
+          className="min-h-[50vh] flex flex-col-reverse lg:flex-row items-center justify-between gap-12 relative pt-12 pb-0"
+        >
           <div className="max-w-3xl space-y-6 flex-1">
             <m.div
               initial={{ opacity: 0, y: 15 }}
@@ -286,7 +319,7 @@ const MainContent: React.FC = () => {
               <span>{t.hero.statusBadge}</span>
             </m.div>
 
-            <m.h1 
+            <m.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -295,7 +328,7 @@ const MainContent: React.FC = () => {
               {t.hero.greeting}
             </m.h1>
 
-            <m.h2 
+            <m.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -304,7 +337,7 @@ const MainContent: React.FC = () => {
               {t.hero.role}
             </m.h2>
 
-            <m.p 
+            <m.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
@@ -314,21 +347,21 @@ const MainContent: React.FC = () => {
             </m.p>
 
             {/* Hero CTAs */}
-            <m.div 
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-wrap items-center gap-4 pt-4"
             >
-              <a 
-                href="#contact" 
+              <a
+                href="#contact"
                 className="flex items-center gap-2 px-6 py-3.5 rounded-full bg-primary hover:opacity-90 text-white font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/35 transition-all duration-300 cursor-pointer group"
               >
                 {t.hero.emailMe}
                 <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
               </a>
 
-              <a 
+              <a
                 href="/assets/pdfs/ErenLebensL.pdf"
                 download
                 target="_blank"
@@ -340,10 +373,22 @@ const MainContent: React.FC = () => {
               </a>
 
               <div className="flex items-center gap-3 md:ml-2">
-                <a href="https://github.com/yigiterenaydin" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" className="p-3 rounded-full glass-card hover:border-[var(--muted)] text-[var(--text-body)] hover:text-[var(--text-main)] transition-all">
+                <a
+                  href="https://github.com/yigiterenaydin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub Profile"
+                  className="p-3 rounded-full glass-card hover:border-[var(--muted)] text-[var(--text-body)] hover:text-[var(--text-main)] transition-all"
+                >
                   <FiGithub className="text-xl" />
                 </a>
-                <a href="https://www.instagram.com/eren_zhhh/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile" className="p-3 rounded-full glass-card hover:border-[var(--muted)] text-[var(--text-body)] hover:text-[var(--text-main)] transition-all">
+                <a
+                  href="https://www.instagram.com/eren_zhhh/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram Profile"
+                  className="p-3 rounded-full glass-card hover:border-[var(--muted)] text-[var(--text-body)] hover:text-[var(--text-main)] transition-all"
+                >
                   <FiInstagram className="text-xl" />
                 </a>
               </div>
@@ -351,39 +396,50 @@ const MainContent: React.FC = () => {
           </div>
 
           {/* Right Column: Premium Photo Card */}
-          <m.div 
+          <m.div
             initial={{ opacity: 0, scale: 0.95, x: 20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex-shrink-0 z-10"
           >
-            <div 
+            <div
               tabIndex={0}
               className="group hover:saturate-100 focus:saturate-100 active:saturate-100 saturate-0 transition-[filter] duration-300 relative w-[300px] h-[380px] bg-[var(--badge-bg)] font-sans border-b-2 border-primary overflow-hidden shadow-2xl rounded-3xl outline-none cursor-pointer"
             >
-              <Image 
+              <Image
                 className="w-[300px] h-[300px] object-cover group-hover:rounded-br-[100px] group-focus:rounded-br-[100px] group-active:rounded-br-[100px] rounded-br-[0px] transition-[border-radius] duration-300"
-                src="/assets/bilder/eren-photo.png" 
+                src="/assets/bilder/eren-photo.png"
                 alt="Eren Aydın"
                 width={300}
                 height={300}
                 priority={true}
               />
-              <p className="m-[5px] text-[var(--text-main)] text-base font-bold">Eren Aydın</p>
-              <p className="m-[5px] text-[var(--text-muted)] text-xs">{t.hero.role}</p>
+              <p className="m-[5px] text-[var(--text-main)] text-base font-bold">
+                Eren Aydın
+              </p>
+              <p className="m-[5px] text-[var(--text-muted)] text-xs">
+                {t.hero.role}
+              </p>
               {/* SVG of Arrow */}
               <svg
                 className="group-hover:opacity-100 group-focus:opacity-100 group-active:opacity-100 opacity-0 transition-opacity duration-300 absolute right-[10px] bottom-[10px]"
-                xmlns="http://www.w3.org/2000/svg" width="45" height="64" viewBox="0 0 45 64" fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                width="45"
+                height="64"
+                viewBox="0 0 45 64"
+                fill="none"
               >
-                <path d="M5.67927 0.685928C5.66838 0.658706 5.65749 0.636925 5.65749 0.636925L3.81168 1.12696C5.55403 11.7281 0.588324 15.4905 0.375974 15.6484L1.49217 17.2056C1.69363 17.0641 5.49414 14.2654 6.03318 7.14353C9.0333 14.2545 13.0244 20.1731 17.1298 24.774C17.059 24.8774 16.9882 24.9754 16.9229 25.0789C14.3311 29.0645 14.0861 34.651 16.1933 41.6912C18.6271 49.8203 24.5239 57.748 32.3754 63.4434L33.5025 61.8916C25.9886 56.4358 20.3477 48.8729 18.0336 41.1358C16.1388 34.8089 16.2913 29.6526 18.4692 26.2114C21.7035 29.5927 24.9432 32.1518 27.7636 33.8288C33.8945 37.4659 38.2232 36.377 40.2541 35.4078C42.4919 34.3406 44.1254 32.375 44.414 30.4094C44.4575 30.1099 44.4793 29.805 44.4793 29.5001C44.4793 27.5509 43.5864 25.5853 41.9039 23.8756C38.4628 20.3691 32.713 18.7465 26.5276 19.5306C23.1518 19.9607 20.3695 21.2457 18.3603 23.2821C14.4455 18.8554 10.645 13.1655 7.77554 6.34314C9.95348 8.22706 13.2476 10.2199 18.1425 11.5266L18.638 9.67539C9.24565 7.16531 6.28364 1.94369 5.75005 0.838382C5.73371 0.783935 5.71193 0.729488 5.6956 0.669594L5.67382 0.669594L5.67927 0.685928ZM26.7672 21.4308C33.3555 20.5923 38.2014 22.8411 40.5372 25.215C42.0509 26.7559 42.7533 28.5037 42.5192 30.1317C42.3558 31.2425 41.3431 32.767 39.4319 33.6763C37.744 34.4822 34.1069 35.3642 28.7437 32.179C25.9886 30.5455 22.8197 28.03 19.6617 24.6923C21.7797 22.5035 24.6056 21.6976 26.7726 21.4254L26.7672 21.4308Z" fill="var(--primary)"/>
+                <path
+                  d="M5.67927 0.685928C5.66838 0.658706 5.65749 0.636925 5.65749 0.636925L3.81168 1.12696C5.55403 11.7281 0.588324 15.4905 0.375974 15.6484L1.49217 17.2056C1.69363 17.0641 5.49414 14.2654 6.03318 7.14353C9.0333 14.2545 13.0244 20.1731 17.1298 24.774C17.059 24.8774 16.9882 24.9754 16.9229 25.0789C14.3311 29.0645 14.0861 34.651 16.1933 41.6912C18.6271 49.8203 24.5239 57.748 32.3754 63.4434L33.5025 61.8916C25.9886 56.4358 20.3477 48.8729 18.0336 41.1358C16.1388 34.8089 16.2913 29.6526 18.4692 26.2114C21.7035 29.5927 24.9432 32.1518 27.7636 33.8288C33.8945 37.4659 38.2232 36.377 40.2541 35.4078C42.4919 34.3406 44.1254 32.375 44.414 30.4094C44.4575 30.1099 44.4793 29.805 44.4793 29.5001C44.4793 27.5509 43.5864 25.5853 41.9039 23.8756C38.4628 20.3691 32.713 18.7465 26.5276 19.5306C23.1518 19.9607 20.3695 21.2457 18.3603 23.2821C14.4455 18.8554 10.645 13.1655 7.77554 6.34314C9.95348 8.22706 13.2476 10.2199 18.1425 11.5266L18.638 9.67539C9.24565 7.16531 6.28364 1.94369 5.75005 0.838382C5.73371 0.783935 5.71193 0.729488 5.6956 0.669594L5.67382 0.669594L5.67927 0.685928ZM26.7672 21.4308C33.3555 20.5923 38.2014 22.8411 40.5372 25.215C42.0509 26.7559 42.7533 28.5037 42.5192 30.1317C42.3558 31.2425 41.3431 32.767 39.4319 33.6763C37.744 34.4822 34.1069 35.3642 28.7437 32.179C25.9886 30.5455 22.8197 28.03 19.6617 24.6923C21.7797 22.5035 24.6056 21.6976 26.7726 21.4254L26.7672 21.4308Z"
+                  fill="var(--primary)"
+                />
               </svg>
             </div>
           </m.div>
         </section>
 
         {/* Apprenticeship Matcher Section */}
-        <m.section 
+        <m.section
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -395,22 +451,22 @@ const MainContent: React.FC = () => {
             </h3>
             <div className="flex flex-wrap gap-3 justify-center items-center">
               <button
-                onClick={() => handleMatcherClick('kaufmann')}
+                onClick={() => handleMatcherClick("kaufmann")}
                 className={`px-5 py-3 rounded-2xl text-xs md:text-sm font-bold border transition-all duration-300 cursor-pointer flex items-center gap-2 ${
-                  selectedMatcher === 'kaufmann'
-                    ? 'bg-primary text-white border-primary shadow-md shadow-primary/25 scale-[1.02]'
-                    : 'bg-transparent text-[var(--text-body)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5'
+                  selectedMatcher === "kaufmann"
+                    ? "bg-primary text-white border-primary shadow-md shadow-primary/25 scale-[1.02]"
+                    : "bg-transparent text-[var(--text-body)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5"
                 }`}
               >
                 <FiBriefcase className="text-base" />
                 {t.matcher.kaufmann}
               </button>
               <button
-                onClick={() => handleMatcherClick('elektro')}
+                onClick={() => handleMatcherClick("elektro")}
                 className={`px-5 py-3 rounded-2xl text-xs md:text-sm font-bold border transition-all duration-300 cursor-pointer flex items-center gap-2 ${
-                  selectedMatcher === 'elektro'
-                    ? 'bg-primary text-white border-primary shadow-md shadow-primary/25 scale-[1.02]'
-                    : 'bg-transparent text-[var(--text-body)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5'
+                  selectedMatcher === "elektro"
+                    ? "bg-primary text-white border-primary shadow-md shadow-primary/25 scale-[1.02]"
+                    : "bg-transparent text-[var(--text-body)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5"
                 }`}
               >
                 <FiZap className="text-base" />
@@ -442,9 +498,12 @@ const MainContent: React.FC = () => {
                     </span>
                     <button
                       onClick={() => {
-                        const el = document.getElementById('experience');
+                        const el = document.getElementById("experience");
                         if (el) {
-                          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          el.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                          });
                         }
                       }}
                       className="px-3 py-1.5 rounded-xl bg-primary hover:opacity-90 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shadow-md shadow-primary/10 hover:shadow-primary/20 active:scale-95"
@@ -461,7 +520,7 @@ const MainContent: React.FC = () => {
         {/* About Me Section */}
         <section id="about" className="scroll-mt-24">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
-            <m.div 
+            <m.div
               whileHover={{ scale: 1.01 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="lg:col-span-7 glass-card p-6 md:p-8 rounded-3xl flex flex-col justify-center space-y-6 border border-[var(--glass-border)] hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 cursor-default"
@@ -469,8 +528,13 @@ const MainContent: React.FC = () => {
               <h2 className="text-3xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block mb-2">
                 {t.about.title}
               </h2>
-              <h4 className="text-xl font-bold text-[var(--text-main)]">{t.about.intro}</h4>
-              <p className="text-[var(--text-body)] text-base md:text-lg leading-relaxed whitespace-pre-line" dangerouslySetInnerHTML={{ __html: t.about.description }} />
+              <h4 className="text-xl font-bold text-[var(--text-main)]">
+                {t.about.intro}
+              </h4>
+              <p
+                className="text-[var(--text-body)] text-base md:text-lg leading-relaxed whitespace-pre-line"
+                dangerouslySetInnerHTML={{ __html: t.about.description }}
+              />
             </m.div>
 
             <div className="lg:col-span-5 glass-card p-6 md:p-8 rounded-3xl space-y-6 flex flex-col justify-between max-w-[360px] w-full lg:ml-auto mx-auto">
@@ -525,7 +589,9 @@ const MainContent: React.FC = () => {
             <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
               {t.documents.title}
             </h2>
-            <p className="text-[var(--text-muted)] text-sm md:text-base">{t.documents.subtitle}</p>
+            <p className="text-[var(--text-muted)] text-sm md:text-base">
+              {t.documents.subtitle}
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
@@ -534,58 +600,74 @@ const MainContent: React.FC = () => {
                 {
                   icon: "text-blue-500 dark:text-blue-400",
                   iconHoverBg: "group-hover:bg-blue-500 group-hover:text-white",
-                  button: "bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 border-blue-500/20",
-                  glow: "bg-blue-500/10"
+                  button:
+                    "bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 border-blue-500/20",
+                  glow: "bg-blue-500/10",
                 },
                 {
                   icon: "text-orange-500 dark:text-orange-400",
-                  iconHoverBg: "group-hover:bg-orange-500 group-hover:text-white",
-                  button: "bg-orange-500/10 hover:bg-orange-500/20 text-orange-600 dark:text-orange-400 border-orange-500/20",
-                  glow: "bg-orange-500/10"
+                  iconHoverBg:
+                    "group-hover:bg-orange-500 group-hover:text-white",
+                  button:
+                    "bg-orange-500/10 hover:bg-orange-500/20 text-orange-600 dark:text-orange-400 border-orange-500/20",
+                  glow: "bg-orange-500/10",
                 },
                 {
                   icon: "text-emerald-500 dark:text-emerald-400",
-                  iconHoverBg: "group-hover:bg-emerald-500 group-hover:text-white",
-                  button: "bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
-                  glow: "bg-emerald-500/10"
+                  iconHoverBg:
+                    "group-hover:bg-emerald-500 group-hover:text-white",
+                  button:
+                    "bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
+                  glow: "bg-emerald-500/10",
                 },
                 {
                   icon: "text-violet-500 dark:text-violet-400",
-                  iconHoverBg: "group-hover:bg-violet-500 group-hover:text-white",
-                  button: "bg-violet-500/10 hover:bg-violet-500/20 text-violet-600 dark:text-violet-400 border-violet-500/20",
-                  glow: "bg-violet-500/10"
+                  iconHoverBg:
+                    "group-hover:bg-violet-500 group-hover:text-white",
+                  button:
+                    "bg-violet-500/10 hover:bg-violet-500/20 text-violet-600 dark:text-violet-400 border-violet-500/20",
+                  glow: "bg-violet-500/10",
                 },
                 {
                   icon: "text-amber-500 dark:text-amber-400",
-                  iconHoverBg: "group-hover:bg-amber-500 group-hover:text-white",
-                  button: "bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/20",
-                  glow: "bg-amber-500/10"
+                  iconHoverBg:
+                    "group-hover:bg-amber-500 group-hover:text-white",
+                  button:
+                    "bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/20",
+                  glow: "bg-amber-500/10",
                 },
                 {
                   icon: "text-rose-500 dark:text-rose-400",
                   iconHoverBg: "group-hover:bg-rose-500 group-hover:text-white",
-                  button: "bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/20",
-                  glow: "bg-rose-500/10"
-                }
+                  button:
+                    "bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/20",
+                  glow: "bg-rose-500/10",
+                },
               ];
 
               return docs.map((doc, index) => {
                 const colors = docColors[index % docColors.length];
                 return (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className="glass-card p-5 rounded-2xl flex flex-col justify-between h-full relative group overflow-hidden"
                   >
-                    <div className={`absolute top-0 right-0 w-16 h-16 ${colors.glow} blur-xl rounded-full`} />
+                    <div
+                      className={`absolute top-0 right-0 w-16 h-16 ${colors.glow} blur-xl rounded-full`}
+                    />
                     <div className="flex items-start gap-4 mb-4">
-                      <div className={`p-3 glass-card rounded-xl ${colors.icon} ${colors.iconHoverBg} transition-all duration-300`}>
+                      <div
+                        className={`p-3 glass-card rounded-xl ${colors.icon} ${colors.iconHoverBg} transition-all duration-300`}
+                      >
                         <FiFileText className="text-xl" />
                       </div>
                       <div>
                         <h3 className="text-base font-bold text-[var(--text-main)] group-hover:text-[var(--text-main)] transition-colors">
                           {doc.term}
                         </h3>
-                        <p className="text-[var(--text-muted)] text-xs mt-0.5">{doc.date}</p>
+                        <p className="text-[var(--text-muted)] text-xs mt-0.5">
+                          {doc.date}
+                        </p>
                       </div>
                     </div>
 
@@ -641,9 +723,14 @@ const MainContent: React.FC = () => {
                     <div key={idx} className="space-y-2">
                       <div className="flex justify-between text-sm">
                         <span className="font-semibold text-[var(--text-body)]">
-                          {lang.name} <span className="text-[var(--text-muted)] font-normal">({lang.note})</span>
+                          {lang.name}{" "}
+                          <span className="text-[var(--text-muted)] font-normal">
+                            ({lang.note})
+                          </span>
                         </span>
-                        <span className="text-[var(--text-muted)] font-semibold">{lang.level}%</span>
+                        <span className="text-[var(--text-muted)] font-semibold">
+                          {lang.level}%
+                        </span>
                       </div>
                       <div className="h-2 w-full bg-[var(--background)] rounded-full overflow-hidden border border-[var(--glass-border)]">
                         {mounted && (
@@ -651,7 +738,11 @@ const MainContent: React.FC = () => {
                             initial={{ width: 0 }}
                             whileInView={{ width: `${lang.level}%` }}
                             viewport={{ once: true }}
-                            transition={{ duration: 1.2, ease: "easeOut", delay: idx * 0.1 }}
+                            transition={{
+                              duration: 1.2,
+                              ease: "easeOut",
+                              delay: idx * 0.1,
+                            }}
                             className="h-full rounded-full bg-gradient-to-r from-primary to-secondary"
                           />
                         )}
@@ -695,25 +786,38 @@ const MainContent: React.FC = () => {
               </h3>
               <div className="space-y-6 flex-1 flex flex-col justify-center">
                 {referencesData[language].map((ref, idx) => (
-                  <div 
+                  <div
                     key={idx}
                     className="p-5 glass-card rounded-2xl space-y-3 hover:border-cyan-500/30 transition-all duration-300"
                   >
                     <div>
-                      <h4 className="text-lg font-bold text-[var(--text-main)]">{ref.name}</h4>
-                      <p className="text-sm text-[var(--primary)] font-semibold">{ref.title}</p>
+                      <h4 className="text-lg font-bold text-[var(--text-main)]">
+                        {ref.name}
+                      </h4>
+                      <p className="text-sm text-[var(--primary)] font-semibold">
+                        {ref.title}
+                      </p>
                     </div>
                     <div className="space-y-1.5 text-sm text-[var(--text-body)]">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-semibold text-[var(--text-muted)]">Email:</span>
-                        <a href={`mailto:${ref.email}`} className="text-[var(--primary)] hover:underline break-all transition-colors">
+                        <span className="text-xs font-semibold text-[var(--text-muted)]">
+                          Email:
+                        </span>
+                        <a
+                          href={`mailto:${ref.email}`}
+                          className="text-[var(--primary)] hover:underline break-all transition-colors"
+                        >
                           {ref.email}
                         </a>
                       </div>
                       {ref.phone && (
                         <div className="flex items-center gap-2">
-                          <span className="text-xs font-semibold text-[var(--text-muted)]">Phone:</span>
-                          <span className="text-[var(--text-body)]">{ref.phone}</span>
+                          <span className="text-xs font-semibold text-[var(--text-muted)]">
+                            Phone:
+                          </span>
+                          <span className="text-[var(--text-body)]">
+                            {ref.phone}
+                          </span>
                         </div>
                       )}
                     </div>
@@ -728,10 +832,18 @@ const MainContent: React.FC = () => {
         <section id="guestbook" className="scroll-mt-24">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
-              {language === 'tr' ? 'Ziyaretçi Defteri' : language === 'de' ? 'Gästebuch' : 'Guestbook'}
+              {language === "tr"
+                ? "Ziyaretçi Defteri"
+                : language === "de"
+                  ? "Gästebuch"
+                  : "Guestbook"}
             </h2>
             <p className="text-[var(--text-muted)] text-sm md:text-base">
-              {language === 'tr' ? 'Bana bir mesaj, geri bildirim veya güzel bir söz bırakın!' : language === 'de' ? 'Hinterlassen Sie mir eine Nachricht, ein Feedback oder ein nettes Wort!' : 'Leave me a message, feedback, or just say hello!'}
+              {language === "tr"
+                ? "Bana bir mesaj, geri bildirim veya güzel bir söz bırakın!"
+                : language === "de"
+                  ? "Hinterlassen Sie mir eine Nachricht, ein Feedback oder ein nettes Wort!"
+                  : "Leave me a message, feedback, or just say hello!"}
             </p>
           </div>
           <Guestbook />
@@ -779,10 +891,10 @@ const PageLoader: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
   return (
     <m.div
       initial={{ opacity: 1 }}
-      exit={{ 
-        y: "-100%", 
+      exit={{
+        y: "-100%",
         opacity: 0,
-        transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } 
+        transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
       }}
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#09090b] text-white select-none overflow-hidden"
     >
@@ -792,13 +904,15 @@ const PageLoader: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
 
       <div className="w-full max-w-xs md:max-w-md px-6 flex flex-col space-y-6 relative z-10">
         {/* Name Logo */}
-        <m.div 
+        <m.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="flex flex-col items-start"
         >
-          <span className="text-[10px] uppercase tracking-[0.3em] text-zinc-500 font-bold mb-1">Portfolio</span>
+          <span className="text-[10px] uppercase tracking-[0.3em] text-zinc-500 font-bold mb-1">
+            Portfolio
+          </span>
           <h2 className="text-xl md:text-2xl font-black tracking-[0.25em] bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent font-sans font-logo">
             EREN AYDIN
           </h2>
@@ -806,23 +920,23 @@ const PageLoader: React.FC<{ onComplete: () => void }> = ({ onComplete }) => {
 
         {/* Monospace progress number */}
         <div className="flex items-baseline justify-between">
-          <m.span 
-            className="text-6xl md:text-8xl font-light font-mono tracking-tighter tabular-nums text-zinc-100"
-          >
-            {String(progress).padStart(3, '0')}
+          <m.span className="text-6xl md:text-8xl font-light font-mono tracking-tighter tabular-nums text-zinc-100">
+            {String(progress).padStart(3, "0")}
           </m.span>
-          <span className="text-xl md:text-2xl font-light text-zinc-500 font-mono">%</span>
+          <span className="text-xl md:text-2xl font-light text-zinc-500 font-mono">
+            %
+          </span>
         </div>
 
         {/* Progress Bar Container */}
         <div className="h-[2px] w-full bg-zinc-800/40 rounded-full overflow-hidden relative">
-          <m.div 
+          <m.div
             className="h-full bg-gradient-to-r from-primary via-secondary to-primary shadow-[0_0_8px_rgba(236,72,153,0.5)] rounded-full"
             style={{ width: `${progress}%` }}
             transition={{ type: "tween", ease: "easeOut" }}
           />
         </div>
-        
+
         {/* Subtext */}
         <div className="flex justify-between text-[8px] md:text-[9px] uppercase tracking-[0.2em] text-zinc-500 font-semibold">
           <span>Loading Experience</span>
@@ -837,13 +951,15 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const isLighthouse = navigator.userAgent.includes('Lighthouse') || navigator.userAgent.includes('Chrome-Lighthouse');
-      const hasVisited = sessionStorage.getItem('portfolio_visited') === 'true';
+    if (typeof window !== "undefined") {
+      const isLighthouse =
+        navigator.userAgent.includes("Lighthouse") ||
+        navigator.userAgent.includes("Chrome-Lighthouse");
+      const hasVisited = sessionStorage.getItem("portfolio_visited") === "true";
       if (isLighthouse || hasVisited) {
         setIsLoading(false);
       } else {
-        sessionStorage.setItem('portfolio_visited', 'true');
+        sessionStorage.setItem("portfolio_visited", "true");
       }
     }
   }, []);
@@ -855,16 +971,16 @@ export default function Home() {
           <PageLoader key="loader" onComplete={() => setIsLoading(false)} />
         )}
       </AnimatePresence>
-      
+
       <m.div
-        animate={{ 
+        animate={{
           opacity: isLoading ? 0 : 1,
-          y: isLoading ? 30 : 0
+          y: isLoading ? 30 : 0,
         }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        style={{ 
-          height: isLoading ? '100vh' : 'auto', 
-          overflow: isLoading ? 'hidden' : 'visible'
+        style={{
+          height: isLoading ? "100vh" : "auto",
+          overflow: isLoading ? "hidden" : "visible",
         }}
       >
         <MainContent />

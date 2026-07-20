@@ -5,24 +5,28 @@
 
 :root:not(.dark):not(.bw-mode) {
   /* Core Variables */
-  --background: #FFC72C;
+  --background: #ffc72c;
   --foreground: #000000;
   --card: rgba(255, 255, 255, 0.6);
   --card-border: rgba(255, 255, 255, 0.8);
   --primary: #000000;
   --primary-glow: rgba(0, 0, 0, 0.15);
-  --secondary: #B37D00;
+  --secondary: #b37d00;
   --secondary-glow: rgba(179, 125, 0, 0.15);
-  --accent: #FF6C02;
+  --accent: #ff6c02;
   --muted: #4d4d4d;
-  
+
   --text-main: #000000;
   --text-body: #1a1a1a;
   --text-muted: #333333;
-  
+
   /* Glassmorphism Variables for Yellow */
   --glass-bg: rgba(255, 199, 44, 0.85);
-  --glass-card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 100%);
+  --glass-card-bg: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
   --glass-border: rgba(255, 255, 255, 0.6);
   --grid-color: rgba(0, 0, 0, 0.04);
   --badge-bg: rgba(255, 255, 255, 0.5);
@@ -34,25 +38,43 @@
 
 /* Beautiful Gradient Backgrounds and Glass Cards for Yellow Theme */
 :root:not(.dark):not(.bw-mode) body {
-  background: radial-gradient(circle at top left, #FFD54F, #FFC72C 60%, #FFA000);
+  background: radial-gradient(
+    circle at top left,
+    #ffd54f,
+    #ffc72c 60%,
+    #ffa000
+  );
 }
 
 :root:not(.dark):not(.bw-mode) .glass-card {
-  box-shadow: 0 8px 32px 0 rgba(179, 125, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 8px 32px 0 rgba(179, 125, 0, 0.2),
+    inset 0 0 15px rgba(255, 255, 255, 0.4);
 }
 
 :root:not(.dark):not(.bw-mode) .glass-card:hover {
   border-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 15px 35px -10px rgba(179, 125, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 15px 35px -10px rgba(179, 125, 0, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.6);
 }
 
-:root:not(.dark):not(.bw-mode) .glass-card:not(.rounded-full):not(button):not(a)::before {
-  background: linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0));
+:root:not(.dark):not(.bw-mode)
+  .glass-card:not(.rounded-full):not(button):not(a)::before {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0)
+  );
 }
 
 /* Header Override */
 :root:not(.dark):not(.bw-mode) header.header-glass-gradient {
-  background: linear-gradient(to right, rgba(255, 213, 79, 0.95), rgba(255, 199, 44, 0.85)) !important;
+  background: linear-gradient(
+    to right,
+    rgba(255, 213, 79, 0.95),
+    rgba(255, 199, 44, 0.85)
+  ) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
   box-shadow: 0 4px 30px rgba(179, 125, 0, 0.1) !important;
 }
@@ -72,7 +94,9 @@
   color: #ffffff !important;
 }
 
-:root:not(.dark):not(.bw-mode) header.header-glass-gradient button:not(.bg-primary):not(.bw-switch-container button):not(.glass-card) {
+:root:not(.dark):not(.bw-mode)
+  header.header-glass-gradient
+  button:not(.bg-primary):not(.bw-switch-container button):not(.glass-card) {
   color: #000000 !important;
 }
 
@@ -84,7 +108,7 @@
 
 /* Footer Override */
 :root:not(.dark):not(.bw-mode) footer {
-  background: linear-gradient(to bottom, #FFC72C, #FFA000) !important;
+  background: linear-gradient(to bottom, #ffc72c, #ffa000) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.4) !important;
 }
 
@@ -105,12 +129,12 @@
 
 :root:not(.dark):not(.bw-mode) footer .rounded-full.bg-gradient-to-br {
   background: #000000 !important;
-  color: #FFC72C !important;
+  color: #ffc72c !important;
 }
 
 /* Mobile Drawer Override */
 :root:not(.dark):not(.bw-mode) .mobile-drawer {
-  background: linear-gradient(135deg, #FFC72C, #FFB300) !important;
+  background: linear-gradient(135deg, #ffc72c, #ffb300) !important;
   border-left: 1px solid rgba(255, 255, 255, 0.4) !important;
 }
 
@@ -130,7 +154,7 @@ html:not(.dark):not(.bw-mode) .skills-card-ascii {
 }
 
 html:not(.dark):not(.bw-mode) .skills-ascii-content {
-  color: #B37D00 !important;
+  color: #b37d00 !important;
   text-shadow: none !important;
 }
 
@@ -176,7 +200,12 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
 :root:not(.dark):not(.bw-mode) a.bg-primary:hover,
 :root:not(.dark):not(.bw-mode) button[type="submit"]:hover,
 :root:not(.dark):not(.bw-mode) .cb-btn:hover {
-  background: rgba(0, 0, 0, 0.1) !important; /* The slight orange/dark hover effect */
+  background: rgba(
+    0,
+    0,
+    0,
+    0.1
+  ) !important; /* The slight orange/dark hover effect */
   border-color: rgba(0, 0, 0, 0.3) !important;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1) !important;
   transform: translateY(-1px);
@@ -192,19 +221,23 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
 
 /* Theme specific Stat Cards */
 :root:not(.dark):not(.bw-mode) .stat-card-1 {
-  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.75)) !important;
-  color: #FFC72C !important;
+  background: linear-gradient(
+    to bottom right,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.75)
+  ) !important;
+  color: #ffc72c !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
 }
 :root:not(.dark):not(.bw-mode) .stat-card-1 .stat-number,
 :root:not(.dark):not(.bw-mode) .stat-card-1 .stat-label,
 :root:not(.dark):not(.bw-mode) .stat-card-1 .stat-desc {
-  color: #FFC72C !important;
+  color: #ffc72c !important;
 }
 
 :root:not(.dark):not(.bw-mode) .stat-card-2 {
-  background: linear-gradient(to bottom right, #E65C00, #B34700) !important;
+  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
   color: #ffffff !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   box-shadow: 0 10px 20px rgba(230, 92, 0, 0.2) !important;

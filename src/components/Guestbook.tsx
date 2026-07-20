@@ -1,9 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useLanguage } from '@/app/contexts/LanguageContext';
-import { motion as m, AnimatePresence } from 'framer-motion';
-import { FiMessageSquare, FiSend, FiUser, FiCalendar, FiCheck, FiLoader } from 'react-icons/fi';
+import React, { useState, useEffect } from "react";
+import { useLanguage } from "@/app/contexts/LanguageContext";
+import { motion as m, AnimatePresence } from "framer-motion";
+import {
+  FiMessageSquare,
+  FiSend,
+  FiUser,
+  FiCalendar,
+  FiCheck,
+  FiLoader,
+} from "react-icons/fi";
 
 interface GuestbookMessage {
   id: string;
@@ -15,27 +22,32 @@ interface GuestbookMessage {
 export const Guestbook: React.FC = () => {
   const { language } = useLanguage();
   const [messages, setMessages] = useState<GuestbookMessage[]>([]);
-  const [name, setName] = useState('');
-  const [message, setMessage] = useState('');
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
 
   // Captcha states
-  const [captcha, setCaptcha] = useState<{ text: string; expectedHash: string } | null>(null);
-  const [userCaptchaAnswer, setUserCaptchaAnswer] = useState('');
+  const [captcha, setCaptcha] = useState<{
+    text: string;
+    expectedHash: string;
+  } | null>(null);
+  const [userCaptchaAnswer, setUserCaptchaAnswer] = useState("");
   const [captchaError, setCaptchaError] = useState(false);
 
   const generateCaptcha = () => {
-    const operators = ['+', '-', '*'];
+    const operators = ["+", "-", "*"];
     const op = operators[Math.floor(Math.random() * operators.length)];
-    let n1 = 0, n2 = 0, ans = 0;
+    let n1 = 0,
+      n2 = 0,
+      ans = 0;
 
-    if (op === '+') {
+    if (op === "+") {
       n1 = Math.floor(Math.random() * 10) + 1;
       n2 = Math.floor(Math.random() * 10) + 1;
       ans = n1 + n2;
-    } else if (op === '-') {
+    } else if (op === "-") {
       n1 = Math.floor(Math.random() * 10) + 5;
       n2 = Math.floor(Math.random() * n1);
       ans = n1 - n2;
@@ -45,19 +57,20 @@ export const Guestbook: React.FC = () => {
       ans = n1 * n2;
     }
 
-    const opSymbol = op === '*' ? '×' : op;
+    const opSymbol = op === "*" ? "×" : op;
     const text = `${n1} ${opSymbol} ${n2} = ?`;
     const expectedHash = String(ans * 43 + 17);
 
     setCaptcha({ text, expectedHash });
-    setUserCaptchaAnswer('');
+    setUserCaptchaAnswer("");
     setCaptchaError(false);
   };
 
   const translations = {
     de: {
       title: "Gästebuch",
-      subtitle: "Hinterlassen Sie mir eine Nachricht, ein Feedback oder ein nettes Wort!",
+      subtitle:
+        "Hinterlassen Sie mir eine Nachricht, ein Feedback oder ein nettes Wort!",
       lblName: "Ihr Name *",
       lblMessage: "Ihre Nachricht *",
       btnSubmit: "Nachricht absenden",
@@ -68,9 +81,11 @@ export const Guestbook: React.FC = () => {
       errFields: "Bitte alle Felder ausfüllen.",
       captchaTitle: "Spamschutz-Sicherheitsfrage",
       captchaPlaceholder: "Ergebnis eingeben...",
-      captchaInstruction: "Geben Sie das mathematische Ergebnis ein, um Spam zu verhindern.",
-      captchaError: "Das Rechenergebnis ist falsch. Bitte versuchen Sie es erneut.",
-      errCaptcha: "Spamschutz-Antwort fehlt oder ist falsch."
+      captchaInstruction:
+        "Geben Sie das mathematische Ergebnis ein, um Spam zu verhindern.",
+      captchaError:
+        "Das Rechenergebnis ist falsch. Bitte versuchen Sie es erneut.",
+      errCaptcha: "Spamschutz-Antwort fehlt oder ist falsch.",
     },
     tr: {
       title: "Ziyaretçi Defteri",
@@ -85,9 +100,10 @@ export const Guestbook: React.FC = () => {
       errFields: "Lütfen tüm alanları doldurun.",
       captchaTitle: "Spam Koruması Güvenlik Sorusu",
       captchaPlaceholder: "Sonucu girin...",
-      captchaInstruction: "Spam mesajları engellemek için lütfen yukarıdaki işlemi yapın.",
+      captchaInstruction:
+        "Spam mesajları engellemek için lütfen yukarıdaki işlemi yapın.",
       captchaError: "İşlem sonucu yanlış, lütfen tekrar deneyin.",
-      errCaptcha: "Spam koruması cevabı eksik veya hatalı."
+      errCaptcha: "Spam koruması cevabı eksik veya hatalı.",
     },
     en: {
       title: "Guestbook",
@@ -102,23 +118,24 @@ export const Guestbook: React.FC = () => {
       errFields: "Please fill in all fields.",
       captchaTitle: "Anti-Spam Security Question",
       captchaPlaceholder: "Enter result...",
-      captchaInstruction: "Solve the math problem above to prevent automated spam.",
+      captchaInstruction:
+        "Solve the math problem above to prevent automated spam.",
       captchaError: "The math result is incorrect. Please try again.",
-      errCaptcha: "Spam protection answer is missing or incorrect."
-    }
+      errCaptcha: "Spam protection answer is missing or incorrect.",
+    },
   };
 
-  const t = translations[language as 'de' | 'tr' | 'en'] || translations.de;
+  const t = translations[language as "de" | "tr" | "en"] || translations.de;
 
   const fetchMessages = async () => {
     try {
-      const res = await fetch('/api/guestbook');
+      const res = await fetch("/api/guestbook");
       if (res.ok) {
         const data = await res.json();
         setMessages(data);
       }
     } catch (err) {
-      console.error('Error fetching guestbook:', err);
+      console.error("Error fetching guestbook:", err);
     }
   };
 
@@ -128,8 +145,8 @@ export const Guestbook: React.FC = () => {
 
     // Listen to updates from other pages
     const handleRefresh = () => fetchMessages();
-    window.addEventListener('guestbook-updated', handleRefresh);
-    return () => window.removeEventListener('guestbook-updated', handleRefresh);
+    window.addEventListener("guestbook-updated", handleRefresh);
+    return () => window.removeEventListener("guestbook-updated", handleRefresh);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -149,30 +166,30 @@ export const Guestbook: React.FC = () => {
     }
 
     setIsSubmitting(true);
-    setErrorMsg('');
+    setErrorMsg("");
     setSuccess(false);
 
     try {
-      const res = await fetch('/api/guestbook', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, message })
+      const res = await fetch("/api/guestbook", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, message }),
       });
 
       if (res.ok) {
         setSuccess(true);
-        setName('');
-        setMessage('');
+        setName("");
+        setMessage("");
         fetchMessages();
         generateCaptcha();
         setTimeout(() => setSuccess(false), 4000);
       } else {
         const errData = await res.json();
-        setErrorMsg(errData.error || 'Failed to submit.');
+        setErrorMsg(errData.error || "Failed to submit.");
         generateCaptcha();
       }
     } catch (err: any) {
-      setErrorMsg(err.message || 'Error occurred.');
+      setErrorMsg(err.message || "Error occurred.");
     } finally {
       setIsSubmitting(false);
     }
@@ -181,15 +198,18 @@ export const Guestbook: React.FC = () => {
   const formatDate = (isoString: string) => {
     try {
       const date = new Date(isoString);
-      return date.toLocaleDateString(language === 'tr' ? 'tr-TR' : language === 'de' ? 'de-CH' : 'en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
+      return date.toLocaleDateString(
+        language === "tr" ? "tr-TR" : language === "de" ? "de-CH" : "en-US",
+        {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        },
+      );
     } catch (e) {
-      return '';
+      return "";
     }
   };
 
@@ -208,7 +228,7 @@ export const Guestbook: React.FC = () => {
         </div>
 
         {success && (
-          <m.div 
+          <m.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold flex items-center gap-2"
@@ -226,7 +246,9 @@ export const Guestbook: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.lblName}</label>
+            <label className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">
+              {t.lblName}
+            </label>
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)]">
                 <FiUser className="text-sm" />
@@ -243,7 +265,9 @@ export const Guestbook: React.FC = () => {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">{t.lblMessage}</label>
+            <label className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">
+              {t.lblMessage}
+            </label>
             <textarea
               required
               rows={4}
@@ -306,7 +330,7 @@ export const Guestbook: React.FC = () => {
       <div className="lg:col-span-7 space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
         <AnimatePresence initial={false}>
           {messages.length === 0 ? (
-            <m.div 
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="p-8 text-center text-sm text-[var(--text-muted)] glass-card rounded-3xl border border-[var(--glass-border)]"
@@ -328,7 +352,9 @@ export const Guestbook: React.FC = () => {
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-primary font-black text-sm">
                       {msg.name.charAt(0).toUpperCase()}
                     </div>
-                    <span className="text-sm font-bold text-[var(--text-main)]">{msg.name}</span>
+                    <span className="text-sm font-bold text-[var(--text-main)]">
+                      {msg.name}
+                    </span>
                   </div>
                   <span className="text-[10px] text-[var(--text-muted)] flex items-center gap-1">
                     <FiCalendar />

@@ -95,7 +95,10 @@
 }
 
 /* Inactive buttons default state (white background with black text) */
-.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):not(.bw-switch-container *) {
+.bw-mode
+  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):not(
+    .bw-switch-container *
+  ) {
   color: #000000 !important;
   background: #ffffff !important;
   background-color: #ffffff !important;
@@ -103,14 +106,19 @@
 }
 
 /* Inactive buttons hover state (invert to black background, white text) */
-.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):not(.bw-switch-container *):hover {
+.bw-mode
+  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):not(
+    .bw-switch-container *
+  ):hover {
   color: #ffffff !important;
   background: #000000 !important;
   background-color: #000000 !important;
   border: 2px solid #000000 !important;
 }
 
-.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover * {
+.bw-mode
+  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
+  * {
   color: #ffffff !important;
 }
 
@@ -309,7 +317,9 @@
 .bw-mode main > *:not(#hero),
 .bw-mode footer,
 .bw-mode header .relative:not(.bw-switch-container):not(.bw-switch-container *),
-.bw-mode [style*="drawer"] .relative:not(.bw-switch-container):not(.bw-switch-container *) {
+.bw-mode
+  [style*="drawer"]
+  .relative:not(.bw-switch-container):not(.bw-switch-container *) {
   filter: grayscale(100%) !important;
 }
 
@@ -333,7 +343,9 @@
 .bw-mode .status-badge-core {
   background-color: #15803d !important;
   border: 1px solid #14532d !important;
-  box-shadow: 0 0 10px rgba(21, 128, 61, 0.6), 0 0 4px rgba(21, 128, 61, 0.4) !important;
+  box-shadow:
+    0 0 10px rgba(21, 128, 61, 0.6),
+    0 0 4px rgba(21, 128, 61, 0.4) !important;
 }
 
 .bw-mode .status-badge-pulse {
@@ -398,10 +410,22 @@
 .bw-mode button:hover span.p-3 *,
 .bw-mode button:hover span.rounded-2xl svg,
 .bw-mode button:hover span.p-3 svg,
-.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover span.rounded-2xl *,
-.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover span.p-3 *,
-.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover span.rounded-2xl svg,
-.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover span.p-3 svg {
+.bw-mode
+  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
+  span.rounded-2xl
+  *,
+.bw-mode
+  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
+  span.p-3
+  *,
+.bw-mode
+  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
+  span.rounded-2xl
+  svg,
+.bw-mode
+  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
+  span.p-3
+  svg {
   color: #000000 !important;
   stroke: #000000 !important;
 }
@@ -418,8 +442,14 @@
 .bw-mode button .rounded-full *,
 .bw-mode button:hover .rounded-full *,
 .bw-mode button:hover .rounded-full svg,
-.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover .rounded-full *,
-.bw-mode button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover .rounded-full svg {
+.bw-mode
+  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
+  .rounded-full
+  *,
+.bw-mode
+  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
+  .rounded-full
+  svg {
   color: #000000 !important;
   stroke: #000000 !important;
 }

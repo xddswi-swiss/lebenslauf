@@ -1,9 +1,9 @@
 "use client";
 
-import React from 'react';
-import { useLanguage } from '@/app/contexts/LanguageContext';
-import { motion as m } from 'framer-motion';
-import { FiUserCheck, FiBookOpen, FiMonitor, FiHeart } from 'react-icons/fi';
+import React from "react";
+import { useLanguage } from "@/app/contexts/LanguageContext";
+import { motion as m } from "framer-motion";
+import { FiUserCheck, FiBookOpen, FiMonitor, FiHeart } from "react-icons/fi";
 
 interface Skill {
   id: string;
@@ -12,48 +12,50 @@ interface Skill {
 }
 
 interface SkillCategory {
-  key: 'personal' | 'school' | 'digital' | 'hobbies';
+  key: "personal" | "school" | "digital" | "hobbies";
   icon: React.ReactNode;
 }
 
 interface SkillsGridProps {
-  selectedMatcher?: 'kaufmann' | 'elektro' | null;
+  selectedMatcher?: "kaufmann" | "elektro" | null;
 }
 
-export const SkillsGrid: React.FC<SkillsGridProps> = ({ selectedMatcher = null }) => {
+export const SkillsGrid: React.FC<SkillsGridProps> = ({
+  selectedMatcher = null,
+}) => {
   const { t } = useLanguage();
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
     setMounted(true);
   }, []);
-  
+
   const isSkillMatching = (skillId: string) => {
     if (!selectedMatcher) return true;
     const s = skillId.toLowerCase();
-    if (selectedMatcher === 'kaufmann') {
+    if (selectedMatcher === "kaufmann") {
       return [
-        'teamwork',
-        'helpfulness',
-        'responsibility',
-        'german',
-        'turkish',
-        'english',
-        'word',
-        'excel',
-        'powerpoint',
-        'media'
+        "teamwork",
+        "helpfulness",
+        "responsibility",
+        "german",
+        "turkish",
+        "english",
+        "word",
+        "excel",
+        "powerpoint",
+        "media",
       ].includes(s);
     }
-    if (selectedMatcher === 'elektro') {
+    if (selectedMatcher === "elektro") {
       return [
-        'reliability',
-        'learning',
-        'responsibility',
-        'geometry',
-        'math',
-        'hardware',
-        'kung-fu'
+        "reliability",
+        "learning",
+        "responsibility",
+        "geometry",
+        "math",
+        "hardware",
+        "kung-fu",
       ].includes(s);
     }
     return true;
@@ -61,21 +63,27 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({ selectedMatcher = null }
 
   const categories: SkillCategory[] = [
     {
-      key: 'personal',
-      icon: <FiUserCheck className="text-xl text-orange-700 dark:text-orange-400" />,
+      key: "personal",
+      icon: (
+        <FiUserCheck className="text-xl text-orange-700 dark:text-orange-400" />
+      ),
     },
     {
-      key: 'school',
+      key: "school",
       icon: <FiBookOpen className="text-xl text-navy-700 dark:text-navy-400" />,
     },
     {
-      key: 'digital',
-      icon: <FiMonitor className="text-xl text-green-700 dark:text-green-400" />,
+      key: "digital",
+      icon: (
+        <FiMonitor className="text-xl text-green-700 dark:text-green-400" />
+      ),
     },
     {
-      key: 'hobbies',
-      icon: <FiHeart className="text-xl text-orange-700 dark:text-orange-400" />,
-    }
+      key: "hobbies",
+      icon: (
+        <FiHeart className="text-xl text-orange-700 dark:text-orange-400" />
+      ),
+    },
   ];
 
   const containerVariants = {
@@ -83,14 +91,19 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({ selectedMatcher = null }
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, scale: 0.95, y: 15 },
-    show: { opacity: 1, scale: 1, y: 0, transition: { type: "spring" as const, stiffness: 100, damping: 15 } }
+    show: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { type: "spring" as const, stiffness: 100, damping: 15 },
+    },
   };
 
   return (
@@ -130,20 +143,23 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({ selectedMatcher = null }
               {t.skills.items[category.key].map((skill, index) => {
                 const matches = isSkillMatching(skill.id);
                 return (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className={`flex items-center justify-between gap-4 py-1.5 transition-all duration-500 ${
-                      selectedMatcher && !matches 
-                        ? 'opacity-20 scale-[0.98]' 
-                        : 'opacity-100'
+                      selectedMatcher && !matches
+                        ? "opacity-20 scale-[0.98]"
+                        : "opacity-100"
                     }`}
                   >
                     {/* Left: Skill Name */}
-                    <span className={`w-[45%] text-left text-xs md:text-sm font-semibold truncate transition-colors duration-300 ${
-                      selectedMatcher && matches 
-                        ? 'text-primary font-bold shadow-sm' 
-                        : 'text-[var(--text-body)]'
-                    }`} title={skill.name}>
+                    <span
+                      className={`w-[45%] text-left text-xs md:text-sm font-semibold truncate transition-colors duration-300 ${
+                        selectedMatcher && matches
+                          ? "text-primary font-bold shadow-sm"
+                          : "text-[var(--text-body)]"
+                      }`}
+                      title={skill.name}
+                    >
                       {skill.name}
                     </span>
 
@@ -155,12 +171,19 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({ selectedMatcher = null }
                             initial={{ width: 0 }}
                             whileInView={{ width: `${skill.level}%` }}
                             viewport={{ once: true }}
-                            transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
+                            transition={{
+                              duration: 1,
+                              ease: "easeOut",
+                              delay: 0.1,
+                            }}
                             className={`h-full rounded-full bg-gradient-to-r ${
-                              category.key === 'personal' ? 'from-orange-600 to-orange-400' :
-                              category.key === 'school' ? 'from-navy-700 to-navy-500' :
-                              category.key === 'digital' ? 'from-green-600 to-green-400' :
-                              'from-orange-600 to-navy-600'
+                              category.key === "personal"
+                                ? "from-orange-600 to-orange-400"
+                                : category.key === "school"
+                                  ? "from-navy-700 to-navy-500"
+                                  : category.key === "digital"
+                                    ? "from-green-600 to-green-400"
+                                    : "from-orange-600 to-navy-600"
                             }`}
                           />
                         )}

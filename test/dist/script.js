@@ -4,126 +4,148 @@ import {
   getEdgeIdsForGridId,
   getPointID,
   hash,
-  smoothstep
+  smoothstep,
 } from "https://codepen.io/shubniggurath/pen/OPyPdmm.js";
 
 console.clear();
 
-let fullCode = '';
+let fullCode = "";
 
-const w = Math.min(400, window.innerWidth - 100), h = Math.min(400, window.innerHeight - 100);
+const w = Math.min(400, window.innerWidth - 100),
+  h = Math.min(400, window.innerHeight - 100);
 const CONFIG = {
   awidth: w,
   aheight: h,
-  gridW: Math.min(50, Math.floor(w/10)), // arbitrary something something
-  gridH: Math.min(50, Math.floor(w/5)),
-  gravity: .2,
-  damping: .99,
+  gridW: Math.min(50, Math.floor(w / 10)), // arbitrary something something
+  gridH: Math.min(50, Math.floor(w / 5)),
+  gravity: 0.2,
+  damping: 0.99,
   iterationsPerFrame: 5,
-  compressFactor: .02,
+  compressFactor: 0.02,
   stretchFactor: 1.1,
   mouseSize: 5000,
   mouseStrength: 4,
   contain: false,
   randomSolve: false,
-  preset: ''
+  preset: "",
 };
-CONFIG.cellWidth = CONFIG.awidth/(CONFIG.gridW-1)
-CONFIG.cellHeight = CONFIG.aheight/(CONFIG.gridH-1);
+CONFIG.cellWidth = CONFIG.awidth / (CONFIG.gridW - 1);
+CONFIG.cellHeight = CONFIG.aheight / (CONFIG.gridH - 1);
 
-window.addEventListener('resize', () => {
-  if(c && c.width) {
+window.addEventListener("resize", () => {
+  if (c && c.width) {
     c.width = window.innerWidth;
     c.height = window.innerHeight;
     CONFIG.awidth = Math.min(CONFIG.width, c.width - 100);
     CONFIG.aheight = Math.min(CONFIG.height, c.height - 100);
-    CONFIG.cellWidth = CONFIG.awidth/(CONFIG.gridW-1)
-    CONFIG.cellHeight = CONFIG.aheight/(CONFIG.gridH-1);
+    CONFIG.cellWidth = CONFIG.awidth / (CONFIG.gridW - 1);
+    CONFIG.cellHeight = CONFIG.aheight / (CONFIG.gridH - 1);
   }
-})
+});
 
 let rafID, input, c;
 function main() {
   fullCode = main.toString();
-  const { awidth: width, aheight: height, gridW, gridH, gravity, damping, iterationsPerFrame, compressFactor, stretchFactor, cellWidth, cellHeight } = CONFIG;
-  
+  const {
+    awidth: width,
+    aheight: height,
+    gridW,
+    gridH,
+    gravity,
+    damping,
+    iterationsPerFrame,
+    compressFactor,
+    stretchFactor,
+    cellWidth,
+    cellHeight,
+  } = CONFIG;
+
   const charCanvases = {};
   const fontSize = Math.max(12, cellHeight * 1.2);
   for (const ch of new Set(fullCode)) {
-    if (ch === ' ') continue;
-    const off = document.createElement('canvas');
+    if (ch === " ") continue;
+    const off = document.createElement("canvas");
     off.width = off.height = Math.ceil(fontSize * 1.4);
-    const octx = off.getContext('2d');
+    const octx = off.getContext("2d");
     octx.font = `bold ${fontSize}px monospace`;
-    octx.textAlign = 'center';
-    octx.textBaseline = 'middle';
-    octx.fillStyle = '#333';
+    octx.textAlign = "center";
+    octx.textBaseline = "middle";
+    octx.fillStyle = "#333";
     octx.fillText(ch, off.width / 2, off.height / 2);
     charCanvases[ch] = off;
   }
-  
-  c = document.createElement('canvas');
-  container.innerHTML = '';
+
+  c = document.createElement("canvas");
+  container.innerHTML = "";
   container.appendChild(c);
   c.width = window.innerWidth;
   c.height = window.innerHeight;
-  const ctx = c.getContext('2d');
-  
+  const ctx = c.getContext("2d");
+
   const particles = [];
-  const constraints = [], verticalConstraints = [], horizontalConstraints = [];
+  const constraints = [],
+    verticalConstraints = [],
+    horizontalConstraints = [];
   const pinnedParticles = [];
-  
+
   input = new Input({ c, particles });
-  
-  for(let i=0;i<gridW;i++) {
-    for(let j=0;j<gridH;j++) {
-      let x = i*cellWidth;
-      let y = j*cellHeight;
-      
+
+  for (let i = 0; i < gridW; i++) {
+    for (let j = 0; j < gridH; j++) {
+      let x = i * cellWidth;
+      let y = j * cellHeight;
+
       const id = getPointID(j, i, gridH);
       const pinned = j === 0;
-      
-      const charIndex = (i + j * gridW) % fullCode.length;
-      const char = fullCode[charIndex] || ' ';
 
-      const particle = new Particle({ x, y, pinned, id, char })
+      const charIndex = (i + j * gridW) % fullCode.length;
+      const char = fullCode[charIndex] || " ";
+
+      const particle = new Particle({ x, y, pinned, id, char });
       particles.push(particle);
-      if(pinned) pinnedParticles.push(particle);
+      if (pinned) pinnedParticles.push(particle);
     }
   }
-  
-  for(let i=0;i<gridW;i++) {
-    for(let j=0;j<gridH;j++) {
+
+  for (let i = 0; i < gridW; i++) {
+    for (let j = 0; j < gridH; j++) {
       const id = getPointID(j, i, gridH);
       const p = particles[id];
 
-      if(j<gridH-1) {
-        const bottomP = particles[getPointID(j+1, i, gridH)];
-        const c = new Constraint({p1: p, p2: bottomP, length: cellHeight, id: id+gridW*gridH, compressFactor, stretchFactor});
+      if (j < gridH - 1) {
+        const bottomP = particles[getPointID(j + 1, i, gridH)];
+        const c = new Constraint({
+          p1: p,
+          p2: bottomP,
+          length: cellHeight,
+          id: id + gridW * gridH,
+          compressFactor,
+          stretchFactor,
+        });
         constraints.push(c);
         p.downConstraint = c; // Cache the down ref directly on the particle
       }
-      if(i<gridW-1) {
-        const rightP = particles[getPointID(j, i+1, gridH)];
-        
+      if (i < gridW - 1) {
+        const rightP = particles[getPointID(j, i + 1, gridH)];
+
         const hc = new Constraint({
-          p1: p, 
-          p2: rightP, 
-          length: cellWidth, 
-          id: id+gridW*gridH*2, 
+          p1: p,
+          p2: rightP,
+          length: cellWidth,
+          id: id + gridW * gridH * 2,
           compressFactor: 0.6,
           stretchFactor: 4,
-          isSpacer: true
+          isSpacer: true,
         });
-        
+
         constraints.push(hc);
         horizontalConstraints.push(hc);
       }
     }
   }
-  
+
   function drawParticles() {
-    particles.forEach(p => {
+    particles.forEach((p) => {
       ctx.beginPath();
       ctx.arc(...p.pos, CONFIG.pointRadius, 0, Math.PI * 2);
       ctx.fill();
@@ -132,17 +154,18 @@ function main() {
   }
 
   function drawCode() {
-    const offset = [c.width/2-width/2,c.height/2-height/2 - 30];
-    particles.forEach(p => {
+    const offset = [c.width / 2 - width / 2, c.height / 2 - height / 2 - 30];
+    particles.forEach((p) => {
       if (p.char && p.char !== " ") {
         const constraint = p.downConstraint;
         let angle = 0;
-        
+
         const img = charCanvases[p.char];
         if (!img) return;
         const half = img.width / 2;
-        
-        let cos = 1, sin = 0;
+
+        let cos = 1,
+          sin = 0;
 
         if (constraint) {
           const dx = constraint.p2.pos.x - constraint.p1.pos.x;
@@ -156,7 +179,14 @@ function main() {
         // if (angle !== 0) ctx.rotate(angle);
         // const cos = Math.cos(angle);
         // const sin = Math.sin(angle);
-        ctx.setTransform(cos, sin, -sin, cos, p.pos.x+offset[0], p.pos.y+offset[1]);
+        ctx.setTransform(
+          cos,
+          sin,
+          -sin,
+          cos,
+          p.pos.x + offset[0],
+          p.pos.y + offset[1],
+        );
 
         // ctx.fillText(p.char, 0, 0);
         ctx.drawImage(img, -half, -half);
@@ -167,34 +197,34 @@ function main() {
     });
     // ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
-  
+
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
   }
-  
+
   let lastDelta = 0;
   function runloop(delta) {
     rafID = requestAnimationFrame(runloop);
-    
+
     ctx.save();
-    ctx.clearRect(0,0,c.width,c.height);
+    ctx.clearRect(0, 0, c.width, c.height);
     // ctx.translate(c.width/2-width/2,c.height/2-height/2);
-    
-    particles.forEach(p=>p.update(delta-lastDelta));
+
+    particles.forEach((p) => p.update(delta - lastDelta));
     lastDelta = delta;
-    
-    if(CONFIG.randomSolve) shuffleArray(constraints)
-    for(let i=0;i<iterationsPerFrame;i++) {
-      for(let j=0;j<constraints.length;j++) constraints[j].solve();
+
+    if (CONFIG.randomSolve) shuffleArray(constraints);
+    for (let i = 0; i < iterationsPerFrame; i++) {
+      for (let j = 0; j < constraints.length; j++) constraints[j].solve();
     }
-    
-    if(CONFIG.contain) particles.forEach(p=>p.contain());
-    
+
+    if (CONFIG.contain) particles.forEach((p) => p.contain());
+
     drawCode();
-    
+
     ctx.restore();
   }
   rafID = requestAnimationFrame(runloop);
@@ -202,16 +232,16 @@ function main() {
 
 class Input {
   constructor({ c, particles }) {
-    this.c = c, this.particles = particles;
+    ((this.c = c), (this.particles = particles));
     this.mousePos = new Vec2();
     this.grabRadius = 20;
     this.grabbed;
-    this.bind()
+    this.bind();
   }
   pointerdown(e) {
     const rect = this.rect;
-    this.mousePos.x = e.clientX - c.width/2 + CONFIG.awidth/2;
-    this.mousePos.y = e.clientY - c.height/2 + CONFIG.aheight/2;
+    this.mousePos.x = e.clientX - c.width / 2 + CONFIG.awidth / 2;
+    this.mousePos.y = e.clientY - c.height / 2 + CONFIG.aheight / 2;
 
     for (const p of this.particles) {
       if (this.mousePos.subtractNew(p.pos).length < this.grabRadius) {
@@ -221,8 +251,8 @@ class Input {
         break;
       }
     }
-    if(!this.grabbedParticle) {
-      this.pointerIsDown = true
+    if (!this.grabbedParticle) {
+      this.pointerIsDown = true;
     }
   }
   pointerup(e) {
@@ -230,30 +260,32 @@ class Input {
       this.grabbedParticle.pinned = this.grabbedParticle.originalPinnedState;
       this.grabbedParticle = null;
     }
-    clearTimeout(this.pointerUpTimer)
+    clearTimeout(this.pointerUpTimer);
     this.pointerUpTimer = setTimeout(() => {
-      this.pointerIsDown = false
-    }, 1000)
+      this.pointerIsDown = false;
+    }, 1000);
   }
   pointermove(e) {
     const rect = this.rect;
-    this.mousePos.x = e.clientX - c.width/2 + CONFIG.awidth/2;
-    this.mousePos.y = e.clientY - c.height/2 + CONFIG.aheight/2;
+    this.mousePos.x = e.clientX - c.width / 2 + CONFIG.awidth / 2;
+    this.mousePos.y = e.clientY - c.height / 2 + CONFIG.aheight / 2;
 
     if (this.grabbedParticle) {
       this.grabbedParticle.pos.reset(this.mousePos.x, this.mousePos.y);
-      this.grabbedParticle.oldPos.reset(this.mousePos.x, this.mousePos.y); 
+      this.grabbedParticle.oldPos.reset(this.mousePos.x, this.mousePos.y);
     }
-      for (const p of this.particles) {
-        const diff = this.mousePos.subtractNew(p.pos);
-        const ls = diff.lengthSquared
-        if(ls < CONFIG.mouseSize) {
-          const a = diff.angle-Math.PI;
-          const strength = smoothstep(CONFIG.mouseSize, -2000, ls)*CONFIG.mouseStrength/300;
-          
-          const force = new Vec2(Math.cos(a)*strength, Math.sin(a)*strength);
-          p.applyForce(force)
-        }
+    for (const p of this.particles) {
+      const diff = this.mousePos.subtractNew(p.pos);
+      const ls = diff.lengthSquared;
+      if (ls < CONFIG.mouseSize) {
+        const a = diff.angle - Math.PI;
+        const strength =
+          (smoothstep(CONFIG.mouseSize, -2000, ls) * CONFIG.mouseStrength) /
+          300;
+
+        const force = new Vec2(Math.cos(a) * strength, Math.sin(a) * strength);
+        p.applyForce(force);
+      }
     }
   }
   contextmenu(e) {
@@ -261,35 +293,35 @@ class Input {
   }
   get rect() {
     const rect = this.c.getBoundingClientRect();
-    rect.scale = rect.width/this.c.width;
+    rect.scale = rect.width / this.c.width;
     return rect;
   }
   bind() {
-    this.pointerdown=this.pointerdown.bind(this)
-    this.pointerup=this.pointerup.bind(this)
-    this.pointermove=this.pointermove.bind(this)
-    this.contextmenu=this.contextmenu.bind(this)
-    document.addEventListener('pointerdown', this.pointerdown)
-    document.addEventListener('pointerup', this.pointerup)
-    document.addEventListener('pointermove', this.pointermove)
-    document.addEventListener('contextmenu', this.contextmenu)
+    this.pointerdown = this.pointerdown.bind(this);
+    this.pointerup = this.pointerup.bind(this);
+    this.pointermove = this.pointermove.bind(this);
+    this.contextmenu = this.contextmenu.bind(this);
+    document.addEventListener("pointerdown", this.pointerdown);
+    document.addEventListener("pointerup", this.pointerup);
+    document.addEventListener("pointermove", this.pointermove);
+    document.addEventListener("contextmenu", this.contextmenu);
   }
   unbind() {
-    document.removeEventListener('pointerdown', this.pointerdown)
-    document.removeEventListener('pointerup', this.pointerup)
-    document.removeEventListener('pointermove', this.pointermove)
-    document.removeEventListener('contextmenu', this.contextmenu)
+    document.removeEventListener("pointerdown", this.pointerdown);
+    document.removeEventListener("pointerup", this.pointerup);
+    document.removeEventListener("pointermove", this.pointermove);
+    document.removeEventListener("contextmenu", this.contextmenu);
   }
 }
 
 class Vec2 {
-  constructor(x=0, y=0) {
-    this.reset(x,y)
+  constructor(x = 0, y = 0) {
+    this.reset(x, y);
   }
   zero() {
-    this.reset(0,0)
+    this.reset(0, 0);
   }
-  reset(x=0, y=0) {
+  reset(x = 0, y = 0) {
     this.x = x;
     this.y = y;
   }
@@ -328,12 +360,12 @@ class Vec2 {
   scaleNew(scalar) {
     return this.clone().scale(scalar);
   }
-  
+
   get array() {
     return [this.x, this.y];
   }
   get lengthSquared() {
-    return this.x**2 + this.y**2;
+    return this.x ** 2 + this.y ** 2;
   }
   get length() {
     return Math.hypot(this.x, this.y);
@@ -341,28 +373,28 @@ class Vec2 {
   get angle() {
     return Math.atan2(this.y, this.x);
   }
-  
+
   [Symbol.iterator]() {
     let values = this.array;
     let i = 0;
     return {
       next() {
-        if(i < values.length) {
+        if (i < values.length) {
           let value = values[i];
           i++;
-          return { value, done: false }
-        } else return { done: true }
-      }
-    }
+          return { value, done: false };
+        } else return { done: true };
+      },
+    };
   }
 }
 
 class Particle {
   // Added 'char' to the constructor
-  constructor({x, y, pinned, id, char}={}) {
+  constructor({ x, y, pinned, id, char } = {}) {
     this.pos = new Vec2(x, y);
     this.oldPos = new Vec2(x, y);
-    this.velocity = new Vec2()
+    this.velocity = new Vec2();
     this.acceleration = new Vec2();
     this.pinned = pinned;
     this.id = id;
@@ -370,9 +402,9 @@ class Particle {
     this.gravityVec = new Vec2();
   }
   contain() {
-    if(this.pinned) return;
+    if (this.pinned) return;
     const radius = 5;
-    
+
     if (this.pos.x < radius) {
       this.pos.x = radius;
       this.oldPos.x = this.pos.x + Math.abs(this.oldPos.x - this.pos.x) * 0.8;
@@ -381,34 +413,34 @@ class Particle {
       this.oldPos.x = this.pos.x - Math.abs(this.oldPos.x - this.pos.x) * 0.8;
     }
     if (this.pos.y < radius) {
-        this.pos.y = radius;
-        this.oldPos.y = this.pos.y + Math.abs(this.oldPos.y - this.pos.y) * 0.8;
+      this.pos.y = radius;
+      this.oldPos.y = this.pos.y + Math.abs(this.oldPos.y - this.pos.y) * 0.8;
     } else if (this.pos.y > CONFIG.aheight - radius) {
-        this.pos.y = CONFIG.aheight - radius;
-        this.oldPos.y = this.pos.y - Math.abs(this.oldPos.y - this.pos.y) * 0.8;
+      this.pos.y = CONFIG.aheight - radius;
+      this.oldPos.y = this.pos.y - Math.abs(this.oldPos.y - this.pos.y) * 0.8;
     }
   }
   update(delta) {
-    if(this.pinned) {
+    if (this.pinned) {
       this.acceleration.zero();
       return;
     }
-    
+
     this.velocity.reset(
       (this.pos.x - this.oldPos.x) * CONFIG.damping,
-      (this.pos.y - this.oldPos.y) * CONFIG.damping
+      (this.pos.y - this.oldPos.y) * CONFIG.damping,
     );
-    
+
     this.oldPos.reset(...this.pos);
-    
-    const dd = delta**2;
-    this.gravityVec.reset(0,CONFIG.gravity/dd)
-    
-    this.applyForce(this.gravityVec)
-    
+
+    const dd = delta ** 2;
+    this.gravityVec.reset(0, CONFIG.gravity / dd);
+
+    this.applyForce(this.gravityVec);
+
     this.pos.x += this.velocity.x + this.acceleration.x * dd;
     this.pos.y += this.velocity.y + this.acceleration.y * dd;
-    
+
     this.acceleration.reset();
   }
   applyForce(v) {
@@ -417,17 +449,21 @@ class Particle {
 }
 
 class Constraint {
-  constructor({p1, p2, length, id, compressFactor, stretchFactor}) {
+  constructor({ p1, p2, length, id, compressFactor, stretchFactor }) {
     this.p1 = p1;
     this.p2 = p2;
     this.length = length;
-    this.id=id;
+    this.id = id;
     this.minLength = length * compressFactor;
     this.maxLength = length * stretchFactor;
-    
+
     c.addEventListener("update", (e) => {
-this.minLength = this.length * (this.isSpacer ? compressFactor : e.detail.compressFactor);
-      this.maxLength = this.length * (this.isSpacer ? stretchFactor : e.detail.stretchFactor);    })
+      this.minLength =
+        this.length *
+        (this.isSpacer ? compressFactor : e.detail.compressFactor);
+      this.maxLength =
+        this.length * (this.isSpacer ? stretchFactor : e.detail.stretchFactor);
+    });
   }
   solve() {
     // Inline the vector math to avoid thrash

@@ -27,7 +27,8 @@ const syne = Syne({
 
 export const metadata: Metadata = {
   title: "Eren Aydin | Portfolio",
-  description: "Persönliches Profil, schulische Unterlagen, Erfahrungen, Sprachkenntnisse und Projekte von Eren Aydin aus Zürich.",
+  description:
+    "Persönliches Profil, schulische Unterlagen, Erfahrungen, Sprachkenntnisse und Projekte von Eren Aydin aus Zürich.",
 };
 
 export const viewport: Viewport = {
@@ -50,9 +51,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <ThemeInitializer />
         <ThemeProvider>
-          <LanguageProvider>
-            {children}
-          </LanguageProvider>
+          <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

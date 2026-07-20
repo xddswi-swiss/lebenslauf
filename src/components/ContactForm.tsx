@@ -1,45 +1,57 @@
 "use client";
 
-import React, { useState } from 'react';
-import { useLanguage } from '@/app/contexts/LanguageContext';
-import { motion as m, AnimatePresence } from 'framer-motion';
-import { FiSend, FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
+import React, { useState } from "react";
+import { useLanguage } from "@/app/contexts/LanguageContext";
+import { motion as m, AnimatePresence } from "framer-motion";
+import { FiSend, FiCheckCircle, FiAlertCircle } from "react-icons/fi";
 
 export const ContactForm: React.FC = () => {
   const { t } = useLanguage();
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "success" | "error"
+  >("idle");
 
   // Captcha states
-  const [captcha, setCaptcha] = useState<{ text: string; expectedHash: string } | null>(null);
-  const [userCaptchaAnswer, setUserCaptchaAnswer] = useState('');
+  const [captcha, setCaptcha] = useState<{
+    text: string;
+    expectedHash: string;
+  } | null>(null);
+  const [userCaptchaAnswer, setUserCaptchaAnswer] = useState("");
   const [captchaError, setCaptchaError] = useState(false);
 
   const generateCaptcha = () => {
-    const operators = ['+', '-', '*'];
+    const operators = ["+", "-", "*"];
     const op = operators[Math.floor(Math.random() * operators.length)];
-    let n1 = 0, n2 = 0, ans = 0;
+    let n1 = 0,
+      n2 = 0,
+      ans = 0;
 
-    if (op === '+') {
+    if (op === "+") {
       n1 = Math.floor(Math.random() * 10) + 1; // 1-10
       n2 = Math.floor(Math.random() * 10) + 1; // 1-10
       ans = n1 + n2;
-    } else if (op === '-') {
+    } else if (op === "-") {
       n1 = Math.floor(Math.random() * 10) + 5; // 5-15
-      n2 = Math.floor(Math.random() * n1);     // 0 to n1 (ensures positive result)
+      n2 = Math.floor(Math.random() * n1); // 0 to n1 (ensures positive result)
       ans = n1 - n2;
-    } else { // '*'
+    } else {
+      // '*'
       n1 = Math.floor(Math.random() * 8) + 2; // 2-9
       n2 = Math.floor(Math.random() * 8) + 2; // 2-9
       ans = n1 * n2;
     }
 
-    const opSymbol = op === '*' ? '×' : op;
+    const opSymbol = op === "*" ? "×" : op;
     const text = `${n1} ${opSymbol} ${n2} = ?`;
     const expectedHash = String(ans * 43 + 17);
 
     setCaptcha({ text, expectedHash });
-    setUserCaptchaAnswer('');
+    setUserCaptchaAnswer("");
     setCaptchaError(false);
   };
 
@@ -47,7 +59,9 @@ export const ContactForm: React.FC = () => {
     generateCaptcha();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -63,38 +77,38 @@ export const ContactForm: React.FC = () => {
       return;
     }
 
-    setStatus('sending');
+    setStatus("sending");
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
+      const response = await fetch("/api/contact", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           ...formData,
           mathAnswer: userCaptchaAnswer,
-          mathHash: captcha.expectedHash
+          mathHash: captcha.expectedHash,
         }),
       });
 
       if (response.ok) {
         const result = await response.json();
         if (result.success) {
-          setStatus('success');
-          setFormData({ name: '', email: '', message: '' });
+          setStatus("success");
+          setFormData({ name: "", email: "", message: "" });
           generateCaptcha();
         } else {
-          setStatus('error');
+          setStatus("error");
           generateCaptcha();
         }
       } else {
-        setStatus('error');
+        setStatus("error");
         generateCaptcha();
       }
     } catch (err) {
-      console.error('Contact form submission error:', err);
-      setStatus('error');
+      console.error("Contact form submission error:", err);
+      setStatus("error");
       generateCaptcha();
     }
   };
@@ -116,7 +130,10 @@ export const ContactForm: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-[var(--text-body)] mb-2">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-[var(--text-body)] mb-2"
+            >
               {t.contact.name}
             </label>
             <input
@@ -126,13 +143,16 @@ export const ContactForm: React.FC = () => {
               required
               value={formData.name}
               onChange={handleChange}
-              disabled={status === 'sending'}
+              disabled={status === "sending"}
               className="w-full px-4 py-3 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-[var(--text-body)] mb-2">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-[var(--text-body)] mb-2"
+            >
               {t.contact.email}
             </label>
             <input
@@ -142,13 +162,16 @@ export const ContactForm: React.FC = () => {
               required
               value={formData.email}
               onChange={handleChange}
-              disabled={status === 'sending'}
+              disabled={status === "sending"}
               className="w-full px-4 py-3 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
             />
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-sm font-medium text-[var(--text-body)] mb-2">
+            <label
+              htmlFor="message"
+              className="block text-sm font-medium text-[var(--text-body)] mb-2"
+            >
               {t.contact.message}
             </label>
             <textarea
@@ -158,7 +181,7 @@ export const ContactForm: React.FC = () => {
               required
               value={formData.message}
               onChange={handleChange}
-              disabled={status === 'sending'}
+              disabled={status === "sending"}
               className="w-full px-4 py-3 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50 resize-none"
             />
           </div>
@@ -183,7 +206,7 @@ export const ContactForm: React.FC = () => {
                 setUserCaptchaAnswer(e.target.value);
                 setCaptchaError(false);
               }}
-              disabled={status === 'sending'}
+              disabled={status === "sending"}
               className="w-full px-4 py-3 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
             />
             {captchaError && (
@@ -198,14 +221,30 @@ export const ContactForm: React.FC = () => {
 
           <button
             type="submit"
-            disabled={status === 'sending'}
+            disabled={status === "sending"}
             className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-primary hover:opacity-90 disabled:opacity-50 text-white font-semibold rounded-2xl transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-primary/30 cursor-pointer disabled:cursor-not-allowed"
           >
-            {status === 'sending' ? (
+            {status === "sending" ? (
               <>
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                <svg
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
                 </svg>
                 {t.contact.sending}
               </>
@@ -219,7 +258,7 @@ export const ContactForm: React.FC = () => {
         </form>
 
         <AnimatePresence>
-          {status === 'success' && (
+          {status === "success" && (
             <m.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -231,7 +270,7 @@ export const ContactForm: React.FC = () => {
             </m.div>
           )}
 
-          {status === 'error' && (
+          {status === "error" && (
             <m.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}

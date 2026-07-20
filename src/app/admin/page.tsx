@@ -1,22 +1,32 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { useLanguage } from '../contexts/LanguageContext';
-import { AdminExperienceForm } from '@/components/AdminExperienceForm';
-import { AdminDocumentForm } from '@/components/AdminDocumentForm';
-import { AdminGuestbookTab } from '@/components/AdminGuestbookTab';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
-import { ScrollToTopButton } from '@/components/ScrollToTopButton';
-import { FiArrowLeft, FiLock, FiUnlock, FiAlertCircle, FiChevronRight, FiBriefcase, FiLogOut, FiFileText, FiMessageSquare } from 'react-icons/fi';
-import Link from 'next/link';
+import React, { useState, useEffect } from "react";
+import { useLanguage } from "../contexts/LanguageContext";
+import { AdminExperienceForm } from "@/components/AdminExperienceForm";
+import { AdminDocumentForm } from "@/components/AdminDocumentForm";
+import { AdminGuestbookTab } from "@/components/AdminGuestbookTab";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { ScrollToTopButton } from "@/components/ScrollToTopButton";
+import {
+  FiArrowLeft,
+  FiLock,
+  FiUnlock,
+  FiAlertCircle,
+  FiChevronRight,
+  FiBriefcase,
+  FiLogOut,
+  FiFileText,
+  FiMessageSquare,
+} from "react-icons/fi";
+import Link from "next/link";
 
 export default function AdminPage() {
   const { language } = useLanguage();
   const [isUnlocked, setIsUnlocked] = useState(false);
-  const [passcode, setPasscode] = useState('');
-  const [passcodeError, setPasscodeError] = useState('');
-  const [activeTab, setActiveTab] = useState('experiences');
+  const [passcode, setPasscode] = useState("");
+  const [passcodeError, setPasscodeError] = useState("");
+  const [activeTab, setActiveTab] = useState("experiences");
 
   const adminTranslations = {
     de: {
@@ -32,7 +42,7 @@ export default function AdminPage() {
       menuTitle: "Menü / Sektionen",
       tabExperiences: "Neue Schnupperlehre",
       tabDocuments: "Bewerbungsunterlagen",
-      tabGuestbook: "Ziyaretçi Defteri (Gästebuch)"
+      tabGuestbook: "Ziyaretçi Defteri (Gästebuch)",
     },
     tr: {
       back: "Ana Sayfaya Dön",
@@ -47,7 +57,7 @@ export default function AdminPage() {
       menuTitle: "Menü / Bölümler",
       tabExperiences: "Yeni Deneyim Ekle",
       tabDocuments: "Başvuru Belgeleri",
-      tabGuestbook: "Ziyaretçi Defteri"
+      tabGuestbook: "Ziyaretçi Defteri",
     },
     en: {
       back: "Back to Home",
@@ -62,34 +72,36 @@ export default function AdminPage() {
       menuTitle: "Menu / Sections",
       tabExperiences: "Add New Experience",
       tabDocuments: "Application Docs",
-      tabGuestbook: "Guestbook Entries"
-    }
+      tabGuestbook: "Guestbook Entries",
+    },
   };
 
-  const activeT = adminTranslations[language as 'de' | 'tr' | 'en'] || adminTranslations.de;
+  const activeT =
+    adminTranslations[language as "de" | "tr" | "en"] || adminTranslations.de;
 
   useEffect(() => {
     const checkAdmin = () => {
-      if (typeof window !== 'undefined') {
-        const isUnlockedLocally = localStorage.getItem('admin_unlocked') === 'true';
+      if (typeof window !== "undefined") {
+        const isUnlockedLocally =
+          localStorage.getItem("admin_unlocked") === "true";
         setIsUnlocked(isUnlockedLocally);
       }
     };
     checkAdmin();
-    window.addEventListener('admin-state-changed', checkAdmin);
+    window.addEventListener("admin-state-changed", checkAdmin);
     return () => {
-      window.removeEventListener('admin-state-changed', checkAdmin);
+      window.removeEventListener("admin-state-changed", checkAdmin);
     };
   }, []);
 
   const handlePasscodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (passcode === 'eren2026') {
+    if (passcode === "eren2026") {
       setIsUnlocked(true);
-      setPasscodeError('');
-      localStorage.setItem('admin_unlocked', 'true');
-      localStorage.setItem('admin_passcode', passcode);
-      window.dispatchEvent(new Event('admin-state-changed'));
+      setPasscodeError("");
+      localStorage.setItem("admin_unlocked", "true");
+      localStorage.setItem("admin_passcode", passcode);
+      window.dispatchEvent(new Event("admin-state-changed"));
     } else {
       setPasscodeError(activeT.passError);
     }
@@ -97,10 +109,10 @@ export default function AdminPage() {
 
   const handleLogout = () => {
     setIsUnlocked(false);
-    setPasscode('');
-    localStorage.removeItem('admin_unlocked');
-    localStorage.removeItem('admin_passcode');
-    window.dispatchEvent(new Event('admin-state-changed'));
+    setPasscode("");
+    localStorage.removeItem("admin_unlocked");
+    localStorage.removeItem("admin_passcode");
+    window.dispatchEvent(new Event("admin-state-changed"));
   };
 
   return (
@@ -137,13 +149,20 @@ export default function AdminPage() {
           /* Locked State - Centralized Login Card */
           <div className="max-w-md mx-auto my-12 glass-card rounded-3xl p-8 border border-[var(--glass-border)] bg-[var(--glass-card-bg)] shadow-2xl relative overflow-hidden">
             <div className="absolute -top-10 -right-10 w-24 h-24 bg-primary/10 rounded-full blur-xl pointer-events-none" />
-            <form onSubmit={handlePasscodeSubmit} className="text-center space-y-6">
+            <form
+              onSubmit={handlePasscodeSubmit}
+              className="text-center space-y-6"
+            >
               <div className="mx-auto w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary shadow-inner">
                 <FiLock className="text-2xl" />
               </div>
               <div className="space-y-2">
-                <h2 className="text-xl font-bold text-[var(--text-main)]">{activeT.passTitle}</h2>
-                <p className="text-xs text-[var(--text-muted)]">{activeT.passDesc}</p>
+                <h2 className="text-xl font-bold text-[var(--text-main)]">
+                  {activeT.passTitle}
+                </h2>
+                <p className="text-xs text-[var(--text-muted)]">
+                  {activeT.passDesc}
+                </p>
               </div>
 
               <div className="space-y-4">
@@ -188,65 +207,71 @@ export default function AdminPage() {
                 </h3>
                 <div className="space-y-2">
                   <button
-                    onClick={() => setActiveTab('experiences')}
+                    onClick={() => setActiveTab("experiences")}
                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all cursor-pointer ${
-                      activeTab === 'experiences'
-                        ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]'
-                        : 'hover:bg-zinc-800/10 text-[var(--text-body)]'
+                      activeTab === "experiences"
+                        ? "bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]"
+                        : "hover:bg-zinc-800/10 text-[var(--text-body)]"
                     }`}
                   >
                     <span className="flex items-center gap-2.5">
                       <FiBriefcase className="text-base" />
                       <span>{activeT.tabExperiences}</span>
                     </span>
-                    <FiChevronRight className={`text-base transition-transform ${activeTab === 'experiences' ? 'rotate-90' : ''}`} />
+                    <FiChevronRight
+                      className={`text-base transition-transform ${activeTab === "experiences" ? "rotate-90" : ""}`}
+                    />
                   </button>
 
-                   <button
-                    onClick={() => setActiveTab('documents')}
+                  <button
+                    onClick={() => setActiveTab("documents")}
                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all cursor-pointer ${
-                      activeTab === 'documents'
-                        ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]'
-                        : 'hover:bg-zinc-800/10 text-[var(--text-body)]'
+                      activeTab === "documents"
+                        ? "bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]"
+                        : "hover:bg-zinc-800/10 text-[var(--text-body)]"
                     }`}
                   >
                     <span className="flex items-center gap-2.5">
                       <FiFileText className="text-base" />
                       <span>{activeT.tabDocuments}</span>
                     </span>
-                    <FiChevronRight className={`text-base transition-transform ${activeTab === 'documents' ? 'rotate-90' : ''}`} />
+                    <FiChevronRight
+                      className={`text-base transition-transform ${activeTab === "documents" ? "rotate-90" : ""}`}
+                    />
                   </button>
 
                   <button
-                    onClick={() => setActiveTab('guestbook')}
+                    onClick={() => setActiveTab("guestbook")}
                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all cursor-pointer ${
-                      activeTab === 'guestbook'
-                        ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]'
-                        : 'hover:bg-zinc-800/10 text-[var(--text-body)]'
+                      activeTab === "guestbook"
+                        ? "bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]"
+                        : "hover:bg-zinc-800/10 text-[var(--text-body)]"
                     }`}
                   >
                     <span className="flex items-center gap-2.5">
                       <FiMessageSquare className="text-base" />
                       <span>{activeT.tabGuestbook}</span>
                     </span>
-                    <FiChevronRight className={`text-base transition-transform ${activeTab === 'guestbook' ? 'rotate-90' : ''}`} />
+                    <FiChevronRight
+                      className={`text-base transition-transform ${activeTab === "guestbook" ? "rotate-90" : ""}`}
+                    />
                   </button>
                 </div>
               </div>
 
               {/* Right Content Area */}
               <div className="lg:col-span-8 glass-card rounded-3xl p-6 md:p-8 border border-[var(--glass-border)] bg-[var(--glass-card-bg)] min-h-[450px]">
-                {activeTab === 'experiences' && (
+                {activeTab === "experiences" && (
                   <div className="space-y-6 animate-fade-in">
                     <AdminExperienceForm forceOpen={true} />
                   </div>
                 )}
-                {activeTab === 'documents' && (
+                {activeTab === "documents" && (
                   <div className="space-y-6 animate-fade-in">
                     <AdminDocumentForm />
                   </div>
                 )}
-                {activeTab === 'guestbook' && (
+                {activeTab === "guestbook" && (
                   <div className="space-y-6 animate-fade-in">
                     <AdminGuestbookTab />
                   </div>

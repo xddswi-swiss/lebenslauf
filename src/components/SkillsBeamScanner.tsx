@@ -1,8 +1,18 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from 'react';
-import { useLanguage } from '@/app/contexts/LanguageContext';
-import { FiUserCheck, FiBookOpen, FiMonitor, FiHeart, FiPlay, FiPause, FiRefreshCw, FiChevronsRight, FiChevronsDown } from 'react-icons/fi';
+import React, { useRef, useEffect, useState } from "react";
+import { useLanguage } from "@/app/contexts/LanguageContext";
+import {
+  FiUserCheck,
+  FiBookOpen,
+  FiMonitor,
+  FiHeart,
+  FiPlay,
+  FiPause,
+  FiRefreshCw,
+  FiChevronsRight,
+  FiChevronsDown,
+} from "react-icons/fi";
 
 interface Skill {
   id: string;
@@ -11,7 +21,7 @@ interface Skill {
 }
 
 interface SkillsBeamScannerProps {
-  selectedMatcher?: 'kaufmann' | 'elektro' | null;
+  selectedMatcher?: "kaufmann" | "elektro" | null;
 }
 
 // ----------------------------------------------------------------------
@@ -50,15 +60,19 @@ class ParticleScanner {
   lightBarY: number = 0;
   lightBarLength: number = 0; // width of horizontal laser on mobile (= card width)
 
-  constructor(canvas: HTMLCanvasElement, isVertical: boolean = false, cardWidth: number = 0) {
+  constructor(
+    canvas: HTMLCanvasElement,
+    isVertical: boolean = false,
+    cardWidth: number = 0,
+  ) {
     this.canvas = canvas;
-    this.ctx = canvas.getContext('2d')!;
+    this.ctx = canvas.getContext("2d")!;
     this.isVertical = isVertical;
     this.w = canvas.offsetWidth;
     this.h = canvas.offsetHeight;
     this.lightBarX = this.w / 2;
     // Lower laser to 80% of height on mobile so content is fully visible
-    this.lightBarY = this.isVertical ? (this.h * 0.8) : (this.h / 2);
+    this.lightBarY = this.isVertical ? this.h * 0.8 : this.h / 2;
     this.lightBarLength = cardWidth > 0 ? cardWidth : this.w;
 
     this.setupCanvas();
@@ -75,7 +89,12 @@ class ParticleScanner {
     this.ctx.clearRect(0, 0, this.w, this.h);
   }
 
-  onResize(width: number, height: number, cardWidth: number = 0, isVertical?: boolean) {
+  onResize(
+    width: number,
+    height: number,
+    cardWidth: number = 0,
+    isVertical?: boolean,
+  ) {
     this.w = width;
     this.h = height;
     if (isVertical !== undefined) {
@@ -83,20 +102,20 @@ class ParticleScanner {
     }
     this.lightBarX = this.w / 2;
     // Lower laser to 80% of height on mobile so content is fully visible
-    this.lightBarY = this.isVertical ? (this.h * 0.8) : (this.h / 2);
+    this.lightBarY = this.isVertical ? this.h * 0.8 : this.h / 2;
     if (cardWidth > 0) this.lightBarLength = cardWidth;
     this.setupCanvas();
   }
 
   createGradientCache() {
-    this.gradientCanvas = document.createElement('canvas');
+    this.gradientCanvas = document.createElement("canvas");
     this.gradientCanvas.width = 16;
     this.gradientCanvas.height = 16;
-    const ctx = this.gradientCanvas.getContext('2d')!;
+    const ctx = this.gradientCanvas.getContext("2d")!;
     const half = this.gradientCanvas.width / 2;
 
-    const isBw = document.documentElement.classList.contains('bw-mode');
-    const isDark = document.documentElement.classList.contains('dark');
+    const isBw = document.documentElement.classList.contains("bw-mode");
+    const isDark = document.documentElement.classList.contains("dark");
 
     let c1, c2, c3;
     if (isBw) {
@@ -117,7 +136,7 @@ class ParticleScanner {
     gradient.addColorStop(0, c1);
     gradient.addColorStop(0.3, c2);
     gradient.addColorStop(0.7, c3);
-    gradient.addColorStop(1, 'transparent');
+    gradient.addColorStop(1, "transparent");
 
     ctx.fillStyle = gradient;
     ctx.beginPath();
@@ -138,40 +157,47 @@ class ParticleScanner {
     const intensityRatio = this.intensity / this.baseIntensity;
     const speedMultiplier = 1 + (intensityRatio - 1) * 1.2;
     const sizeMultiplier = 1 + (intensityRatio - 1) * 0.7;
-    const barLen = Math.min(this.lightBarLength, this.isVertical ? this.w : this.h);
+    const barLen = Math.min(
+      this.lightBarLength,
+      this.isVertical ? this.w : this.h,
+    );
     const barStart = (this.isVertical ? this.w : this.h) / 2 - barLen / 2;
     const barEnd = barStart + barLen;
 
     if (this.isVertical) {
-       return {
-         x: this.randomFloat(barStart, barEnd),
-         y: this.lightBarY + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2),
-         vx: this.randomFloat(-0.18, 0.18) * speedMultiplier,
-         vy: this.randomFloat(0.3, 1.2) * speedMultiplier,
-         radius: this.randomFloat(0.5, 1.2) * sizeMultiplier,
-         alpha: this.randomFloat(0.6, 1),
-         decay: this.randomFloat(0.008, 0.035) * (2 - intensityRatio * 0.5),
-         originalAlpha: 0,
-         life: 1.0,
-         time: 0,
-         twinkleSpeed: this.randomFloat(0.02, 0.08) * speedMultiplier,
-         twinkleAmount: this.randomFloat(0.1, 0.25)
-       };
+      return {
+        x: this.randomFloat(barStart, barEnd),
+        y:
+          this.lightBarY +
+          this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2),
+        vx: this.randomFloat(-0.18, 0.18) * speedMultiplier,
+        vy: this.randomFloat(0.3, 1.2) * speedMultiplier,
+        radius: this.randomFloat(0.5, 1.2) * sizeMultiplier,
+        alpha: this.randomFloat(0.6, 1),
+        decay: this.randomFloat(0.008, 0.035) * (2 - intensityRatio * 0.5),
+        originalAlpha: 0,
+        life: 1.0,
+        time: 0,
+        twinkleSpeed: this.randomFloat(0.02, 0.08) * speedMultiplier,
+        twinkleAmount: this.randomFloat(0.1, 0.25),
+      };
     } else {
-       return {
-         x: this.lightBarX + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2),
-         y: this.randomFloat(barStart, barEnd),
-         vx: this.randomFloat(0.3, 1.2) * speedMultiplier,
-         vy: this.randomFloat(-0.18, 0.18) * speedMultiplier,
-         radius: this.randomFloat(0.5, 1.2) * sizeMultiplier,
-         alpha: this.randomFloat(0.6, 1),
-         decay: this.randomFloat(0.008, 0.035) * (2 - intensityRatio * 0.5),
-         originalAlpha: 0,
-         life: 1.0,
-         time: 0,
-         twinkleSpeed: this.randomFloat(0.02, 0.08) * speedMultiplier,
-         twinkleAmount: this.randomFloat(0.1, 0.25)
-       };
+      return {
+        x:
+          this.lightBarX +
+          this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2),
+        y: this.randomFloat(barStart, barEnd),
+        vx: this.randomFloat(0.3, 1.2) * speedMultiplier,
+        vy: this.randomFloat(-0.18, 0.18) * speedMultiplier,
+        radius: this.randomFloat(0.5, 1.2) * sizeMultiplier,
+        alpha: this.randomFloat(0.6, 1),
+        decay: this.randomFloat(0.008, 0.035) * (2 - intensityRatio * 0.5),
+        originalAlpha: 0,
+        life: 1.0,
+        time: 0,
+        twinkleSpeed: this.randomFloat(0.02, 0.08) * speedMultiplier,
+        twinkleAmount: this.randomFloat(0.1, 0.25),
+      };
     }
   }
 
@@ -191,7 +217,9 @@ class ParticleScanner {
     p.y += p.vy;
     p.time++;
 
-    p.alpha = p.originalAlpha * p.life + Math.sin(p.time * p.twinkleSpeed) * p.twinkleAmount;
+    p.alpha =
+      p.originalAlpha * p.life +
+      Math.sin(p.time * p.twinkleSpeed) * p.twinkleAmount;
     p.life -= p.decay;
 
     if (this.isVertical) {
@@ -206,16 +234,23 @@ class ParticleScanner {
   }
 
   resetParticle(p: any) {
-    const barLen = Math.min(this.lightBarLength, this.isVertical ? this.w : this.h);
+    const barLen = Math.min(
+      this.lightBarLength,
+      this.isVertical ? this.w : this.h,
+    );
     const barStart = (this.isVertical ? this.w : this.h) / 2 - barLen / 2;
     const barEnd = barStart + barLen;
     if (this.isVertical) {
       p.x = this.randomFloat(barStart, barEnd);
-      p.y = this.lightBarY + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2);
+      p.y =
+        this.lightBarY +
+        this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2);
       p.vx = this.randomFloat(-0.18, 0.18);
       p.vy = this.randomFloat(0.3, 1.2);
     } else {
-      p.x = this.lightBarX + this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2);
+      p.x =
+        this.lightBarX +
+        this.randomFloat(-this.lightBarWidth / 2, this.lightBarWidth / 2);
       p.y = this.randomFloat(barStart, barEnd);
       p.vx = this.randomFloat(0.3, 1.2);
       p.vy = this.randomFloat(-0.18, 0.18);
@@ -251,19 +286,20 @@ class ParticleScanner {
       p.x - p.radius,
       p.y - p.radius,
       p.radius * 2,
-      p.radius * 2
+      p.radius * 2,
     );
   }
 
   drawLightBar() {
-    const isBw = document.documentElement.classList.contains('bw-mode');
-    const isDark = document.documentElement.classList.contains('dark');
+    const isBw = document.documentElement.classList.contains("bw-mode");
+    const isDark = document.documentElement.classList.contains("dark");
     const colorPrimary = isDark ? "0, 220, 255" : "234, 179, 8";
     const colorSecondary = isDark ? "170, 245, 255" : "253, 224, 71";
 
-    this.ctx.globalCompositeOperation = 'lighter';
+    this.ctx.globalCompositeOperation = "lighter";
     const targetGlowIntensity = this.scanningActive ? 3.5 : 1;
-    this.currentGlowIntensity += (targetGlowIntensity - this.currentGlowIntensity) * this.transitionSpeed;
+    this.currentGlowIntensity +=
+      (targetGlowIntensity - this.currentGlowIntensity) * this.transitionSpeed;
     const glowIntensity = this.currentGlowIntensity;
     const glow1Alpha = this.scanningActive ? 1.0 : 0.8;
     const glow2Alpha = this.scanningActive ? 0.8 : 0.6;
@@ -277,55 +313,92 @@ class ParticleScanner {
       const fadePx = 28; // px fade at each end
 
       if (isBw) {
-        this.ctx.globalCompositeOperation = 'source-over';
+        this.ctx.globalCompositeOperation = "source-over";
         this.ctx.globalAlpha = 1;
         this.ctx.fillStyle = "#000000";
-        this.ctx.fillRect(barStartX, this.lightBarY - lineWidth / 2, barLen, lineWidth);
+        this.ctx.fillRect(
+          barStartX,
+          this.lightBarY - lineWidth / 2,
+          barLen,
+          lineWidth,
+        );
         return;
       }
 
       // Fade mask: fade left and right edges of the bar only
       const hFade = this.ctx.createLinearGradient(barStartX, 0, barEndX, 0);
-      hFade.addColorStop(0, 'rgba(255,255,255,0)');
-      hFade.addColorStop(Math.min(fadePx / barLen, 0.3), 'rgba(255,255,255,1)');
-      hFade.addColorStop(Math.max(1 - fadePx / barLen, 0.7), 'rgba(255,255,255,1)');
-      hFade.addColorStop(1, 'rgba(255,255,255,0)');
+      hFade.addColorStop(0, "rgba(255,255,255,0)");
+      hFade.addColorStop(Math.min(fadePx / barLen, 0.3), "rgba(255,255,255,1)");
+      hFade.addColorStop(
+        Math.max(1 - fadePx / barLen, 0.7),
+        "rgba(255,255,255,1)",
+      );
+      hFade.addColorStop(1, "rgba(255,255,255,0)");
 
       // Core line (horizontal, card width only)
-      const coreG = this.ctx.createLinearGradient(0, this.lightBarY - lineWidth / 2, 0, this.lightBarY + lineWidth / 2);
-      coreG.addColorStop(0, 'rgba(255,255,255,0)');
+      const coreG = this.ctx.createLinearGradient(
+        0,
+        this.lightBarY - lineWidth / 2,
+        0,
+        this.lightBarY + lineWidth / 2,
+      );
+      coreG.addColorStop(0, "rgba(255,255,255,0)");
       coreG.addColorStop(0.3, `rgba(255,255,255,${0.9 * glowIntensity})`);
       coreG.addColorStop(0.5, `rgba(255,255,255,${1.0 * glowIntensity})`);
       coreG.addColorStop(0.7, `rgba(255,255,255,${0.9 * glowIntensity})`);
-      coreG.addColorStop(1, 'rgba(255,255,255,0)');
+      coreG.addColorStop(1, "rgba(255,255,255,0)");
       this.ctx.globalAlpha = 1;
       this.ctx.fillStyle = coreG;
-      this.ctx.fillRect(barStartX, this.lightBarY - lineWidth / 2, barLen, lineWidth);
+      this.ctx.fillRect(
+        barStartX,
+        this.lightBarY - lineWidth / 2,
+        barLen,
+        lineWidth,
+      );
 
       // Glow 1
-      const g1 = this.ctx.createLinearGradient(0, this.lightBarY - lineWidth * 2, 0, this.lightBarY + lineWidth * 2);
+      const g1 = this.ctx.createLinearGradient(
+        0,
+        this.lightBarY - lineWidth * 2,
+        0,
+        this.lightBarY + lineWidth * 2,
+      );
       g1.addColorStop(0, `rgba(${colorPrimary},0)`);
       g1.addColorStop(0.5, `rgba(${colorSecondary},${0.8 * glowIntensity})`);
       g1.addColorStop(1, `rgba(${colorPrimary},0)`);
       this.ctx.globalAlpha = glow1Alpha;
       this.ctx.fillStyle = g1;
-      this.ctx.fillRect(barStartX, this.lightBarY - lineWidth * 2, barLen, lineWidth * 4);
+      this.ctx.fillRect(
+        barStartX,
+        this.lightBarY - lineWidth * 2,
+        barLen,
+        lineWidth * 4,
+      );
 
       // Glow 2
-      const g2 = this.ctx.createLinearGradient(0, this.lightBarY - lineWidth * 4, 0, this.lightBarY + lineWidth * 4);
+      const g2 = this.ctx.createLinearGradient(
+        0,
+        this.lightBarY - lineWidth * 4,
+        0,
+        this.lightBarY + lineWidth * 4,
+      );
       g2.addColorStop(0, `rgba(${colorPrimary},0)`);
       g2.addColorStop(0.5, `rgba(${colorPrimary},${0.4 * glowIntensity})`);
       g2.addColorStop(1, `rgba(${colorPrimary},0)`);
       this.ctx.globalAlpha = glow2Alpha;
       this.ctx.fillStyle = g2;
-      this.ctx.fillRect(barStartX, this.lightBarY - lineWidth * 4, barLen, lineWidth * 8);
+      this.ctx.fillRect(
+        barStartX,
+        this.lightBarY - lineWidth * 4,
+        barLen,
+        lineWidth * 8,
+      );
 
       // Mask: apply horizontal fade only within bar bounds
-      this.ctx.globalCompositeOperation = 'destination-in';
+      this.ctx.globalCompositeOperation = "destination-in";
       this.ctx.globalAlpha = 1;
       this.ctx.fillStyle = hFade;
       this.ctx.fillRect(barStartX, 0, barLen, this.h);
-
     } else {
       // ── VERTICAL LASER BAR (desktop) ──
       // ── VERTICAL LASER BAR (desktop) — height capped to card height ──
@@ -335,51 +408,112 @@ class ParticleScanner {
       const fadePx = 28;
 
       if (isBw) {
-        this.ctx.globalCompositeOperation = 'source-over';
+        this.ctx.globalCompositeOperation = "source-over";
         this.ctx.globalAlpha = 1;
         this.ctx.fillStyle = "#000000";
-        this.ctx.fillRect(this.lightBarX - lineWidth / 2, barStartY, lineWidth, barLen);
+        this.ctx.fillRect(
+          this.lightBarX - lineWidth / 2,
+          barStartY,
+          lineWidth,
+          barLen,
+        );
         return;
       }
 
       // Fade mask: fade top and bottom edges within bar range only
-      const verticalGradient = this.ctx.createLinearGradient(0, barStartY, 0, barEndY);
-      verticalGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-      verticalGradient.addColorStop(Math.min(fadePx / barLen, 0.3), 'rgba(255, 255, 255, 1)');
-      verticalGradient.addColorStop(Math.max(1 - fadePx / barLen, 0.7), 'rgba(255, 255, 255, 1)');
-      verticalGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      const verticalGradient = this.ctx.createLinearGradient(
+        0,
+        barStartY,
+        0,
+        barEndY,
+      );
+      verticalGradient.addColorStop(0, "rgba(255, 255, 255, 0)");
+      verticalGradient.addColorStop(
+        Math.min(fadePx / barLen, 0.3),
+        "rgba(255, 255, 255, 1)",
+      );
+      verticalGradient.addColorStop(
+        Math.max(1 - fadePx / barLen, 0.7),
+        "rgba(255, 255, 255, 1)",
+      );
+      verticalGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
 
       // Core line
-      const coreGradient = this.ctx.createLinearGradient(this.lightBarX - lineWidth / 2, 0, this.lightBarX + lineWidth / 2, 0);
-      coreGradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-      coreGradient.addColorStop(0.3, `rgba(255, 255, 255, ${0.9 * glowIntensity})`);
-      coreGradient.addColorStop(0.5, `rgba(255, 255, 255, ${1.0 * glowIntensity})`);
-      coreGradient.addColorStop(0.7, `rgba(255, 255, 255, ${0.9 * glowIntensity})`);
-      coreGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      const coreGradient = this.ctx.createLinearGradient(
+        this.lightBarX - lineWidth / 2,
+        0,
+        this.lightBarX + lineWidth / 2,
+        0,
+      );
+      coreGradient.addColorStop(0, "rgba(255, 255, 255, 0)");
+      coreGradient.addColorStop(
+        0.3,
+        `rgba(255, 255, 255, ${0.9 * glowIntensity})`,
+      );
+      coreGradient.addColorStop(
+        0.5,
+        `rgba(255, 255, 255, ${1.0 * glowIntensity})`,
+      );
+      coreGradient.addColorStop(
+        0.7,
+        `rgba(255, 255, 255, ${0.9 * glowIntensity})`,
+      );
+      coreGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
       this.ctx.globalAlpha = 1;
       this.ctx.fillStyle = coreGradient;
-      this.ctx.fillRect(this.lightBarX - lineWidth / 2, barStartY, lineWidth, barLen);
+      this.ctx.fillRect(
+        this.lightBarX - lineWidth / 2,
+        barStartY,
+        lineWidth,
+        barLen,
+      );
 
       // Outer Glow 1
-      const glow1Gradient = this.ctx.createLinearGradient(this.lightBarX - lineWidth * 2, 0, this.lightBarX + lineWidth * 2, 0);
+      const glow1Gradient = this.ctx.createLinearGradient(
+        this.lightBarX - lineWidth * 2,
+        0,
+        this.lightBarX + lineWidth * 2,
+        0,
+      );
       glow1Gradient.addColorStop(0, `rgba(${colorPrimary}, 0)`);
-      glow1Gradient.addColorStop(0.5, `rgba(${colorSecondary}, ${0.8 * glowIntensity})`);
+      glow1Gradient.addColorStop(
+        0.5,
+        `rgba(${colorSecondary}, ${0.8 * glowIntensity})`,
+      );
       glow1Gradient.addColorStop(1, `rgba(${colorPrimary}, 0)`);
       this.ctx.globalAlpha = glow1Alpha;
       this.ctx.fillStyle = glow1Gradient;
-      this.ctx.fillRect(this.lightBarX - lineWidth * 2, barStartY, lineWidth * 4, barLen);
+      this.ctx.fillRect(
+        this.lightBarX - lineWidth * 2,
+        barStartY,
+        lineWidth * 4,
+        barLen,
+      );
 
       // Outer Glow 2
-      const glow2Gradient = this.ctx.createLinearGradient(this.lightBarX - lineWidth * 4, 0, this.lightBarX + lineWidth * 4, 0);
+      const glow2Gradient = this.ctx.createLinearGradient(
+        this.lightBarX - lineWidth * 4,
+        0,
+        this.lightBarX + lineWidth * 4,
+        0,
+      );
       glow2Gradient.addColorStop(0, `rgba(${colorPrimary}, 0)`);
-      glow2Gradient.addColorStop(0.5, `rgba(${colorPrimary}, ${0.4 * glowIntensity})`);
+      glow2Gradient.addColorStop(
+        0.5,
+        `rgba(${colorPrimary}, ${0.4 * glowIntensity})`,
+      );
       glow2Gradient.addColorStop(1, `rgba(${colorPrimary}, 0)`);
       this.ctx.globalAlpha = glow2Alpha;
       this.ctx.fillStyle = glow2Gradient;
-      this.ctx.fillRect(this.lightBarX - lineWidth * 4, barStartY, lineWidth * 8, barLen);
+      this.ctx.fillRect(
+        this.lightBarX - lineWidth * 4,
+        barStartY,
+        lineWidth * 8,
+        barLen,
+      );
 
       // Mask: fade top/bottom within bar bounds only
-      this.ctx.globalCompositeOperation = 'destination-in';
+      this.ctx.globalCompositeOperation = "destination-in";
       this.ctx.globalAlpha = 1;
       this.ctx.fillStyle = verticalGradient;
       this.ctx.fillRect(0, barStartY, this.w, barLen);
@@ -391,24 +525,33 @@ class ParticleScanner {
   }
 
   render() {
-    const targetIntensity = this.scanningActive ? this.scanTargetIntensity : this.baseIntensity;
-    const targetMaxParticles = this.scanningActive ? this.scanTargetParticles : this.baseMaxParticles;
-    const targetFadeZone = this.scanningActive ? this.scanTargetFadeZone : this.baseFadeZone;
+    const targetIntensity = this.scanningActive
+      ? this.scanTargetIntensity
+      : this.baseIntensity;
+    const targetMaxParticles = this.scanningActive
+      ? this.scanTargetParticles
+      : this.baseMaxParticles;
+    const targetFadeZone = this.scanningActive
+      ? this.scanTargetFadeZone
+      : this.baseFadeZone;
 
-    this.currentIntensity += (targetIntensity - this.currentIntensity) * this.transitionSpeed;
-    this.currentMaxParticles += (targetMaxParticles - this.currentMaxParticles) * this.transitionSpeed;
-    this.currentFadeZone += (targetFadeZone - this.currentFadeZone) * this.transitionSpeed;
+    this.currentIntensity +=
+      (targetIntensity - this.currentIntensity) * this.transitionSpeed;
+    this.currentMaxParticles +=
+      (targetMaxParticles - this.currentMaxParticles) * this.transitionSpeed;
+    this.currentFadeZone +=
+      (targetFadeZone - this.currentFadeZone) * this.transitionSpeed;
 
     this.intensity = this.currentIntensity;
     this.maxParticles = Math.floor(this.currentMaxParticles);
     this.fadeZone = this.currentFadeZone;
 
-    this.ctx.globalCompositeOperation = 'source-over';
+    this.ctx.globalCompositeOperation = "source-over";
     this.ctx.clearRect(0, 0, this.w, this.h);
 
     this.drawLightBar();
 
-    this.ctx.globalCompositeOperation = 'lighter';
+    this.ctx.globalCompositeOperation = "lighter";
     for (let i = 1; i <= this.count; i++) {
       if (this.particles[i]) {
         this.updateParticle(this.particles[i]);
@@ -439,8 +582,10 @@ class ParticleScanner {
 }
 
 const generateRandomCode = (width: number, height: number): string => {
-  const codeChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789(){}[]<>;:,._-+=!@#$%^&*|\\/\"'`~?";
-  const randInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+  const codeChars =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789(){}[]<>;:,._-+=!@#$%^&*|\\/\"'`~?";
+  const randInt = (min: number, max: number) =>
+    Math.floor(Math.random() * (max - min + 1)) + min;
   const pick = (arr: string[]) => arr[randInt(0, arr.length - 1)];
 
   const header = [
@@ -482,11 +627,7 @@ const generateRandomCode = (width: number, height: number): string => {
     "}",
   ];
 
-  const loopBlock = [
-    "function tick(t) {",
-    "  const dt = 0.016;",
-    "}",
-  ];
+  const loopBlock = ["function tick(t) {", "  const dt = 0.016;", "}"];
 
   const misc = [
     "const state = { intensity: 1.2, particles: MAX_PARTICLES };",
@@ -513,7 +654,7 @@ const generateRandomCode = (width: number, height: number): string => {
   }
   for (let i = 0; i < 20; i++) {
     library.push(
-      `if (state.intensity > ${1 + (i % 3)}) { scanner.glow += 0.01; }`
+      `if (state.intensity > ${1 + (i % 3)}) { scanner.glow += 0.01; }`,
     );
   }
 
@@ -546,9 +687,11 @@ const generateRandomCode = (width: number, height: number): string => {
   return out;
 };
 
-export const SkillsBeamScanner: React.FC<SkillsBeamScannerProps> = ({ selectedMatcher = null }) => {
+export const SkillsBeamScanner: React.FC<SkillsBeamScannerProps> = ({
+  selectedMatcher = null,
+}) => {
   const { t } = useLanguage();
-  
+
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -565,8 +708,8 @@ export const SkillsBeamScanner: React.FC<SkillsBeamScannerProps> = ({ selectedMa
       setIsMobile(window.innerWidth < 768);
     };
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Position, drag, and velocity refs (high-performance rendering, zero-re-renders)
@@ -598,7 +741,7 @@ export const SkillsBeamScanner: React.FC<SkillsBeamScannerProps> = ({ selectedMa
 
       const track = trackRef.current;
       if (track) {
-        const asciiContents = track.querySelectorAll('.skills-ascii-content');
+        const asciiContents = track.querySelectorAll(".skills-ascii-content");
         asciiContents.forEach((el) => {
           const htmlEl = el as HTMLElement;
           htmlEl.textContent = generateRandomCode(60, 16);
@@ -612,15 +755,29 @@ export const SkillsBeamScanner: React.FC<SkillsBeamScannerProps> = ({ selectedMa
   const isSkillMatching = (skillId: string) => {
     if (!selectedMatcher) return true;
     const s = skillId.toLowerCase();
-    if (selectedMatcher === 'kaufmann') {
+    if (selectedMatcher === "kaufmann") {
       return [
-        'teamwork', 'helpfulness', 'responsibility', 'german', 'turkish', 'english',
-        'word', 'excel', 'powerpoint', 'media'
+        "teamwork",
+        "helpfulness",
+        "responsibility",
+        "german",
+        "turkish",
+        "english",
+        "word",
+        "excel",
+        "powerpoint",
+        "media",
       ].includes(s);
     }
-    if (selectedMatcher === 'elektro') {
+    if (selectedMatcher === "elektro") {
       return [
-        'reliability', 'learning', 'responsibility', 'geometry', 'math', 'hardware', 'kung-fu'
+        "reliability",
+        "learning",
+        "responsibility",
+        "geometry",
+        "math",
+        "hardware",
+        "kung-fu",
       ].includes(s);
     }
     return true;
@@ -629,8 +786,10 @@ export const SkillsBeamScanner: React.FC<SkillsBeamScannerProps> = ({ selectedMa
   // 4 Core categories (we repeat them to create an infinite horizontal carousel)
   const baseCategories = [
     {
-      key: 'personal' as const,
-      icon: <FiUserCheck className="text-xl text-orange-700 dark:text-orange-400" />,
+      key: "personal" as const,
+      icon: (
+        <FiUserCheck className="text-xl text-orange-700 dark:text-orange-400" />
+      ),
       code: `// compiled personal strengths
 class PersonalStrengths {
   constructor() {
@@ -644,10 +803,10 @@ class PersonalStrengths {
   validate() {
     return this.reliability > 0.95;
   }
-}`
+}`,
     },
     {
-      key: 'school' as const,
+      key: "school" as const,
       icon: <FiBookOpen className="text-xl text-navy-700 dark:text-navy-400" />,
       code: `// compiled academic achievements
 class AcademicAchievements {
@@ -662,11 +821,13 @@ class AcademicAchievements {
   getLanguages() {
     return ["DE", "TR", "EN"];
   }
-}`
+}`,
     },
     {
-      key: 'digital' as const,
-      icon: <FiMonitor className="text-xl text-green-700 dark:text-green-400" />,
+      key: "digital" as const,
+      icon: (
+        <FiMonitor className="text-xl text-green-700 dark:text-green-400" />
+      ),
       code: `// compiled IT & digital media
 class DigitalProficiency {
   constructor() {
@@ -680,11 +841,13 @@ class DigitalProficiency {
   isOfficeSuiteProficient() {
     return this.word >= 0.85;
   }
-}`
+}`,
     },
     {
-      key: 'hobbies' as const,
-      icon: <FiHeart className="text-xl text-orange-700 dark:text-orange-400" />,
+      key: "hobbies" as const,
+      icon: (
+        <FiHeart className="text-xl text-orange-700 dark:text-orange-400" />
+      ),
       code: `// compiled interests & hobby profile
 class HobbiesAndInterests {
   constructor() {
@@ -694,8 +857,8 @@ class HobbiesAndInterests {
     this.photography = 0.75;
     this.media = 0.80;
   }
-}`
-    }
+}`,
+    },
   ];
 
   // Double the list to 8 items to ensure infinite looping coverage
@@ -713,7 +876,7 @@ class HobbiesAndInterests {
     mouseVelocityRef.current = 0;
 
     if (trackRef.current) {
-      trackRef.current.classList.add('dragging');
+      trackRef.current.classList.add("dragging");
     }
   };
 
@@ -733,7 +896,7 @@ class HobbiesAndInterests {
     isDraggingRef.current = false;
 
     if (trackRef.current) {
-      trackRef.current.classList.remove('dragging');
+      trackRef.current.classList.remove("dragging");
     }
 
     const baseSpeed = isMobileRef.current ? 45 : 100;
@@ -753,7 +916,11 @@ class HobbiesAndInterests {
     // Mobile: horizontal laser limited to card width (300px)
     // Desktop: vertical laser limited to card height (250px)
     const cardW = isMobileRef.current ? 300 : 250;
-    const scanner = new ParticleScanner(canvasRef.current, isMobileRef.current, cardW);
+    const scanner = new ParticleScanner(
+      canvasRef.current,
+      isMobileRef.current,
+      cardW,
+    );
     scannerInstance.current = scanner;
 
     // Set up MutationObserver to detect when theme changes on document.documentElement (dark or bw-mode)
@@ -764,7 +931,7 @@ class HobbiesAndInterests {
     });
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['class']
+      attributeFilter: ["class"],
     });
 
     // Also listen to window bwModeChange event
@@ -773,7 +940,7 @@ class HobbiesAndInterests {
         scannerInstance.current.onThemeChanged();
       }
     };
-    window.addEventListener('bwModeChange', handleBwChange);
+    window.addEventListener("bwModeChange", handleBwChange);
 
     let lastTime = performance.now();
     let animId: number;
@@ -803,7 +970,8 @@ class HobbiesAndInterests {
             velocityRef.current = baseSpeed; // constant base speed
           }
 
-          positionRef.current += velocityRef.current * directionRef.current * deltaTime;
+          positionRef.current +=
+            velocityRef.current * directionRef.current * deltaTime;
         }
 
         // Loop boundaries for infinite carousel scrolling
@@ -822,7 +990,7 @@ class HobbiesAndInterests {
 
         // Calculate card intersections & clipping boundaries
         let anyCardIntersecting = false;
-        const cards = track.querySelectorAll('.skills-card-wrapper');
+        const cards = track.querySelectorAll(".skills-card-wrapper");
 
         if (activeIsMobile) {
           // Align clipping boundary with the laser line at 80% of container height
@@ -838,34 +1006,36 @@ class HobbiesAndInterests {
               const intersectY = scannerY - cardTop;
               const percentTop = (intersectY / cardSize) * 100;
 
-              htmlCard.style.setProperty('--clip-bottom', `${percentTop}%`);
-              htmlCard.style.setProperty('--clip-top', `${percentTop}%`);
+              htmlCard.style.setProperty("--clip-bottom", `${percentTop}%`);
+              htmlCard.style.setProperty("--clip-top", `${percentTop}%`);
 
               // Fill up progress bars since it is crossing the scanner
-              htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
+              htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
                 const htmlFill = fill as HTMLElement;
-                htmlFill.style.width = htmlFill.getAttribute('data-level') + '%';
+                htmlFill.style.width =
+                  htmlFill.getAttribute("data-level") + "%";
               });
             } else {
               if (cardBottom <= scannerY) {
                 // Card fully above scanner: fully ASCII (code)
-                htmlCard.style.setProperty('--clip-bottom', '100%');
-                htmlCard.style.setProperty('--clip-top', '100%');
+                htmlCard.style.setProperty("--clip-bottom", "100%");
+                htmlCard.style.setProperty("--clip-top", "100%");
 
                 // Reset progress bars to 0% when card is in fully-code state
-                htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
+                htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
                   const htmlFill = fill as HTMLElement;
-                  htmlFill.style.width = '0%';
+                  htmlFill.style.width = "0%";
                 });
               } else if (cardTop >= scannerY) {
                 // Card fully below scanner: fully normal (progress bars)
-                htmlCard.style.setProperty('--clip-bottom', '0%');
-                htmlCard.style.setProperty('--clip-top', '0%');
+                htmlCard.style.setProperty("--clip-bottom", "0%");
+                htmlCard.style.setProperty("--clip-top", "0%");
 
                 // Fill up progress bars since it is in fully-normal state
-                htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
+                htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
                   const htmlFill = fill as HTMLElement;
-                  htmlFill.style.width = htmlFill.getAttribute('data-level') + '%';
+                  htmlFill.style.width =
+                    htmlFill.getAttribute("data-level") + "%";
                 });
               }
             }
@@ -883,34 +1053,36 @@ class HobbiesAndInterests {
               const intersectX = scannerX - cardLeft;
               const percentLeft = (intersectX / cardSize) * 100;
 
-              htmlCard.style.setProperty('--clip-right', `${percentLeft}%`);
-              htmlCard.style.setProperty('--clip-left', `${percentLeft}%`);
+              htmlCard.style.setProperty("--clip-right", `${percentLeft}%`);
+              htmlCard.style.setProperty("--clip-left", `${percentLeft}%`);
 
               // Fill up progress bars since it is crossing the scanner
-              htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
+              htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
                 const htmlFill = fill as HTMLElement;
-                htmlFill.style.width = htmlFill.getAttribute('data-level') + '%';
+                htmlFill.style.width =
+                  htmlFill.getAttribute("data-level") + "%";
               });
             } else {
               if (cardRight <= scannerX) {
                 // Card fully to the left of scanner: fully ASCII (code)
-                htmlCard.style.setProperty('--clip-right', '100%');
-                htmlCard.style.setProperty('--clip-left', '100%');
+                htmlCard.style.setProperty("--clip-right", "100%");
+                htmlCard.style.setProperty("--clip-left", "100%");
 
                 // Reset progress bars to 0% when card is in fully-code state
-                htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
+                htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
                   const htmlFill = fill as HTMLElement;
-                  htmlFill.style.width = '0%';
+                  htmlFill.style.width = "0%";
                 });
               } else if (cardLeft >= scannerX) {
                 // Card fully to the right of scanner: fully normal (progress bars)
-                htmlCard.style.setProperty('--clip-right', '0%');
-                htmlCard.style.setProperty('--clip-left', '0%');
+                htmlCard.style.setProperty("--clip-right", "0%");
+                htmlCard.style.setProperty("--clip-left", "0%");
 
                 // Fill up progress bars since it is in fully-normal state
-                htmlCard.querySelectorAll('.skill-fill').forEach((fill) => {
+                htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
                   const htmlFill = fill as HTMLElement;
-                  htmlFill.style.width = htmlFill.getAttribute('data-level') + '%';
+                  htmlFill.style.width =
+                    htmlFill.getAttribute("data-level") + "%";
                 });
               }
             }
@@ -946,7 +1118,7 @@ class HobbiesAndInterests {
 
     return () => {
       observer.disconnect();
-      window.removeEventListener('bwModeChange', handleBwChange);
+      window.removeEventListener("bwModeChange", handleBwChange);
       cancelAnimationFrame(animId);
       resizeObserver.disconnect();
       scanner.destroy();
@@ -982,172 +1154,192 @@ class HobbiesAndInterests {
       handleDragEnd();
     };
 
-    track.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
+    track.addEventListener("mousedown", onMouseDown);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
 
-    track.addEventListener('touchstart', onTouchStart, { passive: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: true });
-    window.addEventListener('touchend', onTouchEnd);
+    track.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd);
 
     return () => {
-      track.removeEventListener('mousedown', onMouseDown);
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
-track.removeEventListener('touchstart', onTouchStart);
-      window.removeEventListener('touchmove', onTouchMove);
-      window.removeEventListener('touchend', onTouchEnd);
+      track.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+      track.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
     };
   }, [mounted]);
 
   return (
     <>
-    <div
-      className="skills-scanner-container w-full relative overflow-hidden"
-      style={{ height: isMobile ? '320px' : '280px' }}
-      ref={containerRef}
-    >
-      {/* 2D Canvas Sparks/Dust Particle Overlay */}
-      <canvas 
-        ref={canvasRef} 
-        className="absolute top-0 bottom-0 left-0 right-0 w-full h-full pointer-events-none z-10"
-      />
-
-      {/* Slider Draggable Track */}
-      <div 
-        ref={trackRef} 
-        className={`skills-slider-track select-none flex items-center will-change-transform ${isMobile ? 'flex-col h-max w-full pt-4' : 'flex-row w-max h-full'}`}
-        style={{ height: isMobile ? 'max-content' : '100%' }}
+      <div
+        className="skills-scanner-container w-full relative overflow-hidden"
+        style={{ height: isMobile ? "320px" : "280px" }}
+        ref={containerRef}
       >
-        {categories.map((category, index) => (
-          <div 
-            key={index} 
-            className="skills-card-wrapper relative"
-            style={{
-              width: isMobile ? '300px' : '400px',
-              height: isMobile ? '300px' : '250px',
-              flexShrink: 0,
-              marginRight: isMobile ? '0' : '32px',
-              marginBottom: isMobile ? '20px' : '0'
-            }}
-          >
-            
-            {/* 1. LAYER: Decoded Normal Card Layout (Right side of scanner - clipped from left) */}
-            <div 
-              className="skills-card skills-card-normal"
+        {/* 2D Canvas Sparks/Dust Particle Overlay */}
+        <canvas
+          ref={canvasRef}
+          className="absolute top-0 bottom-0 left-0 right-0 w-full h-full pointer-events-none z-10"
+        />
+
+        {/* Slider Draggable Track */}
+        <div
+          ref={trackRef}
+          className={`skills-slider-track select-none flex items-center will-change-transform ${isMobile ? "flex-col h-max w-full pt-4" : "flex-row w-max h-full"}`}
+          style={{ height: isMobile ? "max-content" : "100%" }}
+        >
+          {categories.map((category, index) => (
+            <div
+              key={index}
+              className="skills-card-wrapper relative"
               style={{
-                clipPath: isMobile 
-                  ? 'inset(0 0 calc(100% - var(--clip-bottom, 0%)) 0)' 
-                  : 'inset(0 0 0 var(--clip-right, 0%))'
+                width: isMobile ? "300px" : "400px",
+                height: isMobile ? "300px" : "250px",
+                flexShrink: 0,
+                marginRight: isMobile ? "0" : "32px",
+                marginBottom: isMobile ? "20px" : "0",
               }}
             >
-              <div className="skills-header">
-                <div className="skills-icon p-1.5 bg-[var(--background)] rounded-xl border border-[var(--glass-border)] flex items-center justify-center">
-                  {category.icon}
+              {/* 1. LAYER: Decoded Normal Card Layout (Right side of scanner - clipped from left) */}
+              <div
+                className="skills-card skills-card-normal"
+                style={{
+                  clipPath: isMobile
+                    ? "inset(0 0 calc(100% - var(--clip-bottom, 0%)) 0)"
+                    : "inset(0 0 0 var(--clip-right, 0%))",
+                }}
+              >
+                <div className="skills-header">
+                  <div className="skills-icon p-1.5 bg-[var(--background)] rounded-xl border border-[var(--glass-border)] flex items-center justify-center">
+                    {category.icon}
+                  </div>
+                  <span className="skills-title">
+                    {t.skills.categories[category.key]}
+                  </span>
                 </div>
-                <span className="skills-title">
-                  {t.skills.categories[category.key]}
-                </span>
-              </div>
 
-              <div className="skills-list">
-                {(t.skills.items[category.key] as Skill[]).map((skill, idx) => {
-                  const matches = isSkillMatching(skill.id);
-                  return (
-                    <div 
-                      key={idx} 
-                      className={`skill-item transition-all duration-300 ${
-                        selectedMatcher && !matches 
-                          ? 'opacity-20 scale-[0.98]' 
-                          : 'opacity-100'
-                      }`}
-                    >
-                      {/* Skill Name */}
-                      <span 
-                        className={`skill-label transition-colors duration-300 ${
-                          selectedMatcher && matches 
-                            ? 'text-primary font-bold shadow-sm' 
-                            : ''
-                        }`} 
-                        title={skill.name}
-                      >
-                        {skill.name}
-                      </span>
+                <div className="skills-list">
+                  {(t.skills.items[category.key] as Skill[]).map(
+                    (skill, idx) => {
+                      const matches = isSkillMatching(skill.id);
+                      return (
+                        <div
+                          key={idx}
+                          className={`skill-item transition-all duration-300 ${
+                            selectedMatcher && !matches
+                              ? "opacity-20 scale-[0.98]"
+                              : "opacity-100"
+                          }`}
+                        >
+                          {/* Skill Name */}
+                          <span
+                            className={`skill-label transition-colors duration-300 ${
+                              selectedMatcher && matches
+                                ? "text-primary font-bold shadow-sm"
+                                : ""
+                            }`}
+                            title={skill.name}
+                          >
+                            {skill.name}
+                          </span>
 
-                      {/* Progress Bar + Percentage */}
-                      <div className="skill-bar-container">
-                        <div className="skill-track bg-[var(--background)] border border-[var(--glass-border)]">
-                          {mounted && (
-                            <div
-                              data-level={skill.level}
-                              style={{ width: '0%' }}
-                              className={`skill-fill h-full rounded-full bg-gradient-to-r transition-[width] duration-[1500ms] ease-[cubic-bezier(0.19,1,0.22,1)] ${
-                                category.key === 'personal' ? 'from-orange-600 to-orange-400' :
-                                category.key === 'school' ? 'from-navy-700 to-navy-500' :
-                                category.key === 'digital' ? 'from-green-600 to-green-400' :
-                                'from-orange-600 to-navy-600'
-                              }`}
-                            />
-                          )}
+                          {/* Progress Bar + Percentage */}
+                          <div className="skill-bar-container">
+                            <div className="skill-track bg-[var(--background)] border border-[var(--glass-border)]">
+                              {mounted && (
+                                <div
+                                  data-level={skill.level}
+                                  style={{ width: "0%" }}
+                                  className={`skill-fill h-full rounded-full bg-gradient-to-r transition-[width] duration-[1500ms] ease-[cubic-bezier(0.19,1,0.22,1)] ${
+                                    category.key === "personal"
+                                      ? "from-orange-600 to-orange-400"
+                                      : category.key === "school"
+                                        ? "from-navy-700 to-navy-500"
+                                        : category.key === "digital"
+                                          ? "from-green-600 to-green-400"
+                                          : "from-orange-600 to-navy-600"
+                                  }`}
+                                />
+                              )}
+                            </div>
+                            <span className="skill-percent">
+                              {skill.level}%
+                            </span>
+                          </div>
                         </div>
-                        <span className="skill-percent">
-                          {skill.level}%
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
+                      );
+                    },
+                  )}
+                </div>
+              </div>
+
+              {/* 2. LAYER: Encoded ASCII Code Layout (Left side of scanner - clipped from right) */}
+              <div
+                className="skills-card skills-card-ascii"
+                style={{
+                  clipPath: isMobile
+                    ? "inset(var(--clip-top, 0%) 0 0 0)"
+                    : "inset(0 calc(100% - var(--clip-left, 0%)) 0 0)",
+                }}
+              >
+                <div className="skills-ascii-content">
+                  {mounted ? generateRandomCode(60, 16) : ""}
+                </div>
               </div>
             </div>
-
-            {/* 2. LAYER: Encoded ASCII Code Layout (Left side of scanner - clipped from right) */}
-            <div 
-              className="skills-card skills-card-ascii"
-              style={{
-                clipPath: isMobile 
-                  ? 'inset(var(--clip-top, 0%) 0 0 0)' 
-                  : 'inset(0 calc(100% - var(--clip-left, 0%)) 0 0)'
-              }}
-            >
-              <div className="skills-ascii-content">
-                {mounted ? generateRandomCode(60, 16) : ""}
-              </div>
-            </div>
-
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>{/* end skills-scanner-container */}
+      {/* end skills-scanner-container */}
 
-    {/* Control Buttons (Play/Pause, Reset, Direction) - OUTSIDE overflow:hidden container */}
-    <div className="flex justify-center gap-3 mt-6 relative z-30 select-none flex-wrap">
-      <button 
-        onClick={() => setIsAnimating(!isAnimating)}
-        className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
-      >
-        {isAnimating ? <><FiPause className="text-[var(--primary)]" /> {t.skills.scanner.pause}</> : <><FiPlay className="text-[var(--primary)]" /> {t.skills.scanner.play}</>}
-      </button>
-      <button 
-        onClick={() => {
-          positionRef.current = -300;
-          const isMob = window.innerWidth < 768;
-          velocityRef.current = isMob ? 45 : 100;
-          directionRef.current = isMob ? 1 : -1;
-          setIsAnimating(true);
-        }}
-        className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
-      >
-        <FiRefreshCw className="text-[var(--primary)]" /> {t.skills.scanner.reset}
-      </button>
-      <button 
-        onClick={() => {
-          directionRef.current = directionRef.current === 1 ? -1 : 1;
-        }}
-        className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
-      >
-        {isMobile ? <FiChevronsDown className="text-[var(--primary)]" /> : <FiChevronsRight className="text-[var(--primary)]" />} {t.skills.scanner.direction}
-      </button>
-    </div>
+      {/* Control Buttons (Play/Pause, Reset, Direction) - OUTSIDE overflow:hidden container */}
+      <div className="flex justify-center gap-3 mt-6 relative z-30 select-none flex-wrap">
+        <button
+          onClick={() => setIsAnimating(!isAnimating)}
+          className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
+        >
+          {isAnimating ? (
+            <>
+              <FiPause className="text-[var(--primary)]" />{" "}
+              {t.skills.scanner.pause}
+            </>
+          ) : (
+            <>
+              <FiPlay className="text-[var(--primary)]" />{" "}
+              {t.skills.scanner.play}
+            </>
+          )}
+        </button>
+        <button
+          onClick={() => {
+            positionRef.current = -300;
+            const isMob = window.innerWidth < 768;
+            velocityRef.current = isMob ? 45 : 100;
+            directionRef.current = isMob ? 1 : -1;
+            setIsAnimating(true);
+          }}
+          className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
+        >
+          <FiRefreshCw className="text-[var(--primary)]" />{" "}
+          {t.skills.scanner.reset}
+        </button>
+        <button
+          onClick={() => {
+            directionRef.current = directionRef.current === 1 ? -1 : 1;
+          }}
+          className="flex items-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-xl border border-[var(--glass-border)] bg-[var(--card)] hover:bg-[var(--badge-bg)] text-[var(--text-main)] transition-all cursor-pointer hover:scale-105 active:scale-95"
+        >
+          {isMobile ? (
+            <FiChevronsDown className="text-[var(--primary)]" />
+          ) : (
+            <FiChevronsRight className="text-[var(--primary)]" />
+          )}{" "}
+          {t.skills.scanner.direction}
+        </button>
+      </div>
     </>
   );
 };

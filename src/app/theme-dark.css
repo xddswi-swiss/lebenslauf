@@ -15,14 +15,18 @@
   --secondary-glow: rgba(28, 60, 125, 0.2);
   --accent: #60a5fa;
   --muted: #94a3b8;
-  
+
   --text-main: #ffffff;
   --text-body: #e2e8f0;
   --text-muted: #cbd5e1;
-  
+
   /* Glassmorphism Variables for Midnight Blue */
   --glass-bg: rgba(16, 37, 82, 0.85);
-  --glass-card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  --glass-card-bg: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
   --glass-border: rgba(59, 130, 246, 0.3);
   --grid-color: rgba(255, 255, 255, 0.03);
   --badge-bg: rgba(59, 130, 246, 0.15);
@@ -34,25 +38,43 @@
 
 /* Beautiful Gradient Backgrounds and Glass Cards for Midnight Blue Theme */
 :root.dark:not(.bw-mode) body {
-  background: radial-gradient(circle at top right, #1c3c7d, #102552 60%, #081329);
+  background: radial-gradient(
+    circle at top right,
+    #1c3c7d,
+    #102552 60%,
+    #081329
+  );
 }
 
 :root.dark:not(.bw-mode) .glass-card {
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.05);
+  box-shadow:
+    0 8px 32px 0 rgba(0, 0, 0, 0.4),
+    inset 0 0 15px rgba(255, 255, 255, 0.05);
 }
 
 :root.dark:not(.bw-mode) .glass-card:hover {
   border-color: rgba(59, 130, 246, 0.6);
-  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 15px 35px -10px rgba(0, 0, 0, 0.5),
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
-:root.dark:not(.bw-mode) .glass-card:not(.rounded-full):not(button):not(a)::before {
-  background: linear-gradient(to right, rgba(59, 130, 246, 0.8), rgba(59, 130, 246, 0));
+:root.dark:not(.bw-mode)
+  .glass-card:not(.rounded-full):not(button):not(a)::before {
+  background: linear-gradient(
+    to right,
+    rgba(59, 130, 246, 0.8),
+    rgba(59, 130, 246, 0)
+  );
 }
 
 /* Header Override */
 :root.dark:not(.bw-mode) header.header-glass-gradient {
-  background: linear-gradient(to right, rgba(28, 60, 125, 0.95), rgba(16, 37, 82, 0.85)) !important;
+  background: linear-gradient(
+    to right,
+    rgba(28, 60, 125, 0.95),
+    rgba(16, 37, 82, 0.85)
+  ) !important;
   border-bottom: 1px solid rgba(59, 130, 246, 0.3) !important;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3) !important;
 }
@@ -76,7 +98,9 @@
   color: #ffffff !important;
 }
 
-:root.dark:not(.bw-mode) header.header-glass-gradient button:not(.bg-primary):not(.bw-switch-container button):not(.glass-card) {
+:root.dark:not(.bw-mode)
+  header.header-glass-gradient
+  button:not(.bg-primary):not(.bw-switch-container button):not(.glass-card) {
   color: #e2e8f0 !important;
 }
 
@@ -98,7 +122,7 @@
 }
 
 :root.dark:not(.bw-mode) footer h3 {
-  color: #ffffff !important; 
+  color: #ffffff !important;
 }
 
 :root.dark:not(.bw-mode) footer .glass-card {
@@ -144,7 +168,11 @@ html.dark:not(.bw-mode) .skills-ascii-content {
 
 /* Theme specific Stat Cards */
 :root.dark:not(.bw-mode) .stat-card-1 {
-  background: linear-gradient(to bottom right, rgba(59, 130, 246, 0.25), rgba(37, 99, 235, 0.1)) !important;
+  background: linear-gradient(
+    to bottom right,
+    rgba(59, 130, 246, 0.25),
+    rgba(37, 99, 235, 0.1)
+  ) !important;
   color: #60a5fa !important;
   border: 1px solid rgba(59, 130, 246, 0.3) !important;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3) !important;
@@ -156,7 +184,11 @@ html.dark:not(.bw-mode) .skills-ascii-content {
 }
 
 :root.dark:not(.bw-mode) .stat-card-2 {
-  background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.1)) !important;
+  background: linear-gradient(
+    to bottom right,
+    rgba(16, 185, 129, 0.25),
+    rgba(5, 150, 105, 0.1)
+  ) !important;
   color: #34d399 !important;
   border: 1px solid rgba(16, 185, 129, 0.3) !important;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3) !important;
@@ -183,7 +215,8 @@ html.dark:not(.bw-mode) .skills-ascii-content {
 
 :root.dark:not(.bw-mode) button.bg-primary:not(.bw-switch-container *):hover,
 :root.dark:not(.bw-mode) a.bg-primary:not(.bw-switch-container *):hover,
-:root.dark:not(.bw-mode) button[type="submit"]:not(.bw-switch-container *):hover,
+:root.dark:not(.bw-mode)
+  button[type="submit"]:not(.bw-switch-container *):hover,
 :root.dark:not(.bw-mode) .cb-btn:hover {
   background: rgba(59, 130, 246, 0.4) !important;
   border-color: rgba(59, 130, 246, 0.8) !important;
@@ -194,7 +227,8 @@ html.dark:not(.bw-mode) .skills-ascii-content {
 
 :root.dark:not(.bw-mode) button.bg-primary:not(.bw-switch-container *):active,
 :root.dark:not(.bw-mode) a.bg-primary:not(.bw-switch-container *):active,
-:root.dark:not(.bw-mode) button[type="submit"]:not(.bw-switch-container *):active,
+:root.dark:not(.bw-mode)
+  button[type="submit"]:not(.bw-switch-container *):active,
 :root.dark:not(.bw-mode) .cb-btn:active {
   transform: translateY(1px) !important;
   box-shadow: 0 2px 10px rgba(59, 130, 246, 0.2) !important;

@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 body {
-  background: #EEE;
+  background: #eee;
   margin: 0;
   display: flex;
   min-height: 100vh;
@@ -17,14 +17,14 @@ canvas {
 }
 
 #container {
-  box-shadow: 0 0 20px rgba(0,0,0,.05);
-  border: 1px solid rgba(0,0,0,.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   touch-action: none;
-  }
+}
 h1 {
   font-family: Rubik;
   font-size: 100px;
