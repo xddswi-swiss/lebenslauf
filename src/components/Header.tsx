@@ -227,7 +227,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
     <>
       <header
         style={headerStyle}
-        className="sticky top-0 z-50 header-glass-gradient px-6 py-4 transition-all duration-300"
+        className="fixed top-0 left-0 right-0 w-full z-50 header-glass-gradient px-6 py-4 transition-all duration-300"
       >
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <m.a

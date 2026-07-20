@@ -301,7 +301,7 @@ const MainContent: React.FC = () => {
       <Header activeColorIndex={randomColorIndex} />
 
       {/* Main Container */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-6 py-12 md:py-20 space-y-16 md:space-y-20 overflow-x-hidden">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-6 pt-24 md:pt-32 pb-12 md:pb-20 space-y-16 md:space-y-20 overflow-x-hidden">
         {/* Hero Section */}
         <section
           id="hero"
