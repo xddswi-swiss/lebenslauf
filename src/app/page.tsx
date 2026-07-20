@@ -9,7 +9,6 @@ import { ContactForm } from '@/components/ContactForm';
 import { Guestbook } from '@/components/Guestbook';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { RecruiterWidget } from '@/components/RecruiterWidget';
 import { ScrollToTopButton } from '@/components/ScrollToTopButton';
 import { DownloadButton } from '@/components/DownloadButton';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
@@ -744,7 +743,6 @@ const MainContent: React.FC = () => {
       <Footer activeColorIndex={randomColorIndex} />
       {/* Scroll to Top Button */}
       <ScrollToTopButton />
-      <RecruiterWidget />
     </div>
   );
 };
