@@ -47,11 +47,11 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${robotoFlex.variable} ${ptSerif.variable} ${syne.variable} h-full antialiased bw-mode`}
+      className={`${robotoFlex.variable} ${ptSerif.variable} ${syne.variable} h-full antialiased bw-mode overflow-x-hidden`}
       suppressHydrationWarning
     >
       <head />
-      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+      <body className="min-h-full flex flex-col overflow-x-hidden" suppressHydrationWarning>
         <ThemeInitializer />
         <ThemeProvider>
           <LanguageProvider>
