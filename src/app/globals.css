@@ -979,6 +979,19 @@ body {
   max-width: 100vw;
 }
 
+/* 
+  CRITICAL FIX FOR iOS SAFARI (Two-finger zoom & horizontal pan)
+  We apply overflow-x: hidden ONLY on iOS to avoid breaking the mouse wheel in Windows Edge/Chrome.
+  -webkit-touch-callout: none is exclusively supported by iOS Safari.
+*/
+@supports (-webkit-touch-callout: none) {
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden !important;
+    position: relative; /* Sometimes required by iOS to enforce overflow hidden */
+  }
+}
+
 /* Horizontal Skills Beam Scanner Layout */
 .skills-scanner-container {
   position: relative;
