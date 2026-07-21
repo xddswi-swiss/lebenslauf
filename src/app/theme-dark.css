@@ -200,7 +200,7 @@ html.dark:not(.bw-mode) .skills-ascii-content {
 }
 
 /* --- Unified Button Styling for Dark/Blue Theme --- */
-:root.dark:not(.bw-mode) button.bg-primary:not(.bw-switch-container *),
+:root.dark:not(.bw-mode) button.bg-primary:not(.bw-switch-container *):not(.scroll-top-btn),
 :root.dark:not(.bw-mode) a.bg-primary:not(.bw-switch-container *),
 :root.dark:not(.bw-mode) button[type="submit"]:not(.bw-switch-container *),
 :root.dark:not(.bw-mode) .cb-btn {
@@ -213,7 +213,7 @@ html.dark:not(.bw-mode) .skills-ascii-content {
   box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1) !important;
 }
 
-:root.dark:not(.bw-mode) button.bg-primary:not(.bw-switch-container *):hover,
+:root.dark:not(.bw-mode) button.bg-primary:not(.bw-switch-container *):not(.scroll-top-btn):hover,
 :root.dark:not(.bw-mode) a.bg-primary:not(.bw-switch-container *):hover,
 :root.dark:not(.bw-mode)
   button[type="submit"]:not(.bw-switch-container *):hover,
@@ -225,7 +225,7 @@ html.dark:not(.bw-mode) .skills-ascii-content {
   transform: translateY(-2px) !important;
 }
 
-:root.dark:not(.bw-mode) button.bg-primary:not(.bw-switch-container *):active,
+:root.dark:not(.bw-mode) button.bg-primary:not(.bw-switch-container *):not(.scroll-top-btn):active,
 :root.dark:not(.bw-mode) a.bg-primary:not(.bw-switch-container *):active,
 :root.dark:not(.bw-mode)
   button[type="submit"]:not(.bw-switch-container *):active,

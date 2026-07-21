@@ -142,7 +142,7 @@ export const ScrollToTopButton: React.FC = () => {
             onClick={handleClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 p-3 rounded-full bg-primary hover:opacity-95 text-white shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all duration-300 cursor-pointer flex items-center justify-center w-14 h-14"
+            className="scroll-top-btn fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 p-3 rounded-full bg-primary hover:opacity-95 text-white shadow-lg shadow-primary/30 hover:shadow-primary/50 cursor-pointer flex items-center justify-center w-14 h-14"
             aria-label="Scroll to top"
           >
             <svg

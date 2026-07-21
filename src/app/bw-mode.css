@@ -533,7 +533,7 @@
 
 /* Smooth Transitions for interactive elements */
 .bw-mode .glass-card,
-.bw-mode button,
+.bw-mode button:not(.scroll-top-btn),
 .bw-mode a,
 .bw-mode .stat-card-1,
 .bw-mode .stat-card-2 {
@@ -560,7 +560,7 @@
 }
 
 /* Brutalist hover for buttons */
-.bw-mode button:not(.bw-switch-container *):hover,
+.bw-mode button:not(.bw-switch-container *):not(.scroll-top-btn):hover,
 .bw-mode a.bg-primary:hover,
 .bw-mode .cb-btn:hover {
   transform: translateY(-2px) !important;
@@ -568,7 +568,7 @@
 }
 
 /* Button Active/Pressed state */
-.bw-mode button:not(.bw-switch-container *):active,
+.bw-mode button:not(.bw-switch-container *):not(.scroll-top-btn):active,
 .bw-mode a.bg-primary:active,
 .bw-mode .cb-btn:active {
   transform: translateY(2px) !important;

@@ -183,7 +183,7 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
 }
 
 /* Unified Button Styling (Glass + Orange Hover) */
-:root:not(.dark):not(.bw-mode) button.bg-primary,
+:root:not(.dark):not(.bw-mode) button.bg-primary:not(.scroll-top-btn),
 :root:not(.dark):not(.bw-mode) a.bg-primary,
 :root:not(.dark):not(.bw-mode) button[type="submit"],
 :root:not(.dark):not(.bw-mode) .cb-btn {
@@ -196,7 +196,7 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
 }
 
-:root:not(.dark):not(.bw-mode) button.bg-primary:hover,
+:root:not(.dark):not(.bw-mode) button.bg-primary:not(.scroll-top-btn):hover,
 :root:not(.dark):not(.bw-mode) a.bg-primary:hover,
 :root:not(.dark):not(.bw-mode) button[type="submit"]:hover,
 :root:not(.dark):not(.bw-mode) .cb-btn:hover {
