@@ -4,36 +4,32 @@ import { useEffect } from "react";
 
 export default function ZoomBlocker() {
   useEffect(() => {
-    // Sadece dokunmatik ekran hareketlerini engellemek için fonksiyonlar
-    const handleTouchMove = (event: TouchEvent) => {
-      // Eğer ekranda birden fazla parmak varsa (iki parmakla büyütme yapılıyorsa) engelle
-      if (event.touches && event.touches.length > 1) {
-        if (event.cancelable) {
-          event.preventDefault();
-        }
-      }
+    // 1. Safari'ye özel "iki parmakla büyütme" jestini anında öldürür
+    const preventGesture = (e: Event) => {
+      e.preventDefault();
     };
 
+    // 2. Çift dokunma (double-tap) ile yakınlaştırmayı engeller
     let lastTouchEnd = 0;
-    const handleTouchEnd = (event: TouchEvent) => {
+    const preventDoubleTap = (e: TouchEvent) => {
       const now = new Date().getTime();
       if (now - lastTouchEnd <= 300) {
-        // Çift dokunarak büyütmeyi engelle ama normal buton tıklamalarına dokunma
-        if (event.cancelable) {
-          event.preventDefault();
-        }
+        if (e.cancelable) e.preventDefault();
       }
       lastTouchEnd = now;
     };
 
-    // Bu dinleyicileri SADECE dokunmatik cihazlarda çalışacak şekilde ekliyoruz
-    // 'passive: false' tarayıcının bu engellemeyi zorunlu kılmasını sağlar
-    document.addEventListener("touchmove", handleTouchMove, { passive: false });
-    document.addEventListener("touchend", handleTouchEnd, { passive: false });
+    // Olay Dinleyicileri
+    document.addEventListener("gesturestart", preventGesture, { passive: false });
+    document.addEventListener("gesturechange", preventGesture, { passive: false });
+    document.addEventListener("gestureend", preventGesture, { passive: false });
+    document.addEventListener("touchend", preventDoubleTap, { passive: false });
 
     return () => {
-      document.removeEventListener("touchmove", handleTouchMove);
-      document.removeEventListener("touchend", handleTouchEnd);
+      document.removeEventListener("gesturestart", preventGesture);
+      document.removeEventListener("gesturechange", preventGesture);
+      document.removeEventListener("gestureend", preventGesture);
+      document.removeEventListener("touchend", preventDoubleTap);
     };
   }, []);
 
