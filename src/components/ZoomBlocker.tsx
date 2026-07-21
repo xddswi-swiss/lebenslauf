@@ -19,17 +19,28 @@ export default function ZoomBlocker() {
       lastTouchEnd = now;
     };
 
+    // 3. Sayfa kayarken (momentum scroll) ikinci parmak değdiğinde büyütmeyi engeller
+    const preventMultiTouchMove = (e: TouchEvent) => {
+      if (e.touches && e.touches.length > 1) {
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+      }
+    };
+
     // Olay Dinleyicileri
     document.addEventListener("gesturestart", preventGesture, { passive: false });
     document.addEventListener("gesturechange", preventGesture, { passive: false });
     document.addEventListener("gestureend", preventGesture, { passive: false });
     document.addEventListener("touchend", preventDoubleTap, { passive: false });
+    document.addEventListener("touchmove", preventMultiTouchMove, { passive: false });
 
     return () => {
       document.removeEventListener("gesturestart", preventGesture);
       document.removeEventListener("gesturechange", preventGesture);
       document.removeEventListener("gestureend", preventGesture);
       document.removeEventListener("touchend", preventDoubleTap);
+      document.removeEventListener("touchmove", preventMultiTouchMove);
     };
   }, []);
 
