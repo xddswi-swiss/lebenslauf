@@ -17,6 +17,17 @@ export function ThemeInitializer() {
           document.addEventListener('gesturestart', function(e) {
             e.preventDefault();
           });
+          
+          // Prevent zoom during momentum scroll (inertia)
+          function preventMultiTouch(e) {
+            if (e.touches && e.touches.length > 1) {
+              if (e.cancelable) {
+                e.preventDefault();
+              }
+            }
+          }
+          document.addEventListener('touchstart', preventMultiTouch, { passive: false });
+          document.addEventListener('touchmove', preventMultiTouch, { passive: false });
         `,
       }}
     />

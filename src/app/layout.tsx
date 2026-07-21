@@ -8,7 +8,6 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { ThemeInitializer } from "@/components/ThemeInitializer";
 import CookieConsent from "@/components/CookieConsent";
-import ZoomBlocker from "@/components/ZoomBlocker";
 const robotoFlex = Roboto_Flex({
   variable: "--font-sans",
   subsets: ["latin"],
@@ -35,8 +34,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export default function RootLayout({
@@ -57,7 +54,6 @@ export default function RootLayout({
           <LanguageProvider>
             {children}
             <CookieConsent />
-            <ZoomBlocker />
           </LanguageProvider>
         </ThemeProvider>
       </body>
