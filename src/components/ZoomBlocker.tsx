@@ -19,8 +19,8 @@ export default function ZoomBlocker() {
       lastTouchEnd = now;
     };
 
-    // 3. Sayfa kayarken (momentum scroll) ikinci parmak değdiğinde büyütmeyi engeller
-    const preventMultiTouchMove = (e: TouchEvent) => {
+    // 3. Sayfa kayarken (momentum scroll) veya dururken ikinci parmak değdiğinde büyütmeyi engeller
+    const preventMultiTouch = (e: TouchEvent) => {
       if (e.touches && e.touches.length > 1) {
         if (e.cancelable) {
           e.preventDefault();
@@ -33,14 +33,16 @@ export default function ZoomBlocker() {
     document.addEventListener("gesturechange", preventGesture, { passive: false });
     document.addEventListener("gestureend", preventGesture, { passive: false });
     document.addEventListener("touchend", preventDoubleTap, { passive: false });
-    document.addEventListener("touchmove", preventMultiTouchMove, { passive: false });
+    document.addEventListener("touchmove", preventMultiTouch, { passive: false });
+    document.addEventListener("touchstart", preventMultiTouch, { passive: false });
 
     return () => {
       document.removeEventListener("gesturestart", preventGesture);
       document.removeEventListener("gesturechange", preventGesture);
       document.removeEventListener("gestureend", preventGesture);
       document.removeEventListener("touchend", preventDoubleTap);
-      document.removeEventListener("touchmove", preventMultiTouchMove);
+      document.removeEventListener("touchmove", preventMultiTouch);
+      document.removeEventListener("touchstart", preventMultiTouch);
     };
   }, []);
 
