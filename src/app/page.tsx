@@ -13,6 +13,7 @@ import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import { DownloadButton } from "@/components/DownloadButton";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import Strands from "@/components/Strands";
+import ElectricBorder from "@/components/ElectricBorder";
 import { motion as m, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -82,6 +83,7 @@ const STATS_LETZTE_AKTUALISIERUNG = "19.06.2026"; // Son Güncelleme Tarihi
 
 const MainContent: React.FC = () => {
   const { t, language } = useLanguage();
+  const { theme } = useTheme();
   const [randomColorIndex, setRandomColorIndex] = useState<number>(-1);
   const [selectedMatcher, setSelectedMatcher] = useState<
     "kaufmann" | "elektro" | null
@@ -525,18 +527,31 @@ const MainContent: React.FC = () => {
             <m.div
               whileHover={{ scale: 1.01 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="lg:col-span-7 glass-card p-6 md:p-8 rounded-3xl flex flex-col justify-center space-y-6 border border-[var(--glass-border)] hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 cursor-default"
+              className="lg:col-span-7 flex flex-col justify-center cursor-default"
             >
-              <h2 className="text-3xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block mb-2">
-                {t.about.title}
-              </h2>
-              <h4 className="text-xl font-bold text-[var(--text-main)]">
-                {t.about.intro}
-              </h4>
-              <p
-                className="text-[var(--text-body)] text-base md:text-lg leading-relaxed whitespace-pre-line"
-                dangerouslySetInnerHTML={{ __html: t.about.description }}
-              />
+              <ElectricBorder
+                color={theme === "dark" ? "#00FFCC" : "#000000"}
+                glowColor={theme === "dark" ? "#3B82F6" : "#FF6C02"}
+                thickness={3.5}
+                speed={1.2}
+                chaos={3.5}
+                borderRadius={24}
+                glowIntensity={8}
+                className="w-full h-full"
+              >
+                <div className="glass-card p-6 md:p-8 rounded-3xl flex flex-col justify-center space-y-6 border border-[var(--glass-border)] hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 h-full w-full">
+                  <h2 className="text-3xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block mb-2">
+                    {t.about.title}
+                  </h2>
+                  <h4 className="text-xl font-bold text-[var(--text-main)]">
+                    {t.about.intro}
+                  </h4>
+                  <p
+                    className="text-[var(--text-body)] text-base md:text-lg leading-relaxed whitespace-pre-line"
+                    dangerouslySetInnerHTML={{ __html: t.about.description }}
+                  />
+                </div>
+              </ElectricBorder>
             </m.div>
 
             <div className="lg:col-span-5 glass-card p-6 md:p-8 rounded-3xl space-y-6 flex flex-col justify-between max-w-[360px] w-full lg:ml-auto mx-auto">
