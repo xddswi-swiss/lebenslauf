@@ -533,7 +533,7 @@ const MainContent: React.FC = () => {
                 color={theme === "dark" ? "#00FFCC" : "#000000"}
                 glowColor={theme === "dark" ? "#3B82F6" : "#FF6C02"}
                 thickness={1}
-                speed={1.2}
+                speed={0.5}
                 chaos={3.5}
                 borderRadius={24}
                 glowIntensity={8}

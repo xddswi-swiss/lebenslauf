@@ -155,7 +155,7 @@ interface ElectricBorderProps {
 export default function ElectricBorder({
   color = "#FFFFFF",
   bgColor = "transparent",
-  speed = 1,
+  speed = 0.5,
   chaos = 4,
   thickness = 1,
   borderRadius = 24,
