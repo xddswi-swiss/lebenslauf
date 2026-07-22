@@ -157,7 +157,7 @@ export default function ElectricBorder({
   bgColor = "transparent",
   speed = 1,
   chaos = 4,
-  thickness = 1.8,
+  thickness = 1,
   borderRadius = 24,
   glow = true,
   glowColor = "#00FFCC",
