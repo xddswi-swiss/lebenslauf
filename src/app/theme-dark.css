@@ -29,11 +29,19 @@
   );
   --glass-border: rgba(59, 130, 246, 0.3);
   --grid-color: rgba(255, 255, 255, 0.03);
-  --badge-bg: rgba(59, 130, 246, 0.15);
-  --badge-border: rgba(59, 130, 246, 0.4);
+  --badge-bg: rgba(56, 189, 248, 0.22);
+  --badge-border: rgba(56, 189, 248, 0.5);
 
   --title-gradient-from: #ffffff;
   --title-gradient-to: #94a3b8;
+}
+
+/* Vibrant Light Blue Status Badge for Dark Theme */
+:root.dark:not(.bw-mode) .status-badge {
+  background-color: #85c7f2 !important;
+  border: 1px solid #bbe3fb !important;
+  color: #102552 !important;
+  box-shadow: 0 4px 15px rgba(133, 199, 242, 0.4) !important;
 }
 
 /* Beautiful Gradient Backgrounds and Glass Cards for Midnight Blue Theme */
