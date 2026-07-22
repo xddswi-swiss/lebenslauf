@@ -781,7 +781,7 @@ const MainContent: React.FC = () => {
                       key={index}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="group flex items-center gap-0 hover:gap-2.5 px-3.5 py-2.5 hover:px-5 glass-card hover:border-secondary/40 text-[var(--text-body)] hover:text-[var(--text-main)] rounded-2xl text-sm font-semibold cursor-default transition-all duration-300 shadow-sm"
+                      className="hobby-badge group flex items-center gap-0 hover:gap-2.5 px-3.5 py-2.5 hover:px-5 glass-card hover:border-secondary/40 text-[var(--text-body)] hover:text-[var(--text-main)] rounded-2xl text-sm font-semibold cursor-default transition-all duration-300 shadow-sm"
                     >
                       <span className="text-secondary text-lg flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
                         {hobby.icon}

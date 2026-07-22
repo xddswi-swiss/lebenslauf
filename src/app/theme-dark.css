@@ -36,12 +36,17 @@
   --title-gradient-to: #94a3b8;
 }
 
-/* Vibrant Light Blue Status Badge for Dark Theme */
-:root.dark:not(.bw-mode) .status-badge {
+/* Vibrant Light Blue Status & Hobby Badges for Dark Theme */
+:root.dark:not(.bw-mode) .status-badge,
+:root.dark:not(.bw-mode) .hobby-badge {
   background-color: #85c7f2 !important;
   border: 1px solid #bbe3fb !important;
   color: #102552 !important;
-  box-shadow: 0 4px 15px rgba(133, 199, 242, 0.4) !important;
+  box-shadow: 0 4px 15px rgba(133, 199, 242, 0.3) !important;
+}
+
+:root.dark:not(.bw-mode) .hobby-badge * {
+  color: #102552 !important;
 }
 
 /* Beautiful Gradient Backgrounds and Glass Cards for Midnight Blue Theme */
