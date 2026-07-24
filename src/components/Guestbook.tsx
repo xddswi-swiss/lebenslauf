@@ -10,6 +10,12 @@ import {
   FiCalendar,
   FiCheck,
   FiLoader,
+  FiChevronLeft,
+  FiChevronRight,
+  FiEdit3,
+  FiArrowLeft,
+  FiHeart,
+  FiCheckCircle,
 } from "react-icons/fi";
 
 interface GuestbookMessage {
@@ -22,6 +28,10 @@ interface GuestbookMessage {
 export const Guestbook: React.FC = () => {
   const { language } = useLanguage();
   const [messages, setMessages] = useState<GuestbookMessage[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [mode, setMode] = useState<"view" | "write">("view");
+
+  // Form states
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -69,59 +79,69 @@ export const Guestbook: React.FC = () => {
   const translations = {
     de: {
       title: "Gästebuch",
-      subtitle:
-        "Hinterlassen Sie mir eine Nachricht, ein Feedback oder ein nettes Wort!",
+      subtitle: "Hinterlassen Sie mir eine Nachricht, ein Feedback oder ein nettes Wort!",
+      ctaText: "Möchten Sie mir auch eine Nachricht hinterlassen?",
+      ctaTextBack: "Möchten Sie zurück zu den gespeicherten Nachrichten?",
+      btnWrite: "Nachricht schreiben",
+      btnBack: "Zurück zu den Nachrichten",
       lblName: "Ihr Name *",
       lblMessage: "Ihre Nachricht *",
       btnSubmit: "Nachricht absenden",
-      placeholderName: "Name eingeben...",
-      placeholderMessage: "Nachricht eingeben...",
+      placeholderName: "Ihr Name eingeben...",
+      placeholderMessage: "Schreiben Sie etwas Schönes hier hinein...",
       emptyFeed: "Noch keine Nachrichten vorhanden. Schreiben Sie die erste!",
       successMsg: "Nachricht erfolgreich hinzugefügt! Vielen Dank.",
       errFields: "Bitte alle Felder ausfüllen.",
       captchaTitle: "Spamschutz-Sicherheitsfrage",
       captchaPlaceholder: "Ergebnis eingeben...",
-      captchaInstruction:
-        "Geben Sie das mathematische Ergebnis ein, um Spam zu verhindern.",
-      captchaError:
-        "Das Rechenergebnis ist falsch. Bitte versuchen Sie es erneut.",
+      captchaInstruction: "Geben Sie das mathematische Ergebnis ein, um Spam zu verhindern.",
+      captchaError: "Das Rechenergebnis ist falsch. Bitte versuchen Sie es erneut.",
       errCaptcha: "Spamschutz-Antwort fehlt oder ist falsch.",
+      msgCounter: "Nachricht",
     },
     tr: {
       title: "Ziyaretçi Defteri",
       subtitle: "Bana bir mesaj, geri bildirim veya güzel bir söz bırakın!",
+      ctaText: "Siz de bana bir mesaj veya geri bildirim bırakmak ister misiniz?",
+      ctaTextBack: "Kayıtlı mesajlara geri dönmek ister misiniz?",
+      btnWrite: "Mesaj Yaz",
+      btnBack: "Mesajlara Dön",
       lblName: "Adınız *",
       lblMessage: "Mesajınız *",
       btnSubmit: "Mesajı Gönder",
       placeholderName: "Adınızı girin...",
-      placeholderMessage: "Mesajınızı yazın...",
+      placeholderMessage: "Buraya güzel düşüncelerinizi yazın...",
       emptyFeed: "Henüz mesaj yazılmamış. İlk mesajı siz yazın!",
       successMsg: "Mesajınız başarıyla eklendi! Teşekkürler.",
       errFields: "Lütfen tüm alanları doldurun.",
       captchaTitle: "Spam Koruması Güvenlik Sorusu",
       captchaPlaceholder: "Sonucu girin...",
-      captchaInstruction:
-        "Spam mesajları engellemek için lütfen yukarıdaki işlemi yapın.",
+      captchaInstruction: "Spam mesajları engellemek için lütfen yukarıdaki işlemi yapın.",
       captchaError: "İşlem sonucu yanlış, lütfen tekrar deneyin.",
       errCaptcha: "Spam koruması cevabı eksik veya hatalı.",
+      msgCounter: "Mesaj",
     },
     en: {
       title: "Guestbook",
       subtitle: "Leave me a message, feedback, or just say hello!",
+      ctaText: "Would you like to leave me a message or feedback too?",
+      ctaTextBack: "Would you like to go back to reading messages?",
+      btnWrite: "Write a Message",
+      btnBack: "Back to Messages",
       lblName: "Your Name *",
       lblMessage: "Your Message *",
       btnSubmit: "Send Message",
       placeholderName: "Enter your name...",
-      placeholderMessage: "Enter your message...",
+      placeholderMessage: "Write your nice message here...",
       emptyFeed: "No messages yet. Be the first to write one!",
       successMsg: "Message successfully posted! Thank you.",
       errFields: "Please fill in all fields.",
       captchaTitle: "Anti-Spam Security Question",
       captchaPlaceholder: "Enter result...",
-      captchaInstruction:
-        "Solve the math problem above to prevent automated spam.",
+      captchaInstruction: "Solve the math problem above to prevent automated spam.",
       captchaError: "The math result is incorrect. Please try again.",
       errCaptcha: "Spam protection answer is missing or incorrect.",
+      msgCounter: "Message",
     },
   };
 
@@ -132,7 +152,7 @@ export const Guestbook: React.FC = () => {
       const res = await fetch("/api/guestbook");
       if (res.ok) {
         const data = await res.json();
-        setMessages(data);
+        setMessages(data || []);
       }
     } catch (err) {
       console.error("Error fetching guestbook:", err);
@@ -142,11 +162,6 @@ export const Guestbook: React.FC = () => {
   useEffect(() => {
     fetchMessages();
     generateCaptcha();
-
-    // Listen to updates from other pages
-    const handleRefresh = () => fetchMessages();
-    window.addEventListener("guestbook-updated", handleRefresh);
-    return () => window.removeEventListener("guestbook-updated", handleRefresh);
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -180,9 +195,11 @@ export const Guestbook: React.FC = () => {
         setSuccess(true);
         setName("");
         setMessage("");
-        fetchMessages();
         generateCaptcha();
-        setTimeout(() => setSuccess(false), 4000);
+        await fetchMessages();
+        setCurrentIndex(0); // Focus on the brand new message!
+        setMode("view"); // Return to showcase view
+        setTimeout(() => setSuccess(false), 5000);
       } else {
         const errData = await res.json();
         setErrorMsg(errData.error || "Failed to submit.");
@@ -213,167 +230,285 @@ export const Guestbook: React.FC = () => {
     }
   };
 
+  const handleNext = () => {
+    if (messages.length === 0) return;
+    setCurrentIndex((prev) => (prev + 1) % messages.length);
+  };
+
+  const handlePrev = () => {
+    if (messages.length === 0) return;
+    setCurrentIndex((prev) => (prev - 1 + messages.length) % messages.length);
+  };
+
+  const currentMsg = messages[currentIndex];
+
   return (
-    <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      {/* Form Area */}
-      <div className="lg:col-span-5 glass-card p-5 md:p-6 rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] relative overflow-hidden shadow-lg space-y-4">
-        <div>
-          <h3 className="text-xl font-black text-[var(--text-main)] flex items-center gap-2">
-            <FiMessageSquare className="text-primary text-xl" />
-            {t.title}
-          </h3>
-          <p className="text-xs text-[var(--text-muted)] mt-1.5 leading-relaxed">
-            {t.subtitle}
-          </p>
+    <div className="max-w-4xl mx-auto w-full space-y-6">
+      {/* Toast Notification */}
+      {success && (
+        <m.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-semibold flex items-center justify-center gap-2 shadow-lg max-w-lg mx-auto"
+        >
+          <FiCheck className="text-lg flex-shrink-0" />
+          <span>{t.successMsg}</span>
+        </m.div>
+      )}
+
+      {/* FIXED OUTER GLASS PANEL CONTAINER */}
+      <div className="glass-card p-6 md:p-10 rounded-3xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] shadow-2xl relative overflow-hidden flex flex-col justify-between h-[620px]">
+        
+        {/* CONSTANT TOP HEADER BAR */}
+        <div className="flex items-center justify-between border-b border-[var(--glass-border)] pb-5 h-[65px] flex-shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-2xl bg-primary/10 border border-primary/20 text-primary">
+              <FiMessageSquare className="text-xl" />
+            </div>
+            <div>
+              <h3 className="text-lg md:text-xl font-extrabold text-[var(--text-main)] font-logo tracking-wide">
+                {t.title}
+              </h3>
+              <p className="text-xs text-[var(--text-muted)]">
+                {mode === "view" && messages.length > 0
+                  ? `${t.msgCounter} ${currentIndex + 1} / ${messages.length}`
+                  : t.subtitle}
+              </p>
+            </div>
+          </div>
+
+          {/* Controls: Arrows in View Mode, Back Button in Write Mode */}
+          {mode === "view" ? (
+            messages.length > 1 && (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handlePrev}
+                  className="p-2.5 rounded-xl glass-card hover:border-primary text-[var(--text-main)] hover:text-primary transition-all cursor-pointer hover:scale-105 active:scale-95 border border-[var(--glass-border)]"
+                  aria-label="Previous Message"
+                >
+                  <FiChevronLeft className="text-lg" />
+                </button>
+                <span className="font-mono text-xs font-bold text-[var(--text-muted)] px-2">
+                  {currentIndex + 1} / {messages.length}
+                </span>
+                <button
+                  onClick={handleNext}
+                  className="p-2.5 rounded-xl glass-card hover:border-primary text-[var(--text-main)] hover:text-primary transition-all cursor-pointer hover:scale-105 active:scale-95 border border-[var(--glass-border)]"
+                  aria-label="Next Message"
+                >
+                  <FiChevronRight className="text-lg" />
+                </button>
+              </div>
+            )
+          ) : (
+            <button
+              onClick={() => setMode("view")}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl glass-card hover:border-primary text-xs font-bold text-[var(--text-main)] hover:text-primary transition-all cursor-pointer border border-[var(--glass-border)]"
+            >
+              <FiArrowLeft className="text-sm" />
+              <span>{t.btnBack}</span>
+            </button>
+          )}
         </div>
 
-        {success && (
-          <m.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold flex items-center gap-2"
-          >
-            <FiCheck className="text-base flex-shrink-0" />
-            <span>{t.successMsg}</span>
-          </m.div>
-        )}
-
-        {errorMsg && (
-          <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold flex items-center gap-2">
-            <span>⚠️ {errorMsg}</span>
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">
-              {t.lblName}
-            </label>
-            <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)]">
-                <FiUser className="text-sm" />
-              </span>
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder={t.placeholderName}
-                className="w-full pl-10 pr-4 py-3 rounded-xl bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all"
-              />
-            </div>
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">
-              {t.lblMessage}
-            </label>
-            <textarea
-              required
-              rows={4}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder={t.placeholderMessage}
-              className="w-full px-4 py-3 rounded-xl bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all min-h-[100px] leading-relaxed resize-none"
-            />
-          </div>
-
-          {/* Math Captcha Box */}
-          <div className="p-5 glass-card rounded-2xl border border-[var(--glass-border)] bg-zinc-900/10 space-y-4">
-            <div className="flex flex-col gap-1.5 text-sm font-bold text-[var(--text-main)]">
-              <div className="flex items-center gap-2">
-                <span>🔢</span>
-                <span>{t.captchaTitle}</span>
-              </div>
-              <div
-                suppressHydrationWarning
-                className="pl-7 text-lg font-black text-primary tracking-wide"
-              >
-                {captcha?.text}
-              </div>
-            </div>
-            <input
-              type="text"
-              required
-              placeholder={t.captchaPlaceholder}
-              value={userCaptchaAnswer}
-              onChange={(e) => {
-                setUserCaptchaAnswer(e.target.value);
-                setCaptchaError(false);
-              }}
-              disabled={isSubmitting}
-              className="w-full px-4 py-3 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:border-primary transition-all text-sm disabled:opacity-50"
-            />
-            {captchaError && (
-              <p className="text-xs text-rose-400 font-bold mt-1">
-                ❌ {t.captchaError}
-              </p>
-            )}
-            <p className="text-xs text-[var(--text-muted)] font-medium">
-              {t.captchaInstruction}
-            </p>
-          </div>
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full py-3.5 rounded-xl bg-primary hover:opacity-95 disabled:opacity-50 text-white font-bold text-sm shadow-md shadow-primary/10 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] disabled:cursor-not-allowed"
-          >
-            {isSubmitting ? (
-              <FiLoader className="animate-spin text-base" />
-            ) : (
-              <FiSend className="text-base" />
-            )}
-            {t.btnSubmit}
-          </button>
-        </form>
-      </div>
-
-      {/* Feed Area */}
-      <div
-        suppressHydrationWarning
-        className="lg:col-span-7 space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar"
-      >
-        <AnimatePresence initial={false}>
-          {messages.length === 0 ? (
-            <m.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="p-8 text-center text-sm text-[var(--text-muted)] glass-card rounded-3xl border border-[var(--glass-border)]"
-            >
-              {t.emptyFeed}
-            </m.div>
-          ) : (
-            messages.map((msg) => (
+        {/* INNER SWAPPABLE PANEL BOX (EXACT SAME 410px HEIGHT IN BOTH MODES) */}
+        <div className="my-4 flex-1 h-[410px] min-h-[410px] max-h-[410px] overflow-hidden relative">
+          <AnimatePresence mode="wait">
+            {mode === "view" ? (
+              /* --- VIEW MODE: DISPLAY CURRENT MESSAGE --- */
               <m.div
-                key={msg.id}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ type: "spring", stiffness: 100, damping: 15 }}
-                className="p-5 glass-card rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] shadow-sm space-y-2.5 relative group"
+                key="inner-view-mode"
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="h-full flex flex-col justify-between space-y-4"
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-primary font-black text-sm">
-                      {msg.name.charAt(0).toUpperCase()}
+                {messages.length === 0 ? (
+                  <div className="text-center space-y-4 py-16 h-full flex flex-col items-center justify-center">
+                    <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl font-bold shadow-inner">
+                      <FiHeart />
                     </div>
-                    <span className="text-sm font-bold text-[var(--text-main)]">
-                      {msg.name}
-                    </span>
+                    <p className="text-base md:text-lg font-semibold text-[var(--text-muted)]">
+                      {t.emptyFeed}
+                    </p>
                   </div>
-                  <span className="text-[10px] text-[var(--text-muted)] flex items-center gap-1">
-                    <FiCalendar />
-                    {formatDate(msg.created_at)}
-                  </span>
-                </div>
-                <p className="text-sm text-[var(--text-body)] leading-relaxed whitespace-pre-line pl-10">
-                  {msg.message}
-                </p>
+                ) : (
+                  <AnimatePresence mode="wait">
+                    <m.div
+                      key={currentMsg.id}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.25 }}
+                      className="h-full flex flex-col justify-between space-y-4"
+                    >
+                      {/* Author Header */}
+                      <div className="flex items-center justify-between h-[52px] flex-shrink-0">
+                        <div className="flex items-center gap-3.5">
+                          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 via-primary to-secondary flex items-center justify-center text-white font-black text-xl shadow-lg shadow-primary/20">
+                            {currentMsg.name.charAt(0).toUpperCase()}
+                          </div>
+                          <div>
+                            <h4 className="text-lg md:text-xl font-bold text-[var(--text-main)]">
+                              {currentMsg.name}
+                            </h4>
+                            <span className="text-xs text-[var(--text-muted)] flex items-center gap-1 mt-0.5 font-medium">
+                              <FiCalendar className="text-xs" />
+                              {formatDate(currentMsg.created_at)}
+                            </span>
+                          </div>
+                        </div>
+
+                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">
+                          <FiCheckCircle className="text-xs" />
+                          <span>Approved</span>
+                        </span>
+                      </div>
+
+                      {/* Body Message Box - EXACT MATCHING INNER HEIGHT */}
+                      <div className="p-6 md:p-8 rounded-2xl bg-[var(--badge-bg)] border border-[var(--glass-border)] flex-1 h-[340px] overflow-y-auto custom-scrollbar flex flex-col justify-start">
+                        <p className="text-base md:text-lg text-[var(--text-main)] leading-relaxed whitespace-pre-line font-sans">
+                          {currentMsg.message}
+                        </p>
+                      </div>
+                    </m.div>
+                  </AnimatePresence>
+                )}
               </m.div>
-            ))
+            ) : (
+              /* --- WRITE MODE: FORM FILLS THE EXACT SAME 410px INNER HEIGHT --- */
+              <m.div
+                key="inner-write-mode"
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="h-full flex flex-col justify-between"
+              >
+                <form onSubmit={handleSubmit} className="h-full flex flex-col justify-between">
+                  {errorMsg && (
+                    <div className="p-2.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold flex items-center gap-2 mb-2">
+                      <span>⚠️ {errorMsg}</span>
+                    </div>
+                  )}
+
+                  <div className="space-y-3 flex-1 flex flex-col justify-between">
+                    {/* Name Input */}
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                        {t.lblName}
+                      </label>
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)]">
+                          <FiUser className="text-sm" />
+                        </span>
+                        <input
+                          type="text"
+                          required
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder={t.placeholderName}
+                          className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all shadow-sm"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Message Textarea - EXPANDS TO FILL THE PANEL */}
+                    <div className="space-y-1 flex-1 flex flex-col">
+                      <label className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                        {t.lblMessage}
+                      </label>
+                      <textarea
+                        required
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder={t.placeholderMessage}
+                        className="w-full px-4 py-3 rounded-xl bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all flex-1 min-h-[120px] leading-relaxed resize-none shadow-sm"
+                      />
+                    </div>
+
+                    {/* Math Captcha Box */}
+                    <div className="p-3 glass-card rounded-2xl border border-[var(--glass-border)] bg-zinc-900/10 space-y-2">
+                      <div className="flex items-center justify-between text-xs md:text-sm font-bold text-[var(--text-main)]">
+                        <div className="flex items-center gap-2">
+                          <span>🔢</span>
+                          <span>{t.captchaTitle}</span>
+                        </div>
+                        <div
+                          suppressHydrationWarning
+                          className="text-base font-black text-primary tracking-wide font-mono"
+                        >
+                          {captcha?.text}
+                        </div>
+                      </div>
+                      <input
+                        type="text"
+                        required
+                        placeholder={t.captchaPlaceholder}
+                        value={userCaptchaAnswer}
+                        onChange={(e) => {
+                          setUserCaptchaAnswer(e.target.value);
+                          setCaptchaError(false);
+                        }}
+                        disabled={isSubmitting}
+                        className="w-full px-4 py-2 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:border-primary transition-all text-sm disabled:opacity-50"
+                      />
+                      {captchaError && (
+                        <p className="text-xs text-rose-400 font-bold">
+                          ❌ {t.captchaError}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="pt-3 flex justify-end">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full sm:w-auto px-8 py-3 rounded-xl bg-primary hover:opacity-95 disabled:opacity-50 text-white font-bold text-xs md:text-sm shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? (
+                        <FiLoader className="animate-spin text-base" />
+                      ) : (
+                        <FiSend className="text-base" />
+                      )}
+                      {t.btnSubmit}
+                    </button>
+                  </div>
+                </form>
+              </m.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* CONSTANT BOTTOM CTA BAR (EXACT 60px HEIGHT) */}
+        <div className="pt-4 border-t border-[var(--glass-border)] flex flex-col sm:flex-row items-center justify-between gap-4 h-[60px] flex-shrink-0">
+          <p className="text-xs md:text-sm text-[var(--text-muted)] font-medium text-center sm:text-left">
+            {mode === "view" ? t.ctaText : t.ctaTextBack}
+          </p>
+
+          {mode === "view" ? (
+            <button
+              onClick={() => {
+                generateCaptcha();
+                setMode("write");
+              }}
+              className="px-6 py-3.5 rounded-2xl bg-primary hover:opacity-90 text-white font-bold text-xs md:text-sm shadow-lg shadow-primary/20 hover:shadow-primary/35 transition-all duration-300 cursor-pointer flex items-center gap-2.5 hover:scale-[1.03] active:scale-95 w-full sm:w-auto justify-center"
+            >
+              <FiEdit3 className="text-base" />
+              <span>{t.btnWrite}</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => setMode("view")}
+              className="px-6 py-3.5 rounded-2xl glass-card hover:border-primary/50 text-[var(--text-main)] hover:text-primary font-bold text-xs md:text-sm transition-all duration-300 cursor-pointer flex items-center gap-2 border border-[var(--glass-border)] w-full sm:w-auto justify-center"
+            >
+              <FiArrowLeft className="text-base" />
+              <span>{t.btnBack}</span>
+            </button>
           )}
-        </AnimatePresence>
+        </div>
       </div>
     </div>
   );
