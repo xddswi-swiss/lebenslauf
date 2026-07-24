@@ -98,6 +98,7 @@ export const Guestbook: React.FC = () => {
       captchaError: "Das Rechenergebnis ist falsch. Bitte versuchen Sie es erneut.",
       errCaptcha: "Spamschutz-Antwort fehlt oder ist falsch.",
       msgCounter: "Nachricht",
+      badgeApproved: "Genehmigt",
     },
     tr: {
       title: "Ziyaretçi Defteri",
@@ -120,6 +121,7 @@ export const Guestbook: React.FC = () => {
       captchaError: "İşlem sonucu yanlış, lütfen tekrar deneyin.",
       errCaptcha: "Spam koruması cevabı eksik veya hatalı.",
       msgCounter: "Mesaj",
+      badgeApproved: "Onaylandı",
     },
     en: {
       title: "Guestbook",
@@ -142,6 +144,7 @@ export const Guestbook: React.FC = () => {
       captchaError: "The math result is incorrect. Please try again.",
       errCaptcha: "Spam protection answer is missing or incorrect.",
       msgCounter: "Message",
+      badgeApproved: "Approved",
     },
   };
 
@@ -362,7 +365,7 @@ export const Guestbook: React.FC = () => {
 
                         <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">
                           <FiCheckCircle className="text-xs" />
-                          <span>Approved</span>
+                          <span>{t.badgeApproved}</span>
                         </span>
                       </div>
 
