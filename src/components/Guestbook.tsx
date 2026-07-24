@@ -246,7 +246,7 @@ export const Guestbook: React.FC = () => {
   const currentMsg = messages[currentIndex];
 
   return (
-    <div className="max-w-4xl mx-auto w-full space-y-6">
+    <div className="max-w-4xl mx-auto w-full space-y-4 px-2 sm:px-0">
       {/* Toast Notification */}
       {success && (
         <m.div
@@ -259,20 +259,20 @@ export const Guestbook: React.FC = () => {
         </m.div>
       )}
 
-      {/* FIXED OUTER GLASS PANEL CONTAINER */}
-      <div className="glass-card p-6 md:p-10 rounded-3xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] shadow-2xl relative overflow-hidden flex flex-col justify-between h-[620px]">
+      {/* GLASS PANEL CONTAINER: RESPONSIVE HEIGHT (AUTO ON MOBILE, FIXED 620px ON DESKTOP) */}
+      <div className="glass-card p-4 sm:p-6 md:p-10 rounded-3xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] shadow-2xl relative overflow-hidden flex flex-col justify-between h-auto md:h-[620px]">
         
-        {/* CONSTANT TOP HEADER BAR */}
-        <div className="flex items-center justify-between border-b border-[var(--glass-border)] pb-5 h-[65px] flex-shrink-0">
+        {/* TOP HEADER BAR: CLEANLY RESPONSIVE */}
+        <div className="flex flex-wrap items-center justify-between border-b border-[var(--glass-border)] pb-4 md:pb-5 gap-3 md:h-[65px] flex-shrink-0">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-primary/10 border border-primary/20 text-primary">
-              <FiMessageSquare className="text-xl" />
+            <div className="p-2 md:p-2.5 rounded-2xl bg-primary/10 border border-primary/20 text-primary">
+              <FiMessageSquare className="text-lg md:text-xl" />
             </div>
             <div>
-              <h3 className="text-lg md:text-xl font-extrabold text-[var(--text-main)] font-logo tracking-wide">
+              <h3 className="text-base md:text-xl font-extrabold text-[var(--text-main)] font-logo tracking-wide">
                 {t.title}
               </h3>
-              <p className="text-xs text-[var(--text-muted)]">
+              <p className="text-[11px] md:text-xs text-[var(--text-muted)]">
                 {mode === "view" && messages.length > 0
                   ? `${t.msgCounter} ${currentIndex + 1} / ${messages.length}`
                   : t.subtitle}
@@ -283,30 +283,30 @@ export const Guestbook: React.FC = () => {
           {/* Controls: Arrows in View Mode, Back Button in Write Mode */}
           {mode === "view" ? (
             messages.length > 1 && (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 md:gap-2 ml-auto sm:ml-0">
                 <button
                   onClick={handlePrev}
-                  className="p-2.5 rounded-xl glass-card hover:border-primary text-[var(--text-main)] hover:text-primary transition-all cursor-pointer hover:scale-105 active:scale-95 border border-[var(--glass-border)]"
+                  className="p-2 md:p-2.5 rounded-xl glass-card hover:border-primary text-[var(--text-main)] hover:text-primary transition-all cursor-pointer hover:scale-105 active:scale-95 border border-[var(--glass-border)]"
                   aria-label="Previous Message"
                 >
-                  <FiChevronLeft className="text-lg" />
+                  <FiChevronLeft className="text-base md:text-lg" />
                 </button>
-                <span className="font-mono text-xs font-bold text-[var(--text-muted)] px-2">
+                <span className="font-mono text-xs font-bold text-[var(--text-muted)] px-1.5 md:px-2">
                   {currentIndex + 1} / {messages.length}
                 </span>
                 <button
                   onClick={handleNext}
-                  className="p-2.5 rounded-xl glass-card hover:border-primary text-[var(--text-main)] hover:text-primary transition-all cursor-pointer hover:scale-105 active:scale-95 border border-[var(--glass-border)]"
+                  className="p-2 md:p-2.5 rounded-xl glass-card hover:border-primary text-[var(--text-main)] hover:text-primary transition-all cursor-pointer hover:scale-105 active:scale-95 border border-[var(--glass-border)]"
                   aria-label="Next Message"
                 >
-                  <FiChevronRight className="text-lg" />
+                  <FiChevronRight className="text-base md:text-lg" />
                 </button>
               </div>
             )
           ) : (
             <button
               onClick={() => setMode("view")}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl glass-card hover:border-primary text-xs font-bold text-[var(--text-main)] hover:text-primary transition-all cursor-pointer border border-[var(--glass-border)]"
+              className="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 rounded-xl glass-card hover:border-primary text-xs font-bold text-[var(--text-main)] hover:text-primary transition-all cursor-pointer border border-[var(--glass-border)] ml-auto sm:ml-0"
             >
               <FiArrowLeft className="text-sm" />
               <span>{t.btnBack}</span>
@@ -314,8 +314,8 @@ export const Guestbook: React.FC = () => {
           )}
         </div>
 
-        {/* INNER SWAPPABLE PANEL BOX (EXACT SAME 410px HEIGHT IN BOTH MODES) */}
-        <div className="my-4 flex-1 h-[410px] min-h-[410px] max-h-[410px] overflow-hidden relative">
+        {/* INNER SWAPPABLE PANEL BOX */}
+        <div className="my-3 md:my-4 flex-1 h-auto md:h-[410px] md:min-h-[410px] md:max-h-[410px] relative">
           <AnimatePresence mode="wait">
             {mode === "view" ? (
               /* --- VIEW MODE: DISPLAY CURRENT MESSAGE --- */
@@ -328,11 +328,11 @@ export const Guestbook: React.FC = () => {
                 className="h-full flex flex-col justify-between space-y-4"
               >
                 {messages.length === 0 ? (
-                  <div className="text-center space-y-4 py-16 h-full flex flex-col items-center justify-center">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl font-bold shadow-inner">
+                  <div className="text-center space-y-4 py-12 md:py-16 h-full flex flex-col items-center justify-center">
+                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-xl md:text-2xl font-bold shadow-inner">
                       <FiHeart />
                     </div>
-                    <p className="text-base md:text-lg font-semibold text-[var(--text-muted)]">
+                    <p className="text-sm md:text-lg font-semibold text-[var(--text-muted)]">
                       {t.emptyFeed}
                     </p>
                   </div>
@@ -347,31 +347,31 @@ export const Guestbook: React.FC = () => {
                       className="h-full flex flex-col justify-between space-y-4"
                     >
                       {/* Author Header */}
-                      <div className="flex items-center justify-between h-[52px] flex-shrink-0">
-                        <div className="flex items-center gap-3.5">
-                          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 via-primary to-secondary flex items-center justify-center text-white font-black text-xl shadow-lg shadow-primary/20">
+                      <div className="flex flex-wrap items-center justify-between gap-2 min-h-[48px] flex-shrink-0">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br from-primary/20 via-primary to-secondary flex items-center justify-center text-white font-black text-lg md:text-xl shadow-lg shadow-primary/20 flex-shrink-0">
                             {currentMsg.name.charAt(0).toUpperCase()}
                           </div>
                           <div>
-                            <h4 className="text-lg md:text-xl font-bold text-[var(--text-main)]">
+                            <h4 className="text-base md:text-xl font-bold text-[var(--text-main)] leading-tight">
                               {currentMsg.name}
                             </h4>
-                            <span className="text-xs text-[var(--text-muted)] flex items-center gap-1 mt-0.5 font-medium">
+                            <span className="text-[11px] md:text-xs text-[var(--text-muted)] flex items-center gap-1 mt-0.5 font-medium">
                               <FiCalendar className="text-xs" />
                               {formatDate(currentMsg.created_at)}
                             </span>
                           </div>
                         </div>
 
-                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-primary text-[11px] md:text-xs font-bold border border-primary/20">
                           <FiCheckCircle className="text-xs" />
                           <span>{t.badgeApproved}</span>
                         </span>
                       </div>
 
-                      {/* Body Message Box - EXACT MATCHING INNER HEIGHT */}
-                      <div className="p-6 md:p-8 rounded-2xl bg-[var(--badge-bg)] border border-[var(--glass-border)] flex-1 h-[340px] overflow-y-auto custom-scrollbar flex flex-col justify-start">
-                        <p className="text-base md:text-lg text-[var(--text-main)] leading-relaxed whitespace-pre-line font-sans">
+                      {/* Body Message Box */}
+                      <div className="p-4 sm:p-6 md:p-8 rounded-2xl bg-[var(--badge-bg)] border border-[var(--glass-border)] flex-1 min-h-[180px] md:h-[340px] overflow-y-auto custom-scrollbar flex flex-col justify-start">
+                        <p className="text-sm md:text-lg text-[var(--text-main)] leading-relaxed whitespace-pre-line font-sans">
                           {currentMsg.message}
                         </p>
                       </div>
@@ -380,7 +380,7 @@ export const Guestbook: React.FC = () => {
                 )}
               </m.div>
             ) : (
-              /* --- WRITE MODE: FORM FILLS THE EXACT SAME 410px INNER HEIGHT --- */
+              /* --- WRITE MODE: FORM IN THE INNER BOX --- */
               <m.div
                 key="inner-write-mode"
                 initial={{ opacity: 0, scale: 0.98 }}
@@ -389,9 +389,21 @@ export const Guestbook: React.FC = () => {
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 className="h-full flex flex-col justify-between"
               >
-                <form onSubmit={handleSubmit} className="h-full flex flex-col justify-between">
+                {/* Back button visible at top of form on mobile */}
+                <div className="sm:hidden mb-3">
+                  <button
+                    type="button"
+                    onClick={() => setMode("view")}
+                    className="w-full flex items-center justify-center gap-2 py-2 rounded-xl glass-card text-xs font-bold text-[var(--text-main)] border border-[var(--glass-border)]"
+                  >
+                    <FiArrowLeft className="text-xs" />
+                    <span>{t.btnBack}</span>
+                  </button>
+                </div>
+
+                <form onSubmit={handleSubmit} className="h-full flex flex-col justify-between space-y-3">
                   {errorMsg && (
-                    <div className="p-2.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold flex items-center gap-2 mb-2">
+                    <div className="p-2.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold flex items-center gap-2">
                       <span>⚠️ {errorMsg}</span>
                     </div>
                   )}
@@ -417,17 +429,18 @@ export const Guestbook: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Message Textarea - EXPANDS TO FILL THE PANEL */}
+                    {/* Message Textarea */}
                     <div className="space-y-1 flex-1 flex flex-col">
                       <label className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">
                         {t.lblMessage}
                       </label>
                       <textarea
                         required
+                        rows={4}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder={t.placeholderMessage}
-                        className="w-full px-4 py-3 rounded-xl bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all flex-1 min-h-[120px] leading-relaxed resize-none shadow-sm"
+                        className="w-full px-4 py-3 rounded-xl bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all flex-1 min-h-[110px] leading-relaxed resize-none shadow-sm"
                       />
                     </div>
 
@@ -440,7 +453,7 @@ export const Guestbook: React.FC = () => {
                         </div>
                         <div
                           suppressHydrationWarning
-                          className="text-base font-black text-primary tracking-wide font-mono"
+                          className="text-sm md:text-lg font-black text-primary tracking-wide font-mono"
                         >
                           {captcha?.text}
                         </div>
@@ -465,7 +478,7 @@ export const Guestbook: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="pt-3 flex justify-end">
+                  <div className="pt-2 flex justify-end">
                     <button
                       type="submit"
                       disabled={isSubmitting}
@@ -485,8 +498,8 @@ export const Guestbook: React.FC = () => {
           </AnimatePresence>
         </div>
 
-        {/* CONSTANT BOTTOM CTA BAR (EXACT 60px HEIGHT) */}
-        <div className="pt-4 border-t border-[var(--glass-border)] flex flex-col sm:flex-row items-center justify-between gap-4 h-[60px] flex-shrink-0">
+        {/* BOTTOM CTA BAR */}
+        <div className="pt-3 md:pt-4 border-t border-[var(--glass-border)] flex flex-col sm:flex-row items-center justify-between gap-3 md:h-[60px] flex-shrink-0">
           <p className="text-xs md:text-sm text-[var(--text-muted)] font-medium text-center sm:text-left">
             {mode === "view" ? t.ctaText : t.ctaTextBack}
           </p>
@@ -497,7 +510,7 @@ export const Guestbook: React.FC = () => {
                 generateCaptcha();
                 setMode("write");
               }}
-              className="px-6 py-3.5 rounded-2xl bg-primary hover:opacity-90 text-white font-bold text-xs md:text-sm shadow-lg shadow-primary/20 hover:shadow-primary/35 transition-all duration-300 cursor-pointer flex items-center gap-2.5 hover:scale-[1.03] active:scale-95 w-full sm:w-auto justify-center"
+              className="px-6 py-3 md:py-3.5 rounded-2xl bg-primary hover:opacity-90 text-white font-bold text-xs md:text-sm shadow-lg shadow-primary/20 hover:shadow-primary/35 transition-all duration-300 cursor-pointer flex items-center gap-2.5 hover:scale-[1.03] active:scale-95 w-full sm:w-auto justify-center"
             >
               <FiEdit3 className="text-base" />
               <span>{t.btnWrite}</span>
@@ -505,7 +518,7 @@ export const Guestbook: React.FC = () => {
           ) : (
             <button
               onClick={() => setMode("view")}
-              className="px-6 py-3.5 rounded-2xl glass-card hover:border-primary/50 text-[var(--text-main)] hover:text-primary font-bold text-xs md:text-sm transition-all duration-300 cursor-pointer flex items-center gap-2 border border-[var(--glass-border)] w-full sm:w-auto justify-center"
+              className="px-6 py-3 md:py-3.5 rounded-2xl glass-card hover:border-primary/50 text-[var(--text-main)] hover:text-primary font-bold text-xs md:text-sm transition-all duration-300 cursor-pointer flex items-center gap-2 border border-[var(--glass-border)] w-full sm:w-auto justify-center"
             >
               <FiArrowLeft className="text-base" />
               <span>{t.btnBack}</span>
