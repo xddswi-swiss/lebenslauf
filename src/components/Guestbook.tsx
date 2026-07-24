@@ -285,7 +285,10 @@ export const Guestbook: React.FC = () => {
                 <span>🔢</span>
                 <span>{t.captchaTitle}</span>
               </div>
-              <div className="pl-7 text-lg font-black text-primary tracking-wide">
+              <div
+                suppressHydrationWarning
+                className="pl-7 text-lg font-black text-primary tracking-wide"
+              >
                 {captcha?.text}
               </div>
             </div>
@@ -327,7 +330,10 @@ export const Guestbook: React.FC = () => {
       </div>
 
       {/* Feed Area */}
-      <div className="lg:col-span-7 space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+      <div
+        suppressHydrationWarning
+        className="lg:col-span-7 space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar"
+      >
         <AnimatePresence initial={false}>
           {messages.length === 0 ? (
             <m.div

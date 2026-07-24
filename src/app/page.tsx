@@ -749,20 +749,21 @@ const MainContent: React.FC = () => {
                           {lang.level}%
                         </span>
                       </div>
-                      <div className="h-2 w-full bg-[var(--background)] rounded-full overflow-hidden border border-[var(--glass-border)]">
-                        {mounted && (
-                          <m.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${lang.level}%` }}
-                            viewport={{ once: true }}
-                            transition={{
-                              duration: 1.2,
-                              ease: "easeOut",
-                              delay: idx * 0.1,
-                            }}
-                            className="h-full rounded-full bg-gradient-to-r from-primary to-secondary"
-                          />
-                        )}
+                      <div
+                        suppressHydrationWarning
+                        className="h-2 w-full bg-[var(--background)] rounded-full overflow-hidden border border-[var(--glass-border)]"
+                      >
+                        <m.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${lang.level}%` }}
+                          viewport={{ once: true }}
+                          transition={{
+                            duration: 1.2,
+                            ease: "easeOut",
+                            delay: idx * 0.1,
+                          }}
+                          className="h-full rounded-full bg-gradient-to-r from-primary to-secondary"
+                        />
                       </div>
                     </div>
                   ))}
