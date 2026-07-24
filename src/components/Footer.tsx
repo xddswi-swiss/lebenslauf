@@ -11,6 +11,7 @@ import {
   FiLock,
 } from "react-icons/fi";
 import Link from "next/link";
+import { VisualSitemap } from "@/components/VisualSitemap";
 
 // --- MANUEL DEĞİŞTİREBİLECEĞİNİZ İLETİŞİM / SOSYAL MEDYA LİNKLERİ ---
 const LINK_GITHUB = "https://github.com/yigiterenaydin";
@@ -223,6 +224,9 @@ export const Footer: React.FC<FooterProps> = ({ activeColorIndex }) => {
           </div>
         </div>
       </div>
+
+      {/* Graphical Visual Sitemap */}
+      <VisualSitemap />
 
       {/* Footer Bottom */}
       <div className="border-t border-[var(--glass-border)] pt-8 flex flex-col items-center gap-4 text-center">
