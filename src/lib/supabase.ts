@@ -19,5 +19,11 @@ export const supabaseAdmin =
           persistSession: false,
           autoRefreshToken: false,
         },
+        global: {
+          headers: {
+            Authorization: `Bearer ${supabaseServiceKey}`,
+            apikey: supabaseServiceKey,
+          },
+        },
       })
     : supabase;
