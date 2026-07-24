@@ -48,5 +48,5 @@ export const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
     };
   }, [isInView, value, duration]);
 
-  return <span ref={ref}>{count}</span>;
+  return <span ref={ref} suppressHydrationWarning>{count}</span>;
 };

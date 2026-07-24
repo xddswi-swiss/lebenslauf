@@ -293,7 +293,7 @@ const MainContent: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-grid-mesh relative text-[var(--text-body)] bg-[var(--background)] transition-colors duration-300 flex flex-col overflow-x-hidden w-full">
+    <div suppressHydrationWarning className="min-h-screen bg-grid-mesh relative text-[var(--text-body)] bg-[var(--background)] transition-colors duration-300 flex flex-col overflow-x-hidden w-full">
       {/* Background gradients wrapped to prevent horizontal overflow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-[-10]">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-violet-600/10 blur-[150px] rounded-full" />
@@ -303,7 +303,7 @@ const MainContent: React.FC = () => {
       <Header activeColorIndex={randomColorIndex} />
 
       {/* Main Container */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-6 pt-24 md:pt-32 pb-12 md:pb-20 space-y-16 md:space-y-20 overflow-x-hidden">
+      <main suppressHydrationWarning className="flex-1 max-w-6xl w-full mx-auto px-6 pt-24 md:pt-32 pb-12 md:pb-20 space-y-16 md:space-y-20 overflow-x-hidden">
         {/* Hero Section */}
         <section
           id="hero"

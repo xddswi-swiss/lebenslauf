@@ -1175,6 +1175,7 @@ class HobbiesAndInterests {
   return (
     <>
       <div
+        suppressHydrationWarning
         className="skills-scanner-container w-full relative overflow-hidden"
         style={{ height: isMobile ? "320px" : "280px" }}
         ref={containerRef}
