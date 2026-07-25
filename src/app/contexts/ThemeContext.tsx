@@ -75,10 +75,16 @@ export function updateSafariThemeColor(color: string) {
     });
   }
 
-  // Phase 3: 50ms delay for iOS Safari layout stabilization
+  // Phase 3: Delayed updates for Safari / iOS repaint issues
   setTimeout(() => {
     update();
   }, 50);
+  setTimeout(() => {
+    update();
+  }, 200);
+  setTimeout(() => {
+    update();
+  }, 600);
 }
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
