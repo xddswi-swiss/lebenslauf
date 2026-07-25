@@ -5,36 +5,35 @@ export function ThemeInitializer() {
       dangerouslySetInnerHTML={{
         __html: `
           (function() {
-            var bw = localStorage.getItem('bw-mode');
-            var isBw = bw !== 'false';
-            if (isBw) {
+            var theme = localStorage.getItem('theme-mode');
+            if (!theme) {
+              var bw = localStorage.getItem('bw-mode');
+              if (bw === 'false') {
+                var pref = localStorage.getItem('preferred-theme');
+                theme = pref === 'dark' ? 'blue' : 'yellow';
+              } else {
+                theme = 'white';
+              }
+            }
+
+            var colors = {
+              white: '#ffffff',
+              yellow: '#ffc72c',
+              blue: '#102552'
+            };
+            var color = colors[theme] || '#ffffff';
+
+            if (theme === 'white') {
               document.documentElement.classList.add('bw-mode');
-            } else {
-              document.documentElement.classList.remove('bw-mode');
-            }
-
-            var savedTheme = localStorage.getItem('preferred-theme');
-            var isDark = false;
-            if (savedTheme === 'dark') {
-              isDark = true;
-            } else if (savedTheme === 'light') {
-              isDark = false;
-            } else {
-              isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            }
-
-            if (isDark) {
-              document.documentElement.classList.add('dark');
-            } else {
               document.documentElement.classList.remove('dark');
+            } else if (theme === 'yellow') {
+              document.documentElement.classList.remove('bw-mode');
+              document.documentElement.classList.remove('dark');
+            } else if (theme === 'blue') {
+              document.documentElement.classList.remove('bw-mode');
+              document.documentElement.classList.add('dark');
             }
 
-            var color = '#ffffff';
-            if (!isBw) {
-              color = isDark ? '#102552' : '#ffc72c';
-            }
-
-            // Ensure theme-color-meta is set
             var meta = document.getElementById('theme-color-meta');
             if (!meta) {
               meta = document.createElement('meta');
@@ -44,7 +43,6 @@ export function ThemeInitializer() {
             }
             meta.setAttribute('content', color);
 
-            // Set html and body background-color directly
             document.documentElement.style.backgroundColor = color;
             if (document.body) {
               document.body.style.backgroundColor = color;

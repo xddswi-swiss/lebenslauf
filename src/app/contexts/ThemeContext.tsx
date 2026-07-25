@@ -57,6 +57,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const applyTheme = (mode: ThemeMode) => {
     setThemeMode(mode);
+    localStorage.setItem("theme-mode", mode);
 
     let color = "#ffffff";
     if (mode === "white") {
