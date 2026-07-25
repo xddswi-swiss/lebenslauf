@@ -1021,10 +1021,11 @@ class HobbiesAndInterests {
                 htmlCard.style.setProperty("--clip-bottom", "100%");
                 htmlCard.style.setProperty("--clip-top", "100%");
 
-                // Reset progress bars to 0% when card is in fully-code state
+                // Ensure progress bars are filled on normal card layer
                 htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
                   const htmlFill = fill as HTMLElement;
-                  htmlFill.style.width = "0%";
+                  htmlFill.style.width =
+                    htmlFill.getAttribute("data-level") + "%";
                 });
               } else if (cardTop >= scannerY) {
                 // Card fully below scanner: fully normal (progress bars)
@@ -1068,10 +1069,11 @@ class HobbiesAndInterests {
                 htmlCard.style.setProperty("--clip-right", "100%");
                 htmlCard.style.setProperty("--clip-left", "100%");
 
-                // Reset progress bars to 0% when card is in fully-code state
+                // Ensure progress bars are filled on normal card layer
                 htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
                   const htmlFill = fill as HTMLElement;
-                  htmlFill.style.width = "0%";
+                  htmlFill.style.width =
+                    htmlFill.getAttribute("data-level") + "%";
                 });
               } else if (cardLeft >= scannerX) {
                 // Card fully to the right of scanner: fully normal (progress bars)
