@@ -344,3 +344,49 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
   background: linear-gradient(to bottom right, #ff6600, #cc5200) !important;
   box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
 }
+
+/* Yellow Theme: Accordion Panels Warm Dark Gold / Ochre Contrast */
+:root:not(.dark):not(.bw-mode) .sa-wrap {
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
+  background: #b87a00 !important;
+}
+
+:root:not(.dark):not(.bw-mode) .sa-panel {
+  background: linear-gradient(to bottom, #d48f00, #a87000) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+:root:not(.dark):not(.bw-mode) .sa-panel .sa-lbl {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+:root:not(.dark):not(.bw-mode) .sa-panel .sa-ico {
+  color: #ffffff !important;
+}
+
+:root:not(.dark):not(.bw-mode) .sa-panel:hover:not(.sa-active) {
+  background: linear-gradient(to bottom, #e29b00, #b87b00) !important;
+}
+
+:root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-head-open {
+  background: linear-gradient(to right, #e65c00, #b34700) !important;
+}
+
+:root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-head-open .sa-lbl,
+:root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-head-open .sa-ico {
+  color: #ffffff !important;
+}
+
+:root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-body {
+  background: rgba(255, 248, 230, 0.95) !important;
+}
+
+:root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-name {
+  color: #27272a !important;
+}
+
+:root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-pct {
+  color: #b87a00 !important;
+}

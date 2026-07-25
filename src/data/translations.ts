@@ -691,7 +691,7 @@ export const translations: Record<Language, TranslationSchema> = {
       title: "Beceriler & Referanslar",
       languagesTitle: "Dil Becerileri",
       referencesTitle: "Referanslar",
-      interestsTitle: "İlgi Alanları & Hobiler",
+      interestsTitle: "Boş Zaman & Hobiler",
       interests: {
         cook: "Yemek Pişirme",
         "kung-fu": "Kung‑Fu",

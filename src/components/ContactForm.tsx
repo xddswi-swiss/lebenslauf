@@ -184,16 +184,15 @@ export const ContactForm: React.FC = () => {
           </div>
 
           {/* Math Captcha Box */}
-          <div className="p-3.5 glass-card rounded-xl border border-[var(--glass-border)] bg-zinc-900/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5 text-xs font-semibold text-[var(--text-main)]">
-              <span className="text-base">🔢</span>
+          <div className="p-3.5 glass-card rounded-xl border border-[var(--glass-border)] bg-zinc-900/10 flex flex-row items-center justify-between gap-2 overflow-x-auto">
+            <div className="flex items-center gap-1.5 md:gap-2.5 text-xs font-semibold text-[var(--text-main)] flex-shrink-0">
               <span>{t.contact.captchaTitle}:</span>
-              <span className="text-sm font-black text-primary px-2 py-0.5 rounded-md bg-primary/10 border border-primary/20">
+              <span className="text-xs md:text-sm font-black text-primary px-2 py-0.5 rounded-md bg-primary/10 border border-primary/20">
                 {captcha?.text}
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-shrink-0">
               <input
                 type="text"
                 required
@@ -204,7 +203,7 @@ export const ContactForm: React.FC = () => {
                   setCaptchaError(false);
                 }}
                 disabled={status === "sending"}
-                className="w-20 px-3 py-1.5 text-center text-sm font-bold bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-xl text-[var(--text-main)] placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
+                className="w-16 md:w-20 px-2 md:px-3 py-1.5 text-center text-sm font-bold bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-xl text-[var(--text-main)] placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
               />
             </div>
           </div>
