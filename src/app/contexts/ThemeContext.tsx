@@ -25,13 +25,44 @@ export function updateSafariThemeColor(color: string) {
     meta.id = "theme-color-meta";
     meta.setAttribute("name", "theme-color");
     meta.setAttribute("content", color);
-    document.head.appendChild(meta);
+    document.head.prepend(meta);
+
+    let appleMeta = document.querySelector(
+      'meta[name="apple-mobile-web-app-status-bar-style"]',
+    ) as HTMLMetaElement | null;
+    if (!appleMeta) {
+      appleMeta = document.createElement("meta");
+      appleMeta.setAttribute("name", "apple-mobile-web-app-status-bar-style");
+      appleMeta.setAttribute("content", "black-translucent");
+      document.head.prepend(appleMeta);
+    } else {
+      appleMeta.setAttribute("content", "black-translucent");
+    }
 
     // Set background colors directly on html & body
+    document.documentElement.style.background = color;
     document.documentElement.style.backgroundColor = color;
     if (document.body) {
+      document.body.style.background = color;
       document.body.style.backgroundColor = color;
     }
+
+    // Force a light repaint so mobile browsers apply the new status bar color.
+    document.documentElement.style.opacity = "0.9999";
+    requestAnimationFrame(() => {
+      document.documentElement.style.opacity = "";
+      document.body.offsetHeight; // force reflow
+      if (document.body) {
+        document.body.style.opacity = "0.9999";
+        requestAnimationFrame(() => {
+          if (document.body) {
+            document.body.style.opacity = "";
+          }
+        });
+      }
+    });
+
+    window.dispatchEvent(new Event("resize"));
   };
 
   // Phase 1: Immediate update

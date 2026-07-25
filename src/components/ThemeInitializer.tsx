@@ -41,10 +41,22 @@ export function ThemeInitializer() {
             meta.id = 'theme-color-meta';
             meta.setAttribute('name', 'theme-color');
             meta.setAttribute('content', color);
-            document.head.appendChild(meta);
+            document.head.prepend(meta);
 
+            var appleMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+            if (!appleMeta) {
+              appleMeta = document.createElement('meta');
+              appleMeta.setAttribute('name', 'apple-mobile-web-app-status-bar-style');
+              appleMeta.setAttribute('content', 'black-translucent');
+              document.head.prepend(appleMeta);
+            } else {
+              appleMeta.setAttribute('content', 'black-translucent');
+            }
+
+            document.documentElement.style.background = color;
             document.documentElement.style.backgroundColor = color;
             if (document.body) {
+              document.body.style.background = color;
               document.body.style.backgroundColor = color;
             }
           })();
