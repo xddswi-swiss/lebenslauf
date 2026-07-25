@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/app/contexts/LanguageContext";
-import { useTheme } from "@/app/contexts/ThemeContext";
+import { useTheme, updateSafariThemeColor } from "@/app/contexts/ThemeContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { SwissSwitch } from "@/components/SwissSwitch";
 import { motion as m, AnimatePresence } from "framer-motion";
@@ -77,21 +77,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
         color = isDark ? "#102552" : "#ffc72c"; // Midnight Blue or Sunlit Yellow
       }
 
-      // Remove all old theme-color and apple status bar meta tags
-      const oldMetas = document.querySelectorAll(
-        'meta[name="theme-color"], meta[name="apple-mobile-web-app-status-bar-style"]',
-      );
-      oldMetas.forEach((el) => el.remove());
-
-      // Create a fresh new meta tag to force WebKit Safari to immediately repaint status bar
-      const meta = document.createElement("meta");
-      meta.setAttribute("name", "theme-color");
-      meta.setAttribute("content", color);
-      document.head.appendChild(meta);
-
-      // Explicitly set html and body background-color to match status bar
-      document.documentElement.style.backgroundColor = color;
-      document.body.style.backgroundColor = color;
+      updateSafariThemeColor(color);
     };
 
     updateThemeColor();

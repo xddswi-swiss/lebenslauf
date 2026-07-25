@@ -13,6 +13,43 @@ interface ThemeContextProps {
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
+export function updateSafariThemeColor(color: string) {
+  if (typeof window === "undefined") return;
+
+  const update = () => {
+    // 1. Remove all old theme-color meta tags
+    document.querySelectorAll('meta[name="theme-color"]').forEach((el) => el.remove());
+
+    // 2. Create fresh new meta tag with ID
+    const meta = document.createElement("meta");
+    meta.id = "theme-color-meta";
+    meta.setAttribute("name", "theme-color");
+    meta.setAttribute("content", color);
+    document.head.appendChild(meta);
+
+    // 3. Set background colors directly on html & body
+    document.documentElement.style.backgroundColor = color;
+    if (document.body) {
+      document.body.style.backgroundColor = color;
+    }
+  };
+
+  // Phase 1: Immediate update
+  update();
+
+  // Phase 2: Next frame after React DOM render
+  if (typeof requestAnimationFrame !== "undefined") {
+    requestAnimationFrame(() => {
+      update();
+    });
+  }
+
+  // Phase 3: 50ms delay for iOS Safari layout stabilization
+  setTimeout(() => {
+    update();
+  }, 50);
+}
+
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -41,18 +78,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       color = "#102552";
     }
 
-    // Direct status bar update on theme change (exact user snippet pattern)
-    let meta = document.getElementById("theme-color-meta") as HTMLMetaElement;
-    if (!meta) {
-      meta = document.createElement("meta");
-      meta.id = "theme-color-meta";
-      meta.setAttribute("name", "theme-color");
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute("content", color);
-
-    document.documentElement.style.backgroundColor = color;
-    document.body.style.backgroundColor = color;
+    // Update status bar color across 3 phases (Immediate, rAF, 50ms timeout)
+    updateSafariThemeColor(color);
 
     window.dispatchEvent(new Event("bwModeChange"));
     window.dispatchEvent(new Event("themeChange"));
