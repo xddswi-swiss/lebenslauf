@@ -39,43 +39,11 @@ export interface FooterProps {
   activeColorIndex: number;
 }
 
-export const Footer: React.FC<FooterProps> = ({ activeColorIndex }) => {
+export const Footer: React.FC<FooterProps> = () => {
   const { t } = useLanguage();
-  const { theme } = useTheme();
-  const [footerStyle, setFooterStyle] = useState<React.CSSProperties>({});
-
-  useEffect(() => {
-    if (activeColorIndex === -1) {
-      setFooterStyle({});
-      return;
-    }
-
-    const lightGradients = [
-      "linear-gradient(to right, rgba(255, 249, 233, 0.96) 0%, rgba(254, 226, 226, 0.92) 40%, rgba(239, 68, 68, 0.28) 75%, rgba(220, 38, 38, 0.20) 100%)", // 0. Crimson / Red (Matches Dark Volcanic Fire)
-      "linear-gradient(to right, rgba(255, 249, 233, 0.96) 0%, rgba(237, 233, 254, 0.92) 40%, rgba(139, 92, 246, 0.28) 75%, rgba(99, 102, 241, 0.20) 100%)", // 1. Deep Purple / Indigo (Matches Dark Nebula)
-      "linear-gradient(to right, rgba(255, 249, 233, 0.96) 0%, rgba(209, 250, 229, 0.92) 40%, rgba(16, 185, 129, 0.28) 75%, rgba(5, 150, 105, 0.20) 100%)", // 2. Emerald / Mint Green (Matches Dark Cyberpunk Green)
-      "linear-gradient(to right, rgba(255, 249, 233, 0.96) 0%, rgba(253, 224, 241, 0.92) 40%, rgba(236, 72, 153, 0.28) 75%, rgba(168, 85, 247, 0.20) 100%)", // 3. Cosmic Rose / Pink-Violet (Matches Dark Cosmic Rose)
-      "linear-gradient(to right, rgba(255, 249, 233, 0.96) 0%, rgba(224, 242, 254, 0.92) 40%, rgba(6, 182, 212, 0.28) 75%, rgba(59, 130, 246, 0.20) 100%)", // 4. Sky / Cyan Blue (Matches Dark Electric Cyan)
-    ];
-
-    const darkGradients = [
-      "linear-gradient(to right, rgba(3, 3, 3, 0.96) 0%, rgba(242, 17, 55, 0.35) 60%, rgba(249, 115, 22, 0.25) 100%)", // 0. Volcanic Fire (Crimson-Orange)
-      "linear-gradient(to right, rgba(3, 3, 3, 0.96) 0%, rgba(139, 92, 246, 0.35) 60%, rgba(59, 130, 246, 0.25) 100%)", // 1. Deep Nebula (Purple-Blue)
-      "linear-gradient(to right, rgba(3, 3, 3, 0.96) 0%, rgba(16, 185, 129, 0.35) 60%, rgba(16, 185, 129, 0.25) 100%)", // 2. Cyberpunk Green (Teal-Emerald)
-      "linear-gradient(to right, rgba(3, 3, 3, 0.96) 0%, rgba(236, 72, 153, 0.35) 60%, rgba(124, 58, 237, 0.25) 100%)", // 3. Cosmic Rose (Magenta-Violet)
-      "linear-gradient(to right, rgba(3, 3, 3, 0.96) 0%, rgba(6, 182, 212, 0.35) 60%, rgba(59, 130, 246, 0.25) 100%)", // 4. Electric Cyan (Cyan-Blue)
-    ];
-
-    const index = activeColorIndex;
-    const activeGradient =
-      theme === "dark" ? darkGradients[index] : lightGradients[index];
-
-    setFooterStyle({ background: activeGradient });
-  }, [theme, activeColorIndex]);
 
   return (
     <footer
-      style={footerStyle}
       className="mt-auto border-t border-[var(--glass-border)] bg-[var(--background)] py-16 px-6 md:px-12 text-[var(--text-muted)] transition-colors duration-300"
     >
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16 pb-12">

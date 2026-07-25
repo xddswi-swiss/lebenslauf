@@ -94,20 +94,20 @@ export const VisualSitemap: React.FC = () => {
   const l = labels[language] || labels.de;
 
   const mainNodes = [
-    { id: "hero", icon: <FiHome className="text-primary" />, title: l.hero, anchor: true },
-    { id: "about", icon: <FiUser className="text-cyan-500" />, title: l.about, anchor: true },
-    { id: "documents", icon: <FiFileText className="text-amber-500" />, title: l.documents, anchor: true },
-    { id: "experience", icon: <FiBriefcase className="text-emerald-500" />, title: l.experience, anchor: true },
-    { id: "skills", icon: <FiCpu className="text-violet-500" />, title: l.skills, anchor: true },
-    { id: "guestbook", icon: <FiBookOpen className="text-pink-500" />, title: l.guestbook, anchor: true },
-    { id: "contact", icon: <FiMail className="text-rose-500" />, title: l.contact, anchor: true },
+    { id: "hero", icon: <FiHome className="text-[var(--text-main)]" />, title: l.hero, anchor: true },
+    { id: "about", icon: <FiUser className="text-[var(--text-main)]" />, title: l.about, anchor: true },
+    { id: "documents", icon: <FiFileText className="text-[var(--text-main)]" />, title: l.documents, anchor: true },
+    { id: "experience", icon: <FiBriefcase className="text-[var(--text-main)]" />, title: l.experience, anchor: true },
+    { id: "skills", icon: <FiCpu className="text-[var(--text-main)]" />, title: l.skills, anchor: true },
+    { id: "guestbook", icon: <FiBookOpen className="text-[var(--text-main)]" />, title: l.guestbook, anchor: true },
+    { id: "contact", icon: <FiMail className="text-[var(--text-main)]" />, title: l.contact, anchor: true },
   ];
 
   const systemNodes = [
-    { href: "/sitemap.xml", icon: <FiGlobe className="text-sky-500" />, title: l.sitemapXml, badge: "XML" },
-    { href: "/robots.txt", icon: <FiCode className="text-indigo-500" />, title: l.robotsTxt, badge: "TXT" },
-    { href: "/assets/pdfs/ErenLebensL.pdf", icon: <FiDownload className="text-green-500" />, title: l.resumePdf, badge: "PDF", download: true },
-    { href: "/admin", icon: <FiLock className="text-red-500" />, title: l.adminConsole, badge: "AUTH" },
+    { href: "/sitemap.xml", icon: <FiGlobe className="text-[var(--text-main)]" />, title: l.sitemapXml, badge: "XML" },
+    { href: "/robots.txt", icon: <FiCode className="text-[var(--text-main)]" />, title: l.robotsTxt, badge: "TXT" },
+    { href: "/assets/pdfs/ErenLebensL.pdf", icon: <FiDownload className="text-[var(--text-main)]" />, title: l.resumePdf, badge: "PDF", download: true },
+    { href: "/admin", icon: <FiLock className="text-[var(--text-main)]" />, title: l.adminConsole, badge: "AUTH" },
   ];
 
   const handleScrollTo = (id: string) => {
@@ -143,7 +143,7 @@ export const VisualSitemap: React.FC = () => {
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden text-left"
           >
-            <div className="p-6 md:p-8 rounded-3xl glass-card border border-[var(--glass-border)] space-y-8">
+            <div className="p-6 md:p-8 rounded-3xl border-2 border-[var(--glass-border)] bg-[var(--background)] space-y-8">
               {/* Sitemap Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--glass-border)] pb-6">
                 <div>
@@ -168,42 +168,42 @@ export const VisualSitemap: React.FC = () => {
               </div>
 
               {/* Graphical Tree Architecture */}
-              <div className="space-y-6">
+              <div className="space-y-5">
                 {/* Root Node */}
-                <div className="flex items-center gap-3 p-3.5 px-5 rounded-2xl bg-primary/10 border border-primary/30 w-fit">
-                  <FiGlobe className="text-xl text-primary" />
-                  <span className="font-mono text-xs md:text-sm font-bold text-[var(--text-main)]">
+                <div className="flex items-center gap-2.5 p-2.5 px-4 rounded-xl bg-primary/10 border border-primary/30 w-fit">
+                  <FiGlobe className="text-base text-primary" />
+                  <span className="font-mono text-xs font-bold text-[var(--text-main)]">
                     https://erenaydin.ch
                   </span>
-                  <span className="text-[10px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-md bg-primary text-white ml-2">
+                  <span className="text-[9px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded bg-primary text-white ml-1.5">
                     {l.rootNode}
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-2">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-1">
                   {/* Column 1: Main Page Sections */}
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2 text-xs font-extrabold text-[var(--text-muted)] uppercase tracking-wider mb-3">
-                      <FiCornerDownRight className="text-primary text-sm" />
+                  <div className="space-y-2.5">
+                    <div className="flex items-center gap-1.5 text-[11px] font-bold text-[var(--text-muted)] uppercase tracking-wider mb-2">
+                      <FiCornerDownRight className="text-primary text-xs" />
                       <span>{l.sectionsTitle}</span>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {mainNodes.map((node) => (
                         <button
                           key={node.id}
                           onClick={() => handleScrollTo(node.id)}
-                          className="flex items-center justify-between p-3.5 rounded-2xl glass-card hover:border-primary/50 hover:bg-primary/5 text-left transition-all duration-200 group cursor-pointer border border-[var(--glass-border)]"
+                          className="flex items-center justify-between p-2 px-3 rounded-xl glass-card hover:border-primary/50 text-left transition-all duration-200 group cursor-pointer border border-[var(--glass-border)]"
                         >
-                          <div className="flex items-center gap-3">
-                            <span className="p-2 rounded-xl bg-[var(--background)] border border-[var(--glass-border)] group-hover:scale-110 transition-transform">
+                          <div className="flex items-center gap-2.5">
+                            <span className="p-1.5 rounded-lg bg-[var(--background)] border border-[var(--glass-border)] group-hover:scale-110 transition-transform text-sm">
                               {node.icon}
                             </span>
-                            <span className="text-xs md:text-sm font-bold text-[var(--text-main)] group-hover:text-primary transition-colors">
+                            <span className="text-xs font-semibold text-[var(--text-main)] group-hover:text-primary transition-colors">
                               {node.title}
                             </span>
                           </div>
-                          <span className="text-[10px] font-mono text-[var(--text-muted)] group-hover:translate-x-1 transition-transform">
+                          <span className="text-[9px] font-mono text-[var(--text-muted)] group-hover:translate-x-0.5 transition-transform">
                             #{node.id}
                           </span>
                         </button>
@@ -212,13 +212,13 @@ export const VisualSitemap: React.FC = () => {
                   </div>
 
                   {/* Column 2: System & SEO Resources */}
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2 text-xs font-extrabold text-[var(--text-muted)] uppercase tracking-wider mb-3">
-                      <FiCornerDownRight className="text-cyan-500 text-sm" />
+                  <div className="space-y-2.5">
+                    <div className="flex items-center gap-1.5 text-[11px] font-bold text-[var(--text-muted)] uppercase tracking-wider mb-2">
+                      <FiCornerDownRight className="text-primary text-xs" />
                       <span>{l.systemTitle}</span>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {systemNodes.map((node, idx) => (
                         <a
                           key={idx}
@@ -226,21 +226,21 @@ export const VisualSitemap: React.FC = () => {
                           target={node.href.startsWith("/") ? "_self" : "_blank"}
                           download={node.download}
                           rel="noopener noreferrer"
-                          className="flex items-center justify-between p-3.5 rounded-2xl glass-card hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all duration-200 group cursor-pointer border border-[var(--glass-border)]"
+                          className="flex items-center justify-between p-2 px-3 rounded-xl glass-card hover:border-primary/50 text-left transition-all duration-200 group cursor-pointer border border-[var(--glass-border)]"
                         >
-                          <div className="flex items-center gap-3">
-                            <span className="p-2 rounded-xl bg-[var(--background)] border border-[var(--glass-border)] group-hover:scale-110 transition-transform">
+                          <div className="flex items-center gap-2.5">
+                            <span className="p-1.5 rounded-lg bg-[var(--background)] border border-[var(--glass-border)] group-hover:scale-110 transition-transform text-sm">
                               {node.icon}
                             </span>
-                            <span className="text-xs md:text-sm font-bold text-[var(--text-main)] group-hover:text-cyan-500 transition-colors">
+                            <span className="text-xs font-semibold text-[var(--text-main)] group-hover:text-primary transition-colors">
                               {node.title}
                             </span>
                           </div>
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-md bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)]">
+                          <div className="flex items-center gap-1">
+                            <span className="text-[8.5px] font-mono font-bold px-1.5 py-0.5 rounded bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)]">
                               {node.badge}
                             </span>
-                            <FiExternalLink className="text-xs text-[var(--text-muted)] group-hover:text-cyan-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                            <FiExternalLink className="text-[11px] text-[var(--text-muted)] group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                           </div>
                         </a>
                       ))}

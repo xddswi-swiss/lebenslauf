@@ -1,585 +1,376 @@
-/* Black & White Blueprint / Sketch Mode */
-.bw-mode {
-  --background: #ffffff !important;
-  --text-main: #000000 !important;
-  --text-body: #111111 !important;
-  --text-muted: #555555 !important;
-  --primary: #000000 !important;
-  --secondary: #000000 !important;
-  --glass-card-bg: #ffffff !important;
-  --glass-border: #000000 !important;
-  --badge-bg: #ffffff !important;
-  --badge-border: #000000 !important;
-  --title-from: #000000 !important;
-  --title-to: #000000 !important;
-  color-scheme: light !important;
+/* ============================================================
+   Black & White Theme (bw-mode) Strict Color Overrides
+   Preserves natural rounded card shapes (no forced square corners)
+   ============================================================ */
+
+html.bw-mode,
+html.bw-mode body,
+body.bw-mode {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #000000 !important;
+  --background: #ffffff;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-border: #000000;
+  --primary: #000000;
+  --primary-glow: rgba(0, 0, 0, 0.1);
+  --secondary: #000000;
+  --glass-bg: #ffffff;
+  --glass-card-bg: #ffffff;
+  --glass-border: #000000;
+  --text-main: #000000;
+  --text-body: #000000;
+  --text-muted: #444444;
 }
 
-/* Force all text shadow, box shadow, gradients, and filters to be B&W */
-.bw-mode *:not(.bw-switch-container):not(.bw-switch-container *) {
-  text-shadow: none !important;
+/* Header in B&W */
+html.bw-mode header.header-glass-gradient,
+body.bw-mode header.header-glass-gradient {
+  background: #ffffff !important;
+  border-bottom: 2px solid #000000 !important;
   box-shadow: none !important;
-  background-image: none !important;
-  border-color: #000000 !important;
 }
 
-.bw-mode body {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  color: #000000 !important;
-}
-
-/* Override borders, background, shadow and border radius for all UI elements to look like a draft drawing */
-.bw-mode .glass-card:not(.mobile-drawer *),
-.bw-mode header,
-.bw-mode footer,
-.bw-mode button:not(.bw-switch-container *),
-.bw-mode input,
-.bw-mode textarea,
-.bw-mode .timeline-card {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  border: 2px solid #000000 !important;
-  box-shadow: none !important;
-  text-shadow: none !important;
-}
-
-/* Fix statistics cards in B&W mode (solid black background with white text) */
-.bw-mode .from-blue-600,
-.bw-mode .from-emerald-600 {
-  background: #000000 !important;
-  background-color: #000000 !important;
-  color: #ffffff !important;
-  border: 2px solid #000000 !important;
-}
-
-.bw-mode .from-blue-600 *,
-.bw-mode .from-emerald-600 * {
-  color: #ffffff !important;
-}
-
-/* Fix active and selected buttons (solid black background with white text) */
-.bw-mode button.bg-primary,
-.bw-mode button.bg-primary:not(.bw-switch-container *),
-.bw-mode button[class*="bg-primary"]:not(.bw-switch-container *),
-.bw-mode button[class*="bg-primary"],
-.bw-mode .bg-primary {
-  background: #000000 !important;
-  background-color: #000000 !important;
-  color: #ffffff !important;
-  border-color: #000000 !important;
-}
-
-.bw-mode button.bg-primary *,
-.bw-mode button.bg-primary:not(.bw-switch-container *) *,
-.bw-mode button[class*="bg-primary"] *,
-.bw-mode .bg-primary *,
-.bw-mode .text-white {
-  color: #ffffff !important;
-}
-
-/* Selected button hover (invert to white background, black text) */
-.bw-mode button.bg-primary:hover,
-.bw-mode button[class*="bg-primary"]:hover,
-.bw-mode .bg-primary:hover {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  border-color: #000000 !important;
-}
-
-.bw-mode button.bg-primary:hover *,
-.bw-mode button[class*="bg-primary"]:hover *,
-.bw-mode .bg-primary:hover * {
-  color: #000000 !important;
-}
-
-/* Inactive buttons default state (white background with black text) */
-.bw-mode
-  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):not(
-    .bw-switch-container *
-  ) {
-  color: #000000 !important;
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  border: 2px solid #000000 !important;
-}
-
-/* Inactive buttons hover state (invert to black background, white text) */
-.bw-mode
-  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):not(
-    .bw-switch-container *
-  ):hover {
-  color: #ffffff !important;
-  background: #000000 !important;
-  background-color: #000000 !important;
-  border: 2px solid #000000 !important;
-}
-
-.bw-mode
-  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
-  * {
-  color: #ffffff !important;
-}
-
-/* Remove colored glows but keep backdrop-blurs visible */
-.bw-mode .bg-violet-600\/10,
-.bw-mode .bg-cyan-600\/10,
-.bw-mode [class^="blur-"],
-.bw-mode [class*=" blur-"] {
-  display: none !important;
-}
-
-/* Remove grid meshes background but keep element visible */
-.bw-mode .bg-grid-mesh {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  background-image: none !important;
-}
-
-/* Make image elements look drawn or strictly black & white */
-.bw-mode img {
-  filter: grayscale(100%) contrast(150%) !important;
-  outline: 2px solid #000000 !important;
-  outline-offset: -2px !important;
-  border-radius: 4px !important;
-  transition: filter 0.3s ease !important;
-}
-
-/* Allow images (like profile picture) to become colorful on hover/focus/active in B&W mode */
-.bw-mode #hero .group:hover img,
-.bw-mode #hero .group:focus img,
-.bw-mode #hero .group:active img {
-  filter: grayscale(0%) contrast(100%) !important;
-}
-
-/* Switch styling itself shouldn't be fully B&W to remain usable/tactile */
-.bw-mode button[title*="Lichtschalter"] * {
-  filter: none !important;
-}
-
-/* Force specific components like timeline items to be clean */
-.bw-mode .timeline-node {
-  background-color: #ffffff !important;
-  border: 2px solid #000000 !important;
-}
-
-.bw-mode .timeline-line {
-  border-left-color: #000000 !important;
-}
-
-/* Monospace fonts for all headings to give it a blueprint draft feel */
-.bw-mode h1,
-.bw-mode h2,
-.bw-mode h3,
-.bw-mode h4,
-.bw-mode h5,
-.bw-mode h6 {
-  color: #000000 !important;
-  font-family: monospace, Courier, monospace !important;
-}
-
-/* Force filled progress bar lines to be visible as black blocks in B&W mode */
-.bw-mode .h-2 > * {
-  background: #000000 !important;
-  background-color: #000000 !important;
-  background-image: none !important;
-}
-
-/* Keep floating action buttons rounded (pill shape) in B&W mode */
-.bw-mode button.fixed {
-  border-radius: 9999px !important;
-}
-
-/* Fix Recruiter floating button readability in B&W mode (black background with white text) */
-.bw-mode button.fixed.left-6 {
-  background: #000000 !important;
-  background-color: #000000 !important;
-  color: #ffffff !important;
-  border: 2px solid #000000 !important;
-}
-
-.bw-mode button.fixed.left-6 * {
-  color: #ffffff !important;
-}
-
-.bw-mode button.fixed.left-6:hover {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  color: #000000 !important;
-}
-
-.bw-mode button.fixed.left-6:hover * {
-  color: #000000 !important;
-}
-
-/* Style all download buttons inside the document cards */
-.bw-mode #documents a.border {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  border: 2px solid #000000 !important;
-  border-radius: 0.5rem !important;
-}
-
-.bw-mode #documents a.border * {
-  color: #000000 !important;
-}
-
-.bw-mode #documents a.border:hover {
-  background: #000000 !important;
-  background-color: #000000 !important;
-  color: #ffffff !important;
-  border-color: #000000 !important;
-}
-
-.bw-mode #documents a.border:hover * {
-  color: #ffffff !important;
-}
-
-/* Force all standard Tailwind colored text classes to black in B&W mode */
-.bw-mode [class*="text-blue-"],
-.bw-mode [class*="text-orange-"],
-.bw-mode [class*="text-emerald-"],
-.bw-mode [class*="text-violet-"],
-.bw-mode [class*="text-amber-"],
-.bw-mode [class*="text-rose-"],
-.bw-mode [class*="text-navy-"],
-.bw-mode [class*="text-green-"],
-.bw-mode [class*="text-cyan-"],
-.bw-mode [class*="text-sky-"] {
-  color: #000000 !important;
-}
-
-/* Force all standard Tailwind colored border classes to black in B&W mode */
-.bw-mode [class*="border-blue-"],
-.bw-mode [class*="border-orange-"],
-.bw-mode [class*="border-emerald-"],
-.bw-mode [class*="border-violet-"],
-.bw-mode [class*="border-amber-"],
-.bw-mode [class*="border-rose-"],
-.bw-mode [class*="border-navy-"],
-.bw-mode [class*="border-green-"],
-.bw-mode [class*="border-cyan-"],
-.bw-mode [class*="border-sky-"] {
-  border-color: #000000 !important;
-}
-
-/* Clear all standard Tailwind colored backgrounds in B&W mode, unless they are specific B&W active states */
-.bw-mode [class*="bg-blue-"]:not(.from-blue-600),
-.bw-mode [class*="bg-orange-"],
-.bw-mode [class*="bg-emerald-"]:not(.from-emerald-600),
-.bw-mode [class*="bg-violet-"],
-.bw-mode [class*="bg-amber-"],
-.bw-mode [class*="bg-rose-"],
-.bw-mode [class*="bg-navy-"],
-.bw-mode [class*="bg-green-"],
-.bw-mode [class*="bg-cyan-"],
-.bw-mode [class*="bg-sky-"] {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-/* Force company initials badge in timeline cards to have a solid black background with white text in B&W mode */
-.bw-mode [class*="from-orange-500"],
-.bw-mode [class*="from-green-500"],
-.bw-mode [class*="from-navy-600"] {
-  background: #000000 !important;
-  background-color: #000000 !important;
-  color: #ffffff !important;
-  border: 2px solid #000000 !important;
-}
-
-.bw-mode [class*="from-orange-500"] *,
-.bw-mode [class*="from-green-500"] *,
-.bw-mode [class*="from-navy-600"] * {
-  color: #ffffff !important;
-}
-
-/* Keep the Feller/Draggable switch plate 3D/tactile even in blueprint mode */
-
-/* Keep all elements that are rounded-full in color mode rounded-full in B&W mode too */
-.bw-mode .rounded-full,
-.bw-mode button.rounded-full,
-.bw-mode a.rounded-full,
-.bw-mode .cb-btn {
-  border-radius: 9999px !important;
-}
-
-/* Force all transparent gradient text to render as solid black in B&W mode */
-.bw-mode .text-transparent,
-.bw-mode [class*="text-transparent"] {
+html.bw-mode header.header-glass-gradient * {
   color: #000000 !important;
   -webkit-text-fill-color: #000000 !important;
 }
 
-/* Grayscale main content (excluding hero section), footer, and language switcher in B&W mode to strip color from emojis and flags */
-.bw-mode main > *:not(#hero),
-.bw-mode footer,
-.bw-mode header .relative:not(.bw-switch-container):not(.bw-switch-container *),
-.bw-mode
-  [style*="drawer"]
-  .relative:not(.bw-switch-container):not(.bw-switch-container *) {
-  filter: grayscale(100%) !important;
+/* Glass Cards & Elements in B&W (Keep natural rounded corners and solid border on hover) */
+html.bw-mode .glass-card,
+body.bw-mode .glass-card,
+html.bw-mode [class*="glass-card"],
+body.bw-mode [class*="glass-card"] {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  box-shadow: none !important;
 }
 
-/* Grayscale specific colored elements inside the hero section to keep the page monochrome,
-   while preserving the bright green pulse dot! */
-.bw-mode #hero img,
-.bw-mode #hero a,
-.bw-mode #hero button,
-.bw-mode #hero svg:not(.status-badge-dot *),
-.bw-mode #hero [class*="bg-primary"],
-.bw-mode #hero [class*="text-primary"]:not([class*="badge-bg"]),
-.bw-mode #hero [class*="bg-cyan-600/10"] {
-  filter: grayscale(100%) !important;
-}
-
-/* Ensure the status-badge-dot remains perfectly green and bright in B&W mode */
-.bw-mode .status-badge-dot {
-  filter: none !important;
-}
-
-.bw-mode .status-badge-core {
-  background-color: #15803d !important;
-  border: 1px solid #14532d !important;
-  box-shadow:
-    0 0 10px rgba(21, 128, 61, 0.6),
-    0 0 4px rgba(21, 128, 61, 0.4) !important;
-}
-
-.bw-mode .status-badge-pulse {
-  background-color: #16a34a !important;
-}
-
-/* Explicitly protect switch container and its kids from any parent filters */
-.bw-mode .bw-switch-container,
-.bw-mode .bw-switch-container * {
-  filter: none !important;
-}
-
-/* Progress Bar in B&W mode (white theme) */
-.bw-mode .h-2\.5.rounded-full {
-  background-color: #ffffff !important;
-  border: 1px solid #000000 !important;
-}
-
-.bw-mode .h-2\.5.rounded-full > div {
-  background: #000000 !important;
-  background-color: #000000 !important;
-}
-
-/* Explicit override for active language switcher buttons to be solid black with white text */
-.bw-mode button.active-language-btn:not(.bw-switch-container *) {
-  background: #000000 !important;
-  background-color: #000000 !important;
-  color: #ffffff !important;
+html.bw-mode .glass-card:hover,
+body.bw-mode .glass-card:hover,
+html.bw-mode [class*="glass-card"]:hover,
+body.bw-mode [class*="glass-card"]:hover {
+  border: 2px solid #000000 !important;
   border-color: #000000 !important;
+  box-shadow: none !important;
 }
 
-.bw-mode button.active-language-btn:not(.bw-switch-container *) * {
+html.bw-mode .glass-card::before,
+body.bw-mode .glass-card::before {
+  display: none !important;
+}
+
+/* 1. First Reference Card Only (Thomas Seinige) */
+html.bw-mode #contact .lg\:col-span-5 .space-y-3 > div:first-child,
+body.bw-mode #contact .lg\:col-span-5 .space-y-3 > div:first-child {
+  background: #000000 !important;
+  border: 2px solid #000000 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+html.bw-mode #contact .lg\:col-span-5 .space-y-3 > div:first-child h4,
+html.bw-mode #contact .lg\:col-span-5 .space-y-3 > div:first-child p,
+html.bw-mode #contact .lg\:col-span-5 .space-y-3 > div:first-child span,
+html.bw-mode #contact .lg\:col-span-5 .space-y-3 > div:first-child a {
   color: #ffffff !important;
 }
 
-/* Explicit override for inactive language switcher buttons to be solid white with black text */
-.bw-mode button.inactive-language-btn:not(.bw-switch-container *) {
+/* 2. Contact Form Submit Button (Nachricht senden) */
+html.bw-mode #contact form button[type="submit"],
+body.bw-mode #contact form button[type="submit"] {
+  background: #000000 !important;
+  border: 2px solid #000000 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+}
+
+html.bw-mode #contact form button[type="submit"] * {
+  color: #ffffff !important;
+}
+
+html.bw-mode #contact form button[type="submit"]:hover {
+  background: #333333 !important;
+  border-color: #333333 !important;
+}
+
+/* 3. Hero Contact Button (İletişime Geç / Kontakt aufnehmen) -> SOLID BLACK */
+html.bw-mode a[href="#contact"].bg-primary,
+body.bw-mode a[href="#contact"].bg-primary {
+  background: #000000 !important;
+  border: 2px solid #000000 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+}
+
+html.bw-mode a[href="#contact"].bg-primary *,
+body.bw-mode a[href="#contact"].bg-primary * {
+  color: #ffffff !important;
+}
+
+html.bw-mode a[href="#contact"].bg-primary:hover,
+body.bw-mode a[href="#contact"].bg-primary:hover {
+  background: #333333 !important;
+  border-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+/* 3b. Hero Download CV Button (Özgeçmişi İndir / Lebenslauf herunderladen) -> WHITE BG */
+html.bw-mode a[download].bg-primary,
+body.bw-mode a[download].bg-primary {
   background: #ffffff !important;
-  background-color: #ffffff !important;
+  border: 2px solid #000000 !important;
   color: #000000 !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+}
+
+html.bw-mode a[download].bg-primary *,
+body.bw-mode a[download].bg-primary * {
+  color: #000000 !important;
+}
+
+html.bw-mode a[download].bg-primary:hover,
+body.bw-mode a[download].bg-primary:hover {
+  background: #000000 !important;
+  border-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+html.bw-mode a[download].bg-primary:hover *,
+body.bw-mode a[download].bg-primary:hover * {
+  color: #ffffff !important;
+}
+
+/* 4. Skill Matcher Buttons (Kaufmann EFZ & Elektroinstallateur EFZ) */
+html.bw-mode .matcher-btn,
+body.bw-mode .matcher-btn {
+  background: #000000 !important;
+  border: 2px solid #000000 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+html.bw-mode .matcher-btn *,
+html.bw-mode .matcher-btn svg {
+  color: #ffffff !important;
+}
+
+html.bw-mode .matcher-btn:hover {
+  background: #333333 !important;
+  border-color: #333333 !important;
+}
+
+/* 5. Experiences Header Button (Erfahrungen) */
+html.bw-mode .experience-header-btn,
+body.bw-mode .experience-header-btn {
+  background: #000000 !important;
+  border: 2px solid #000000 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+html.bw-mode .experience-header-btn *,
+html.bw-mode .experience-header-btn svg {
+  color: #ffffff !important;
+}
+
+html.bw-mode .experience-header-btn span.rounded-full {
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+html.bw-mode .experience-header-btn span.rounded-full svg,
+html.bw-mode .experience-header-btn span.rounded-full svg path {
+  color: #000000 !important;
+  stroke: #000000 !important;
+  fill: none !important;
+}
+
+html.bw-mode .experience-header-btn:hover {
+  background: #000000 !important;
   border-color: #000000 !important;
 }
 
-.bw-mode button.inactive-language-btn:not(.bw-switch-container *) * {
-  color: #000000 !important;
-}
-
-/* Fix icon and badge wrapper visibility inside accordion headers (Erfahrungen & Ausbildung) in B&W mode (normal and hover states) */
-.bw-mode button span.rounded-2xl,
-.bw-mode button span.p-3,
-.bw-mode button:hover span.rounded-2xl,
-.bw-mode button:hover span.p-3 {
-  background: #ffffff !important;
-  background-color: #ffffff !important;
+/* 6. Accordion Elements in B&W Mode */
+html.bw-mode .sa-wrap,
+body.bw-mode .sa-wrap {
   border: 2px solid #000000 !important;
-  color: #000000 !important;
-}
-
-.bw-mode button span.rounded-2xl *,
-.bw-mode button span.p-3 *,
-.bw-mode button:hover span.rounded-2xl *,
-.bw-mode button:hover span.p-3 *,
-.bw-mode button:hover span.rounded-2xl svg,
-.bw-mode button:hover span.p-3 svg,
-.bw-mode
-  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
-  span.rounded-2xl
-  *,
-.bw-mode
-  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
-  span.p-3
-  *,
-.bw-mode
-  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
-  span.rounded-2xl
-  svg,
-.bw-mode
-  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
-  span.p-3
-  svg {
-  color: #000000 !important;
-  stroke: #000000 !important;
-}
-
-/* Fix chevron arrow visibility inside circle button wrapper in B&W mode */
-.bw-mode button .rounded-full,
-.bw-mode button:hover .rounded-full {
+  box-shadow: none !important;
   background: #ffffff !important;
-  background-color: #ffffff !important;
-  border: 2px solid #000000 !important;
-  color: #000000 !important;
 }
 
-.bw-mode button .rounded-full *,
-.bw-mode button:hover .rounded-full *,
-.bw-mode button:hover .rounded-full svg,
-.bw-mode
-  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
-  .rounded-full
-  *,
-.bw-mode
-  button:not(.bg-primary):not([class*="bg-primary"]):not(.text-white):hover
-  .rounded-full
-  svg {
-  color: #000000 !important;
-  stroke: #000000 !important;
-}
-/* Black & White Blueprint Mode overrides for Skills Scanner Carousel */
-.bw-mode .skills-card-normal {
+html.bw-mode .sa-panel,
+body.bw-mode .sa-panel {
+  border-right: 2px solid #000000 !important;
   background: #ffffff !important;
-  border: 2px solid #000000 !important;
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 1) !important;
-  border-radius: 4px !important;
+}
+
+html.bw-mode .sa-panel .sa-lbl,
+html.bw-mode .sa-panel .sa-ico,
+body.bw-mode .sa-panel .sa-lbl,
+body.bw-mode .sa-panel .sa-ico {
   color: #000000 !important;
 }
 
-.bw-mode .skills-card-ascii {
-  background: #ffffff !important;
-  border: 2px solid #000000 !important;
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 1) !important;
-  border-radius: 4px !important;
-  color: #000000 !important;
-}
-
-.bw-mode .skills-ascii-content {
-  color: #000000 !important;
-  text-shadow: none !important;
-}
-
-.bw-mode .skill-track {
-  background: rgba(0, 0, 0, 0.08) !important;
-  border: 1.5px solid #000000 !important;
-  border-radius: 2px !important;
-}
-
-.bw-mode .skill-fill {
+html.bw-mode .sa-panel.sa-active .sa-head-open,
+body.bw-mode .sa-panel.sa-active .sa-head-open {
   background: #000000 !important;
-  border-radius: 1px !important;
-}
-
-.bw-mode .skills-header {
   border-bottom: 2px solid #000000 !important;
 }
 
-.bw-mode .skills-title {
-  color: #000000 !important;
-}
-
-.bw-mode .skill-label {
-  color: #000000 !important;
-}
-
-.bw-mode .skill-percent {
-  color: #000000 !important;
-}
-
-/* B&W Theme Stat Cards */
-:root.bw-mode .stat-card-1 {
-  background: #000000 !important;
-  color: #ffffff !important;
-  border: 2px solid #000000 !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-}
-:root.bw-mode .stat-card-1 .stat-number,
-:root.bw-mode .stat-card-1 .stat-label,
-:root.bw-mode .stat-card-1 .stat-desc {
+html.bw-mode .sa-panel.sa-active .sa-head-open .sa-lbl,
+html.bw-mode .sa-panel.sa-active .sa-head-open .sa-ico,
+body.bw-mode .sa-panel.sa-active .sa-head-open * {
   color: #ffffff !important;
 }
 
-:root.bw-mode .stat-card-2 {
+html.bw-mode .sa-panel.sa-active .sa-body,
+body.bw-mode .sa-panel.sa-active .sa-body {
   background: #ffffff !important;
+  border: none !important;
+}
+
+html.bw-mode .sa-panel.sa-active .sa-name,
+html.bw-mode .sa-panel.sa-active .sa-pct,
+body.bw-mode .sa-panel.sa-active .sa-name,
+body.bw-mode .sa-panel.sa-active .sa-pct {
   color: #000000 !important;
+}
+
+html.bw-mode .sa-panel.sa-active .sa-fill,
+body.bw-mode .sa-panel.sa-active .sa-fill {
+  background: #000000 !important;
+}
+
+html.bw-mode .sa-panel.sa-active .sa-fill::after,
+body.bw-mode .sa-panel.sa-active .sa-fill::after {
+  background: #000000 !important;
+  box-shadow: none !important;
+}
+
+html.bw-mode .sa-panel.sa-active .sa-beam,
+body.bw-mode .sa-panel.sa-active .sa-beam {
+  background: #000000 !important;
+  box-shadow: none !important;
+}
+
+/* Stat Cards in B&W (stat-card-2 is solid black with white text) */
+html.bw-mode .stat-card-1,
+body.bw-mode .stat-card-1 {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+}
+
+html.bw-mode .stat-card-1 *,
+body.bw-mode .stat-card-1 * {
+  color: #000000 !important;
+}
+
+html.bw-mode .stat-card-2,
+body.bw-mode .stat-card-2 {
+  background: #000000 !important;
+  border: 2px solid #000000 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+html.bw-mode .stat-card-2 *,
+body.bw-mode .stat-card-2 * {
+  color: #ffffff !important;
+}
+
+/* Status & Hobby Badges in B&W */
+html.bw-mode .status-badge,
+html.bw-mode .hobby-badge,
+body.bw-mode .status-badge,
+body.bw-mode .hobby-badge {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+}
+
+html.bw-mode .status-badge *,
+html.bw-mode .hobby-badge *,
+body.bw-mode .status-badge *,
+body.bw-mode .hobby-badge * {
+  color: #000000 !important;
+}
+
+/* Document Card Icons in B&W Mode */
+html.bw-mode #documents .glass-card[class*="text-"],
+body.bw-mode #documents .glass-card[class*="text-"] {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border: 1.5px solid #000000 !important;
+}
+
+html.bw-mode #documents .glass-card[class*="text-"] *,
+body.bw-mode #documents .glass-card[class*="text-"] * {
+  color: #ffffff !important;
+}
+
+/* Footer Social Icons Hover in B&W Mode */
+html.bw-mode footer a.glass-card,
+body.bw-mode footer a.glass-card {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  border: 1.5px solid #000000 !important;
+}
+
+html.bw-mode footer a.glass-card svg,
+body.bw-mode footer a.glass-card svg {
+  color: #000000 !important;
+  fill: currentColor !important;
+}
+
+html.bw-mode footer a.glass-card:hover,
+body.bw-mode footer a.glass-card:hover {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+}
+
+html.bw-mode footer a.glass-card:hover svg,
+body.bw-mode footer a.glass-card:hover svg {
+  color: #ffffff !important;
+  fill: currentColor !important;
+}
+
+/* Visual Sitemap Part 1 & Part 2 Buttons in B&W Mode */
+html.bw-mode footer .grid button.glass-card,
+html.bw-mode footer .grid a.glass-card,
+body.bw-mode footer .grid button.glass-card,
+body.bw-mode footer .grid a.glass-card {
+  background: #ffffff !important;
+  border: 1.5px solid #000000 !important;
+  color: #000000 !important;
+}
+
+html.bw-mode footer .grid button.glass-card *,
+html.bw-mode footer .grid a.glass-card *,
+body.bw-mode footer .grid button.glass-card *,
+body.bw-mode footer .grid a.glass-card * {
+  color: #000000 !important;
+}
+
+/* Visual Sitemap Main Container - NO HOVER EFFECTS & STABLE BORDER */
+html.bw-mode footer div.border-2,
+body.bw-mode footer div.border-2 {
+  background: #ffffff !important;
   border: 2px solid #000000 !important;
   box-shadow: none !important;
-  border-radius: 0 !important;
-}
-:root.bw-mode .stat-card-2 .stat-number,
-:root.bw-mode .stat-card-2 .stat-label,
-:root.bw-mode .stat-card-2 .stat-desc {
-  color: #000000 !important;
 }
 
-/* --- B&W Hover & Transition Effects --- */
-
-/* Smooth Transitions for interactive elements */
-.bw-mode .glass-card,
-.bw-mode button:not(.scroll-top-btn),
-.bw-mode a,
-.bw-mode .stat-card-1,
-.bw-mode .stat-card-2 {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-/* Brutalist hover for standard cards */
-.bw-mode .glass-card:not(.mobile-drawer *):hover {
-  transform: translateY(-4px) !important;
-  box-shadow: 6px 6px 0px 0px #000000 !important;
-}
-
-/* Brutalist hover for stat cards */
-:root.bw-mode .stat-card-1:hover {
-  transform: translateY(-4px) !important;
-  /* Card 1 is black, so on hover it casts a white shadow (if background was grey) but since page is white, a thick white shadow with black border offset looks cool, but standard black shadow is safer. Let's do a double border shadow by using a grey or solid outline, actually box-shadow: 6px 6px 0px 0px #555555 looks nice on black. Let's use a stark offset shadow */
-  box-shadow: 6px 6px 0px 0px #000000 !important;
-  /* Since card 1 is black on white bg, the black shadow won't be distinguishable unless we translate it and leave a white gap. Wait, a black card translating -4px up will show white page under it, and then a black shadow. That works! */
-}
-
-:root.bw-mode .stat-card-2:hover {
-  transform: translateY(-4px) !important;
-  box-shadow: 6px 6px 0px 0px #000000 !important;
-}
-
-/* Brutalist hover for buttons */
-.bw-mode button:not(.bw-switch-container *):not(.scroll-top-btn):hover,
-.bw-mode a.bg-primary:hover,
-.bw-mode .cb-btn:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 4px 4px 0px 0px #000000 !important;
-}
-
-/* Button Active/Pressed state */
-.bw-mode button:not(.bw-switch-container *):not(.scroll-top-btn):active,
-.bw-mode a.bg-primary:active,
-.bw-mode .cb-btn:active {
-  transform: translateY(2px) !important;
-  box-shadow: 0px 0px 0px 0px #000000 !important;
-}
-
-/* Force border-radius on ALL buttons in B&W mode to ensure they are never square */
-.bw-mode button,
-.bw-mode .cb-btn,
-.bw-mode button:not(.bw-switch-container *),
-:root.bw-mode .cb-btn,
-:root.bw-mode button {
-  border-radius: 22px !important;
+html.bw-mode footer div.border-2::before,
+html.bw-mode footer div.border-2::after,
+body.bw-mode footer div.border-2::before,
+body.bw-mode footer div.border-2::after {
+  display: none !important;
 }

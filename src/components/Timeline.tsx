@@ -492,7 +492,7 @@ export const Timeline: React.FC<TimelineProps> = ({
           className="w-full flex items-center justify-between p-6 md:p-8 cursor-pointer select-none text-left bg-gradient-to-r from-cyan-500/5 to-transparent hover:from-cyan-500/10 transition-all duration-300"
         >
           <span className="flex items-center gap-4">
-            <span className="p-3 rounded-2xl bg-cyan-500/10 text-cyan-700 dark:text-cyan-300">
+            <span className="p-3 rounded-2xl bg-[var(--badge-bg)] text-primary">
               <FiBookOpen className="text-xl md:text-2xl" />
             </span>
             <span className="block">

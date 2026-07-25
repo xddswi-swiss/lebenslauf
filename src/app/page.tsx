@@ -83,7 +83,7 @@ const STATS_LETZTE_AKTUALISIERUNG = "19.06.2026"; // Son Güncelleme Tarihi
 
 const MainContent: React.FC = () => {
   const { t, language } = useLanguage();
-  const { theme } = useTheme();
+  const { theme, themeMode } = useTheme();
   const [randomColorIndex, setRandomColorIndex] = useState<number>(-1);
   const [selectedMatcher, setSelectedMatcher] = useState<
     "kaufmann" | "elektro" | null
@@ -530,8 +530,20 @@ const MainContent: React.FC = () => {
               className="lg:col-span-7 flex flex-col justify-center cursor-default"
             >
               <ElectricBorder
-                color={theme === "dark" ? "#00FFCC" : "#000000"}
-                glowColor={theme === "dark" ? "#3B82F6" : "#FF6C02"}
+                color={
+                  themeMode === "white"
+                    ? "#000000"
+                    : themeMode === "blue"
+                      ? "#00FFCC"
+                      : "#000000"
+                }
+                glowColor={
+                  themeMode === "white"
+                    ? "#000000"
+                    : themeMode === "blue"
+                      ? "#3B82F6"
+                      : "#FF6C02"
+                }
                 thickness={1}
                 speed={0.5}
                 chaos={3.5}
