@@ -762,7 +762,7 @@ const MainContent: React.FC = () => {
                             ease: "easeOut",
                             delay: idx * 0.1,
                           }}
-                          className="h-full rounded-full lang-fill-bar bg-gradient-to-r from-primary to-secondary"
+                          className="h-full rounded-full lang-fill-bar bg-[#ff5500]"
                         />
                       </div>
                     </div>

@@ -246,3 +246,9 @@ html.dark:not(.bw-mode) .skills-ascii-content {
   transform: translateY(1px) !important;
   box-shadow: 0 2px 10px rgba(59, 130, 246, 0.2) !important;
 }
+
+/* Progress Bar Fill Styling for Dark/Blue Theme */
+:root.dark:not(.bw-mode) .lang-fill-bar,
+:root.dark:not(.bw-mode) .skill-fill {
+  background: linear-gradient(to right, #3b82f6, #60a5fa) !important;
+}

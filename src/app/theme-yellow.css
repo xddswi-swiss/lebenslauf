@@ -248,9 +248,15 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
   color: #ffffff !important;
 }
 
-/* Yellow Theme Progress Bar Fill Styling (Solid User Specified Orange #d45100) */
+/* Yellow Theme Progress Bar Fill Styling (Bright Neon Electric Orange #FF5500) */
+html:not(.dark):not(.bw-mode) .lang-fill-bar,
+html:not(.dark):not(.bw-mode) .skill-fill,
 :root:not(.dark):not(.bw-mode) .lang-fill-bar,
 :root:not(.dark):not(.bw-mode) .skill-fill {
-  background: #d45100 !important;
+  background: #ff5500 !important;
+  background-color: #ff5500 !important;
   background-image: none !important;
+  --tw-gradient-from: #ff5500 !important;
+  --tw-gradient-to: #ff5500 !important;
+  --tw-gradient-stops: #ff5500, #ff5500 !important;
 }

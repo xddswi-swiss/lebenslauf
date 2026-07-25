@@ -1269,15 +1269,7 @@ class HobbiesAndInterests {
                                 <div
                                   data-level={skill.level}
                                   style={{ width: "0%" }}
-                                  className={`skill-fill h-full rounded-full bg-gradient-to-r transition-[width] duration-[1500ms] ease-[cubic-bezier(0.19,1,0.22,1)] ${
-                                    category.key === "personal"
-                                      ? "from-orange-600 to-orange-400"
-                                      : category.key === "school"
-                                        ? "from-navy-700 to-navy-500"
-                                        : category.key === "digital"
-                                          ? "from-green-600 to-green-400"
-                                          : "from-orange-600 to-navy-600"
-                                  }`}
+                                  className="skill-fill h-full rounded-full bg-[#ff5500] transition-[width] duration-[1500ms] ease-[cubic-bezier(0.19,1,0.22,1)]"
                                 />
                               )}
                             </div>
