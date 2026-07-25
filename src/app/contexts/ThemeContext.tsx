@@ -49,21 +49,26 @@ export function updateSafariThemeColor(color: string) {
     // 5. Force a full-viewport repaint (mirrors what happens when the mobile
     // drawer's fullscreen backdrop mounts/unmounts). With viewport-fit=cover,
     // the strip under the notch/status bar is genuinely just the top of the
-    // page — but some mobile browsers don't repaint that strip on a plain
-    // style/scroll change; they only repaint it after a large compositing
-    // event covers the whole viewport. Briefly inserting and removing a
-    // fixed, fullscreen, transparent layer forces exactly that.
+    // page — but some mobile browsers skip repainting that strip on a plain
+    // style/scroll change; they only resample it after a real, visible paint
+    // covers the whole viewport (that's exactly what the drawer's opaque
+    // bg-black/60 + blur backdrop does, and why opening the menu "fixes" it).
+    // A fully TRANSPARENT layer gets optimized away with no paint at all, so
+    // use an OPAQUE layer in the exact color we're switching to — worst case
+    // it's an imperceptible one-frame flash of the correct color.
     const flushLayer = document.createElement("div");
     flushLayer.style.position = "fixed";
     flushLayer.style.inset = "0";
     flushLayer.style.zIndex = "2147483647";
     flushLayer.style.pointerEvents = "none";
-    flushLayer.style.background = "transparent";
+    flushLayer.style.background = color;
     document.body.appendChild(flushLayer);
     // Force layout/paint to actually happen before removing it.
     void flushLayer.offsetHeight;
     requestAnimationFrame(() => {
-      flushLayer.remove();
+      requestAnimationFrame(() => {
+        flushLayer.remove();
+      });
     });
   };
 
