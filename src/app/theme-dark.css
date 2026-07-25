@@ -255,3 +255,130 @@ html.dark:not(.bw-mode) .skills-ascii-content {
     rgba(8, 19, 41, 0.95) 100%
   );
 }
+
+/* --- Dark Theme Light Blue Elements (#85c7f2) --- */
+
+/* 1. First Reference Card Only (Thomas Seinige) */
+:root.dark:not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child {
+  background: #85c7f2 !important;
+  border: 1px solid #bbe3fb !important;
+  box-shadow: 0 6px 20px rgba(133, 199, 242, 0.3) !important;
+}
+
+:root.dark:not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child h4,
+:root.dark:not(.dark):not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child p,
+:root.dark:not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child span,
+:root.dark:not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child a {
+  color: #102552 !important;
+}
+
+/* 2. Contact Form Submit Button (Nachricht senden) */
+:root.dark:not(.bw-mode) #contact form button[type="submit"] {
+  background: #85c7f2 !important;
+  border: 1px solid #bbe3fb !important;
+  color: #102552 !important;
+  box-shadow: 0 6px 20px rgba(133, 199, 242, 0.3) !important;
+  font-weight: 700 !important;
+}
+
+:root.dark:not(.bw-mode) #contact form button[type="submit"] * {
+  color: #102552 !important;
+}
+
+:root.dark:not(.bw-mode) #contact form button[type="submit"]:hover {
+  background: #a3d7f7 !important;
+  box-shadow: 0 8px 25px rgba(133, 199, 242, 0.45) !important;
+}
+
+/* 3. Hero Contact Button (Kontakt aufnehmen) */
+:root.dark:not(.bw-mode) a[href="#contact"].bg-primary,
+:root.dark:not(.bw-mode) a[href="#contact"].bg-primary * {
+  background: #85c7f2 !important;
+  border: 1px solid #bbe3fb !important;
+  color: #102552 !important;
+  box-shadow: 0 6px 20px rgba(133, 199, 242, 0.3) !important;
+  font-weight: 700 !important;
+}
+
+:root.dark:not(.bw-mode) a[href="#contact"].bg-primary:hover {
+  background: #a3d7f7 !important;
+  box-shadow: 0 8px 25px rgba(133, 199, 242, 0.45) !important;
+}
+
+/* 4. Skill Matcher Buttons (Kaufmann EFZ & Elektroinstallateur EFZ) */
+:root.dark:not(.bw-mode) .matcher-btn {
+  background: #85c7f2 !important;
+  border: 1px solid #bbe3fb !important;
+  color: #102552 !important;
+  box-shadow: 0 6px 20px rgba(133, 199, 242, 0.3) !important;
+}
+
+:root.dark:not(.bw-mode) .matcher-btn *,
+:root.dark:not(.bw-mode) .matcher-btn svg {
+  color: #102552 !important;
+}
+
+:root.dark:not(.bw-mode) .matcher-btn:hover {
+  background: #a3d7f7 !important;
+  box-shadow: 0 8px 25px rgba(133, 199, 242, 0.45) !important;
+}
+
+/* 5. Experiences Header Button (Erfahrungen) */
+:root.dark:not(.bw-mode) .experience-header-btn {
+  background: #85c7f2 !important;
+  border: 1px solid #bbe3fb !important;
+  color: #102552 !important;
+  box-shadow: 0 6px 20px rgba(133, 199, 242, 0.3) !important;
+}
+
+:root.dark:not(.bw-mode) .experience-header-btn *,
+:root.dark:not(.bw-mode) .experience-header-btn svg {
+  color: #102552 !important;
+}
+
+:root.dark:not(.bw-mode) .experience-header-btn:hover {
+  background: #a3d7f7 !important;
+  box-shadow: 0 8px 25px rgba(133, 199, 242, 0.45) !important;
+}
+
+/* 6. Accordion Active Panel Body & Skill Texts in Dark Theme (Emerald Green Style) */
+:root.dark:not(.bw-mode) .sa-panel.sa-active .sa-head-open {
+  background: rgba(16, 185, 129, 0.25) !important;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.4) !important;
+}
+
+:root.dark:not(.bw-mode) .sa-panel.sa-active .sa-head-open .sa-lbl,
+:root.dark:not(.bw-mode) .sa-panel.sa-active .sa-head-open .sa-ico {
+  color: #34d399 !important;
+}
+
+:root.dark:not(.bw-mode) .sa-panel.sa-active .sa-body {
+  background: linear-gradient(
+    to bottom right,
+    rgba(10, 30, 60, 0.95),
+    rgba(5, 20, 45, 0.95)
+  ) !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+:root.dark:not(.bw-mode) .sa-panel.sa-active .sa-name,
+:root.dark:not(.bw-mode) .sa-panel.sa-active .sa-pct {
+  color: #34d399 !important;
+}
+
+:root.dark:not(.bw-mode) .sa-panel.sa-active .sa-fill,
+:root.dark:not(.bw-mode) .sa-panel.sa-active .sa-fill::after {
+  background: #34d399 !important;
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.6) !important;
+}
+
+:root.dark:not(.bw-mode) .sa-panel.sa-active .sa-beam {
+  background: linear-gradient(
+    to right,
+    transparent,
+    #34d399 30%,
+    #34d399 70%,
+    transparent
+  ) !important;
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.8) !important;
+}
