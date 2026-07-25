@@ -654,15 +654,22 @@ body.bw-mode .mobile-drawer .glass-card {
   border: none !important;
 }
 
+/* Yellow/dark themes have no visible hover background at all on these rows
+   (globals.css's generic 5% black tint is imperceptible against a solid
+   colored drawer) — only the icon's built-in scale-110 grow shows. In B&W
+   mode that same faint tint reads as plain gray, which isn't allowed, so
+   cancel it outright and let the icon's scale transform be the only
+   hover/press feedback, matching yellow/blue exactly. */
 html.bw-mode .mobile-drawer .glass-card:hover,
 body.bw-mode .mobile-drawer .glass-card:hover {
-  background-color: rgba(0, 0, 0, 0.06) !important;
+  background-color: transparent !important;
 }
 
-/* Icon badge chip behind each nav link's icon (bg-[var(--badge-bg)]) */
+/* Icon badge chip behind each nav link's icon (bg-[var(--badge-bg)]) — no
+   gray fill, leave it flat/transparent so only the black icon shows. */
 html.bw-mode .mobile-drawer [class*="badge-bg"],
 body.bw-mode .mobile-drawer [class*="badge-bg"] {
-  background-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: transparent !important;
 }
 
 /* Kill every stray cyan accent in B&W Mode (e.g. the "Ausbildung" accordion

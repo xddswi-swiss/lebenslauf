@@ -175,9 +175,8 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
       opacity: 1,
       x: 0,
       transition: {
-        type: "spring" as const,
-        stiffness: 120,
-        damping: 15,
+        duration: 0.22,
+        ease: "easeOut" as const,
       },
     },
   };
@@ -317,7 +316,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 280, damping: 28 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={drawerStyle}
               className="mobile-drawer fixed right-0 top-0 bottom-0 w-[85%] max-w-[340px] z-[70] h-full shadow-2xl flex flex-col p-6 border-l border-[var(--glass-border)] lg:hidden"
             >
