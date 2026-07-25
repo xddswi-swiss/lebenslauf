@@ -190,7 +190,7 @@ export default function AdminPage() {
                 )}
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-2xl bg-primary hover:opacity-90 text-white text-sm font-bold shadow-lg shadow-primary/10 transition-all cursor-pointer active:scale-98"
+                  className="admin-force-white-text w-full py-3.5 rounded-2xl bg-primary hover:opacity-90 text-white text-sm font-bold shadow-lg shadow-primary/10 transition-all cursor-pointer active:scale-98"
                 >
                   {activeT.passBtn}
                 </button>
@@ -220,7 +220,7 @@ export default function AdminPage() {
                     onClick={() => setActiveTab("experiences")}
                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all cursor-pointer ${
                       activeTab === "experiences"
-                        ? "bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]"
+                        ? "admin-force-white-text bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]"
                         : "hover:bg-zinc-800/10 text-[var(--text-body)]"
                     }`}
                   >
@@ -237,7 +237,7 @@ export default function AdminPage() {
                     onClick={() => setActiveTab("documents")}
                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all cursor-pointer ${
                       activeTab === "documents"
-                        ? "bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]"
+                        ? "admin-force-white-text bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]"
                         : "hover:bg-zinc-800/10 text-[var(--text-body)]"
                     }`}
                   >
@@ -254,7 +254,7 @@ export default function AdminPage() {
                     onClick={() => setActiveTab("guestbook")}
                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all cursor-pointer ${
                       activeTab === "guestbook"
-                        ? "bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]"
+                        ? "admin-force-white-text bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]"
                         : "hover:bg-zinc-800/10 text-[var(--text-body)]"
                     }`}
                   >

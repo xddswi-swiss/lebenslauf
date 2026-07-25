@@ -659,7 +659,7 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({
                   )}
                   <button
                     type="submit"
-                    className="w-full py-3 rounded-xl bg-primary hover:opacity-90 text-white text-sm font-semibold shadow-md shadow-primary/10 transition-all cursor-pointer"
+                    className="admin-force-white-text w-full py-3 rounded-xl bg-primary hover:opacity-90 text-white text-sm font-semibold shadow-md shadow-primary/10 transition-all cursor-pointer"
                   >
                     {t.passBtn}
                   </button>
@@ -1106,7 +1106,7 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-4 rounded-xl bg-primary hover:opacity-95 disabled:opacity-50 text-white font-bold text-sm shadow-lg shadow-primary/15 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+                  className="admin-force-white-text w-full py-4 rounded-xl bg-primary hover:opacity-95 disabled:opacity-50 text-white font-bold text-sm shadow-lg shadow-primary/15 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
                 >
                   {isLoading ? (
                     <FiLoader className="animate-spin text-lg" />
@@ -1217,7 +1217,7 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({
               <div className="flex items-center gap-3">
                 <button
                   onClick={handleCopyJson}
-                  className="flex-1 py-3.5 rounded-xl bg-primary hover:opacity-90 text-white font-bold text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                  className="admin-force-white-text flex-1 py-3.5 rounded-xl bg-primary hover:opacity-90 text-white font-bold text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
                 >
                   <FiCheck
                     className={`text-base transition-transform ${copied ? "scale-100" : "scale-0 w-0"}`}

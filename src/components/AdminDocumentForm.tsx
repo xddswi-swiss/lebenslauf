@@ -521,7 +521,7 @@ export const AdminDocumentForm: React.FC = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-4 rounded-xl bg-primary hover:opacity-95 disabled:opacity-50 text-white font-bold text-sm shadow-lg shadow-primary/15 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 disabled:cursor-not-allowed"
+          className="admin-force-white-text w-full py-4 rounded-xl bg-primary hover:opacity-95 disabled:opacity-50 text-white font-bold text-sm shadow-lg shadow-primary/15 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95 disabled:cursor-not-allowed"
         >
           {isLoading ? (
             <FiLoader className="animate-spin text-lg" />
@@ -614,7 +614,7 @@ export const AdminDocumentForm: React.FC = () => {
             <div className="flex items-center gap-3">
               <button
                 onClick={copyFallbackJson}
-                className="flex-1 py-3.5 rounded-xl bg-primary hover:opacity-90 text-white font-bold text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                className="admin-force-white-text flex-1 py-3.5 rounded-xl bg-primary hover:opacity-90 text-white font-bold text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 <FiCheck
                   className={`text-base transition-transform ${copied ? "scale-100" : "scale-0 w-0"}`}

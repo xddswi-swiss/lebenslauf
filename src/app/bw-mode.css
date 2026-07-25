@@ -571,3 +571,16 @@ body.bw-mode .active-language-btn {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
+
+/* Admin panel: force readable white text on black/primary buttons (active
+   sidebar tab, "Add Document"/"Add Experience" submit buttons, fallback
+   copy buttons). These buttons weren't part of the original theme design,
+   so the generic button[type="submit"]/.bg-primary theme overrides (meant
+   only for the public contact form / hero CTA) were unintentionally also
+   forcing black text onto them, making the label invisible on the black
+   background. Applies across all themes — loaded last so it wins ties. */
+.admin-force-white-text,
+.admin-force-white-text * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
