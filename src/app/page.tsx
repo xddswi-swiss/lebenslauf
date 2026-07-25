@@ -756,7 +756,7 @@ const MainContent: React.FC = () => {
                         <m.div
                           initial={{ width: 0 }}
                           whileInView={{ width: `${lang.level}%` }}
-                          viewport={{ once: true }}
+                          viewport={{ once: false, amount: 0.2 }}
                           transition={{
                             duration: 1.2,
                             ease: "easeOut",
