@@ -128,13 +128,13 @@ export default function RootLayout({
     >
       <head>
         <meta name="theme-color" content="#ffffff" id="theme-color-meta" />
+        <ThemeInitializer />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <ThemeInitializer />
         <ThemeProvider>
           <LanguageProvider>
             {children}

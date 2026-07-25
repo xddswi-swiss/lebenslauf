@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import { useTheme } from "@/app/contexts/ThemeContext";
 
 export const SwissSwitch: React.FC = () => {
