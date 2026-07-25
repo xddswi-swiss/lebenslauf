@@ -419,11 +419,12 @@ export const translations: Record<Language, TranslationSchema> = {
       intro: "Wer bin ich & was mach ich? 🤔",
       description:
         'Ich heisse <span class="text-user-orange-dark dark:text-orange-400 font-bold">Eren</span>, bin <span class="text-user-yellow-dark dark:text-navy-300 font-semibold">16 Jahre alt</span>. Ich habe meine absolute Wunschlehrstelle gefunden! Ab August 2026 starte ich meine Ausbildung als <span class="text-user-orange-dark dark:text-orange-400 font-bold">Elektroinstallateur EFZ</span> bei der Firma <span class="text-user-green dark:text-green-400 font-semibold">Elektro Götz</span>. Ich freue mich riesig auf diese handwerkliche und technische Herausforderung, bei der ich mein technisches Verständnis und meine praktischen Fähigkeiten täglich unter Beweis stellen kann. Vielen Dank an alle, die mich auf diesem Weg unterstützt haben!',
-      quickFactsTitle: "Meine Bewerbungsstatistiken",
+      quickFactsTitle: "Mein Weg bis zur Lehrstelle",
       statsSchnupperLabel: "Schnupperlehren",
-      statsSchnupperDesc: "so viele Schnupperlehren habe ich bisher besucht.",
+      statsSchnupperDesc: "so viele Schnupperlehren habe ich auf dem Weg dorthin besucht.",
       statsBewerbungLabel: "Lehrstellenbewerbungen",
-      statsBewerbungDesc: "für eine Lehrstelle habe ich bisher abgeschickt.",
+      statsBewerbungDesc:
+        "Bewerbungen habe ich geschrieben, bis ich meine Traumlehrstelle gefunden habe.",
       statsLastUpdate: "Letzte Aktualisierung",
     },
     documents: {
@@ -619,12 +620,12 @@ export const translations: Record<Language, TranslationSchema> = {
       intro: "Ben kimim ve ne yapıyorum? 🤔",
       description:
         'Adım <span class="text-user-orange-dark dark:text-orange-400 font-bold">Eren</span>, <span class="text-user-yellow-dark dark:text-navy-300 font-semibold">16 yaşındayım</span>. Hayalimdeki çıraklık yerini buldum! Ağustos 2026\'dan itibaren <span class="text-user-green dark:text-green-400 font-semibold">Elektro Götz</span> firmasında <span class="text-user-orange-dark dark:text-orange-400 font-bold">Elektroinstallateur EFZ (Elektrik Tesisatçısı)</span> olarak eğitimime başlıyorum. Teknik anlayışımı ve pratik becerilerimi her gün sergileyebileceğim bu teknik ve el becerisi gerektiren yolculuk için çok heyecanlıyım. Bu süreçte beni destekleyen herkese çok teşekkür ederim!',
-      quickFactsTitle: "Başvuru İstatistiklerim",
+      quickFactsTitle: "Çıraklık Yerimi Bulana Kadarki Yolculuğum",
       statsSchnupperLabel: "Staj Deneyimleri",
-      statsSchnupperDesc: "şimdiye kadar katıldığım staj sayısı.",
+      statsSchnupperDesc: "bu yolculukta katıldığım staj sayısı.",
       statsBewerbungLabel: "Çıraklık Başvuruları",
       statsBewerbungDesc:
-        "şimdiye kadar gönderdiğim çıraklık başvurusu sayısı.",
+        "hayalimdeki çıraklık yerini bulana kadar gönderdiğim başvuru sayısı.",
       statsLastUpdate: "Son Güncelleme",
     },
     documents: {
@@ -813,11 +814,12 @@ export const translations: Record<Language, TranslationSchema> = {
       intro: "Who am I & what do I do? 🤔",
       description:
         'My name is <span class="text-user-orange-dark dark:text-orange-400 font-bold">Eren</span>, I am <span class="text-user-yellow-dark dark:text-navy-300 font-semibold">16 years old</span>. I have officially found my dream apprenticeship! Starting August 2026, I will begin my training as an <span class="text-user-orange-dark dark:text-orange-400 font-bold">Electrical Installer EFZ</span> at <span class="text-user-green dark:text-green-400 font-semibold">Elektro Götz</span>. I am incredibly excited about this technical and hands-on challenge where I can apply my technical understanding and practical skills daily. Huge thanks to everyone who supported me along the way!',
-      quickFactsTitle: "Application Statistics",
+      quickFactsTitle: "My Journey to the Apprenticeship",
       statsSchnupperLabel: "Trial Apprenticeships",
-      statsSchnupperDesc: "trial apprenticeships I have completed so far.",
+      statsSchnupperDesc: "trial apprenticeships I completed along the way.",
       statsBewerbungLabel: "Apprenticeship Applications",
-      statsBewerbungDesc: "applications I have sent out for an apprenticeship.",
+      statsBewerbungDesc:
+        "applications I sent out before finding my dream apprenticeship.",
       statsLastUpdate: "Last Updated",
     },
     documents: {

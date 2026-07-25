@@ -23,16 +23,11 @@ import {
   FiGithub,
   FiInstagram,
   FiFileText,
-  FiZap,
-  FiX,
-  FiBriefcase,
-  FiTrash2,
 } from "react-icons/fi";
 import {
   reportItems,
   languagesData,
   referencesData,
-  experienceItems,
 } from "@/data/translations";
 import {
   FaUtensils,
@@ -85,9 +80,6 @@ const MainContent: React.FC = () => {
   const { t, language } = useLanguage();
   const { theme, themeMode } = useTheme();
   const [randomColorIndex, setRandomColorIndex] = useState<number>(-1);
-  const [selectedMatcher, setSelectedMatcher] = useState<
-    "kaufmann" | "elektro" | null
-  >(null);
   const [docs, setDocs] = useState<any[]>([]);
   const [mounted, setMounted] = useState(false);
 
@@ -133,149 +125,6 @@ const MainContent: React.FC = () => {
       window.removeEventListener("documents-updated", handleRefresh);
     };
   }, [language]);
-
-  const handleMatcherClick = (type: "kaufmann" | "elektro") => {
-    const nextVal = selectedMatcher === type ? null : type;
-    setSelectedMatcher(nextVal);
-    if (nextVal) {
-      // Smooth scroll to the experience section after a brief delay to allow rendering/expansion
-      setTimeout(() => {
-        const el = document.getElementById("experience");
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }, 150);
-    }
-  };
-
-  const getMatcherStats = () => {
-    if (!selectedMatcher) return { experienceCount: 0, skillCount: 0 };
-
-    // Count experiences
-    const items = experienceItems[language] || [];
-    const workItems = items.filter(
-      (item) => item.type === "work" || !item.type,
-    );
-
-    const matchesRole = (role: string) => {
-      const r = role.toLowerCase();
-      if (selectedMatcher === "kaufmann") {
-        return (
-          r.includes("kaufmann") ||
-          r.includes("kaufmännische") ||
-          r.includes("kv") ||
-          r.includes("treuhand") ||
-          r.includes("bank") ||
-          r.includes("schüler") ||
-          r.includes("sekundarschule") ||
-          r.includes("ticari") ||
-          r.includes("ticaret") ||
-          r.includes("bankacılık") ||
-          r.includes("ortaokulu") ||
-          r.includes("sekundar") ||
-          r.includes("commercial") ||
-          r.includes("banking") ||
-          r.includes("apprentice") ||
-          r.includes("school")
-        );
-      }
-      if (selectedMatcher === "elektro") {
-        return (
-          r.includes("elektro") ||
-          r.includes("netzelektriker") ||
-          r.includes("schüler") ||
-          r.includes("sekundarschule") ||
-          r.includes("elektrik") ||
-          r.includes("ortaokulu") ||
-          r.includes("sekundar") ||
-          r.includes("electrical") ||
-          r.includes("installer") ||
-          r.includes("school")
-        );
-      }
-      return true;
-    };
-
-    const experienceCount = workItems.filter((item) =>
-      matchesRole(item.role),
-    ).length;
-
-    // Count skills
-    const skillsList = [
-      "reliability",
-      "teamwork",
-      "helpfulness",
-      "learning",
-      "responsibility",
-      "geometry",
-      "math",
-      "german",
-      "turkish",
-      "english",
-      "word",
-      "excel",
-      "powerpoint",
-      "web",
-      "hardware",
-      "kung-fu",
-      "swim",
-      "cook",
-      "photography",
-      "media",
-    ];
-
-    const matchesSkill = (skillId: string) => {
-      const s = skillId.toLowerCase();
-      if (selectedMatcher === "kaufmann") {
-        return [
-          "teamwork",
-          "helpfulness",
-          "responsibility",
-          "german",
-          "turkish",
-          "english",
-          "word",
-          "excel",
-          "powerpoint",
-          "media",
-        ].includes(s);
-      }
-      if (selectedMatcher === "elektro") {
-        return [
-          "reliability",
-          "learning",
-          "responsibility",
-          "geometry",
-          "math",
-          "hardware",
-          "kung-fu",
-        ].includes(s);
-      }
-      return true;
-    };
-
-    const skillCount = skillsList.filter(matchesSkill).length;
-
-    return { experienceCount, skillCount };
-  };
-
-  const stats = getMatcherStats();
-
-  const getBannerText = () => {
-    if (language === "tr") {
-      return `✨ ${stats.experienceCount} uygun staj ve ${stats.skillCount} yetenek aşağıda vurgulandı!`;
-    }
-    if (language === "en") {
-      return `✨ ${stats.experienceCount} matching apprenticeships and ${stats.skillCount} skills highlighted!`;
-    }
-    return `✨ ${stats.experienceCount} passende Schnupperlehren und ${stats.skillCount} Fähigkeiten hervorgehoben!`;
-  };
-
-  const getBannerLinkText = () => {
-    if (language === "tr") return "Sonuçları Gör ↓";
-    if (language === "en") return "View Results ↓";
-    return "Ergebnisse ansehen ↓";
-  };
 
   React.useEffect(() => {
     // Pick a random index once on client mount
@@ -431,85 +280,6 @@ const MainContent: React.FC = () => {
             </div>
           </m.div>
         </section>
-
-        {/* Apprenticeship Matcher Section */}
-        <m.section
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="scroll-mt-24 max-w-2xl mx-auto w-full"
-        >
-          <div className="glass-card p-6 md:p-8 rounded-3xl text-center border border-[var(--glass-border)] bg-[var(--glass-card-bg)] backdrop-blur-md relative overflow-hidden shadow-lg">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-muted)] mb-4">
-              {t.matcher.title}
-            </h3>
-            <div className="flex flex-wrap gap-3 justify-center items-center">
-              <button
-                onClick={() => handleMatcherClick("kaufmann")}
-                className={`matcher-btn px-5 py-3 rounded-2xl text-xs md:text-sm font-bold border transition-all duration-300 cursor-pointer flex items-center gap-2 ${
-                  selectedMatcher === "kaufmann"
-                    ? "bg-primary text-white border-primary shadow-md shadow-primary/25 scale-[1.02]"
-                    : "bg-transparent text-[var(--text-body)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5"
-                }`}
-              >
-                <FiBriefcase className="text-base" />
-                {t.matcher.kaufmann}
-              </button>
-              <button
-                onClick={() => handleMatcherClick("elektro")}
-                className={`matcher-btn px-5 py-3 rounded-2xl text-xs md:text-sm font-bold border transition-all duration-300 cursor-pointer flex items-center gap-2 ${
-                  selectedMatcher === "elektro"
-                    ? "bg-primary text-white border-primary shadow-md shadow-primary/25 scale-[1.02]"
-                    : "bg-transparent text-[var(--text-body)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5"
-                }`}
-              >
-                <FiZap className="text-base" />
-                {t.matcher.elektro}
-              </button>
-              {selectedMatcher && (
-                <button
-                  onClick={() => setSelectedMatcher(null)}
-                  className="p-3 rounded-2xl border border-red-500/20 hover:border-red-500 bg-red-500/5 hover:bg-red-500 text-red-500 hover:text-white transition-all cursor-pointer flex items-center justify-center active:scale-95 shadow-sm"
-                  title={t.matcher.reset}
-                >
-                  <FiX className="text-base" />
-                </button>
-              )}
-            </div>
-
-            <AnimatePresence>
-              {selectedMatcher && (
-                <m.div
-                  initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                  animate={{ opacity: 1, height: "auto", marginTop: 24 }}
-                  exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="overflow-hidden"
-                >
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 p-3 px-5 rounded-2xl bg-primary/10 border border-primary/20 text-xs md:text-sm">
-                    <span className="text-[var(--text-main)] font-semibold">
-                      {getBannerText()}
-                    </span>
-                    <button
-                      onClick={() => {
-                        const el = document.getElementById("experience");
-                        if (el) {
-                          el.scrollIntoView({
-                            behavior: "smooth",
-                            block: "start",
-                          });
-                        }
-                      }}
-                      className="px-3 py-1.5 rounded-xl bg-primary hover:opacity-90 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shadow-md shadow-primary/10 hover:shadow-primary/20 active:scale-95"
-                    >
-                      {getBannerLinkText()}
-                    </button>
-                  </div>
-                </m.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </m.section>
 
         {/* About Me Section */}
         <section id="about" className="scroll-mt-24">
@@ -712,12 +482,12 @@ const MainContent: React.FC = () => {
               {t.experience.title}
             </h2>
           </div>
-          <Timeline selectedMatcher={selectedMatcher} />
+          <Timeline selectedMatcher={null} />
         </section>
 
         {/* Skills Section */}
         <section id="skills" className="scroll-mt-24">
-          <SkillsGrid selectedMatcher={selectedMatcher} />
+          <SkillsGrid selectedMatcher={null} />
         </section>
 
         {/* Contact & References Section */}
