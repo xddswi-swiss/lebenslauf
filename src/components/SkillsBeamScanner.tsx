@@ -993,8 +993,8 @@ class HobbiesAndInterests {
         const cards = track.querySelectorAll(".skills-card-wrapper");
 
         if (activeIsMobile) {
-          // Align clipping boundary with the laser line at 80% of container height
-          const scannerY = containerRect.top + containerRect.height * 0.8;
+          // Align clipping boundary with the laser line at 65% of container height (triggers earlier)
+          const scannerY = containerRect.top + containerRect.height * 0.65;
           cards.forEach((card) => {
             const htmlCard = card as HTMLElement;
             const rect = htmlCard.getBoundingClientRect();
@@ -1256,7 +1256,7 @@ class HobbiesAndInterests {
                                 <div
                                   data-level={skill.level}
                                   style={{ width: "0%" }}
-                                  className={`skill-fill h-full rounded-full bg-gradient-to-r transition-[width] duration-[1500ms] ease-[cubic-bezier(0.19,1,0.22,1)] ${
+                                  className={`skill-fill h-full rounded-full bg-gradient-to-r transition-[width] duration-[800ms] ease-[cubic-bezier(0.19,1,0.22,1)] ${
                                     category.key === "personal"
                                       ? "from-orange-600 to-orange-400"
                                       : category.key === "school"
