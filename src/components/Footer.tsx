@@ -40,7 +40,7 @@ export interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
     <footer
@@ -56,18 +56,17 @@ export const Footer: React.FC<FooterProps> = () => {
             <p className="mt-3 text-sm leading-relaxed text-[var(--text-body)]">
               {t.footer.description}
             </p>
-            
-            {/* Additional Links like Cookie Settings */}
-            <div className="flex items-center gap-4 mt-4 text-sm text-[var(--text-muted)]">
+            <div className="mt-3 text-xs">
               <button
+                type="button"
                 onClick={() => {
                   if (typeof window !== 'undefined' && (window as any).showCookieSettings) {
                     (window as any).showCookieSettings();
                   }
                 }}
-                className="hover:text-[var(--text-main)] transition-colors underline decoration-[var(--text-muted)] underline-offset-4"
+                className="hover:underline cursor-pointer opacity-80 hover:opacity-100 transition-opacity"
               >
-                Cookie Settings
+                {language === "tr" ? "Çerez Ayarları" : language === "en" ? "Cookie Settings" : "Cookie-Einstellungen"}
               </button>
             </div>
           </div>

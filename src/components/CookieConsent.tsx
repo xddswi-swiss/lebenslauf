@@ -35,6 +35,7 @@ export default function CookieConsent() {
   const handleAcceptAll = () => {
     localStorage.setItem("cookie_consent", "all");
     setIsVisible(false);
+    setShowSettings(false);
   };
 
   const handleSaveSettings = () => {
@@ -43,6 +44,7 @@ export default function CookieConsent() {
       trackingEnabled ? "all" : "essential",
     );
     setIsVisible(false);
+    setShowSettings(false);
   };
 
   // We must not return null early because we need the component mounted to expose the window function

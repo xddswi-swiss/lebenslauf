@@ -37,11 +37,14 @@ export function updateSafariThemeColor(color: string) {
       document.body.style.backgroundColor = color;
     }
 
-    // 4. Trigger Safari UI compositor tint re-sampling
-    if (window.scrollY === 0) {
-      window.scrollTo(0, 1);
-      window.scrollTo(0, 0);
-    }
+    // 4. Trigger Safari/Chrome UI compositor tint re-sampling.
+    // Nudge relative to the CURRENT scroll position (not just when at the very
+    // top) — theme buttons live in the sticky header, so users are usually
+    // scrolled down when they switch themes, and the old top-only check
+    // silently skipped the repaint trick in that (most common) case.
+    const currentY = window.scrollY;
+    window.scrollTo(0, currentY + 1);
+    window.scrollTo(0, currentY);
   };
 
   // Phase 1: Immediate update

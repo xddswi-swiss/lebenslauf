@@ -123,6 +123,14 @@
   color: #ffffff !important;
 }
 
+/* Midnight Blue Theme Active Nav Link Indicator (Light Sky Blue line from button color) */
+:root.dark:not(.bw-mode) header.header-glass-gradient nav span.bg-primary,
+:root.dark:not(.bw-mode) header.header-glass-gradient nav .active-nav-indicator,
+:root.dark:not(.bw-mode) .active-nav-indicator {
+  background-color: #85c7f2 !important;
+  background: #85c7f2 !important;
+}
+
 /* Footer Override */
 :root.dark:not(.bw-mode) footer {
   background: linear-gradient(to bottom, #102552, #081329) !important;
@@ -336,6 +344,17 @@ html.dark:not(.bw-mode) .skills-ascii-content {
   color: #102552 !important;
 }
 
+:root.dark:not(.bw-mode) .experience-header-btn span.rounded-full {
+  background: #102552 !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+:root.dark:not(.bw-mode) .experience-header-btn span.rounded-full svg,
+:root.dark:not(.bw-mode) .experience-header-btn span.rounded-full svg path {
+  color: #85c7f2 !important;
+  stroke: #85c7f2 !important;
+}
+
 :root.dark:not(.bw-mode) .experience-header-btn:hover {
   background: #a3d7f7 !important;
   box-shadow: 0 8px 25px rgba(133, 199, 242, 0.45) !important;
@@ -381,4 +400,20 @@ html.dark:not(.bw-mode) .skills-ascii-content {
     transparent
   ) !important;
   box-shadow: 0 0 12px rgba(52, 211, 153, 0.8) !important;
+}
+
+/* ScrollToTop Button in Midnight Blue Theme (Light Sky Blue Circle, Dark Blue Stickman) */
+:root.dark:not(.bw-mode) button[aria-label="Scroll to top"] {
+  background: #85c7f2 !important;
+  color: #102552 !important;
+  border: 1.5px solid #85c7f2 !important;
+  box-shadow: 0 8px 25px rgba(133, 199, 242, 0.4) !important;
+}
+
+:root.dark:not(.bw-mode) .climbing-stickman,
+:root.dark:not(.bw-mode) .climbing-stickman * {
+  color: #102552 !important;
+  stroke: #102552 !important;
+  fill: #102552 !important;
+  -webkit-text-fill-color: #102552 !important;
 }

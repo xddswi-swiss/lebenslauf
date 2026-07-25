@@ -89,7 +89,6 @@ const MainContent: React.FC = () => {
     "kaufmann" | "elektro" | null
   >(null);
   const [docs, setDocs] = useState<any[]>([]);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -128,19 +127,10 @@ const MainContent: React.FC = () => {
       fetchDocuments();
     };
 
-    const checkAdmin = () => {
-      if (typeof window !== "undefined") {
-        setIsAdmin(localStorage.getItem("admin_unlocked") === "true");
-      }
-    };
-    checkAdmin();
-
     window.addEventListener("documents-updated", handleRefresh);
-    window.addEventListener("admin-state-changed", checkAdmin);
     return () => {
       isMounted = false;
       window.removeEventListener("documents-updated", handleRefresh);
-      window.removeEventListener("admin-state-changed", checkAdmin);
     };
   }, [language]);
 
@@ -785,10 +775,6 @@ const MainContent: React.FC = () => {
                       </div>
                     </div>
                   ))}
-                </div>
-
-                <div className="p-3 rounded-xl bg-primary/5 border border-primary/10 text-[11px] text-[var(--text-muted)]">
-                  💡 <span className="font-medium">Hinweis:</span> Weitere Auskünfte auf Anfrage erhältlich.
                 </div>
               </div>
             </div>

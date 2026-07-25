@@ -52,10 +52,8 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
     >
       <span className="cb-fill" aria-hidden="true"></span>
       <span className="cb-label">
-        <FiDownload className="cb-arrow" aria-hidden="true" />
-        <span>{downloadLabel}</span>
+        <span>{status === "done" ? completeLabel : downloadLabel}</span>
       </span>
-      <span className="cb-done">✓&nbsp;{completeLabel}</span>
     </button>
   );
 };

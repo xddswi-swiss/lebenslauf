@@ -89,9 +89,12 @@
   color: #000000 !important;
 }
 
-:root:not(.dark):not(.bw-mode) header.header-glass-gradient button.bg-primary {
-  background: #000000 !important;
-  color: #ffffff !important;
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient button.active-language-btn,
+:root:not(.dark):not(.bw-mode) .active-language-btn {
+  background: #e65c00 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  font-weight: 900 !important;
 }
 
 :root:not(.dark):not(.bw-mode)
@@ -104,6 +107,14 @@
   border-color: rgba(255, 255, 255, 0.5) !important;
   background-color: rgba(255, 255, 255, 0.3) !important;
   color: #000000 !important;
+}
+
+/* Yellow Theme Active Nav Link Indicator (Orange line from button color) */
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient nav span.bg-primary,
+:root:not(.dark):not(.bw-mode) header.header-glass-gradient nav .active-nav-indicator,
+:root:not(.dark):not(.bw-mode) .active-nav-indicator {
+  background-color: #e65c00 !important;
+  background: #e65c00 !important;
 }
 
 /* Footer Override */
@@ -345,29 +356,30 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
   box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
 }
 
-/* Yellow Theme: Accordion Panels Warm Dark Gold / Ochre Contrast */
+/* Yellow Theme: Accordion Panels Warm Vibrant Amber Orange (from User Image) */
 :root:not(.dark):not(.bw-mode) .sa-wrap {
-  border: 1px solid rgba(0, 0, 0, 0.2) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
-  background: #b87a00 !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 10px 30px rgba(245, 158, 11, 0.25) !important;
+  background: #f59e0b !important;
 }
 
 :root:not(.dark):not(.bw-mode) .sa-panel {
-  background: linear-gradient(to bottom, #d48f00, #a87000) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: #f59e0b !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
 :root:not(.dark):not(.bw-mode) .sa-panel .sa-lbl {
-  color: #ffffff !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  color: #000000 !important;
+  font-weight: 800 !important;
+  text-shadow: none !important;
 }
 
 :root:not(.dark):not(.bw-mode) .sa-panel .sa-ico {
-  color: #ffffff !important;
+  color: #000000 !important;
 }
 
 :root:not(.dark):not(.bw-mode) .sa-panel:hover:not(.sa-active) {
-  background: linear-gradient(to bottom, #e29b00, #b87b00) !important;
+  background: #ffab00 !important;
 }
 
 :root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-head-open {
@@ -389,4 +401,20 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
 
 :root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-pct {
   color: #b87a00 !important;
+}
+
+/* ScrollToTop Button in Yellow Theme (Orange Circle, Pure White Stickman) */
+:root:not(.dark):not(.bw-mode) button[aria-label="Scroll to top"] {
+  background: #e65c00 !important;
+  color: #ffffff !important;
+  border: 1.5px solid #e65c00 !important;
+  box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
+}
+
+:root:not(.dark):not(.bw-mode) .climbing-stickman,
+:root:not(.dark):not(.bw-mode) .climbing-stickman * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }

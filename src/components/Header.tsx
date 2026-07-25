@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/app/contexts/LanguageContext";
-import { useTheme, updateSafariThemeColor } from "@/app/contexts/ThemeContext";
+import { useTheme } from "@/app/contexts/ThemeContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { SwissSwitch } from "@/components/SwissSwitch";
 import { motion as m, AnimatePresence } from "framer-motion";
@@ -66,36 +66,13 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
     return () => observer.disconnect();
   }, [language]); // Re-bind observer if language changes (though IDs remain same, safe measure)
 
-  // Sync mobile status bar color (theme-color meta tag) with current theme
-  useEffect(() => {
-    const updateThemeColor = () => {
-      const isBw = document.documentElement.classList.contains("bw-mode");
-      const isDark = document.documentElement.classList.contains("dark");
-
-      let color = "#ffffff"; // BW Mode (White)
-      if (!isBw) {
-        color = isDark ? "#102552" : "#ffc72c"; // Midnight Blue or Sunlit Yellow
-      }
-
-      updateSafariThemeColor(color);
-    };
-
-    updateThemeColor();
-
-    const observer = new MutationObserver(updateThemeColor);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-    window.addEventListener("bwModeChange", updateThemeColor);
-    window.addEventListener("themeChange", updateThemeColor);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("bwModeChange", updateThemeColor);
-      window.removeEventListener("themeChange", updateThemeColor);
-    };
-  }, []);
+  // NOTE: Mobile status bar (theme-color meta tag) syncing is handled
+  // centrally in ThemeContext.tsx's applyTheme()/updateSafariThemeColor().
+  // A duplicate MutationObserver + event-listener sync used to live here too,
+  // firing the same update 3-4x per theme switch from slightly different
+  // code paths — harmless in the end result but noisy and a source of
+  // confusion when debugging the "stuck one step behind" status bar bug.
+  // Removed to keep a single source of truth.
 
   const navLinks = [
     {
@@ -243,7 +220,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                     {isActive && (
                       <m.span
                         layoutId="activeNavIndicator"
-                        className="absolute left-0 bottom-0 w-full h-[2px] bg-primary rounded-full"
+                        className="active-nav-indicator absolute left-0 bottom-0 w-full h-[3.5px] bg-primary rounded-full"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{

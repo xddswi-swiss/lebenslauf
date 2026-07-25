@@ -66,7 +66,6 @@ export const Timeline: React.FC<TimelineProps> = ({
   const [isEducationExpanded, setIsEducationExpanded] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null); // All items closed by default
   const [workItems, setWorkItems] = useState<ExperienceItem[]>([]);
-  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (selectedMatcher) {
@@ -74,20 +73,6 @@ export const Timeline: React.FC<TimelineProps> = ({
       return () => clearTimeout(timer);
     }
   }, [selectedMatcher]);
-
-  useEffect(() => {
-    const checkAdmin = () => {
-      if (typeof window !== "undefined") {
-        setIsAdmin(localStorage.getItem("admin_unlocked") === "true");
-      }
-    };
-
-    checkAdmin();
-    window.addEventListener("admin-state-changed", checkAdmin);
-    return () => {
-      window.removeEventListener("admin-state-changed", checkAdmin);
-    };
-  }, []);
 
   useEffect(() => {
     // Defer initial static items set to avoid synchronous setState cascading renders
