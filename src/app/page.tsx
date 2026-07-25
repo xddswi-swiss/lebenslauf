@@ -79,7 +79,51 @@ const getStrandsColors = (index: number) => {
 const STATS_SCHNUPPERLEHREN = 25; // Schnupperlehren (Staj) Sayısı
 const STATS_BEWERBUNGEN = 96; // Lehrstellenbewerbungen (Çıraklık Başvurusu) Sayısı
 const STATS_LETZTE_AKTUALISIERUNG = "19.06.2026"; // Son Güncelleme Tarihi
-// ------------------------------------------------
+const LanguageProgressBar: React.FC<{ level: number; index: number }> = ({
+  level,
+  index,
+}) => {
+  const barRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const el = barRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            el.style.transition = `width 1.2s cubic-bezier(0.19, 1, 0.22, 1) ${index * 0.1}s`;
+            requestAnimationFrame(() => {
+              el.style.width = `${level}%`;
+            });
+          } else {
+            el.style.transition = "none";
+            el.style.width = "0%";
+            void el.offsetWidth;
+          }
+        });
+      },
+      { threshold: 0.15 },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [level, index]);
+
+  return (
+    <div
+      suppressHydrationWarning
+      className="h-2 w-full bg-[var(--background)] rounded-full overflow-hidden border border-[var(--glass-border)]"
+    >
+      <div
+        ref={barRef}
+        style={{ width: "0%" }}
+        className="h-full rounded-full lang-fill-bar bg-[#ff9900]"
+      />
+    </div>
+  );
+};
 
 const MainContent: React.FC = () => {
   const { t, language } = useLanguage();
@@ -749,22 +793,7 @@ const MainContent: React.FC = () => {
                           {lang.level}%
                         </span>
                       </div>
-                      <div
-                        suppressHydrationWarning
-                        className="h-2 w-full bg-[var(--background)] rounded-full overflow-hidden border border-[var(--glass-border)]"
-                      >
-                        <m.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${lang.level}%` }}
-                          viewport={{ once: false, amount: 0.2 }}
-                          transition={{
-                            duration: 1.2,
-                            ease: "easeOut",
-                            delay: idx * 0.1,
-                          }}
-                          className="h-full rounded-full lang-fill-bar bg-[#ff6c02]"
-                        />
-                      </div>
+                      <LanguageProgressBar level={lang.level} index={idx} />
                     </div>
                   ))}
                 </div>

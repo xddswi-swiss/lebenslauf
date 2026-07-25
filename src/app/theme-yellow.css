@@ -248,11 +248,11 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
   color: #ffffff !important;
 }
 
-/* Yellow Theme: Sprachkenntnisse is ORANGE (#ff6c02) */
+/* Yellow Theme: Sprachkenntnisse is PURE WARM ORANGE (#ff9900) */
 html:not(.dark):not(.bw-mode) .lang-fill-bar,
 :root:not(.dark):not(.bw-mode) .lang-fill-bar {
-  background: #ff6c02 !important;
-  background-color: #ff6c02 !important;
+  background: #ff9900 !important;
+  background-color: #ff9900 !important;
   background-image: none !important;
 }
 
