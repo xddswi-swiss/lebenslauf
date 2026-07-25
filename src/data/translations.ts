@@ -42,6 +42,7 @@ export interface TranslationSchema {
     experience: string;
     skills: string;
     details: string;
+    guestbook: string;
     contact: string;
   };
   hero: {
@@ -114,6 +115,10 @@ export interface TranslationSchema {
       excel: string;
       code: string;
     };
+  };
+  guestbook: {
+    title: string;
+    subtitle: string;
   };
   contact: {
     title: string;
@@ -403,6 +408,7 @@ export const translations: Record<Language, TranslationSchema> = {
       experience: "Schnupperlehren",
       skills: "Fähigkeiten",
       details: "Kompetenzen",
+      guestbook: "Gästebuch",
       contact: "Kontakt",
     },
     hero: {
@@ -514,6 +520,10 @@ export const translations: Record<Language, TranslationSchema> = {
         code: "Programmieren",
       },
     },
+    guestbook: {
+      title: "Gästebuch",
+      subtitle: "Hinterlassen Sie mir eine Nachricht, Feedback oder einfach einen netten Gruss!",
+    },
     contact: {
       title: "Kontakt",
       subtitle:
@@ -604,6 +614,7 @@ export const translations: Record<Language, TranslationSchema> = {
       experience: "Stajlar",
       skills: "Beceriler",
       details: "Yetkinlikler",
+      guestbook: "Ziyaretçi Defteri",
       contact: "İletişim",
     },
     hero: {
@@ -706,6 +717,10 @@ export const translations: Record<Language, TranslationSchema> = {
         code: "Programlama",
       },
     },
+    guestbook: {
+      title: "Ziyaretçi Defteri",
+      subtitle: "Bana bir mesaj, geri bildirim veya güzel bir söz bırakın!",
+    },
     contact: {
       title: "İletişim",
       subtitle:
@@ -798,6 +813,7 @@ export const translations: Record<Language, TranslationSchema> = {
       experience: "Apprenticeships",
       skills: "Skills",
       details: "Competences",
+      guestbook: "Guestbook",
       contact: "Contact",
     },
     hero: {
@@ -903,6 +919,10 @@ export const translations: Record<Language, TranslationSchema> = {
         excel: "Excel",
         code: "Programming",
       },
+    },
+    guestbook: {
+      title: "Guestbook",
+      subtitle: "Leave me a message, feedback, or just say hello!",
     },
     contact: {
       title: "Contact",

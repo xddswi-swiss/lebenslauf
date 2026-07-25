@@ -484,6 +484,20 @@ const MainContent: React.FC = () => {
           <SkillsGrid selectedMatcher={null} />
         </section>
 
+        {/* Guestbook Section */}
+        <section id="guestbook" className="scroll-mt-24">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
+              {t.guestbook.title}
+            </h2>
+            <p className="text-[var(--text-muted)] text-sm md:text-base">
+              {t.guestbook.subtitle}
+            </p>
+          </div>
+
+          <Guestbook />
+        </section>
+
         {/* Contact & References Section */}
         <section id="contact" className="scroll-mt-24 max-w-5xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

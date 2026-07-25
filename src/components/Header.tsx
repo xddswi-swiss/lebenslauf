@@ -101,6 +101,11 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
       icon: <FiSliders className="text-lg" />,
     },
     {
+      href: "#guestbook",
+      label: t.nav.guestbook,
+      icon: <FiMessageSquare className="text-lg" />,
+    },
+    {
       href: "#contact",
       label: t.nav.contact,
       icon: <FiMail className="text-lg" />,
