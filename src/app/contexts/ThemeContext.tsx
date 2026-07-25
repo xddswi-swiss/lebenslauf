@@ -45,23 +45,26 @@ export function updateSafariThemeColor(color: string) {
     const currentY = window.scrollY;
     window.scrollTo(0, currentY + 1);
     window.scrollTo(0, currentY);
+  };
 
-    // 5. Force a full-viewport repaint (mirrors what happens when the mobile
-    // drawer's fullscreen backdrop mounts/unmounts). With viewport-fit=cover,
-    // the strip under the notch/status bar is genuinely just the top of the
-    // page — but some mobile browsers skip repainting that strip on a plain
-    // style/scroll change; they only resample it after a real, visible paint
-    // covers the whole viewport (that's exactly what the drawer's opaque
-    // bg-black/60 + blur backdrop does, and why opening the menu "fixes" it).
-    // A fully TRANSPARENT layer gets optimized away with no paint at all, so
-    // use an OPAQUE layer in the exact color we're switching to — worst case
-    // it's an imperceptible one-frame flash of the correct color.
+  // Force a full-viewport repaint ONCE per theme change (mirrors what happens
+  // when the mobile drawer's fullscreen backdrop mounts/unmounts). With
+  // viewport-fit=cover, the strip under the notch/status bar is genuinely
+  // just the top of the page — but some mobile browsers skip repainting that
+  // strip on a plain style/scroll change; they only resample it after a real
+  // paint covers the whole viewport. A fully transparent layer gets optimized
+  // away with no paint at all, so use a near-invisible (not zero) opacity
+  // layer — enough to force a real paint, too faint to be seen as a flash.
+  // NOTE: this must run only once — it previously lived inside `update()`,
+  // which fires 5x per theme change, causing a visible flash/blink each time.
+  const forceRepaint = () => {
     const flushLayer = document.createElement("div");
     flushLayer.style.position = "fixed";
     flushLayer.style.inset = "0";
     flushLayer.style.zIndex = "2147483647";
     flushLayer.style.pointerEvents = "none";
     flushLayer.style.background = color;
+    flushLayer.style.opacity = "0.02";
     document.body.appendChild(flushLayer);
     // Force layout/paint to actually happen before removing it.
     void flushLayer.offsetHeight;
@@ -74,6 +77,7 @@ export function updateSafariThemeColor(color: string) {
 
   // Phase 1: Immediate update
   update();
+  forceRepaint();
 
   // Phase 2: Next frame after React DOM render
   if (typeof requestAnimationFrame !== "undefined") {
