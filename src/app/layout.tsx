@@ -123,17 +123,17 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${robotoFlex.variable} ${ptSerif.variable} ${syne.variable} h-full antialiased bw-mode`}
+      className={`${robotoFlex.variable} ${ptSerif.variable} ${syne.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
-        <ThemeInitializer />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <ThemeInitializer />
         <ThemeProvider>
           <LanguageProvider>
             {children}
