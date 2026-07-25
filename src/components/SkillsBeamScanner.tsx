@@ -993,8 +993,8 @@ class HobbiesAndInterests {
         const cards = track.querySelectorAll(".skills-card-wrapper");
 
         if (activeIsMobile) {
-          // Align clipping boundary with the laser line at 75% of container height (visible fill animation)
-          const scannerY = containerRect.top + containerRect.height * 0.75;
+          // Align clipping boundary with the laser line at 65% of container height (preferred settings)
+          const scannerY = containerRect.top + containerRect.height * 0.65;
           cards.forEach((card) => {
             const htmlCard = card as HTMLElement;
             const rect = htmlCard.getBoundingClientRect();
