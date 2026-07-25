@@ -247,19 +247,3 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
 :root:not(.dark):not(.bw-mode) .stat-card-2 .stat-desc {
   color: #ffffff !important;
 }
-
-/* Yellow Theme: Sprachkenntnisse is PURE WARM ORANGE (#ff9900) */
-html:not(.dark):not(.bw-mode) .lang-fill-bar,
-:root:not(.dark):not(.bw-mode) .lang-fill-bar {
-  background: #ff9900 !important;
-  background-color: #ff9900 !important;
-  background-image: none !important;
-}
-
-/* Yellow Theme: SkillsBeamScanner Carousel Cards are BLACK (#000000) */
-html:not(.dark):not(.bw-mode) .skill-fill,
-:root:not(.dark):not(.bw-mode) .skill-fill {
-  background: #000000 !important;
-  background-color: #000000 !important;
-  background-image: none !important;
-}

@@ -908,74 +908,6 @@ class HobbiesAndInterests {
     }
   };
 
-  // IntersectionObserver to re-trigger progress bar filling whenever section enters viewport
-  useEffect(() => {
-    if (!mounted || !containerRef.current) return;
-
-    const container = containerRef.current;
-
-    const resetBars = () => {
-      const track = trackRef.current;
-      if (!track) return;
-      const cards = track.querySelectorAll(".skills-card-wrapper");
-      cards.forEach((card) => {
-        const htmlCard = card as HTMLElement;
-        htmlCard.dataset.state = "code";
-        const fills = htmlCard.querySelectorAll(".skill-fill");
-        fills.forEach((fill) => {
-          const htmlFill = fill as HTMLElement;
-          htmlFill.style.transition = "none";
-          htmlFill.style.width = "0%";
-          void htmlFill.offsetWidth; // Force layout reflow at 0%
-        });
-      });
-    };
-
-    const animateBars = () => {
-      const track = trackRef.current;
-      if (!track) return;
-      const cards = track.querySelectorAll(".skills-card-wrapper");
-      cards.forEach((card) => {
-        const htmlCard = card as HTMLElement;
-        htmlCard.dataset.state = "normal";
-        const fills = htmlCard.querySelectorAll(".skill-fill");
-        fills.forEach((fill) => {
-          const htmlFill = fill as HTMLElement;
-          const level = htmlFill.getAttribute("data-level");
-          if (level) {
-            htmlFill.style.transition =
-              "width 1.2s cubic-bezier(0.16, 1, 0.3, 1)";
-            requestAnimationFrame(() => {
-              htmlFill.style.width = level + "%";
-            });
-          }
-        });
-      });
-    };
-
-    // Run initial animation on mount
-    animateBars();
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animateBars();
-          } else {
-            resetBars();
-          }
-        });
-      },
-      { threshold: 0.1 },
-    );
-
-    observer.observe(container);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [mounted]);
-
   // Setup canvas scanner and auto-scroll loop
   useEffect(() => {
     if (!mounted || !canvasRef.current || !containerRef.current) return;
@@ -1076,40 +1008,35 @@ class HobbiesAndInterests {
 
               htmlCard.style.setProperty("--clip-bottom", `${percentTop}%`);
               htmlCard.style.setProperty("--clip-top", `${percentTop}%`);
+
+              // Fill up progress bars since it is crossing the scanner
+              htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
+                const htmlFill = fill as HTMLElement;
+                htmlFill.style.width =
+                  htmlFill.getAttribute("data-level") + "%";
+              });
             } else {
               if (cardBottom <= scannerY) {
                 // Card fully above scanner: fully ASCII (code)
                 htmlCard.style.setProperty("--clip-bottom", "100%");
                 htmlCard.style.setProperty("--clip-top", "100%");
 
-                if (htmlCard.dataset.state !== "code") {
-                  htmlCard.dataset.state = "code";
-                  htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
-                    const htmlFill = fill as HTMLElement;
-                    htmlFill.style.transition = "none";
-                    htmlFill.style.width = "0%";
-                    void htmlFill.offsetWidth;
-                  });
-                }
+                // Reset progress bars to 0% when card is in fully-code state
+                htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
+                  const htmlFill = fill as HTMLElement;
+                  htmlFill.style.width = "0%";
+                });
               } else if (cardTop >= scannerY) {
                 // Card fully below scanner: fully normal (progress bars)
                 htmlCard.style.setProperty("--clip-bottom", "0%");
                 htmlCard.style.setProperty("--clip-top", "0%");
 
-                if (htmlCard.dataset.state !== "normal") {
-                  htmlCard.dataset.state = "normal";
-                  htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
-                    const htmlFill = fill as HTMLElement;
-                    const level = htmlFill.getAttribute("data-level");
-                    if (level) {
-                      htmlFill.style.transition =
-                        "width 1.5s cubic-bezier(0.19, 1, 0.22, 1)";
-                      requestAnimationFrame(() => {
-                        htmlFill.style.width = level + "%";
-                      });
-                    }
-                  });
-                }
+                // Fill up progress bars since it is in fully-normal state
+                htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
+                  const htmlFill = fill as HTMLElement;
+                  htmlFill.style.width =
+                    htmlFill.getAttribute("data-level") + "%";
+                });
               }
             }
           });
@@ -1128,40 +1055,35 @@ class HobbiesAndInterests {
 
               htmlCard.style.setProperty("--clip-right", `${percentLeft}%`);
               htmlCard.style.setProperty("--clip-left", `${percentLeft}%`);
+
+              // Fill up progress bars since it is crossing the scanner
+              htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
+                const htmlFill = fill as HTMLElement;
+                htmlFill.style.width =
+                  htmlFill.getAttribute("data-level") + "%";
+              });
             } else {
               if (cardRight <= scannerX) {
                 // Card fully to the left of scanner: fully ASCII (code)
                 htmlCard.style.setProperty("--clip-right", "100%");
                 htmlCard.style.setProperty("--clip-left", "100%");
 
-                if (htmlCard.dataset.state !== "code") {
-                  htmlCard.dataset.state = "code";
-                  htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
-                    const htmlFill = fill as HTMLElement;
-                    htmlFill.style.transition = "none";
-                    htmlFill.style.width = "0%";
-                    void htmlFill.offsetWidth;
-                  });
-                }
+                // Reset progress bars to 0% when card is in fully-code state
+                htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
+                  const htmlFill = fill as HTMLElement;
+                  htmlFill.style.width = "0%";
+                });
               } else if (cardLeft >= scannerX) {
                 // Card fully to the right of scanner: fully normal (progress bars)
                 htmlCard.style.setProperty("--clip-right", "0%");
                 htmlCard.style.setProperty("--clip-left", "0%");
 
-                if (htmlCard.dataset.state !== "normal") {
-                  htmlCard.dataset.state = "normal";
-                  htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
-                    const htmlFill = fill as HTMLElement;
-                    const level = htmlFill.getAttribute("data-level");
-                    if (level) {
-                      htmlFill.style.transition =
-                        "width 1.5s cubic-bezier(0.19, 1, 0.22, 1)";
-                      requestAnimationFrame(() => {
-                        htmlFill.style.width = level + "%";
-                      });
-                    }
-                  });
-                }
+                // Fill up progress bars since it is in fully-normal state
+                htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
+                  const htmlFill = fill as HTMLElement;
+                  htmlFill.style.width =
+                    htmlFill.getAttribute("data-level") + "%";
+                });
               }
             }
           });
@@ -1332,7 +1254,15 @@ class HobbiesAndInterests {
                                 <div
                                   data-level={skill.level}
                                   style={{ width: "0%" }}
-                                  className="skill-fill h-full rounded-full bg-[#000000] transition-[width] duration-[1500ms] ease-[cubic-bezier(0.19,1,0.22,1)]"
+                                  className={`skill-fill h-full rounded-full bg-gradient-to-r transition-[width] duration-[1500ms] ease-[cubic-bezier(0.19,1,0.22,1)] ${
+                                    category.key === "personal"
+                                      ? "from-orange-600 to-orange-400"
+                                      : category.key === "school"
+                                        ? "from-navy-700 to-navy-500"
+                                        : category.key === "digital"
+                                          ? "from-green-600 to-green-400"
+                                          : "from-orange-600 to-navy-600"
+                                  }`}
                                 />
                               )}
                             </div>
