@@ -913,32 +913,47 @@ class HobbiesAndInterests {
     if (!mounted || !containerRef.current) return;
 
     const container = containerRef.current;
+
+    const resetBars = () => {
+      const track = trackRef.current;
+      if (!track) return;
+      const fills = track.querySelectorAll(".skill-fill");
+      fills.forEach((fill) => {
+        const htmlFill = fill as HTMLElement;
+        htmlFill.style.transition = "none";
+        htmlFill.style.width = "0%";
+        void htmlFill.offsetWidth; // Force layout reflow at 0%
+      });
+    };
+
+    const animateBars = () => {
+      const track = trackRef.current;
+      if (!track) return;
+      const fills = track.querySelectorAll(".skill-fill");
+      fills.forEach((fill) => {
+        const htmlFill = fill as HTMLElement;
+        const level = htmlFill.getAttribute("data-level");
+        if (level) {
+          htmlFill.style.transition =
+            "width 1.5s cubic-bezier(0.19, 1, 0.22, 1)";
+          requestAnimationFrame(() => {
+            htmlFill.style.width = level + "%";
+          });
+        }
+      });
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const track = trackRef.current;
-          if (!track) return;
-
-          const fills = track.querySelectorAll(".skill-fill");
           if (entry.isIntersecting) {
-            fills.forEach((fill) => {
-              const htmlFill = fill as HTMLElement;
-              const level = htmlFill.getAttribute("data-level");
-              if (level) {
-                requestAnimationFrame(() => {
-                  htmlFill.style.width = level + "%";
-                });
-              }
-            });
+            animateBars();
           } else {
-            fills.forEach((fill) => {
-              const htmlFill = fill as HTMLElement;
-              htmlFill.style.width = "0%";
-            });
+            resetBars();
           }
         });
       },
-      { threshold: 0.15 },
+      { threshold: 0.1 },
     );
 
     observer.observe(container);
@@ -1048,35 +1063,15 @@ class HobbiesAndInterests {
 
               htmlCard.style.setProperty("--clip-bottom", `${percentTop}%`);
               htmlCard.style.setProperty("--clip-top", `${percentTop}%`);
-
-              // Fill up progress bars since it is crossing the scanner
-              htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
-                const htmlFill = fill as HTMLElement;
-                htmlFill.style.width =
-                  htmlFill.getAttribute("data-level") + "%";
-              });
             } else {
               if (cardBottom <= scannerY) {
                 // Card fully above scanner: fully ASCII (code)
                 htmlCard.style.setProperty("--clip-bottom", "100%");
                 htmlCard.style.setProperty("--clip-top", "100%");
-
-                // Reset progress bars to 0% when card is in fully-code state
-                htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
-                  const htmlFill = fill as HTMLElement;
-                  htmlFill.style.width = "0%";
-                });
               } else if (cardTop >= scannerY) {
                 // Card fully below scanner: fully normal (progress bars)
                 htmlCard.style.setProperty("--clip-bottom", "0%");
                 htmlCard.style.setProperty("--clip-top", "0%");
-
-                // Fill up progress bars since it is in fully-normal state
-                htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
-                  const htmlFill = fill as HTMLElement;
-                  htmlFill.style.width =
-                    htmlFill.getAttribute("data-level") + "%";
-                });
               }
             }
           });
@@ -1095,35 +1090,15 @@ class HobbiesAndInterests {
 
               htmlCard.style.setProperty("--clip-right", `${percentLeft}%`);
               htmlCard.style.setProperty("--clip-left", `${percentLeft}%`);
-
-              // Fill up progress bars since it is crossing the scanner
-              htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
-                const htmlFill = fill as HTMLElement;
-                htmlFill.style.width =
-                  htmlFill.getAttribute("data-level") + "%";
-              });
             } else {
               if (cardRight <= scannerX) {
                 // Card fully to the left of scanner: fully ASCII (code)
                 htmlCard.style.setProperty("--clip-right", "100%");
                 htmlCard.style.setProperty("--clip-left", "100%");
-
-                // Reset progress bars to 0% when card is in fully-code state
-                htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
-                  const htmlFill = fill as HTMLElement;
-                  htmlFill.style.width = "0%";
-                });
               } else if (cardLeft >= scannerX) {
                 // Card fully to the right of scanner: fully normal (progress bars)
                 htmlCard.style.setProperty("--clip-right", "0%");
                 htmlCard.style.setProperty("--clip-left", "0%");
-
-                // Fill up progress bars since it is in fully-normal state
-                htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
-                  const htmlFill = fill as HTMLElement;
-                  htmlFill.style.width =
-                    htmlFill.getAttribute("data-level") + "%";
-                });
               }
             }
           });
