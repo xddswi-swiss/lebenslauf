@@ -317,10 +317,14 @@ body.bw-mode .sa-panel.sa-active .sa-head-open {
   border-bottom: 2px solid #000000 !important;
 }
 
-html.bw-mode .sa-panel.sa-active .sa-head-open .sa-lbl,
-html.bw-mode .sa-panel.sa-active .sa-head-open .sa-ico,
+html.bw-mode .sa-panel.sa-active .sa-head-open,
+html.bw-mode .sa-panel.sa-active .sa-head-open *,
+body.bw-mode .sa-panel.sa-active .sa-head-open,
 body.bw-mode .sa-panel.sa-active .sa-head-open * {
   color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
 }
 
 html.bw-mode .sa-panel.sa-active .sa-body,
@@ -433,6 +437,34 @@ body.bw-mode #documents .glass-card[class*="text-"] {
 
 html.bw-mode #documents .glass-card[class*="text-"] *,
 body.bw-mode #documents .glass-card[class*="text-"] * {
+  color: #ffffff !important;
+}
+
+/* Document Download Button in B&W Mode (the separate <a> download link, not
+   the icon avatar above) — at rest AND on hover this must stay pure
+   black/white, never the per-document accent color (blue/orange/emerald/
+   violet/amber/rose). Same white-bg/black-border → black-bg/white-icon
+   invert pattern used for the footer social icons. */
+html.bw-mode #documents a[class*="text-"],
+body.bw-mode #documents a[class*="text-"] {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1.5px solid #000000 !important;
+}
+
+html.bw-mode #documents a[class*="text-"] *,
+body.bw-mode #documents a[class*="text-"] * {
+  color: #000000 !important;
+}
+
+html.bw-mode #documents a[class*="text-"]:hover,
+body.bw-mode #documents a[class*="text-"]:hover {
+  background-color: #000000 !important;
+  border: 1.5px solid #000000 !important;
+}
+
+html.bw-mode #documents a[class*="text-"]:hover *,
+body.bw-mode #documents a[class*="text-"]:hover * {
   color: #ffffff !important;
 }
 
@@ -583,4 +615,75 @@ body.bw-mode .active-language-btn {
 .admin-force-white-text * {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Mobile Drawer in B&W Mode
+   Header.tsx sets an inline `style={drawerStyle}` on .mobile-drawer with a
+   random colored gradient (one of 5 accent colors, incl. green/cyan/pink) —
+   this is only ever overridden per-theme via a hardcoded `.mobile-drawer`
+   !important rule in theme-yellow.css / theme-dark.css. Since bw-mode never
+   had its own override, the random colored gradient leaked straight through
+   in B&W mode. Fixed here the same way yellow/dark already do it. */
+html.bw-mode .mobile-drawer,
+body.bw-mode .mobile-drawer {
+  background: #ffffff !important;
+  border-left: 1px solid #000000 !important;
+}
+
+html.bw-mode .mobile-drawer *,
+body.bw-mode .mobile-drawer * {
+  color: #000000 !important;
+}
+
+html.bw-mode .mobile-drawer .border-b,
+html.bw-mode .mobile-drawer .border-t,
+body.bw-mode .mobile-drawer .border-b,
+body.bw-mode .mobile-drawer .border-t {
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Mobile Drawer nav links: yellow/dark themes deliberately have NO border
+   or box around each row (globals.css strips it for every theme via
+   `.mobile-drawer .glass-card { border: none !important; }`) — the only
+   per-item visual is the icon badge chip + a faint hover/press tint. Keep
+   B&W mode exactly as borderless/flat as yellow/blue; just make the icon
+   badge chip and hover tint grayscale instead of colored. */
+html.bw-mode .mobile-drawer .glass-card,
+body.bw-mode .mobile-drawer .glass-card {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+html.bw-mode .mobile-drawer .glass-card:hover,
+body.bw-mode .mobile-drawer .glass-card:hover {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Icon badge chip behind each nav link's icon (bg-[var(--badge-bg)]) */
+html.bw-mode .mobile-drawer [class*="badge-bg"],
+body.bw-mode .mobile-drawer [class*="badge-bg"] {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Kill every stray cyan accent in B&W Mode (e.g. the "Ausbildung" accordion
+   toggle's from-cyan-500/5 gradient, which reads as a faint light-green
+   wash, plus its cyan text/border on expand). B&W mode must stay strictly
+   grayscale. */
+html.bw-mode [class*="from-cyan"],
+html.bw-mode [class*="to-cyan"],
+html.bw-mode [class*="via-cyan"],
+body.bw-mode [class*="from-cyan"],
+body.bw-mode [class*="to-cyan"],
+body.bw-mode [class*="via-cyan"] {
+  background-image: none !important;
+}
+
+html.bw-mode [class*="text-cyan"],
+body.bw-mode [class*="text-cyan"] {
+  color: #000000 !important;
+}
+
+html.bw-mode [class*="border-cyan"],
+body.bw-mode [class*="border-cyan"] {
+  border-color: #000000 !important;
 }
