@@ -70,11 +70,16 @@
 
 /* Header Override */
 :root:not(.dark):not(.bw-mode) header.header-glass-gradient {
-  background: linear-gradient(
-    to right,
-    rgba(255, 213, 79, 0.95),
-    rgba(255, 199, 44, 0.85)
-  ) !important;
+  /* Solid background-color alongside the gradient: iOS 26 Safari tints the
+     status bar "forehead"/"chin" from the background-color of fixed-position
+     elements (not the theme-color meta tag anymore), so a gradient-only
+     background leaves it transparent and stuck white. */
+  background: #ffc72c
+    linear-gradient(
+      to right,
+      rgba(255, 213, 79, 0.95),
+      rgba(255, 199, 44, 0.85)
+    ) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
   box-shadow: 0 4px 30px rgba(179, 125, 0, 0.1) !important;
 }
