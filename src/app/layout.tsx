@@ -131,7 +131,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <meta id="theme-color-meta" name="theme-color" content="#ffffff" />
       </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <ThemeInitializer />
