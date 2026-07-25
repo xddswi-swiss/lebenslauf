@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useTheme } from "@/app/contexts/ThemeContext";
 
 export const SwissSwitch: React.FC = () => {
+  const { changeTheme } = useTheme();
   const [bwMode, setBwMode] = useState(true);
 
   useEffect(() => {
@@ -50,15 +51,8 @@ export const SwissSwitch: React.FC = () => {
   };
 
   const activateBwMode = () => {
-    if (!bwMode) {
-      setBwMode(true);
-      if (typeof window !== "undefined") {
-        document.documentElement.classList.add("bw-mode");
-        localStorage.setItem("bw-mode", "true");
-        window.dispatchEvent(new Event("bwModeChange"));
-      }
-      playClickSound(true);
-    }
+    changeTheme("white");
+    playClickSound(true);
   };
 
   return (

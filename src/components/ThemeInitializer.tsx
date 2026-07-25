@@ -34,19 +34,15 @@ export function ThemeInitializer() {
               color = isDark ? '#102552' : '#ffc72c';
             }
 
-            // Remove old theme-color and apple status bar style tags
-            var oldMetas = document.querySelectorAll('meta[name="theme-color"], meta[name="apple-mobile-web-app-status-bar-style"]');
-            for (var i = 0; i < oldMetas.length; i++) {
-              if (oldMetas[i].parentNode) {
-                oldMetas[i].parentNode.removeChild(oldMetas[i]);
-              }
+            // Ensure theme-color-meta is set
+            var meta = document.getElementById('theme-color-meta');
+            if (!meta) {
+              meta = document.createElement('meta');
+              meta.id = 'theme-color-meta';
+              meta.setAttribute('name', 'theme-color');
+              document.head.appendChild(meta);
             }
-
-            // Fresh meta tag to trigger WebKit Safari status bar repaint
-            var meta = document.createElement('meta');
-            meta.setAttribute('name', 'theme-color');
             meta.setAttribute('content', color);
-            document.head.appendChild(meta);
 
             // Set html and body background-color directly
             document.documentElement.style.backgroundColor = color;

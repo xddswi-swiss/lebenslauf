@@ -35,21 +35,7 @@ export interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
   const { t, language, setLanguage } = useLanguage();
-  const { theme, toggleTheme } = useTheme();
-
-  const handleThemeSelect = (targetTheme: "light" | "dark") => {
-    if (typeof window !== "undefined") {
-      const isBw = document.documentElement.classList.contains("bw-mode");
-      if (isBw) {
-        document.documentElement.classList.remove("bw-mode");
-        localStorage.setItem("bw-mode", "false");
-        window.dispatchEvent(new Event("bwModeChange"));
-      }
-    }
-    if (theme !== targetTheme) {
-      toggleTheme();
-    }
-  };
+  const { theme, changeTheme } = useTheme();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [headerStyle, setHeaderStyle] = useState<React.CSSProperties>({});
@@ -293,7 +279,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               <div className="flex gap-1 items-center bw-switch-container">
                 <SwissSwitch />
                 <button
-                  onClick={() => handleThemeSelect("light")}
+                  onClick={() => changeTheme("yellow")}
                   aria-label="Light Theme"
                   className={`w-7 h-7 rounded-lg bg-[#FFC72C] border transition-all cursor-pointer hover:scale-110 ${
                     theme === "light"
@@ -302,7 +288,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                   }`}
                 />
                 <button
-                  onClick={() => handleThemeSelect("dark")}
+                  onClick={() => changeTheme("blue")}
                   aria-label="Dark Theme"
                   className={`w-7 h-7 rounded-lg bg-[#2563eb] border transition-all cursor-pointer hover:scale-110 ${
                     theme === "dark"
@@ -319,7 +305,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               <div className="flex gap-1 items-center bw-switch-container">
                 <SwissSwitch />
                 <button
-                  onClick={() => handleThemeSelect("light")}
+                  onClick={() => changeTheme("yellow")}
                   aria-label="Light Theme"
                   className={`w-7 h-7 rounded-lg bg-[#FFC72C] border transition-all cursor-pointer hover:scale-110 ${
                     theme === "light"
@@ -328,7 +314,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                   }`}
                 />
                 <button
-                  onClick={() => handleThemeSelect("dark")}
+                  onClick={() => changeTheme("blue")}
                   aria-label="Dark Theme"
                   className={`w-7 h-7 rounded-lg bg-[#2563eb] border transition-all cursor-pointer hover:scale-110 ${
                     theme === "dark"
