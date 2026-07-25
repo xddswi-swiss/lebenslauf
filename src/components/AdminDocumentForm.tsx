@@ -71,7 +71,7 @@ export const AdminDocumentForm: React.FC = () => {
     setSuccessMsg("");
 
     try {
-      const passcode = localStorage.getItem("admin_passcode") || "eren2026";
+      const passcode = localStorage.getItem("admin_passcode") || "";
       const res = await fetch("/api/documents", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -297,7 +297,7 @@ export const AdminDocumentForm: React.FC = () => {
           : translateText(srcTitle, srcLang, "en"),
       ]);
 
-      const passcode = localStorage.getItem("admin_passcode") || "eren2026";
+      const passcode = localStorage.getItem("admin_passcode") || "";
 
       const response = await fetch("/api/documents", {
         method: "POST",

@@ -7,7 +7,9 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const passcode = searchParams.get("passcode");
-    const isAdmin = passcode === "eren2026";
+    const isAdmin = Boolean(
+      process.env.ADMIN_PASSCODE && passcode === process.env.ADMIN_PASSCODE,
+    );
 
     let query = supabaseAdmin
       .from("guestbook")
@@ -67,8 +69,8 @@ export async function DELETE(request: Request) {
     const body = await request.json();
     const { passcode, id } = body;
 
-    // Validate passcode
-    if (passcode !== "eren2026") {
+    // Validate passcode against the server-only environment variable
+    if (!process.env.ADMIN_PASSCODE || passcode !== process.env.ADMIN_PASSCODE) {
       return NextResponse.json(
         { error: "Falsches Passwort / Yanlış Şifre / Incorrect Password" },
         { status: 401 },

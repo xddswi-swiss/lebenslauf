@@ -77,7 +77,7 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({
     setSuccessMsg("");
 
     try {
-      const passcode = localStorage.getItem("admin_passcode") || "eren2026";
+      const passcode = localStorage.getItem("admin_passcode") || "";
       const res = await fetch("/api/experiences", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -142,15 +142,31 @@ export const AdminExperienceForm: React.FC<{ forceOpen?: boolean }> = ({
     };
   }, [forceOpen]);
 
-  const handlePasscodeSubmit = (e: React.FormEvent) => {
+  const handlePasscodeSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passcode === "eren2026") {
-      setIsUnlocked(true);
-      setPasscodeError("");
-      localStorage.setItem("admin_unlocked", "true");
-      localStorage.setItem("admin_passcode", passcode);
-      window.dispatchEvent(new Event("admin-state-changed"));
-    } else {
+    setPasscodeError("");
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ passcode }),
+      });
+
+      if (res.ok) {
+        setIsUnlocked(true);
+        localStorage.setItem("admin_unlocked", "true");
+        localStorage.setItem("admin_passcode", passcode);
+        window.dispatchEvent(new Event("admin-state-changed"));
+      } else {
+        setPasscodeError(
+          language === "tr"
+            ? "Yanlış Şifre!"
+            : language === "de"
+              ? "Falsches Passwort!"
+              : "Incorrect Passcode!",
+        );
+      }
+    } catch (err) {
       setPasscodeError(
         language === "tr"
           ? "Yanlış Şifre!"

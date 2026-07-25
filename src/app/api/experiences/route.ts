@@ -149,8 +149,8 @@ export async function POST(request: Request) {
       logoFile,
     } = body;
 
-    // Validate passcode
-    if (passcode !== "eren2026") {
+    // Validate passcode against the server-only environment variable
+    if (!process.env.ADMIN_PASSCODE || passcode !== process.env.ADMIN_PASSCODE) {
       return NextResponse.json(
         { error: "Falsches Passwort / Yanlış Şifre / Incorrect Password" },
         { status: 401 },
@@ -319,8 +319,8 @@ export async function DELETE(request: Request) {
     const body = await request.json();
     const { passcode, company, period } = body;
 
-    // Validate passcode
-    if (passcode !== "eren2026") {
+    // Validate passcode against the server-only environment variable
+    if (!process.env.ADMIN_PASSCODE || passcode !== process.env.ADMIN_PASSCODE) {
       return NextResponse.json(
         { error: "Falsches Passwort / Yanlış Şifre / Incorrect Password" },
         { status: 401 },

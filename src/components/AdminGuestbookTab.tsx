@@ -66,7 +66,7 @@ export const AdminGuestbookTab: React.FC = () => {
   const fetchAllMessages = async () => {
     try {
       setIsLoading(true);
-      const passcode = localStorage.getItem("admin_passcode") || "eren2026";
+      const passcode = localStorage.getItem("admin_passcode") || "";
       const res = await fetch(`/api/guestbook?passcode=${passcode}`);
       if (res.ok) {
         const data = await res.json();
@@ -87,7 +87,7 @@ export const AdminGuestbookTab: React.FC = () => {
     if (!window.confirm(t.confirmDelete)) return;
 
     setDeletingId(id);
-    const passcode = localStorage.getItem("admin_passcode") || "eren2026";
+    const passcode = localStorage.getItem("admin_passcode") || "";
 
     try {
       const res = await fetch("/api/guestbook", {
