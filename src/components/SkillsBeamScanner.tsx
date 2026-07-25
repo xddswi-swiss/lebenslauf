@@ -908,6 +908,46 @@ class HobbiesAndInterests {
     }
   };
 
+  // IntersectionObserver to re-trigger progress bar filling whenever section enters viewport
+  useEffect(() => {
+    if (!mounted || !containerRef.current) return;
+
+    const container = containerRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const track = trackRef.current;
+          if (!track) return;
+
+          const fills = track.querySelectorAll(".skill-fill");
+          if (entry.isIntersecting) {
+            fills.forEach((fill) => {
+              const htmlFill = fill as HTMLElement;
+              const level = htmlFill.getAttribute("data-level");
+              if (level) {
+                requestAnimationFrame(() => {
+                  htmlFill.style.width = level + "%";
+                });
+              }
+            });
+          } else {
+            fills.forEach((fill) => {
+              const htmlFill = fill as HTMLElement;
+              htmlFill.style.width = "0%";
+            });
+          }
+        });
+      },
+      { threshold: 0.15 },
+    );
+
+    observer.observe(container);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [mounted]);
+
   // Setup canvas scanner and auto-scroll loop
   useEffect(() => {
     if (!mounted || !canvasRef.current || !containerRef.current) return;
