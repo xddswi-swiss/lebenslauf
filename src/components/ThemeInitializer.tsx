@@ -29,23 +29,29 @@ export function ThemeInitializer() {
               document.documentElement.classList.remove('dark');
             }
 
-            // Synchronously set status bar color on HTML load
             var color = '#ffffff';
             if (!isBw) {
               color = isDark ? '#102552' : '#ffc72c';
             }
 
-            var metas = document.querySelectorAll('meta[name="theme-color"]');
-            if (metas.length === 0) {
-              var meta = document.createElement('meta');
-              meta.setAttribute('name', 'theme-color');
-              meta.setAttribute('content', color);
-              document.head.appendChild(meta);
-            } else {
-              for (var i = 0; i < metas.length; i++) {
-                metas[i].removeAttribute('media');
-                metas[i].setAttribute('content', color);
+            // Remove old theme-color and apple status bar style tags
+            var oldMetas = document.querySelectorAll('meta[name="theme-color"], meta[name="apple-mobile-web-app-status-bar-style"]');
+            for (var i = 0; i < oldMetas.length; i++) {
+              if (oldMetas[i].parentNode) {
+                oldMetas[i].parentNode.removeChild(oldMetas[i]);
               }
+            }
+
+            // Fresh meta tag to trigger WebKit Safari status bar repaint
+            var meta = document.createElement('meta');
+            meta.setAttribute('name', 'theme-color');
+            meta.setAttribute('content', color);
+            document.head.appendChild(meta);
+
+            // Set html and body background-color directly
+            document.documentElement.style.backgroundColor = color;
+            if (document.body) {
+              document.body.style.backgroundColor = color;
             }
           })();
 

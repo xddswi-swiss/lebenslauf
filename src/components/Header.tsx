@@ -91,36 +91,21 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
         color = isDark ? "#102552" : "#ffc72c"; // Midnight Blue or Sunlit Yellow
       }
 
-      // Update all theme-color meta tags and strip media queries
-      const metaTags = document.querySelectorAll('meta[name="theme-color"]');
-      if (metaTags.length === 0) {
-        const meta = document.createElement("meta");
-        meta.setAttribute("name", "theme-color");
-        meta.setAttribute("content", color);
-        document.head.appendChild(meta);
-      } else {
-        metaTags.forEach((meta) => {
-          meta.removeAttribute("media");
-          meta.setAttribute("content", color);
-        });
-      }
+      // Remove all old theme-color and apple status bar meta tags
+      const oldMetas = document.querySelectorAll(
+        'meta[name="theme-color"], meta[name="apple-mobile-web-app-status-bar-style"]',
+      );
+      oldMetas.forEach((el) => el.remove());
 
-      // iOS Apple Mobile Web App Status Bar Style
-      let appleMeta = document.querySelector(
-        'meta[name="apple-mobile-web-app-status-bar-style"]',
-      );
-      if (!appleMeta) {
-        appleMeta = document.createElement("meta");
-        appleMeta.setAttribute(
-          "name",
-          "apple-mobile-web-app-status-bar-style",
-        );
-        document.head.appendChild(appleMeta);
-      }
-      appleMeta.setAttribute(
-        "content",
-        isDark && !isBw ? "black-translucent" : "default",
-      );
+      // Create a fresh new meta tag to force WebKit Safari to immediately repaint status bar
+      const meta = document.createElement("meta");
+      meta.setAttribute("name", "theme-color");
+      meta.setAttribute("content", color);
+      document.head.appendChild(meta);
+
+      // Explicitly set html and body background-color to match status bar
+      document.documentElement.style.backgroundColor = color;
+      document.body.style.backgroundColor = color;
     };
 
     updateThemeColor();
