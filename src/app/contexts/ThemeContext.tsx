@@ -45,6 +45,26 @@ export function updateSafariThemeColor(color: string) {
     const currentY = window.scrollY;
     window.scrollTo(0, currentY + 1);
     window.scrollTo(0, currentY);
+
+    // 5. Force a full-viewport repaint (mirrors what happens when the mobile
+    // drawer's fullscreen backdrop mounts/unmounts). With viewport-fit=cover,
+    // the strip under the notch/status bar is genuinely just the top of the
+    // page — but some mobile browsers don't repaint that strip on a plain
+    // style/scroll change; they only repaint it after a large compositing
+    // event covers the whole viewport. Briefly inserting and removing a
+    // fixed, fullscreen, transparent layer forces exactly that.
+    const flushLayer = document.createElement("div");
+    flushLayer.style.position = "fixed";
+    flushLayer.style.inset = "0";
+    flushLayer.style.zIndex = "2147483647";
+    flushLayer.style.pointerEvents = "none";
+    flushLayer.style.background = "transparent";
+    document.body.appendChild(flushLayer);
+    // Force layout/paint to actually happen before removing it.
+    void flushLayer.offsetHeight;
+    requestAnimationFrame(() => {
+      flushLayer.remove();
+    });
   };
 
   // Phase 1: Immediate update
