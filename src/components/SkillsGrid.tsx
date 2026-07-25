@@ -83,7 +83,7 @@ const SkillRow: React.FC<{
 export const SkillsGrid: React.FC<SkillsGridProps> = ({
   selectedMatcher = null,
 }) => {
-  const { t, lang } = useLanguage();
+  const { t, language } = useLanguage();
   // Hepsi kapalı başlasın diye default null
   const [active, setActive] = useState<CategoryKey | null>(null);
 
@@ -158,7 +158,7 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({
 
           // Formatted items
           const currentLangData =
-            languagesData[lang] || languagesData["de"] || [];
+            languagesData[language] || languagesData["de"] || [];
 
           const isLang = key === "languages";
           const isInterests = key === "interests";
