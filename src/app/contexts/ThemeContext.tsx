@@ -17,52 +17,31 @@ export function updateSafariThemeColor(color: string) {
   if (typeof window === "undefined") return;
 
   const update = () => {
-    // Remove all existing theme-color meta tags and create a fresh one so browsers
-    // re-read the color immediately instead of caching the old value.
-    document.querySelectorAll('meta[name="theme-color"]').forEach((el) => el.remove());
+    // 1. Remove all old theme-color meta tags and apple status bar style tags
+    document
+      .querySelectorAll(
+        'meta[name="theme-color"], meta[name="apple-mobile-web-app-status-bar-style"]',
+      )
+      .forEach((el) => el.remove());
 
+    // 2. Create fresh theme-color meta tag
     const meta = document.createElement("meta");
     meta.id = "theme-color-meta";
     meta.setAttribute("name", "theme-color");
     meta.setAttribute("content", color);
-    document.head.prepend(meta);
+    document.head.appendChild(meta);
 
-    let appleMeta = document.querySelector(
-      'meta[name="apple-mobile-web-app-status-bar-style"]',
-    ) as HTMLMetaElement | null;
-    if (!appleMeta) {
-      appleMeta = document.createElement("meta");
-      appleMeta.setAttribute("name", "apple-mobile-web-app-status-bar-style");
-      appleMeta.setAttribute("content", "black-translucent");
-      document.head.prepend(appleMeta);
-    } else {
-      appleMeta.setAttribute("content", "black-translucent");
-    }
-
-    // Set background colors directly on html & body
-    document.documentElement.style.background = color;
+    // 3. Set background colors directly on html & body
     document.documentElement.style.backgroundColor = color;
     if (document.body) {
-      document.body.style.background = color;
       document.body.style.backgroundColor = color;
     }
 
-    // Force a light repaint so mobile browsers apply the new status bar color.
-    document.documentElement.style.opacity = "0.9999";
-    requestAnimationFrame(() => {
-      document.documentElement.style.opacity = "";
-      document.body.offsetHeight; // force reflow
-      if (document.body) {
-        document.body.style.opacity = "0.9999";
-        requestAnimationFrame(() => {
-          if (document.body) {
-            document.body.style.opacity = "";
-          }
-        });
-      }
-    });
-
-    window.dispatchEvent(new Event("resize"));
+    // 4. Trigger Safari UI compositor tint re-sampling
+    if (window.scrollY === 0) {
+      window.scrollTo(0, 1);
+      window.scrollTo(0, 0);
+    }
   };
 
   // Phase 1: Immediate update

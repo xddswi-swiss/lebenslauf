@@ -34,29 +34,21 @@ export function ThemeInitializer() {
               document.documentElement.classList.add('dark');
             }
 
-            document.querySelectorAll('meta[name="theme-color"]').forEach(function(el) {
-              el.remove();
-            });
+            var oldMetas = document.querySelectorAll('meta[name="theme-color"], meta[name="apple-mobile-web-app-status-bar-style"]');
+            for (var i = 0; i < oldMetas.length; i++) {
+              if (oldMetas[i].parentNode) {
+                oldMetas[i].parentNode.removeChild(oldMetas[i]);
+              }
+            }
+
             var meta = document.createElement('meta');
             meta.id = 'theme-color-meta';
             meta.setAttribute('name', 'theme-color');
             meta.setAttribute('content', color);
-            document.head.prepend(meta);
+            document.head.appendChild(meta);
 
-            var appleMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-            if (!appleMeta) {
-              appleMeta = document.createElement('meta');
-              appleMeta.setAttribute('name', 'apple-mobile-web-app-status-bar-style');
-              appleMeta.setAttribute('content', 'black-translucent');
-              document.head.prepend(appleMeta);
-            } else {
-              appleMeta.setAttribute('content', 'black-translucent');
-            }
-
-            document.documentElement.style.background = color;
             document.documentElement.style.backgroundColor = color;
             if (document.body) {
-              document.body.style.background = color;
               document.body.style.backgroundColor = color;
             }
           })();
