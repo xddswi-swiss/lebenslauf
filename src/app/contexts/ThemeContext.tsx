@@ -17,18 +17,15 @@ export function updateSafariThemeColor(color: string) {
   if (typeof window === "undefined") return;
 
   const update = () => {
-    // Reuse an existing theme-color meta tag if possible, otherwise create one.
-    let meta = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null;
-    if (!meta) {
-      meta = document.createElement("meta");
-      meta.id = "theme-color-meta";
-      meta.setAttribute("name", "theme-color");
-      document.head.appendChild(meta);
-    }
+    // Remove all existing theme-color meta tags and create a fresh one so browsers
+    // re-read the color immediately instead of caching the old value.
+    document.querySelectorAll('meta[name="theme-color"]').forEach((el) => el.remove());
+
+    const meta = document.createElement("meta");
+    meta.id = "theme-color-meta";
+    meta.setAttribute("name", "theme-color");
     meta.setAttribute("content", color);
-    if (!meta.id) {
-      meta.id = "theme-color-meta";
-    }
+    document.head.appendChild(meta);
 
     // Set background colors directly on html & body
     document.documentElement.style.backgroundColor = color;

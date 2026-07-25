@@ -34,16 +34,14 @@ export function ThemeInitializer() {
               document.documentElement.classList.add('dark');
             }
 
-            var meta = document.querySelector('meta[name="theme-color"]');
-            if (!meta) {
-              meta = document.createElement('meta');
-              meta.id = 'theme-color-meta';
-              meta.setAttribute('name', 'theme-color');
-              document.head.appendChild(meta);
-            } else if (!meta.id) {
-              meta.id = 'theme-color-meta';
-            }
+            document.querySelectorAll('meta[name="theme-color"]').forEach(function(el) {
+              el.remove();
+            });
+            var meta = document.createElement('meta');
+            meta.id = 'theme-color-meta';
+            meta.setAttribute('name', 'theme-color');
             meta.setAttribute('content', color);
+            document.head.appendChild(meta);
 
             document.documentElement.style.backgroundColor = color;
             if (document.body) {
