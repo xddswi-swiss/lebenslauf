@@ -93,7 +93,7 @@ const LanguageProgressBar: React.FC<{ level: number; index: number }> = ({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            el.style.transition = `width 1.2s cubic-bezier(0.19, 1, 0.22, 1) ${index * 0.1}s`;
+            el.style.transition = `width 0.45s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.04}s`;
             requestAnimationFrame(() => {
               el.style.width = `${level}%`;
             });
@@ -104,7 +104,10 @@ const LanguageProgressBar: React.FC<{ level: number; index: number }> = ({
           }
         });
       },
-      { threshold: 0.15 },
+      {
+        threshold: 0,
+        rootMargin: "0px 0px 100px 0px", // Trigger 100px before entering screen on mobile
+      },
     );
 
     observer.observe(el);
