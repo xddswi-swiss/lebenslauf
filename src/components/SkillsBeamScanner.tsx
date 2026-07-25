@@ -917,31 +917,44 @@ class HobbiesAndInterests {
     const resetBars = () => {
       const track = trackRef.current;
       if (!track) return;
-      const fills = track.querySelectorAll(".skill-fill");
-      fills.forEach((fill) => {
-        const htmlFill = fill as HTMLElement;
-        htmlFill.style.transition = "none";
-        htmlFill.style.width = "0%";
-        void htmlFill.offsetWidth; // Force layout reflow at 0%
+      const cards = track.querySelectorAll(".skills-card-wrapper");
+      cards.forEach((card) => {
+        const htmlCard = card as HTMLElement;
+        htmlCard.dataset.state = "code";
+        const fills = htmlCard.querySelectorAll(".skill-fill");
+        fills.forEach((fill) => {
+          const htmlFill = fill as HTMLElement;
+          htmlFill.style.transition = "none";
+          htmlFill.style.width = "0%";
+          void htmlFill.offsetWidth; // Force layout reflow at 0%
+        });
       });
     };
 
     const animateBars = () => {
       const track = trackRef.current;
       if (!track) return;
-      const fills = track.querySelectorAll(".skill-fill");
-      fills.forEach((fill) => {
-        const htmlFill = fill as HTMLElement;
-        const level = htmlFill.getAttribute("data-level");
-        if (level) {
-          htmlFill.style.transition =
-            "width 1.5s cubic-bezier(0.19, 1, 0.22, 1)";
-          requestAnimationFrame(() => {
-            htmlFill.style.width = level + "%";
-          });
-        }
+      const cards = track.querySelectorAll(".skills-card-wrapper");
+      cards.forEach((card) => {
+        const htmlCard = card as HTMLElement;
+        htmlCard.dataset.state = "normal";
+        const fills = htmlCard.querySelectorAll(".skill-fill");
+        fills.forEach((fill) => {
+          const htmlFill = fill as HTMLElement;
+          const level = htmlFill.getAttribute("data-level");
+          if (level) {
+            htmlFill.style.transition =
+              "width 1.2s cubic-bezier(0.16, 1, 0.3, 1)";
+            requestAnimationFrame(() => {
+              htmlFill.style.width = level + "%";
+            });
+          }
+        });
       });
     };
+
+    // Run initial animation on mount
+    animateBars();
 
     const observer = new IntersectionObserver(
       (entries) => {
