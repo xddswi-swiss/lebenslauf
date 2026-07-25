@@ -115,13 +115,10 @@ export const ContactForm: React.FC = () => {
 
   return (
     <div className="w-full max-w-2xl mx-auto py-0">
-      <div className="text-center mb-10">
-        <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
+      <div className="text-center mb-6">
+        <h2 className="text-3xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
           {t.contact.title}
         </h2>
-        <p className="text-[var(--text-muted)] text-sm md:text-base max-w-md mx-auto">
-          {t.contact.subtitle}
-        </p>
       </div>
 
       <div className="glass-card p-5 md:p-6 rounded-2xl relative overflow-hidden">
@@ -187,37 +184,35 @@ export const ContactForm: React.FC = () => {
           </div>
 
           {/* Math Captcha Box */}
-          <div className="p-5 glass-card rounded-2xl border border-[var(--glass-border)] bg-zinc-900/10 space-y-4">
-            <div className="flex flex-col gap-1.5 text-sm font-bold text-[var(--text-main)]">
-              <div className="flex items-center gap-2">
-                <span>🔢</span>
-                <span>{t.contact.captchaTitle}</span>
-              </div>
-              <div className="pl-7 text-lg font-black text-primary tracking-wide">
+          <div className="p-3.5 glass-card rounded-xl border border-[var(--glass-border)] bg-zinc-900/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 text-xs font-semibold text-[var(--text-main)]">
+              <span className="text-base">🔢</span>
+              <span>{t.contact.captchaTitle}:</span>
+              <span className="text-sm font-black text-primary px-2 py-0.5 rounded-md bg-primary/10 border border-primary/20">
                 {captcha?.text}
-              </div>
+              </span>
             </div>
-            <input
-              type="text"
-              required
-              placeholder={t.contact.captchaPlaceholder}
-              value={userCaptchaAnswer}
-              onChange={(e) => {
-                setUserCaptchaAnswer(e.target.value);
-                setCaptchaError(false);
-              }}
-              disabled={status === "sending"}
-              className="w-full px-4 py-3 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-2xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
-            />
-            {captchaError && (
-              <p className="text-xs text-rose-400 font-bold mt-1">
-                ❌ {t.contact.captchaError}
-              </p>
-            )}
-            <p className="text-xs text-[var(--text-muted)] font-medium">
-              {t.contact.captchaInstruction}
-            </p>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                required
+                placeholder="?"
+                value={userCaptchaAnswer}
+                onChange={(e) => {
+                  setUserCaptchaAnswer(e.target.value);
+                  setCaptchaError(false);
+                }}
+                disabled={status === "sending"}
+                className="w-20 px-3 py-1.5 text-center text-sm font-bold bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-xl text-[var(--text-main)] placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all disabled:opacity-50"
+              />
+            </div>
           </div>
+          {captchaError && (
+            <p className="text-xs text-rose-500 font-bold -mt-2">
+              ❌ {t.contact.captchaError}
+            </p>
+          )}
 
           <button
             type="submit"

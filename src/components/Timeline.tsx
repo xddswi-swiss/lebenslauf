@@ -295,7 +295,7 @@ export const Timeline: React.FC<TimelineProps> = ({
       <div className="glass-card rounded-3xl overflow-hidden border border-[var(--glass-border)] shadow-xl transition-all duration-300">
         <button
           onClick={() => setIsWorkExpanded(!isWorkExpanded)}
-          className="w-full flex items-center justify-between p-6 md:p-8 cursor-pointer select-none text-left bg-gradient-to-r from-primary/5 to-transparent hover:from-primary/10 transition-all duration-300"
+          className="experience-header-btn w-full flex items-center justify-between p-6 md:p-8 cursor-pointer select-none text-left bg-gradient-to-r from-primary/5 to-transparent hover:from-primary/10 transition-all duration-300"
         >
           <span className="flex items-center gap-4">
             <span className="p-3 rounded-2xl bg-[var(--badge-bg)] text-primary">

@@ -267,3 +267,80 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
 :root:not(.dark):not(.bw-mode) .bg-grid-mesh {
   background-image: none !important;
 }
+
+/* Yellow Theme: First Reference Card Only (Thomas Seinige - Orange Gradient) */
+:root:not(.dark):not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child {
+  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 6px 20px rgba(230, 92, 0, 0.2) !important;
+}
+
+:root:not(.dark):not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child h4,
+:root:not(.dark):not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child p,
+:root:not(.dark):not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child span,
+:root:not(.dark):not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child a {
+  color: #ffffff !important;
+}
+
+/* Yellow Theme: Contact Form Submit Button (Nachricht senden) */
+:root:not(.dark):not(.bw-mode) #contact form button[type="submit"] {
+  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(230, 92, 0, 0.25) !important;
+}
+
+:root:not(.dark):not(.bw-mode) #contact form button[type="submit"]:hover {
+  background: linear-gradient(to bottom right, #ff6600, #cc5200) !important;
+  box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
+}
+
+/* Yellow Theme: Hero Contact Button (Kontakt aufnehmen) */
+:root:not(.dark):not(.bw-mode) a[href="#contact"].bg-primary,
+:root:not(.dark):not(.bw-mode) a[href="#contact"].bg-primary * {
+  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(230, 92, 0, 0.25) !important;
+}
+
+:root:not(.dark):not(.bw-mode) a[href="#contact"].bg-primary:hover {
+  background: linear-gradient(to bottom right, #ff6600, #cc5200) !important;
+  box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
+}
+
+/* Yellow Theme: Skill Matcher Buttons (Kaufmann EFZ & Elektroinstallateur EFZ) */
+:root:not(.dark):not(.bw-mode) .matcher-btn {
+  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(230, 92, 0, 0.25) !important;
+}
+
+:root:not(.dark):not(.bw-mode) .matcher-btn *,
+:root:not(.dark):not(.bw-mode) .matcher-btn svg {
+  color: #ffffff !important;
+}
+
+:root:not(.dark):not(.bw-mode) .matcher-btn:hover {
+  background: linear-gradient(to bottom right, #ff6600, #cc5200) !important;
+  box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
+}
+
+/* Yellow Theme: Experiences Header Button (Erfahrungen) */
+:root:not(.dark):not(.bw-mode) .experience-header-btn {
+  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(230, 92, 0, 0.25) !important;
+}
+
+:root:not(.dark):not(.bw-mode) .experience-header-btn *,
+:root:not(.dark):not(.bw-mode) .experience-header-btn svg {
+  color: #ffffff !important;
+}
+
+:root:not(.dark):not(.bw-mode) .experience-header-btn:hover {
+  background: linear-gradient(to bottom right, #ff6600, #cc5200) !important;
+  box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
+}

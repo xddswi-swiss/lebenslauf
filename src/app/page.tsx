@@ -456,7 +456,7 @@ const MainContent: React.FC = () => {
             <div className="flex flex-wrap gap-3 justify-center items-center">
               <button
                 onClick={() => handleMatcherClick("kaufmann")}
-                className={`px-5 py-3 rounded-2xl text-xs md:text-sm font-bold border transition-all duration-300 cursor-pointer flex items-center gap-2 ${
+                className={`matcher-btn px-5 py-3 rounded-2xl text-xs md:text-sm font-bold border transition-all duration-300 cursor-pointer flex items-center gap-2 ${
                   selectedMatcher === "kaufmann"
                     ? "bg-primary text-white border-primary shadow-md shadow-primary/25 scale-[1.02]"
                     : "bg-transparent text-[var(--text-body)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5"
@@ -467,7 +467,7 @@ const MainContent: React.FC = () => {
               </button>
               <button
                 onClick={() => handleMatcherClick("elektro")}
-                className={`px-5 py-3 rounded-2xl text-xs md:text-sm font-bold border transition-all duration-300 cursor-pointer flex items-center gap-2 ${
+                className={`matcher-btn px-5 py-3 rounded-2xl text-xs md:text-sm font-bold border transition-all duration-300 cursor-pointer flex items-center gap-2 ${
                   selectedMatcher === "elektro"
                     ? "bg-primary text-white border-primary shadow-md shadow-primary/25 scale-[1.02]"
                     : "bg-transparent text-[var(--text-body)] border-[var(--glass-border)] hover:bg-zinc-800/10 dark:hover:bg-zinc-200/5"
@@ -718,158 +718,69 @@ const MainContent: React.FC = () => {
           <SkillsGrid selectedMatcher={selectedMatcher} />
         </section>
 
-        {/* Languages, Hobbies & References Section */}
-        <section id="details" className="scroll-mt-24 max-w-5xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
-              {t.details.title}
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Left Column: Languages & Interests */}
-            <div className="space-y-8">
-              {/* Languages Card */}
-              <div className="glass-card p-6 md:p-8 rounded-3xl">
-                <h3 className="text-xl font-bold text-[var(--text-main)] mb-6 flex items-center gap-2">
-                  <span className="w-1.5 h-6 bg-primary rounded-full" />
-                  {t.details.languagesTitle}
-                </h3>
-                <div className="space-y-6">
-                  {languagesData[language].map((lang, idx) => (
-                    <div key={idx} className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="font-semibold text-[var(--text-body)]">
-                          {lang.name}{" "}
-                          <span className="text-[var(--text-muted)] font-normal">
-                            ({lang.note})
-                          </span>
-                        </span>
-                        <span className="text-[var(--text-muted)] font-semibold">
-                          {lang.level}%
-                        </span>
-                      </div>
-                      <div
-                        suppressHydrationWarning
-                        className="h-2 w-full bg-[var(--background)] rounded-full overflow-hidden border border-[var(--glass-border)]"
-                      >
-                        <m.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${lang.level}%` }}
-                          viewport={{ once: true }}
-                          transition={{
-                            duration: 1.2,
-                            ease: "easeOut",
-                            delay: idx * 0.1,
-                          }}
-                          className="h-full rounded-full bg-gradient-to-r from-primary to-secondary"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Interests Card */}
-              <div className="glass-card p-6 md:p-8 rounded-3xl">
-                <h3 className="text-xl font-bold text-[var(--text-main)] mb-6 flex items-center gap-2">
-                  <span className="w-1.5 h-6 bg-secondary rounded-full" />
-                  {t.details.interestsTitle}
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  {hobbiesWithIcons.map((hobby, index) => (
-                    <m.div
-                      key={index}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="hobby-badge group flex items-center gap-0 hover:gap-2.5 px-3.5 py-2.5 hover:px-5 glass-card hover:border-secondary/40 text-[var(--text-body)] hover:text-[var(--text-main)] rounded-2xl text-sm font-semibold cursor-default transition-all duration-300 shadow-sm"
-                    >
-                      <span className="text-secondary text-lg flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
-                        {hobby.icon}
-                      </span>
-                      <span className="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[200px] group-hover:opacity-100 transition-all duration-300 whitespace-nowrap font-bold">
-                        {t.details.interests[hobby.key]}
-                      </span>
-                    </m.div>
-                  ))}
-                </div>
-              </div>
+        {/* Contact & References Section */}
+        <section id="contact" className="scroll-mt-24 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            {/* Left Column: Contact Form */}
+            <div className="lg:col-span-7">
+              <ContactForm />
             </div>
 
             {/* Right Column: References */}
-            <div className="glass-card p-6 md:p-8 rounded-3xl h-full flex flex-col">
-              <h3 className="text-xl font-bold text-[var(--text-main)] mb-6 flex items-center gap-2">
-                <span className="w-1.5 h-6 bg-primary rounded-full" />
-                {t.details.referencesTitle}
-              </h3>
-              <div className="space-y-6 flex-1 flex flex-col justify-center">
-                {referencesData[language].map((ref, idx) => (
-                  <div
-                    key={idx}
-                    className="p-5 glass-card rounded-2xl space-y-3 hover:border-cyan-500/30 transition-all duration-300"
-                  >
-                    <div>
-                      <h4 className="text-lg font-bold text-[var(--text-main)]">
-                        {ref.name}
-                      </h4>
-                      <p className="text-sm text-[var(--primary)] font-semibold">
-                        {ref.title}
-                      </p>
-                    </div>
-                    <div className="space-y-1.5 text-sm text-[var(--text-body)]">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-semibold text-[var(--text-muted)]">
-                          Email:
-                        </span>
-                        <a
-                          href={`mailto:${ref.email}`}
-                          className="text-[var(--primary)] hover:underline break-all transition-colors"
-                        >
-                          {ref.email}
-                        </a>
+            <div className="lg:col-span-5 lg:pt-[52px]">
+              <div className="glass-card p-5 md:p-6 rounded-2xl space-y-4">
+                <h3 className="text-xl font-bold text-[var(--text-main)] mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-6 bg-primary rounded-full" />
+                  {t.details.referencesTitle}
+                </h3>
+
+                <div className="space-y-3">
+                  {referencesData[language].map((ref, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3.5 glass-card rounded-xl space-y-1.5 hover:border-primary/40 transition-all duration-300"
+                    >
+                      <div>
+                        <h4 className="text-sm font-bold text-[var(--text-main)]">
+                          {ref.name}
+                        </h4>
+                        <p className="text-[11px] text-[var(--primary)] font-semibold">
+                          {ref.title}
+                        </p>
                       </div>
-                      {ref.phone && (
+                      <div className="space-y-0.5 text-xs text-[var(--text-body)]">
                         <div className="flex items-center gap-2">
-                          <span className="text-xs font-semibold text-[var(--text-muted)]">
-                            Phone:
+                          <span className="font-semibold text-[var(--text-muted)] text-[11px]">
+                            Email:
                           </span>
-                          <span className="text-[var(--text-body)]">
-                            {ref.phone}
-                          </span>
+                          <a
+                            href={`mailto:${ref.email}`}
+                            className="text-[var(--primary)] hover:underline break-all transition-colors"
+                          >
+                            {ref.email}
+                          </a>
                         </div>
-                      )}
+                        {ref.phone && (
+                          <div className="flex items-center gap-2">
+                            <span className="font-semibold text-[var(--text-muted)] text-[11px]">
+                              Tel:
+                            </span>
+                            <span className="text-[var(--text-body)]">
+                              {ref.phone}
+                            </span>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+
+                <div className="p-3 rounded-xl bg-primary/5 border border-primary/10 text-[11px] text-[var(--text-muted)]">
+                  💡 <span className="font-medium">Hinweis:</span> Weitere Auskünfte auf Anfrage erhältlich.
+                </div>
               </div>
             </div>
           </div>
-        </section>
-
-        {/* Guestbook Section */}
-        <section id="guestbook" className="scroll-mt-24">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
-              {language === "tr"
-                ? "Ziyaretçi Defteri"
-                : language === "de"
-                  ? "Gästebuch"
-                  : "Guestbook"}
-            </h2>
-            <p className="text-[var(--text-muted)] text-sm md:text-base">
-              {language === "tr"
-                ? "Bana bir mesaj, geri bildirim veya güzel bir söz bırakın!"
-                : language === "de"
-                  ? "Hinterlassen Sie mir eine Nachricht, ein Feedback oder ein nettes Wort!"
-                  : "Leave me a message, feedback, or just say hello!"}
-            </p>
-          </div>
-          <Guestbook />
-        </section>
-
-        {/* Contact Section */}
-        <section id="contact" className="scroll-mt-24">
-          <ContactForm />
         </section>
       </main>
 
