@@ -34,12 +34,14 @@ export function ThemeInitializer() {
               document.documentElement.classList.add('dark');
             }
 
-            var meta = document.getElementById('theme-color-meta');
+            var meta = document.querySelector('meta[name="theme-color"]');
             if (!meta) {
               meta = document.createElement('meta');
               meta.id = 'theme-color-meta';
               meta.setAttribute('name', 'theme-color');
               document.head.appendChild(meta);
+            } else if (!meta.id) {
+              meta.id = 'theme-color-meta';
             }
             meta.setAttribute('content', color);
 
