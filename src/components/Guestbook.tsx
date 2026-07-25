@@ -7,7 +7,6 @@ import {
   FiMessageSquare,
   FiSend,
   FiUser,
-  FiCalendar,
   FiCheck,
   FiLoader,
   FiChevronLeft,
@@ -15,7 +14,6 @@ import {
   FiEdit3,
   FiArrowLeft,
   FiHeart,
-  FiCheckCircle,
 } from "react-icons/fi";
 
 interface GuestbookMessage {
@@ -92,7 +90,7 @@ export const Guestbook: React.FC = () => {
       emptyFeed: "Noch keine Nachrichten vorhanden. Schreiben Sie die erste!",
       successMsg: "Nachricht erfolgreich hinzugefügt! Vielen Dank.",
       errFields: "Bitte alle Felder ausfüllen.",
-      captchaTitle: "Spamschutz-Sicherheitsfrage",
+      captchaTitle: "Sicherheitsfrage",
       captchaPlaceholder: "Ergebnis eingeben...",
       captchaInstruction: "Geben Sie das mathematische Ergebnis ein, um Spam zu verhindern.",
       captchaError: "Das Rechenergebnis ist falsch. Bitte versuchen Sie es erneut.",
@@ -115,7 +113,7 @@ export const Guestbook: React.FC = () => {
       emptyFeed: "Henüz mesaj yazılmamış. İlk mesajı siz yazın!",
       successMsg: "Mesajınız başarıyla eklendi! Teşekkürler.",
       errFields: "Lütfen tüm alanları doldurun.",
-      captchaTitle: "Spam Koruması Güvenlik Sorusu",
+      captchaTitle: "Güvenlik Sorusu",
       captchaPlaceholder: "Sonucu girin...",
       captchaInstruction: "Spam mesajları engellemek için lütfen yukarıdaki işlemi yapın.",
       captchaError: "İşlem sonucu yanlış, lütfen tekrar deneyin.",
@@ -138,7 +136,7 @@ export const Guestbook: React.FC = () => {
       emptyFeed: "No messages yet. Be the first to write one!",
       successMsg: "Message successfully posted! Thank you.",
       errFields: "Please fill in all fields.",
-      captchaTitle: "Anti-Spam Security Question",
+      captchaTitle: "Security Question",
       captchaPlaceholder: "Enter result...",
       captchaInstruction: "Solve the math problem above to prevent automated spam.",
       captchaError: "The math result is incorrect. Please try again.",
@@ -224,8 +222,6 @@ export const Guestbook: React.FC = () => {
           year: "numeric",
           month: "short",
           day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
         },
       );
     } catch (e) {
@@ -262,60 +258,33 @@ export const Guestbook: React.FC = () => {
       {/* GLASS PANEL CONTAINER: RESPONSIVE HEIGHT (AUTO ON MOBILE, FIXED 620px ON DESKTOP) */}
       <div className="glass-card p-4 sm:p-6 md:p-10 rounded-3xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] shadow-2xl relative overflow-hidden flex flex-col justify-between h-auto md:h-[620px]">
         
-        {/* TOP HEADER BAR: CLEANLY RESPONSIVE */}
-        <div className="flex flex-wrap items-center justify-between border-b border-[var(--glass-border)] pb-4 md:pb-5 gap-3 md:h-[65px] flex-shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="p-2 md:p-2.5 rounded-2xl bg-primary/10 border border-primary/20 text-primary">
-              <FiMessageSquare className="text-lg md:text-xl" />
-            </div>
-            <div>
-              <h3 className="text-base md:text-xl font-extrabold text-[var(--text-main)] font-logo tracking-wide">
-                {t.title}
-              </h3>
-              <p className="text-[11px] md:text-xs text-[var(--text-muted)]">
-                {mode === "view" && messages.length > 0
-                  ? `${t.msgCounter} ${currentIndex + 1} / ${messages.length}`
-                  : t.subtitle}
-              </p>
+        {/* TOP CONTROLS (ARROWS ONLY WHEN MULTIPLE MESSAGES) */}
+        {mode === "view" && messages.length > 1 && (
+          <div className="flex items-center justify-end border-b border-[var(--glass-border)] pb-3 md:pb-4 gap-3 flex-shrink-0">
+            <div className="flex items-center gap-1.5 md:gap-2">
+              <button
+                onClick={handlePrev}
+                className="p-2 md:p-2.5 rounded-xl glass-card hover:border-primary text-[var(--text-main)] hover:text-primary transition-all cursor-pointer hover:scale-105 active:scale-95 border border-[var(--glass-border)]"
+                aria-label="Previous Message"
+              >
+                <FiChevronLeft className="text-base md:text-lg" />
+              </button>
+              <span className="font-mono text-xs font-bold text-[var(--text-muted)] px-1.5 md:px-2">
+                {currentIndex + 1} / {messages.length}
+              </span>
+              <button
+                onClick={handleNext}
+                className="p-2 md:p-2.5 rounded-xl glass-card hover:border-primary text-[var(--text-main)] hover:text-primary transition-all cursor-pointer hover:scale-105 active:scale-95 border border-[var(--glass-border)]"
+                aria-label="Next Message"
+              >
+                <FiChevronRight className="text-base md:text-lg" />
+              </button>
             </div>
           </div>
-
-          {/* Controls: Arrows in View Mode, Back Button in Write Mode */}
-          {mode === "view" ? (
-            messages.length > 1 && (
-              <div className="flex items-center gap-1.5 md:gap-2 ml-auto sm:ml-0">
-                <button
-                  onClick={handlePrev}
-                  className="p-2 md:p-2.5 rounded-xl glass-card hover:border-primary text-[var(--text-main)] hover:text-primary transition-all cursor-pointer hover:scale-105 active:scale-95 border border-[var(--glass-border)]"
-                  aria-label="Previous Message"
-                >
-                  <FiChevronLeft className="text-base md:text-lg" />
-                </button>
-                <span className="font-mono text-xs font-bold text-[var(--text-muted)] px-1.5 md:px-2">
-                  {currentIndex + 1} / {messages.length}
-                </span>
-                <button
-                  onClick={handleNext}
-                  className="p-2 md:p-2.5 rounded-xl glass-card hover:border-primary text-[var(--text-main)] hover:text-primary transition-all cursor-pointer hover:scale-105 active:scale-95 border border-[var(--glass-border)]"
-                  aria-label="Next Message"
-                >
-                  <FiChevronRight className="text-base md:text-lg" />
-                </button>
-              </div>
-            )
-          ) : (
-            <button
-              onClick={() => setMode("view")}
-              className="flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 rounded-xl glass-card hover:border-primary text-xs font-bold text-[var(--text-main)] hover:text-primary transition-all cursor-pointer border border-[var(--glass-border)] ml-auto sm:ml-0"
-            >
-              <FiArrowLeft className="text-sm" />
-              <span>{t.btnBack}</span>
-            </button>
-          )}
-        </div>
+        )}
 
         {/* INNER SWAPPABLE PANEL BOX */}
-        <div className="my-3 md:my-4 flex-1 h-auto md:h-[410px] md:min-h-[410px] md:max-h-[410px] relative">
+        <div className="my-3 md:my-4 flex-1 h-auto md:h-[450px] md:min-h-[450px] relative">
           <AnimatePresence mode="wait">
             {mode === "view" ? (
               /* --- VIEW MODE: DISPLAY CURRENT MESSAGE --- */
@@ -347,30 +316,18 @@ export const Guestbook: React.FC = () => {
                       className="h-full flex flex-col justify-between space-y-4"
                     >
                       {/* Author Header */}
-                      <div className="flex flex-wrap items-center justify-between gap-2 min-h-[48px] flex-shrink-0">
+                      <div className="flex flex-wrap items-center justify-between gap-2 min-h-[36px] flex-shrink-0">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br from-primary/20 via-primary to-secondary flex items-center justify-center text-white font-black text-lg md:text-xl shadow-lg shadow-primary/20 flex-shrink-0">
-                            {currentMsg.name.charAt(0).toUpperCase()}
-                          </div>
                           <div>
-                            <h4 className="text-base md:text-xl font-bold text-[var(--text-main)] leading-tight">
+                            <h4 className="text-sm md:text-base font-bold text-[var(--text-main)] leading-tight">
                               {currentMsg.name}
                             </h4>
-                            <span className="text-[11px] md:text-xs text-[var(--text-muted)] flex items-center gap-1 mt-0.5 font-medium">
-                              <FiCalendar className="text-xs" />
-                              {formatDate(currentMsg.created_at)}
-                            </span>
                           </div>
                         </div>
-
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10 text-primary text-[11px] md:text-xs font-bold border border-primary/20">
-                          <FiCheckCircle className="text-xs" />
-                          <span>{t.badgeApproved}</span>
-                        </span>
                       </div>
 
                       {/* Body Message Box */}
-                      <div className="p-4 sm:p-6 md:p-8 rounded-2xl bg-[var(--badge-bg)] border border-[var(--glass-border)] flex-1 min-h-[180px] md:h-[340px] overflow-y-auto custom-scrollbar flex flex-col justify-start">
+                      <div className="p-4 sm:p-6 md:p-8 rounded-2xl bg-[var(--badge-bg)] border border-[var(--glass-border)] flex-1 min-h-[220px] md:h-[380px] overflow-y-auto custom-scrollbar flex flex-col justify-start">
                         <p className="text-sm md:text-lg text-[var(--text-main)] leading-relaxed whitespace-pre-line font-sans">
                           {currentMsg.message}
                         </p>
@@ -389,18 +346,6 @@ export const Guestbook: React.FC = () => {
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 className="h-full flex flex-col justify-between"
               >
-                {/* Back button visible at top of form on mobile */}
-                <div className="sm:hidden mb-3">
-                  <button
-                    type="button"
-                    onClick={() => setMode("view")}
-                    className="w-full flex items-center justify-center gap-2 py-2 rounded-xl glass-card text-xs font-bold text-[var(--text-main)] border border-[var(--glass-border)]"
-                  >
-                    <FiArrowLeft className="text-xs" />
-                    <span>{t.btnBack}</span>
-                  </button>
-                </div>
-
                 <form onSubmit={handleSubmit} className="h-full flex flex-col justify-between space-y-3">
                   {errorMsg && (
                     <div className="p-2.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold flex items-center gap-2">
@@ -436,40 +381,41 @@ export const Guestbook: React.FC = () => {
                       </label>
                       <textarea
                         required
-                        rows={4}
+                        rows={6}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder={t.placeholderMessage}
-                        className="w-full px-4 py-3 rounded-xl bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all flex-1 min-h-[110px] leading-relaxed resize-none shadow-sm"
+                        className="w-full px-4 py-3 rounded-xl bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 focus:border-primary focus:outline-none text-[var(--text-main)] text-sm transition-all flex-1 min-h-[160px] md:min-h-[220px] leading-relaxed resize-none shadow-sm"
                       />
                     </div>
 
                     {/* Math Captcha Box */}
-                    <div className="p-3 glass-card rounded-2xl border border-[var(--glass-border)] bg-zinc-900/10 space-y-2">
-                      <div className="flex items-center justify-between text-xs md:text-sm font-bold text-[var(--text-main)]">
+                    <div className="p-2.5 px-4 glass-card rounded-2xl border border-[var(--glass-border)] bg-zinc-900/10 w-fit max-w-full space-y-1">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <span className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">
+                          {t.captchaTitle}
+                        </span>
                         <div className="flex items-center gap-2">
-                          <span>🔢</span>
-                          <span>{t.captchaTitle}</span>
-                        </div>
-                        <div
-                          suppressHydrationWarning
-                          className="text-sm md:text-lg font-black text-primary tracking-wide font-mono"
-                        >
-                          {captcha?.text}
+                          <span
+                            suppressHydrationWarning
+                            className="text-sm md:text-base font-black text-primary tracking-wide font-mono"
+                          >
+                            {captcha?.text}
+                          </span>
+                          <input
+                            type="number"
+                            required
+                            placeholder="?"
+                            value={userCaptchaAnswer}
+                            onChange={(e) => {
+                              setUserCaptchaAnswer(e.target.value);
+                              setCaptchaError(false);
+                            }}
+                            disabled={isSubmitting}
+                            className="w-16 px-2 py-1 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:border-primary transition-all text-sm font-mono font-bold text-center disabled:opacity-50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          />
                         </div>
                       </div>
-                      <input
-                        type="text"
-                        required
-                        placeholder={t.captchaPlaceholder}
-                        value={userCaptchaAnswer}
-                        onChange={(e) => {
-                          setUserCaptchaAnswer(e.target.value);
-                          setCaptchaError(false);
-                        }}
-                        disabled={isSubmitting}
-                        className="w-full px-4 py-2 bg-white dark:bg-zinc-950/40 border border-neutral-400 dark:border-zinc-700 rounded-xl text-[var(--text-main)] placeholder-zinc-500 focus:outline-none focus:border-primary transition-all text-sm disabled:opacity-50"
-                      />
                       {captchaError && (
                         <p className="text-xs text-rose-400 font-bold">
                           ❌ {t.captchaError}
@@ -478,7 +424,7 @@ export const Guestbook: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="pt-2 flex justify-end">
+                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
                     <button
                       type="submit"
                       disabled={isSubmitting}
@@ -491,6 +437,15 @@ export const Guestbook: React.FC = () => {
                       )}
                       {t.btnSubmit}
                     </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setMode("view")}
+                      className="w-full sm:w-auto px-6 py-3 rounded-xl glass-card hover:border-primary text-[var(--text-main)] hover:text-primary font-bold text-xs md:text-sm border border-[var(--glass-border)] transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
+                    >
+                      <FiArrowLeft className="text-base" />
+                      <span>{t.btnBack}</span>
+                    </button>
                   </div>
                 </form>
               </m.div>
@@ -499,12 +454,12 @@ export const Guestbook: React.FC = () => {
         </div>
 
         {/* BOTTOM CTA BAR */}
-        <div className="pt-3 md:pt-4 border-t border-[var(--glass-border)] flex flex-col sm:flex-row items-center justify-between gap-3 md:h-[60px] flex-shrink-0">
-          <p className="text-xs md:text-sm text-[var(--text-muted)] font-medium text-center sm:text-left">
-            {mode === "view" ? t.ctaText : t.ctaTextBack}
-          </p>
+        {mode === "view" && (
+          <div className="pt-3 md:pt-4 border-t border-[var(--glass-border)] flex flex-col sm:flex-row items-center justify-between gap-3 md:h-[60px] flex-shrink-0">
+            <p className="text-xs md:text-sm text-[var(--text-muted)] font-medium text-center sm:text-left">
+              {t.ctaText}
+            </p>
 
-          {mode === "view" ? (
             <button
               onClick={() => {
                 generateCaptcha();
@@ -515,16 +470,8 @@ export const Guestbook: React.FC = () => {
               <FiEdit3 className="text-base" />
               <span>{t.btnWrite}</span>
             </button>
-          ) : (
-            <button
-              onClick={() => setMode("view")}
-              className="px-6 py-3 md:py-3.5 rounded-2xl glass-card hover:border-primary/50 text-[var(--text-main)] hover:text-primary font-bold text-xs md:text-sm transition-all duration-300 cursor-pointer flex items-center gap-2 border border-[var(--glass-border)] w-full sm:w-auto justify-center"
-            >
-              <FiArrowLeft className="text-base" />
-              <span>{t.btnBack}</span>
-            </button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
