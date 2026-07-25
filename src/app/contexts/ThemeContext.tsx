@@ -49,6 +49,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     } else {
       document.documentElement.classList.remove("dark");
     }
+    window.dispatchEvent(new Event("themeChange"));
   };
 
   return (

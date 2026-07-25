@@ -88,16 +88,39 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
 
       let color = "#ffffff"; // BW Mode (White)
       if (!isBw) {
-        color = isDark ? "#020617" : "#d9dc00"; // Dark Blue or Yellow
+        color = isDark ? "#102552" : "#ffc72c"; // Midnight Blue or Sunlit Yellow
       }
 
-      let meta = document.querySelector('meta[name="theme-color"]');
-      if (!meta) {
-        meta = document.createElement("meta");
+      // Update all theme-color meta tags and strip media queries
+      const metaTags = document.querySelectorAll('meta[name="theme-color"]');
+      if (metaTags.length === 0) {
+        const meta = document.createElement("meta");
         meta.setAttribute("name", "theme-color");
+        meta.setAttribute("content", color);
         document.head.appendChild(meta);
+      } else {
+        metaTags.forEach((meta) => {
+          meta.removeAttribute("media");
+          meta.setAttribute("content", color);
+        });
       }
-      meta.setAttribute("content", color);
+
+      // iOS Apple Mobile Web App Status Bar Style
+      let appleMeta = document.querySelector(
+        'meta[name="apple-mobile-web-app-status-bar-style"]',
+      );
+      if (!appleMeta) {
+        appleMeta = document.createElement("meta");
+        appleMeta.setAttribute(
+          "name",
+          "apple-mobile-web-app-status-bar-style",
+        );
+        document.head.appendChild(appleMeta);
+      }
+      appleMeta.setAttribute(
+        "content",
+        isDark && !isBw ? "black-translucent" : "default",
+      );
     };
 
     updateThemeColor();
@@ -108,10 +131,12 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
       attributeFilter: ["class"],
     });
     window.addEventListener("bwModeChange", updateThemeColor);
+    window.addEventListener("themeChange", updateThemeColor);
 
     return () => {
       observer.disconnect();
       window.removeEventListener("bwModeChange", updateThemeColor);
+      window.removeEventListener("themeChange", updateThemeColor);
     };
   }, []);
 
