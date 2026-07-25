@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion as m, AnimatePresence } from "framer-motion";
 import {
   FiFileText,
@@ -35,6 +35,17 @@ export const AdminDocumentForm: React.FC = () => {
 
   // List of existing documents for deletion in admin
   const [existingDocuments, setExistingDocuments] = useState<any[]>([]);
+  // Set to true right after a successful add, so the list can auto-scroll to
+  // reveal the newly added document once it shows up in existingDocuments.
+  const [justAddedDocument, setJustAddedDocument] = useState(false);
+  const listEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (justAddedDocument) {
+      listEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+      setJustAddedDocument(false);
+    }
+  }, [justAddedDocument, existingDocuments]);
 
   const fetchDocuments = async () => {
     try {
@@ -322,7 +333,8 @@ export const AdminDocumentForm: React.FC = () => {
             "document-pdf-upload",
           ) as HTMLInputElement;
           if (fileInput) fileInput.value = "";
-          fetchDocuments();
+          await fetchDocuments();
+          setJustAddedDocument(true);
         } else {
           // If read-only mode locally or fails local writes, generate fallback JSON
           if (
@@ -570,6 +582,7 @@ export const AdminDocumentForm: React.FC = () => {
                 </button>
               </div>
             ))}
+            <div ref={listEndRef} />
           </div>
         </div>
       </form>

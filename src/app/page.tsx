@@ -10,7 +10,6 @@ import { Guestbook } from "@/components/Guestbook";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
-import { DownloadButton } from "@/components/DownloadButton";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import Strands from "@/components/Strands";
 import ElectricBorder from "@/components/ElectricBorder";
@@ -383,95 +382,90 @@ const MainContent: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
-            {(() => {
-              const docColors = [
-                {
-                  icon: "text-blue-500 dark:text-blue-400",
-                  iconHoverBg: "group-hover:bg-blue-500 group-hover:text-white",
-                  button:
-                    "bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 border-blue-500/20",
-                  glow: "bg-blue-500/10",
-                },
-                {
-                  icon: "text-orange-500 dark:text-orange-400",
-                  iconHoverBg:
-                    "group-hover:bg-orange-500 group-hover:text-white",
-                  button:
-                    "bg-orange-500/10 hover:bg-orange-500/20 text-orange-600 dark:text-orange-400 border-orange-500/20",
-                  glow: "bg-orange-500/10",
-                },
-                {
-                  icon: "text-emerald-500 dark:text-emerald-400",
-                  iconHoverBg:
-                    "group-hover:bg-emerald-500 group-hover:text-white",
-                  button:
-                    "bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
-                  glow: "bg-emerald-500/10",
-                },
-                {
-                  icon: "text-violet-500 dark:text-violet-400",
-                  iconHoverBg:
-                    "group-hover:bg-violet-500 group-hover:text-white",
-                  button:
-                    "bg-violet-500/10 hover:bg-violet-500/20 text-violet-600 dark:text-violet-400 border-violet-500/20",
-                  glow: "bg-violet-500/10",
-                },
-                {
-                  icon: "text-amber-500 dark:text-amber-400",
-                  iconHoverBg:
-                    "group-hover:bg-amber-500 group-hover:text-white",
-                  button:
-                    "bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/20",
-                  glow: "bg-amber-500/10",
-                },
-                {
-                  icon: "text-rose-500 dark:text-rose-400",
-                  iconHoverBg: "group-hover:bg-rose-500 group-hover:text-white",
-                  button:
-                    "bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/20",
-                  glow: "bg-rose-500/10",
-                },
-              ];
+          <div className="max-w-md mx-auto">
+            <div className="rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] backdrop-blur-md divide-y divide-[var(--glass-border)] max-h-[520px] overflow-y-auto">
+              {(() => {
+                const docColors = [
+                  {
+                    icon: "text-blue-500 dark:text-blue-400",
+                    iconHoverBg:
+                      "group-hover:bg-blue-500 group-hover:text-white",
+                    button:
+                      "bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 border-blue-500/20",
+                  },
+                  {
+                    icon: "text-orange-500 dark:text-orange-400",
+                    iconHoverBg:
+                      "group-hover:bg-orange-500 group-hover:text-white",
+                    button:
+                      "bg-orange-500/10 hover:bg-orange-500/20 text-orange-600 dark:text-orange-400 border-orange-500/20",
+                  },
+                  {
+                    icon: "text-emerald-500 dark:text-emerald-400",
+                    iconHoverBg:
+                      "group-hover:bg-emerald-500 group-hover:text-white",
+                    button:
+                      "bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
+                  },
+                  {
+                    icon: "text-violet-500 dark:text-violet-400",
+                    iconHoverBg:
+                      "group-hover:bg-violet-500 group-hover:text-white",
+                    button:
+                      "bg-violet-500/10 hover:bg-violet-500/20 text-violet-600 dark:text-violet-400 border-violet-500/20",
+                  },
+                  {
+                    icon: "text-amber-500 dark:text-amber-400",
+                    iconHoverBg:
+                      "group-hover:bg-amber-500 group-hover:text-white",
+                    button:
+                      "bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border-amber-500/20",
+                  },
+                  {
+                    icon: "text-rose-500 dark:text-rose-400",
+                    iconHoverBg:
+                      "group-hover:bg-rose-500 group-hover:text-white",
+                    button:
+                      "bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border-rose-500/20",
+                  },
+                ];
 
-              return docs.map((doc, index) => {
-                const colors = docColors[index % docColors.length];
-                return (
-                  <div
-                    key={index}
-                    className="glass-card p-5 rounded-2xl flex flex-col justify-between h-full relative group overflow-hidden"
-                  >
+                return docs.map((doc, index) => {
+                  const colors = docColors[index % docColors.length];
+                  return (
                     <div
-                      className={`absolute top-0 right-0 w-16 h-16 ${colors.glow} blur-xl rounded-full`}
-                    />
-                    <div className="flex items-start gap-4 mb-4">
+                      key={index}
+                      className="flex items-center gap-4 p-4 group hover:bg-[var(--primary)]/5 transition-colors duration-200"
+                    >
                       <div
-                        className={`p-3 glass-card rounded-xl ${colors.icon} ${colors.iconHoverBg} transition-all duration-300`}
+                        className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center glass-card ${colors.icon} ${colors.iconHoverBg} transition-all duration-300`}
                       >
-                        <FiFileText className="text-xl" />
+                        <FiFileText className="text-lg" />
                       </div>
-                      <div>
-                        <h3 className="text-base font-bold text-[var(--text-main)] group-hover:text-[var(--text-main)] transition-colors">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-sm font-bold text-[var(--text-main)] truncate">
                           {doc.term}
                         </h3>
                         <p className="text-[var(--text-muted)] text-xs mt-0.5">
                           {doc.date}
                         </p>
                       </div>
+                      <a
+                        href={doc.file}
+                        download={`${doc.term}.pdf`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={t.documents.download}
+                        title={t.documents.download}
+                        className={`flex-shrink-0 p-2.5 rounded-xl border transition-all duration-200 hover:scale-105 active:scale-95 ${colors.button}`}
+                      >
+                        <FiDownload className="text-base" />
+                      </a>
                     </div>
-
-                    <div className="flex gap-2 items-center w-full mt-4">
-                      <DownloadButton
-                        fileUrl={doc.file}
-                        fileName={`${doc.term}.pdf`}
-                        downloadLabel={t.documents.download}
-                        completeLabel={t.documents.complete}
-                      />
-                    </div>
-                  </div>
-                );
-              });
-            })()}
+                  );
+                });
+              })()}
+            </div>
           </div>
         </section>
 
