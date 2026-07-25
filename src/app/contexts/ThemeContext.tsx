@@ -90,10 +90,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     const isBw = document.documentElement.classList.contains("bw-mode");
     if (isBw) {
       setThemeMode("white");
+      updateSafariThemeColor("#ffffff");
     } else if (document.documentElement.classList.contains("dark")) {
       setThemeMode("blue");
+      updateSafariThemeColor("#102552");
     } else {
       setThemeMode("yellow");
+      updateSafariThemeColor("#ffc72c");
     }
   }, []);
 
