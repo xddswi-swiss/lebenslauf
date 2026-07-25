@@ -247,3 +247,9 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
 :root:not(.dark):not(.bw-mode) .stat-card-2 .stat-desc {
   color: #ffffff !important;
 }
+
+/* Yellow Theme Progress Bar Fill Styling (User Specified Warm Burnt Orange) */
+:root:not(.dark):not(.bw-mode) .lang-fill-bar,
+:root:not(.dark):not(.bw-mode) .skill-fill {
+  background: linear-gradient(to right, #c84c00, #e65c00) !important;
+}
