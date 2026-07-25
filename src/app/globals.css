@@ -744,3 +744,320 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
   color: white;
   box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.1);
 }
+
+/* ==========================================================
+   Skills Vertical Accordion (sa-*)
+   Desktop → horizontal panels, collapsed = narrow strip
+   Mobile  → vertical stack, collapsed = short strip
+   Colors come from CSS variables (auto theme-aware)
+   ========================================================== */
+
+/* ---- Container ---- */
+.sa-wrap {
+  display: flex;
+  flex-direction: row;      /* Desktop: side-by-side */
+  height: 360px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* ---- Panel ---- */
+.sa-panel {
+  position: relative;
+  flex: 0 0 76px;           /* Collapsed: fixed narrow width */
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--glass-card-bg);
+  border-right: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    flex 0.48s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.3s ease;
+  /* Subtle top accent bar (same as glass-card) */
+}
+
+.sa-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--primary), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.sa-panel:hover::before {
+  opacity: 0.4;
+}
+
+.sa-panel.sa-active::before {
+  opacity: 0.7;
+}
+
+.sa-panel:last-child {
+  border-right: none;
+}
+
+.sa-panel:hover:not(.sa-active) {
+  background: color-mix(in srgb, var(--glass-card-bg) 80%, var(--primary) 8%);
+}
+
+/* Expanded panel */
+.sa-panel.sa-active {
+  flex: 1 0 260px;
+  cursor: default;
+}
+
+/* ---- Header (collapsed: vertical text) ---- */
+.sa-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 26px;
+  height: 100%;
+  gap: 14px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sa-head.sa-head-open {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: auto;
+  padding: 18px 22px 14px;
+  gap: 10px;
+  border-bottom: 1px solid var(--glass-border);
+  pointer-events: none;
+}
+
+.sa-ico {
+  font-size: 18px;
+  color: var(--primary);
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.sa-panel:hover .sa-ico,
+.sa-panel.sa-active .sa-ico {
+  opacity: 1;
+}
+
+.sa-lbl {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-main);
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  /* Vertical writing when collapsed */
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+.sa-head-open .sa-lbl {
+  writing-mode: horizontal-tb;
+  text-orientation: initial;
+  transform: none;
+  font-size: 13px;
+  letter-spacing: 0.07em;
+}
+
+/* ---- Body (expanded content) ---- */
+.sa-body {
+  position: relative;
+  padding: 14px 22px 18px;
+  overflow: hidden;
+}
+
+/* ---- Scanner beam ---- */
+.sa-beam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--primary) 30%,
+    var(--primary) 70%,
+    transparent
+  );
+  box-shadow: 0 0 12px var(--primary-glow, rgba(0, 0, 0, 0.3));
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* ---- Skill rows ---- */
+.sa-item {
+  margin-bottom: 12px;
+}
+
+.sa-item:last-child {
+  margin-bottom: 0;
+}
+
+.sa-name {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-body);
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sa-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sa-track {
+  flex: 1;
+  height: 1.5px;
+  background: var(--glass-border);
+  border-radius: 1px;
+  position: relative;
+  overflow: visible;
+}
+
+.sa-fill {
+  height: 1.5px;
+  background: var(--primary);
+  border-radius: 1px;
+  position: relative;
+}
+
+/* Dot at end of bar */
+.sa-fill::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 6px var(--primary-glow, rgba(0, 0, 0, 0.2));
+}
+
+.sa-pct {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  font-family: monospace;
+  width: 30px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ---- B&W Mode overrides ---- */
+:root.bw-mode .sa-wrap {
+  border: 2px solid #000000;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+:root.bw-mode .sa-panel {
+  border-right: 2px solid #000000;
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+}
+
+:root.bw-mode .sa-panel::before {
+  background: #000000;
+}
+
+:root.bw-mode .sa-head {
+  border-bottom: none;
+}
+
+:root.bw-mode .sa-head.sa-head-open {
+  border-bottom: 2px solid #000000;
+}
+
+:root.bw-mode .sa-beam {
+  background: #000000;
+  box-shadow: none;
+}
+
+:root.bw-mode .sa-fill::after {
+  box-shadow: none;
+}
+
+/* ============================================================
+   Mobile: Horizontal (vertical stack) accordion
+   ============================================================ */
+@media (max-width: 767px) {
+  .sa-wrap {
+    flex-direction: column;
+    height: auto;
+    border-radius: 14px;
+  }
+
+  .sa-panel {
+    flex: 0 0 56px;           /* Collapsed: fixed height */
+    border-right: none;
+    border-bottom: 1px solid var(--glass-border);
+    transition:
+      flex 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+      background 0.3s ease;
+  }
+
+  .sa-panel:last-child {
+    border-bottom: none;
+  }
+
+  .sa-panel.sa-active {
+    flex: 0 0 auto;           /* Grows to fit content */
+  }
+
+  /* On mobile, header is always horizontal */
+  .sa-head {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 56px;
+    padding: 0 18px;
+    gap: 10px;
+    border-bottom: none;
+  }
+
+  .sa-head.sa-head-open {
+    height: 56px;
+    padding: 0 18px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  /* Text always horizontal on mobile */
+  .sa-lbl {
+    writing-mode: horizontal-tb;
+    text-orientation: initial;
+    transform: none;
+    font-size: 12.5px;
+  }
+
+  .sa-body {
+    padding: 12px 18px 16px;
+  }
+
+  :root.bw-mode .sa-panel {
+    border-bottom: 2px solid #000000;
+    border-right: none;
+  }
+}
+
