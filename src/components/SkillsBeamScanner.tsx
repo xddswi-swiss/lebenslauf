@@ -1068,10 +1068,35 @@ class HobbiesAndInterests {
                 // Card fully above scanner: fully ASCII (code)
                 htmlCard.style.setProperty("--clip-bottom", "100%");
                 htmlCard.style.setProperty("--clip-top", "100%");
+
+                if (htmlCard.dataset.state !== "code") {
+                  htmlCard.dataset.state = "code";
+                  htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
+                    const htmlFill = fill as HTMLElement;
+                    htmlFill.style.transition = "none";
+                    htmlFill.style.width = "0%";
+                    void htmlFill.offsetWidth;
+                  });
+                }
               } else if (cardTop >= scannerY) {
                 // Card fully below scanner: fully normal (progress bars)
                 htmlCard.style.setProperty("--clip-bottom", "0%");
                 htmlCard.style.setProperty("--clip-top", "0%");
+
+                if (htmlCard.dataset.state !== "normal") {
+                  htmlCard.dataset.state = "normal";
+                  htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
+                    const htmlFill = fill as HTMLElement;
+                    const level = htmlFill.getAttribute("data-level");
+                    if (level) {
+                      htmlFill.style.transition =
+                        "width 1.5s cubic-bezier(0.19, 1, 0.22, 1)";
+                      requestAnimationFrame(() => {
+                        htmlFill.style.width = level + "%";
+                      });
+                    }
+                  });
+                }
               }
             }
           });
@@ -1095,10 +1120,35 @@ class HobbiesAndInterests {
                 // Card fully to the left of scanner: fully ASCII (code)
                 htmlCard.style.setProperty("--clip-right", "100%");
                 htmlCard.style.setProperty("--clip-left", "100%");
+
+                if (htmlCard.dataset.state !== "code") {
+                  htmlCard.dataset.state = "code";
+                  htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
+                    const htmlFill = fill as HTMLElement;
+                    htmlFill.style.transition = "none";
+                    htmlFill.style.width = "0%";
+                    void htmlFill.offsetWidth;
+                  });
+                }
               } else if (cardLeft >= scannerX) {
                 // Card fully to the right of scanner: fully normal (progress bars)
                 htmlCard.style.setProperty("--clip-right", "0%");
                 htmlCard.style.setProperty("--clip-left", "0%");
+
+                if (htmlCard.dataset.state !== "normal") {
+                  htmlCard.dataset.state = "normal";
+                  htmlCard.querySelectorAll(".skill-fill").forEach((fill) => {
+                    const htmlFill = fill as HTMLElement;
+                    const level = htmlFill.getAttribute("data-level");
+                    if (level) {
+                      htmlFill.style.transition =
+                        "width 1.5s cubic-bezier(0.19, 1, 0.22, 1)";
+                      requestAnimationFrame(() => {
+                        htmlFill.style.width = level + "%";
+                      });
+                    }
+                  });
+                }
               }
             }
           });
@@ -1269,7 +1319,7 @@ class HobbiesAndInterests {
                                 <div
                                   data-level={skill.level}
                                   style={{ width: "0%" }}
-                                  className="skill-fill h-full rounded-full bg-[#ff5500] transition-[width] duration-[1500ms] ease-[cubic-bezier(0.19,1,0.22,1)]"
+                                  className="skill-fill h-full rounded-full bg-[#000000] transition-[width] duration-[1500ms] ease-[cubic-bezier(0.19,1,0.22,1)]"
                                 />
                               )}
                             </div>

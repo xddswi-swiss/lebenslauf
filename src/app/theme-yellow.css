@@ -248,15 +248,18 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
   color: #ffffff !important;
 }
 
-/* Yellow Theme Progress Bar Fill Styling (Bright Neon Electric Orange #FF5500) */
+/* Yellow Theme: Sprachkenntnisse is ORANGE (#ff6c02) */
 html:not(.dark):not(.bw-mode) .lang-fill-bar,
-html:not(.dark):not(.bw-mode) .skill-fill,
-:root:not(.dark):not(.bw-mode) .lang-fill-bar,
-:root:not(.dark):not(.bw-mode) .skill-fill {
-  background: #ff5500 !important;
-  background-color: #ff5500 !important;
+:root:not(.dark):not(.bw-mode) .lang-fill-bar {
+  background: #ff6c02 !important;
+  background-color: #ff6c02 !important;
   background-image: none !important;
-  --tw-gradient-from: #ff5500 !important;
-  --tw-gradient-to: #ff5500 !important;
-  --tw-gradient-stops: #ff5500, #ff5500 !important;
+}
+
+/* Yellow Theme: SkillsBeamScanner Carousel Cards are BLACK (#000000) */
+html:not(.dark):not(.bw-mode) .skill-fill,
+:root:not(.dark):not(.bw-mode) .skill-fill {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  background-image: none !important;
 }
