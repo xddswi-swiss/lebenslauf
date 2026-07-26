@@ -110,7 +110,7 @@ body.bw-mode #guestbook * {
 html.bw-mode header.header-glass-gradient,
 body.bw-mode header.header-glass-gradient {
   background: #ffffff !important;
-  border-bottom: 2px solid #000000 !important;
+  border-bottom: 1px solid #000000 !important;
   box-shadow: none !important;
 }
 
@@ -135,7 +135,7 @@ body.bw-mode .glass-card,
 html.bw-mode [class*="glass-card"],
 body.bw-mode [class*="glass-card"] {
   background: #ffffff !important;
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
   box-shadow: none !important;
 }
 
@@ -143,7 +143,7 @@ html.bw-mode .glass-card:hover,
 body.bw-mode .glass-card:hover,
 html.bw-mode [class*="glass-card"]:hover,
 body.bw-mode [class*="glass-card"]:hover {
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
   border-color: #000000 !important;
   box-shadow: none !important;
 }
@@ -157,7 +157,7 @@ body.bw-mode .glass-card::before {
 html.bw-mode #contact .lg\:col-span-5 .space-y-3 > div:first-child,
 body.bw-mode #contact .lg\:col-span-5 .space-y-3 > div:first-child {
   background: #000000 !important;
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
   color: #ffffff !important;
   box-shadow: none !important;
 }
@@ -173,7 +173,7 @@ html.bw-mode #contact .lg\:col-span-5 .space-y-3 > div:first-child a {
 html.bw-mode #contact form button[type="submit"],
 body.bw-mode #contact form button[type="submit"] {
   background: #000000 !important;
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
   color: #ffffff !important;
   font-weight: 700 !important;
   box-shadow: none !important;
@@ -192,7 +192,7 @@ html.bw-mode #contact form button[type="submit"]:hover {
 html.bw-mode a[href="#contact"].bg-primary,
 body.bw-mode a[href="#contact"].bg-primary {
   background: #000000 !important;
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
   color: #ffffff !important;
   font-weight: 700 !important;
   box-shadow: none !important;
@@ -214,7 +214,7 @@ body.bw-mode a[href="#contact"].bg-primary:hover {
 html.bw-mode a[download].bg-primary,
 body.bw-mode a[download].bg-primary {
   background: #ffffff !important;
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
   color: #000000 !important;
   font-weight: 700 !important;
   box-shadow: none !important;
@@ -241,7 +241,7 @@ body.bw-mode a[download].bg-primary:hover * {
 html.bw-mode .matcher-btn,
 body.bw-mode .matcher-btn {
   background: #000000 !important;
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
   color: #ffffff !important;
   box-shadow: none !important;
 }
@@ -293,14 +293,14 @@ html.bw-mode .experience-header-btn:hover {
 /* 6. Accordion Elements in B&W Mode */
 html.bw-mode .sa-wrap,
 body.bw-mode .sa-wrap {
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
   box-shadow: none !important;
   background: #ffffff !important;
 }
 
 html.bw-mode .sa-panel,
 body.bw-mode .sa-panel {
-  border-right: 2px solid #000000 !important;
+  border-right: 1px solid #000000 !important;
   background: #ffffff !important;
 }
 
@@ -314,7 +314,7 @@ body.bw-mode .sa-panel .sa-ico {
 html.bw-mode .sa-panel.sa-active .sa-head-open,
 body.bw-mode .sa-panel.sa-active .sa-head-open {
   background: #000000 !important;
-  border-bottom: 2px solid #000000 !important;
+  border-bottom: 1px solid #000000 !important;
 }
 
 html.bw-mode .sa-panel.sa-active .sa-head-open,
@@ -366,7 +366,7 @@ body.bw-mode .sa-panel.sa-active .sa-beam {
 html.bw-mode .stat-card-1,
 body.bw-mode .stat-card-1 {
   background: #ffffff !important;
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
   color: #000000 !important;
   box-shadow: none !important;
 }
@@ -387,7 +387,7 @@ body.bw-mode .stat-card-1 .stat-desc {
 html.bw-mode .stat-card-2,
 body.bw-mode .stat-card-2 {
   background: #000000 !important;
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
   color: #ffffff !important;
   box-shadow: none !important;
 }
@@ -403,7 +403,7 @@ html.bw-mode .hobby-badge,
 body.bw-mode .status-badge,
 body.bw-mode .hobby-badge {
   background: #ffffff !important;
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
   color: #000000 !important;
   box-shadow: none !important;
 }
@@ -511,7 +511,7 @@ body.bw-mode footer .grid a.glass-card * {
 html.bw-mode footer div.border-2,
 body.bw-mode footer div.border-2 {
   background: #ffffff !important;
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
   box-shadow: none !important;
 }
 
@@ -563,7 +563,7 @@ body.bw-mode footer .w-10.h-10.rounded-full {
 html.bw-mode [class*="z-\[99999\]"] .glass-card,
 body.bw-mode [class*="z-\[99999\]"] .glass-card {
   background: #ffffff !important;
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25) !important;
 }
 
@@ -572,7 +572,7 @@ body.bw-mode [class*="z-\[99999\]"] button.bg-primary {
   background: #000000 !important;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
 }
 
 html.bw-mode [class*="z-\[99999\]"] button.border-2,
@@ -580,7 +580,7 @@ body.bw-mode [class*="z-\[99999\]"] button.border-2 {
   background: #ffffff !important;
   color: #000000 !important;
   -webkit-text-fill-color: #000000 !important;
-  border: 2px solid #000000 !important;
+  border: 1px solid #000000 !important;
 }
 
 /* ScrollToTop Button in B&W Mode (Solid Black Circle, Bright White Climbing Stickman) */
