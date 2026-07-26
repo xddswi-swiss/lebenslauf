@@ -367,15 +367,24 @@ html.dark:not(.bw-mode) .skills-ascii-content {
   box-shadow: 0 8px 25px rgba(133, 199, 242, 0.45) !important;
 }
 
-/* 6. Accordion Active Panel Body & Skill Texts in Dark Theme (Emerald Green Style) */
+/* 6. Accordion Active Panel Body & Skill Texts in Dark Theme
+   Was a flat emerald green for every category — now uses each category's
+   own color (--cat-color, set inline per panel in SkillsGrid.tsx), same
+   blue/orange/emerald/violet/amber/rose family as the document cards.
+   Falls back to the old emerald if the variable is ever missing. */
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-head-open {
-  background: rgba(16, 185, 129, 0.25) !important;
-  border-bottom: 1px solid rgba(16, 185, 129, 0.4) !important;
+  background: color-mix(
+    in srgb,
+    var(--cat-color, #10b981) 25%,
+    transparent
+  ) !important;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--cat-color, #10b981) 40%, transparent) !important;
 }
 
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-head-open .sa-lbl,
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-head-open .sa-ico {
-  color: #34d399 !important;
+  color: var(--cat-color-light, #6ee7b7) !important;
 }
 
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-body {
@@ -384,29 +393,32 @@ html.dark:not(.bw-mode) .skills-ascii-content {
     rgba(30, 58, 95, 0.95),
     rgba(22, 40, 63, 0.95)
   ) !important;
-  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  border: 1px solid
+    color-mix(in srgb, var(--cat-color, #10b981) 30%, transparent) !important;
 }
 
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-name,
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-pct {
-  color: #34d399 !important;
+  color: var(--cat-color-light, #6ee7b7) !important;
 }
 
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-fill,
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-fill::after {
-  background: #34d399 !important;
-  box-shadow: 0 0 8px rgba(52, 211, 153, 0.6) !important;
+  background: var(--cat-color, #34d399) !important;
+  box-shadow: 0 0 8px
+    color-mix(in srgb, var(--cat-color, #34d399) 60%, transparent) !important;
 }
 
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-beam {
   background: linear-gradient(
     to right,
     transparent,
-    #34d399 30%,
-    #34d399 70%,
+    var(--cat-color, #34d399) 30%,
+    var(--cat-color, #34d399) 70%,
     transparent
   ) !important;
-  box-shadow: 0 0 12px rgba(52, 211, 153, 0.8) !important;
+  box-shadow: 0 0 12px
+    color-mix(in srgb, var(--cat-color, #34d399) 80%, transparent) !important;
 }
 
 /* ScrollToTop Button in Midnight Blue Theme (Light Sky Blue Circle, Dark Blue Stickman) */

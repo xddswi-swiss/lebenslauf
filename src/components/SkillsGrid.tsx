@@ -34,6 +34,24 @@ const ICONS: Record<CategoryKey, React.ElementType> = {
   interests: FiSmile,
 };
 
+// Same 6-color family already used for the document cards elsewhere on the
+// page (blue/orange/emerald/violet/amber/rose), so the accordion matches
+// the rest of the site instead of using one flat theme color for every tab.
+const CATEGORY_COLORS: Record<
+  CategoryKey,
+  { base: string; dark: string; light: string }
+> = {
+  // "light" is a brighter/paler tint of the same hue, used for text on the
+  // dark (blue) theme's navy background — the plain saturated "base" color
+  // didn't have enough contrast there and read as dull/hard to read.
+  personal: { base: "#3b82f6", dark: "#1d4ed8", light: "#93c5fd" }, // blue
+  school: { base: "#f97316", dark: "#c2410c", light: "#fdba74" }, // orange
+  digital: { base: "#10b981", dark: "#047857", light: "#6ee7b7" }, // emerald
+  hobbies: { base: "#8b5cf6", dark: "#6d28d9", light: "#c4b5fd" }, // violet
+  languages: { base: "#f59e0b", dark: "#b45309", light: "#fcd34d" }, // amber
+  interests: { base: "#f43f5e", dark: "#be123c", light: "#fda4af" }, // rose
+};
+
 /* ------------------------------------------------------------------ */
 /* Single animated skill row: name + drawing line + percentage        */
 /* ------------------------------------------------------------------ */
@@ -163,12 +181,21 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({
           const isLang = key === "languages";
           const isInterests = key === "interests";
 
+          const catColor = CATEGORY_COLORS[key];
+
           return (
             <div
               key={key}
               className={`sa-panel${isActive ? " sa-active" : ""}`}
               role="listitem"
               aria-expanded={isActive}
+              style={
+                {
+                  "--cat-color": catColor.base,
+                  "--cat-color-dark": catColor.dark,
+                  "--cat-color-light": catColor.light,
+                } as React.CSSProperties
+              }
               onClick={() => setActive(isActive ? null : key)}
               onKeyDown={(e) =>
                 e.key === "Enter" && setActive(isActive ? null : key)

@@ -388,7 +388,11 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
 }
 
 :root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-head-open {
-  background: linear-gradient(to right, #e65c00, #b34700) !important;
+  background: linear-gradient(
+    to right,
+    var(--cat-color, #e65c00),
+    var(--cat-color-dark, #b34700)
+  ) !important;
 }
 
 :root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-head-open .sa-lbl,
