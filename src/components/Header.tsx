@@ -286,13 +286,17 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                   onClick={() => changeTheme("yellow")}
                   aria-label="Light Theme"
                   title="Gelbes Design"
-                  className="flex-1 h-full bg-[#FFC72C] transition-all cursor-pointer hover:brightness-95"
+                  className={`flex-1 h-full bg-[#FFC72C] transition-all cursor-pointer hover:brightness-95 ${
+                    themeMode === "yellow" ? "theme-flag-yellow-active-pulse" : ""
+                  }`}
                 />
                 <button
                   onClick={() => changeTheme("blue")}
                   aria-label="Dark Theme"
                   title="Blaues Design"
-                  className="flex-1 h-full bg-[#2563eb] transition-all cursor-pointer hover:brightness-95"
+                  className={`flex-1 h-full bg-[#2563eb] transition-all cursor-pointer hover:brightness-95 ${
+                    themeMode === "blue" ? "theme-flag-active-pulse" : ""
+                  }`}
                 />
               </div>
             </div>
@@ -441,12 +445,16 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                 <button
                   onClick={() => changeTheme("yellow")}
                   aria-label="Light Theme"
-                  className="flex-1 h-full bg-[#FFC72C] transition-all cursor-pointer"
+                  className={`flex-1 h-full bg-[#FFC72C] transition-all cursor-pointer ${
+                    themeMode === "yellow" ? "theme-flag-yellow-active-pulse" : ""
+                  }`}
                 />
                 <button
                   onClick={() => changeTheme("blue")}
                   aria-label="Dark Theme"
-                  className="flex-1 h-full bg-[#2563eb] transition-all cursor-pointer"
+                  className={`flex-1 h-full bg-[#2563eb] transition-all cursor-pointer ${
+                    themeMode === "blue" ? "theme-flag-active-pulse" : ""
+                  }`}
                 />
               </div>
 

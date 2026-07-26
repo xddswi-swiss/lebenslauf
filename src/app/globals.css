@@ -512,6 +512,56 @@ body {
   transform: translateX(0);
 }
 
+/* Theme flag: slow "breathing" glow on the currently active color stripe,
+   to draw the eye and hint that these stripes are interactive/clickable. */
+@keyframes theme-flag-pulse {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.4);
+  }
+}
+
+.theme-flag-active-pulse {
+  animation: theme-flag-pulse 1.8s ease-in-out infinite;
+}
+
+/* Yellow stripe: a plain brightness pulse made it look like a harsh
+   screaming yellow at the peak, so shift the color itself slightly toward
+   orange instead of just brightening it. */
+@keyframes theme-flag-yellow-pulse {
+  0%,
+  100% {
+    background-color: #ffc72c;
+  }
+  50% {
+    background-color: #ea580c;
+  }
+}
+
+.theme-flag-yellow-active-pulse {
+  animation: theme-flag-yellow-pulse 1.8s ease-in-out infinite;
+}
+
+/* Black & white stripe can't use a brightness pulse (nothing to brighten
+   when it's already the "off" white/black look), so fade its background
+   between white and black instead. */
+@keyframes theme-flag-bw-pulse {
+  0%,
+  100% {
+    background-color: #ffffff;
+  }
+  50% {
+    background-color: #000000;
+  }
+}
+
+.theme-flag-bw-active-pulse {
+  animation: theme-flag-bw-pulse 1.8s ease-in-out infinite;
+}
+
 .cb-btn.is-done .cb-label {
   opacity: 0;
 }
