@@ -141,11 +141,11 @@ const MainContent: React.FC = () => {
       <Header activeColorIndex={randomColorIndex} />
 
       {/* Main Container */}
-      <main suppressHydrationWarning className="flex-1 max-w-6xl w-full mx-auto px-6 pt-24 md:pt-32 pb-12 md:pb-20 space-y-16 md:space-y-20 overflow-x-hidden">
+      <main suppressHydrationWarning className="flex-1 max-w-6xl w-full mx-auto px-6 pt-24 md:pt-32 pb-12 md:pb-20 space-y-20 md:space-y-28 overflow-x-hidden">
         {/* Hero Section */}
         <section
           id="hero"
-          className="min-h-[50vh] flex flex-col-reverse lg:flex-row items-center justify-between gap-12 relative pt-12 pb-0"
+          className="scroll-mt-32 min-h-[50vh] flex flex-col-reverse lg:flex-row items-center justify-between gap-12 relative pt-12 pb-0"
         >
           <div className="max-w-3xl space-y-6 flex-1">
             <m.div
@@ -281,7 +281,7 @@ const MainContent: React.FC = () => {
         </section>
 
         {/* About Me Section */}
-        <section id="about" className="scroll-mt-24">
+        <section id="about" className="scroll-mt-32">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
             <m.div
               whileHover={{ scale: 1.01 }}
@@ -372,7 +372,7 @@ const MainContent: React.FC = () => {
         </section>
 
         {/* School Documents (Zeugnisse) Section */}
-        <section id="documents" className="scroll-mt-24">
+        <section id="documents" className="scroll-mt-32">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
               {t.documents.title}
@@ -470,7 +470,7 @@ const MainContent: React.FC = () => {
         </section>
 
         {/* Experience Section */}
-        <section id="experience" className="scroll-mt-24">
+        <section id="experience" className="scroll-mt-32">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
               {t.experience.title}
@@ -480,12 +480,12 @@ const MainContent: React.FC = () => {
         </section>
 
         {/* Skills Section */}
-        <section id="skills" className="scroll-mt-24">
+        <section id="skills" className="scroll-mt-32">
           <SkillsGrid selectedMatcher={null} />
         </section>
 
         {/* Guestbook Section */}
-        <section id="guestbook" className="scroll-mt-24">
+        <section id="guestbook" className="scroll-mt-32">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
               {t.guestbook.title}
@@ -499,7 +499,7 @@ const MainContent: React.FC = () => {
         </section>
 
         {/* Contact & References Section */}
-        <section id="contact" className="scroll-mt-24 max-w-5xl mx-auto">
+        <section id="contact" className="scroll-mt-32 max-w-5xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Column: Contact Form */}
             <div className="lg:col-span-7">

@@ -116,8 +116,10 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
     children?: { href: string; label: string; icon: React.ReactNode }[];
   }[] = [
     {
+      // Acts like "Home": jumps to the very top of the page (hero photo +
+      // greeting), not the #about section further down.
       key: "about",
-      href: "#about",
+      href: "#hero",
       label: t.nav.about,
       icon: <FiUser className="text-lg" />,
     },
