@@ -124,7 +124,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       document.documentElement.classList.add("dark");
       localStorage.setItem("bw-mode", "false");
       localStorage.setItem("preferred-theme", "dark");
-      color = "#102552";
+      color = "#1e3a5f";
     }
 
     // Update status bar color across 3 phases (Immediate, rAF, 50ms timeout)
@@ -141,7 +141,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       updateSafariThemeColor("#ffffff");
     } else if (document.documentElement.classList.contains("dark")) {
       setThemeMode("blue");
-      updateSafariThemeColor("#102552");
+      updateSafariThemeColor("#1e3a5f");
     } else {
       setThemeMode("yellow");
       updateSafariThemeColor("#ffc72c");
