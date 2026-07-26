@@ -331,6 +331,11 @@ html.bw-mode .sa-panel.sa-active .sa-body,
 body.bw-mode .sa-panel.sa-active .sa-body {
   background: #ffffff !important;
   border: none !important;
+  /* globals.css .sa-body has a faint inset shadow (rgba(0,0,0,0.04)) for
+     the colored themes' glass look — in B&W mode this left an almost
+     invisible grey smudge/line along the top edge of the opened panel.
+     Kill it explicitly so the panel body is pure flat white. */
+  box-shadow: none !important;
 }
 
 html.bw-mode .sa-panel.sa-active .sa-name,
