@@ -428,7 +428,7 @@ export const Guestbook: React.FC = () => {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full sm:w-auto px-8 py-3 rounded-xl bg-primary hover:opacity-95 disabled:opacity-50 text-white font-bold text-xs md:text-sm shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] disabled:cursor-not-allowed"
+                      className="admin-force-white-text w-full sm:w-auto px-8 py-3 rounded-xl bg-primary hover:opacity-95 disabled:opacity-50 text-white font-bold text-xs md:text-sm shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] disabled:cursor-not-allowed"
                     >
                       {isSubmitting ? (
                         <FiLoader className="animate-spin text-base" />
@@ -465,7 +465,7 @@ export const Guestbook: React.FC = () => {
                 generateCaptcha();
                 setMode("write");
               }}
-              className="px-6 py-3 md:py-3.5 rounded-2xl bg-primary hover:opacity-90 text-white font-bold text-xs md:text-sm shadow-lg shadow-primary/20 hover:shadow-primary/35 transition-all duration-300 cursor-pointer flex items-center gap-2.5 hover:scale-[1.03] active:scale-95 w-full sm:w-auto justify-center"
+              className="admin-force-white-text px-6 py-3 md:py-3.5 rounded-2xl bg-primary hover:opacity-90 text-white font-bold text-xs md:text-sm shadow-lg shadow-primary/20 hover:shadow-primary/35 transition-all duration-300 cursor-pointer flex items-center gap-2.5 hover:scale-[1.03] active:scale-95 w-full sm:w-auto justify-center"
             >
               <FiEdit3 className="text-base" />
               <span>{t.btnWrite}</span>
