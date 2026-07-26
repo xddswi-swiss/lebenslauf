@@ -311,7 +311,7 @@ const MainContent: React.FC = () => {
                 className="w-full h-full"
               >
                 <div className="glass-card p-6 md:p-8 rounded-3xl flex flex-col justify-center space-y-6 border border-[var(--glass-border)] hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 h-full w-full">
-                  <h2 className="text-3xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block mb-2">
+                  <h2 className="text-4xl md:text-5xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block mb-2">
                     {t.about.title}
                   </h2>
                   <h4 className="text-xl font-bold text-[var(--text-main)]">
