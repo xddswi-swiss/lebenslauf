@@ -369,22 +369,22 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
 }
 
 :root:not(.dark):not(.bw-mode) .sa-panel {
-  background: #f59e0b !important;
+  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
   border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
 :root:not(.dark):not(.bw-mode) .sa-panel .sa-lbl {
-  color: #000000 !important;
+  color: #ffffff !important;
   font-weight: 800 !important;
   text-shadow: none !important;
 }
 
 :root:not(.dark):not(.bw-mode) .sa-panel .sa-ico {
-  color: #000000 !important;
+  color: #ffffff !important;
 }
 
 :root:not(.dark):not(.bw-mode) .sa-panel:hover:not(.sa-active) {
-  background: #ffab00 !important;
+  background: #c2510a !important;
 }
 
 :root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-head-open {
