@@ -467,7 +467,6 @@ export const Guestbook: React.FC = () => {
               }}
               className="admin-force-white-text px-6 py-3 md:py-3.5 rounded-2xl bg-primary hover:opacity-90 text-white font-bold text-xs md:text-sm shadow-lg shadow-primary/20 hover:shadow-primary/35 transition-all duration-300 cursor-pointer flex items-center gap-2.5 hover:scale-[1.03] active:scale-95 w-full sm:w-auto justify-center"
             >
-              <FiEdit3 className="text-base" />
               <span>{t.btnWrite}</span>
             </button>
           </div>
