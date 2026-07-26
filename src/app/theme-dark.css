@@ -367,6 +367,23 @@ html.dark:not(.bw-mode) .skills-ascii-content {
   box-shadow: 0 8px 25px rgba(133, 199, 242, 0.45) !important;
 }
 
+/* 5b. Collapsed Skill Accordion Panels — match Erfahrungen button bg
+   Scoped to :not(.sa-active) so this solid bg doesn't leak underneath the
+   translucent open-header tint once a panel is expanded (was washing out
+   the active header to a too-pale blue and hurting text contrast). */
+:root.dark:not(.bw-mode) .sa-panel:not(.sa-active) {
+  background: #85c7f2 !important;
+}
+
+:root.dark:not(.bw-mode) .sa-panel:not(.sa-active) .sa-lbl,
+:root.dark:not(.bw-mode) .sa-panel:not(.sa-active) .sa-ico {
+  color: #000000 !important;
+}
+
+:root.dark:not(.bw-mode) .sa-panel:hover:not(.sa-active) {
+  background: #a3d7f7 !important;
+}
+
 /* 6. Accordion Active Panel Body & Skill Texts in Dark Theme
    Was a flat emerald green for every category — now uses each category's
    own color (--cat-color, set inline per panel in SkillsGrid.tsx), same
@@ -384,7 +401,7 @@ html.dark:not(.bw-mode) .skills-ascii-content {
 
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-head-open .sa-lbl,
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-head-open .sa-ico {
-  color: var(--cat-color-light, #6ee7b7) !important;
+  color: #ffffff !important;
 }
 
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-body {
@@ -397,9 +414,20 @@ html.dark:not(.bw-mode) .skills-ascii-content {
     color-mix(in srgb, var(--cat-color, #10b981) 30%, transparent) !important;
 }
 
-:root.dark:not(.bw-mode) .sa-panel.sa-active .sa-name,
+/* Skill name/percentage text: always plain near-white, regardless of
+   category. Using each category's own light accent color here read fine
+   for warm hues (orange/emerald/violet/amber/rose) but the "personal"
+   category is blue-on-navy — same hue family as the card background —
+   which stayed low-contrast and hard to read no matter how light the
+   shade. Plain white guarantees readability for every category; the
+   category color still shows via the progress bar fill/beam/borders. */
+:root.dark:not(.bw-mode) .sa-panel.sa-active .sa-name {
+  color: #f8fafc !important;
+}
+
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-pct {
   color: var(--cat-color-light, #6ee7b7) !important;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.35);
 }
 
 :root.dark:not(.bw-mode) .sa-panel.sa-active .sa-fill,
