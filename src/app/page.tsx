@@ -332,7 +332,7 @@ const MainContent: React.FC = () => {
                 </h3>
                 <div className="space-y-4">
                   {/* Schnupperlehren Card */}
-                  <div className="stat-card-1 p-6 rounded-2xl hover:scale-[1.02] transition-transform duration-300 flex flex-col justify-between min-h-[140px]">
+                  <div className="stat-card-1 p-6 rounded-2xl hover:scale-[1.02] transition-transform duration-300 flex flex-col items-center justify-between min-h-[140px] text-center">
                     <div className="text-5xl font-extrabold tracking-tight stat-number">
                       <AnimatedCounter value={STATS_SCHNUPPERLEHREN} />
                     </div>
@@ -347,7 +347,7 @@ const MainContent: React.FC = () => {
                   </div>
 
                   {/* Lehrstellenbewerbungen Card */}
-                  <div className="stat-card-2 p-6 rounded-2xl hover:scale-[1.02] transition-transform duration-300 flex flex-col justify-between min-h-[140px]">
+                  <div className="stat-card-2 p-6 rounded-2xl hover:scale-[1.02] transition-transform duration-300 flex flex-col items-center justify-between min-h-[140px] text-center">
                     <div className="text-5xl font-extrabold tracking-tight stat-number">
                       <AnimatedCounter value={STATS_BEWERBUNGEN} />
                     </div>
