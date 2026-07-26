@@ -390,11 +390,12 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                     <AnimatePresence>
                       {isOpen && (
                         <m.div
-                          initial={{ opacity: 0, y: -8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -8 }}
-                          transition={{ duration: 0.15 }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 min-w-[200px] rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] backdrop-blur-md shadow-2xl p-2 flex flex-col gap-1 z-50"
+                          initial={{ opacity: 0, scaleY: 0.85, y: -4 }}
+                          animate={{ opacity: 1, scaleY: 1, y: 0 }}
+                          exit={{ opacity: 0, scaleY: 0.85, y: -4 }}
+                          transition={{ duration: 0.18, ease: "easeOut" }}
+                          style={{ transformOrigin: "top" }}
+                          className="absolute top-full left-0 mt-2 min-w-[180px] rounded-xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] backdrop-blur-md shadow-2xl p-1.5 flex flex-col z-50"
                         >
                           {group.children.map((child) => {
                             const childSectionId = child.href.substring(1);
@@ -408,15 +409,12 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                                   setActiveSection(childSectionId);
                                   setOpenDesktopGroup(null);
                                 }}
-                                className={`flex items-center gap-2.5 px-3 py-2 rounded-xl transition-colors duration-200 ${
+                                className={`px-3 py-2 rounded-lg text-sm transition-colors duration-200 ${
                                   isChildActive
-                                    ? "bg-primary/10 text-[var(--text-main)]"
+                                    ? "bg-primary/10 text-[var(--text-main)] font-semibold"
                                     : "text-[var(--text-body)] hover:bg-primary/5 hover:text-[var(--text-main)]"
                                 }`}
                               >
-                                <span className="text-primary">
-                                  {child.icon}
-                                </span>
                                 {child.label}
                               </a>
                             );
