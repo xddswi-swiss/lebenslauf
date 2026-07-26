@@ -38,6 +38,7 @@ export interface TranslationSchema {
   };
   nav: {
     about: string;
+    resume: string;
     documents: string;
     experience: string;
     skills: string;
@@ -404,6 +405,7 @@ export const translations: Record<Language, TranslationSchema> = {
     },
     nav: {
       about: "Über mich",
+      resume: "Lebenslauf",
       documents: "Unterlagen",
       experience: "Schnupperlehren",
       skills: "Fähigkeiten",
@@ -610,6 +612,7 @@ export const translations: Record<Language, TranslationSchema> = {
     },
     nav: {
       about: "Hakkımda",
+      resume: "Özgeçmiş",
       documents: "Belgeler",
       experience: "Stajlar",
       skills: "Beceriler",
@@ -809,6 +812,7 @@ export const translations: Record<Language, TranslationSchema> = {
     },
     nav: {
       about: "About Me",
+      resume: "Resume",
       documents: "Documents",
       experience: "Apprenticeships",
       skills: "Skills",

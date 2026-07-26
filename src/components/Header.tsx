@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/app/contexts/LanguageContext";
 import { useTheme } from "@/app/contexts/ThemeContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -18,6 +18,7 @@ import {
   FiSliders,
   FiMail,
   FiChevronRight,
+  FiChevronDown,
   FiGithub,
   FiInstagram,
   FiMessageSquare,
@@ -35,12 +36,40 @@ export interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
   const { t, language, setLanguage } = useLanguage();
-  const { theme, changeTheme } = useTheme();
+  const { theme, themeMode, changeTheme } = useTheme();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [headerStyle, setHeaderStyle] = useState<React.CSSProperties>({});
   const [drawerStyle, setDrawerStyle] = useState<React.CSSProperties>({});
   const [activeSection, setActiveSection] = useState<string>("");
+  const [openDesktopGroup, setOpenDesktopGroup] = useState<string | null>(
+    null,
+  );
+  const navRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const [navWidth, setNavWidth] = useState<number | null>(null);
+  const [headerHeight, setHeaderHeight] = useState<number | null>(null);
+
+  // Measure the desktop nav's rendered width and the header's own full
+  // height, so the theme flag can be stretched to match the nav's width and
+  // fill the header's height edge-to-edge (no top/bottom gap).
+  useEffect(() => {
+    const measure = () => {
+      if (navRef.current) {
+        setNavWidth(navRef.current.offsetWidth);
+      }
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    const id = window.setTimeout(measure, 300); // after fonts/layout settle
+    return () => {
+      window.removeEventListener("resize", measure);
+      window.clearTimeout(id);
+    };
+  }, [language]);
 
   // Track active section on scroll
   useEffect(() => {
@@ -74,43 +103,82 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
   // confusion when debugging the "stuck one step behind" status bar bug.
   // Removed to keep a single source of truth.
 
-  const navLinks = [
+  // Desktop nav groups: related sections are combined under one parent with
+  // a dropdown, so the horizontal bar doesn't overflow (7 flat items used to
+  // wrap/overflow in some browsers, e.g. Edge). Mobile drawer + the active-
+  // section scroll observer still use the flattened `navLinks` below, so
+  // nothing changes there.
+  const navGroups: {
+    key: string;
+    href?: string;
+    label: string;
+    icon: React.ReactNode;
+    children?: { href: string; label: string; icon: React.ReactNode }[];
+  }[] = [
     {
+      key: "about",
       href: "#about",
       label: t.nav.about,
       icon: <FiUser className="text-lg" />,
     },
     {
-      href: "#documents",
-      label: t.nav.documents,
+      key: "resume",
+      label: t.nav.resume,
       icon: <FiFileText className="text-lg" />,
+      children: [
+        {
+          href: "#documents",
+          label: t.nav.documents,
+          icon: <FiFileText className="text-lg" />,
+        },
+        {
+          href: "#experience",
+          label: t.nav.experience,
+          icon: <FiBriefcase className="text-lg" />,
+        },
+      ],
     },
     {
-      href: "#experience",
-      label: t.nav.experience,
-      icon: <FiBriefcase className="text-lg" />,
-    },
-    {
-      href: "#skills",
+      key: "skillsGroup",
       label: t.nav.skills,
       icon: <FiAward className="text-lg" />,
+      children: [
+        {
+          href: "#skills",
+          label: t.nav.skills,
+          icon: <FiAward className="text-lg" />,
+        },
+        {
+          href: "#details",
+          label: t.nav.details,
+          icon: <FiSliders className="text-lg" />,
+        },
+      ],
     },
     {
-      href: "#details",
-      label: t.nav.details,
-      icon: <FiSliders className="text-lg" />,
-    },
-    {
-      href: "#guestbook",
-      label: t.nav.guestbook,
-      icon: <FiMessageSquare className="text-lg" />,
-    },
-    {
-      href: "#contact",
+      key: "contactGroup",
       label: t.nav.contact,
       icon: <FiMail className="text-lg" />,
+      children: [
+        {
+          href: "#guestbook",
+          label: t.nav.guestbook,
+          icon: <FiMessageSquare className="text-lg" />,
+        },
+        {
+          href: "#contact",
+          label: t.nav.contact,
+          icon: <FiMail className="text-lg" />,
+        },
+      ],
     },
   ];
+
+  const navLinks = navGroups.flatMap((group) =>
+    group.children
+      ? group.children
+      : [{ href: group.href!, label: group.label, icon: group.icon }],
+  );
 
   useEffect(() => {
     if (!ENABLE_RANDOM_HEADER_GRADIENT || activeColorIndex === -1) {
@@ -189,106 +257,216 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
   return (
     <>
       <header
+        ref={headerRef}
         style={headerStyle}
         className="fixed top-0 left-0 right-0 w-full z-50 header-glass-gradient px-6 py-4 transition-all duration-300"
       >
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <m.a
-            href="#"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="text-xl font-black bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent font-logo"
-          >
-            EREN AYDIN
-          </m.a>
+          <div className="flex items-center gap-3">
+            <m.a
+              href="#"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-xl font-black bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent font-logo"
+            >
+              EREN AYDIN
+            </m.a>
+
+            {/* Theme Selector — a small flag: three color stripes flush
+                together in one shared frame (like the reference flag image),
+                instead of separate rounded squares. */}
+            <div
+              className="hidden lg:flex items-center ml-1"
+              title="Design wechseln / Tema değiştir / Change theme"
+            >
+              <div
+                className="flex items-stretch rounded-md overflow-hidden border border-black/20 dark:border-white/30 shadow-sm bw-switch-container -my-4"
+                style={{
+                  width: navWidth
+                    ? `${Math.round(navWidth * 0.35)}px`
+                    : "5.5rem",
+                  height: headerHeight ? `${headerHeight}px` : "2rem",
+                }}
+              >
+                <SwissSwitch />
+                <button
+                  onClick={() => changeTheme("yellow")}
+                  aria-label="Light Theme"
+                  title="Gelbes Design"
+                  className="relative flex-1 h-full bg-[#FFC72C] transition-all cursor-pointer hover:brightness-95 flex items-end justify-center pb-0.5"
+                >
+                  {themeMode === "yellow" && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-black ring-2 ring-white shadow" />
+                  )}
+                </button>
+                <button
+                  onClick={() => changeTheme("blue")}
+                  aria-label="Dark Theme"
+                  title="Blaues Design"
+                  className="relative flex-1 h-full bg-[#2563eb] transition-all cursor-pointer hover:brightness-95 flex items-end justify-center pb-0.5"
+                >
+                  {themeMode === "blue" && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-black ring-2 ring-white shadow" />
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
 
           {/* Desktop Navigation & Actions */}
           <div className="flex items-center gap-4">
-            <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold">
-              {navLinks.map((link) => {
-                const sectionId = link.href.substring(1);
-                const isActive = activeSection === sectionId;
+            <nav
+              ref={navRef}
+              className="hidden lg:flex items-center gap-6 text-sm font-semibold"
+            >
+              {navGroups.map((group) => {
+                // ---- Single top-level link (no dropdown) ----
+                if (!group.children) {
+                  const sectionId = group.href!.substring(1);
+                  const isActive = activeSection === sectionId;
+
+                  return (
+                    <a
+                      key={group.key}
+                      href={group.href}
+                      onClick={() => setActiveSection(sectionId)}
+                      className={`relative py-1.5 transition-colors duration-300 ${
+                        isActive
+                          ? "text-[var(--text-main)]"
+                          : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                      }`}
+                    >
+                      {group.label}
+                      {isActive && (
+                        <m.span
+                          layoutId="activeNavIndicator"
+                          className="active-nav-indicator absolute left-0 bottom-0 w-full h-[3.5px] bg-primary rounded-full"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 300,
+                            damping: 30,
+                          }}
+                        />
+                      )}
+                    </a>
+                  );
+                }
+
+                // ---- Grouped link with dropdown ----
+                const isGroupActive = group.children.some(
+                  (child) => activeSection === child.href.substring(1),
+                );
+                const isOpen = openDesktopGroup === group.key;
 
                 return (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setActiveSection(sectionId)}
-                    className={`relative py-1.5 transition-colors duration-300 ${
-                      isActive
-                        ? "text-[var(--text-main)]"
-                        : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
-                    }`}
+                  <div
+                    key={group.key}
+                    className="relative"
+                    onMouseEnter={() => setOpenDesktopGroup(group.key)}
+                    onMouseLeave={() => setOpenDesktopGroup(null)}
                   >
-                    {link.label}
-                    {isActive && (
-                      <m.span
-                        layoutId="activeNavIndicator"
-                        className="active-nav-indicator absolute left-0 bottom-0 w-full h-[3.5px] bg-primary rounded-full"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 300,
-                          damping: 30,
-                        }}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setOpenDesktopGroup(isOpen ? null : group.key)
+                      }
+                      aria-expanded={isOpen}
+                      className={`relative flex items-center gap-1 py-1.5 cursor-pointer transition-colors duration-300 ${
+                        isGroupActive
+                          ? "text-[var(--text-main)]"
+                          : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                      }`}
+                    >
+                      {group.label}
+                      <FiChevronDown
+                        className={`text-xs transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
                       />
-                    )}
-                  </a>
+                      {isGroupActive && (
+                        <m.span
+                          layoutId="activeNavIndicator"
+                          className="active-nav-indicator absolute left-0 bottom-0 w-full h-[3.5px] bg-primary rounded-full"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 300,
+                            damping: 30,
+                          }}
+                        />
+                      )}
+                    </button>
+
+                    <AnimatePresence>
+                      {isOpen && (
+                        <m.div
+                          initial={{ opacity: 0, y: -8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          transition={{ duration: 0.15 }}
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 min-w-[200px] rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] backdrop-blur-md shadow-2xl p-2 flex flex-col gap-1 z-50"
+                        >
+                          {group.children.map((child) => {
+                            const childSectionId = child.href.substring(1);
+                            const isChildActive =
+                              activeSection === childSectionId;
+                            return (
+                              <a
+                                key={child.href}
+                                href={child.href}
+                                onClick={() => {
+                                  setActiveSection(childSectionId);
+                                  setOpenDesktopGroup(null);
+                                }}
+                                className={`flex items-center gap-2.5 px-3 py-2 rounded-xl transition-colors duration-200 ${
+                                  isChildActive
+                                    ? "bg-primary/10 text-[var(--text-main)]"
+                                    : "text-[var(--text-body)] hover:bg-primary/5 hover:text-[var(--text-main)]"
+                                }`}
+                              >
+                                <span className="text-primary">
+                                  {child.icon}
+                                </span>
+                                {child.label}
+                              </a>
+                            );
+                          })}
+                        </m.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 );
               })}
             </nav>
 
             <div className="hidden lg:flex items-center gap-1">
               <LanguageSwitcher />
-
-              {/* Theme Selector (White / Yellow / Blue Squares) */}
-              <div className="flex gap-1 items-center bw-switch-container">
-                <SwissSwitch />
-                <button
-                  onClick={() => changeTheme("yellow")}
-                  aria-label="Light Theme"
-                  className={`w-7 h-7 rounded-lg bg-[#FFC72C] border transition-all cursor-pointer hover:scale-110 ${
-                    theme === "light"
-                      ? "border-black border-2 scale-105"
-                      : "border-zinc-300 dark:border-zinc-700"
-                  }`}
-                />
-                <button
-                  onClick={() => changeTheme("blue")}
-                  aria-label="Dark Theme"
-                  className={`w-7 h-7 rounded-lg bg-[#2563eb] border transition-all cursor-pointer hover:scale-110 ${
-                    theme === "dark"
-                      ? "border-white border-2 scale-105"
-                      : "border-zinc-300 dark:border-zinc-700"
-                  }`}
-                />
-              </div>
             </div>
 
             {/* Mobile Menu Actions */}
             <div className="flex lg:hidden items-center gap-1">
-              {/* Theme Selector (White / Yellow / Blue Squares) */}
-              <div className="flex gap-1 items-center bw-switch-container">
+              {/* Theme Selector — same flag design as desktop */}
+              <div className="flex items-stretch h-7 w-16 rounded-md overflow-hidden border border-black/20 dark:border-white/30 shadow-sm bw-switch-container">
                 <SwissSwitch />
                 <button
                   onClick={() => changeTheme("yellow")}
                   aria-label="Light Theme"
-                  className={`w-7 h-7 rounded-lg bg-[#FFC72C] border transition-all cursor-pointer hover:scale-110 ${
-                    theme === "light"
-                      ? "border-black border-2 scale-105"
-                      : "border-zinc-300 dark:border-zinc-700"
-                  }`}
-                />
+                  className="relative flex-1 h-full bg-[#FFC72C] transition-all cursor-pointer flex items-end justify-center pb-0.5"
+                >
+                  {themeMode === "yellow" && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-black ring-2 ring-white shadow" />
+                  )}
+                </button>
                 <button
                   onClick={() => changeTheme("blue")}
                   aria-label="Dark Theme"
-                  className={`w-7 h-7 rounded-lg bg-[#2563eb] border transition-all cursor-pointer hover:scale-110 ${
-                    theme === "dark"
-                      ? "border-white border-2 scale-105"
-                      : "border-zinc-300 dark:border-zinc-700"
-                  }`}
-                />
+                  className="relative flex-1 h-full bg-[#2563eb] transition-all cursor-pointer flex items-end justify-center pb-0.5"
+                >
+                  {themeMode === "blue" && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-black ring-2 ring-white shadow" />
+                  )}
+                </button>
               </div>
 
               {/* Hamburger Button */}
