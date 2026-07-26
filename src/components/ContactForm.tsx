@@ -115,12 +115,6 @@ export const ContactForm: React.FC = () => {
 
   return (
     <div className="w-full max-w-2xl mx-auto py-0">
-      <div className="text-center mb-6">
-        <h2 className="text-3xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
-          {t.contact.title}
-        </h2>
-      </div>
-
       <div className="glass-card p-5 md:p-6 rounded-2xl relative overflow-hidden">
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-orange-500/10 blur-2xl rounded-full" />
         <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-navy-500/10 blur-2xl rounded-full" />

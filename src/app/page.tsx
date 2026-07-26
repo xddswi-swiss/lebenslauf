@@ -500,6 +500,12 @@ const MainContent: React.FC = () => {
 
         {/* Contact & References Section */}
         <section id="contact" className="scroll-mt-32 max-w-5xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
+              {t.contact.title}
+            </h2>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Column: Contact Form */}
             <div className="lg:col-span-7">
@@ -507,7 +513,7 @@ const MainContent: React.FC = () => {
             </div>
 
             {/* Right Column: References */}
-            <div className="lg:col-span-5 lg:pt-[52px]">
+            <div className="lg:col-span-5">
               <div className="glass-card p-5 md:p-6 rounded-2xl space-y-4">
                 <h3 className="text-xl font-bold text-[var(--text-main)] mb-4 flex items-center gap-2">
                   <span className="w-1.5 h-6 bg-primary rounded-full" />
