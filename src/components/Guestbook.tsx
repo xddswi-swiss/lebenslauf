@@ -428,7 +428,7 @@ export const Guestbook: React.FC = () => {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="admin-force-white-text w-full sm:w-auto px-8 py-3 rounded-xl bg-primary hover:opacity-95 disabled:opacity-50 text-white font-bold text-xs md:text-sm shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] disabled:cursor-not-allowed"
+                      className="admin-force-white-text h-11 w-full sm:w-auto px-8 rounded-xl bg-primary hover:opacity-95 disabled:opacity-50 text-white font-bold text-xs md:text-sm shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98] disabled:cursor-not-allowed"
                     >
                       {isSubmitting ? (
                         <FiLoader className="animate-spin text-base" />
@@ -441,7 +441,7 @@ export const Guestbook: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setMode("view")}
-                      className="w-full sm:w-auto px-6 py-3 rounded-xl glass-card hover:border-primary text-[var(--text-main)] hover:text-primary font-bold text-xs md:text-sm border border-[var(--glass-border)] transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
+                      className="h-11 w-full sm:w-auto px-6 rounded-xl glass-card hover:border-primary text-[var(--text-main)] hover:text-primary font-bold text-xs md:text-sm border border-[var(--glass-border)] transition-all cursor-pointer flex items-center justify-center gap-2 active:scale-[0.98]"
                     >
                       <FiArrowLeft className="text-base" />
                       <span>{t.btnBack}</span>
