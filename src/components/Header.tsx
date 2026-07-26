@@ -139,21 +139,14 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
       ],
     },
     {
+      // No dropdown here anymore: Fähigkeiten (#skills) and Kompetenzen
+      // (#details) sit right next to each other on the page already, so a
+      // single link to #skills covers both — no need to make the visitor
+      // pick one from a submenu.
       key: "skillsGroup",
+      href: "#skills",
       label: t.nav.skills,
       icon: <FiAward className="text-lg" />,
-      children: [
-        {
-          href: "#skills",
-          label: t.nav.skills,
-          icon: <FiAward className="text-lg" />,
-        },
-        {
-          href: "#details",
-          label: t.nav.details,
-          icon: <FiSliders className="text-lg" />,
-        },
-      ],
     },
     {
       key: "contactGroup",
@@ -293,22 +286,14 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                   onClick={() => changeTheme("yellow")}
                   aria-label="Light Theme"
                   title="Gelbes Design"
-                  className="relative flex-1 h-full bg-[#FFC72C] transition-all cursor-pointer hover:brightness-95 flex items-end justify-center pb-0.5"
-                >
-                  {themeMode === "yellow" && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-black ring-2 ring-white shadow" />
-                  )}
-                </button>
+                  className="flex-1 h-full bg-[#FFC72C] transition-all cursor-pointer hover:brightness-95"
+                />
                 <button
                   onClick={() => changeTheme("blue")}
                   aria-label="Dark Theme"
                   title="Blaues Design"
-                  className="relative flex-1 h-full bg-[#2563eb] transition-all cursor-pointer hover:brightness-95 flex items-end justify-center pb-0.5"
-                >
-                  {themeMode === "blue" && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-black ring-2 ring-white shadow" />
-                  )}
-                </button>
+                  className="flex-1 h-full bg-[#2563eb] transition-all cursor-pointer hover:brightness-95"
+                />
               </div>
             </div>
           </div>
@@ -446,27 +431,23 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
 
             {/* Mobile Menu Actions */}
             <div className="flex lg:hidden items-center gap-1">
-              {/* Theme Selector — same flag design as desktop */}
-              <div className="flex items-stretch h-7 w-16 rounded-md overflow-hidden border border-black/20 dark:border-white/30 shadow-sm bw-switch-container">
+              {/* Theme Selector — same flag design as desktop, also
+                  stretched edge-to-edge vertically (no top/bottom gap) */}
+              <div
+                className="flex items-stretch w-16 rounded-md overflow-hidden border border-black/20 dark:border-white/30 shadow-sm bw-switch-container -my-4"
+                style={{ height: headerHeight ? `${headerHeight}px` : "2rem" }}
+              >
                 <SwissSwitch />
                 <button
                   onClick={() => changeTheme("yellow")}
                   aria-label="Light Theme"
-                  className="relative flex-1 h-full bg-[#FFC72C] transition-all cursor-pointer flex items-end justify-center pb-0.5"
-                >
-                  {themeMode === "yellow" && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-black ring-2 ring-white shadow" />
-                  )}
-                </button>
+                  className="flex-1 h-full bg-[#FFC72C] transition-all cursor-pointer"
+                />
                 <button
                   onClick={() => changeTheme("blue")}
                   aria-label="Dark Theme"
-                  className="relative flex-1 h-full bg-[#2563eb] transition-all cursor-pointer flex items-end justify-center pb-0.5"
-                >
-                  {themeMode === "blue" && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-black ring-2 ring-white shadow" />
-                  )}
-                </button>
+                  className="flex-1 h-full bg-[#2563eb] transition-all cursor-pointer"
+                />
               </div>
 
               {/* Hamburger Button */}

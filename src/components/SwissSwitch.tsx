@@ -61,11 +61,7 @@ export const SwissSwitch: React.FC = () => {
       onClick={activateBwMode}
       aria-label="Toggle Black and White Mode"
       title="Schwarz-Weiss Design"
-      className="relative flex-1 h-full bg-white transition-all cursor-pointer hover:brightness-95 flex items-end justify-center pb-0.5"
-    >
-      {bwMode && (
-        <span className="w-1.5 h-1.5 rounded-full bg-black ring-2 ring-white shadow" />
-      )}
-    </button>
+      className="flex-1 h-full bg-white transition-all cursor-pointer hover:brightness-95"
+    />
   );
 };
