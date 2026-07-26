@@ -275,7 +275,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               title="Design wechseln / Tema değiştir / Change theme"
             >
               <div
-                className="flex items-stretch rounded-md overflow-hidden border border-black/20 dark:border-white/30 shadow-sm bw-switch-container -my-4"
+                className="relative flex items-stretch rounded-md overflow-hidden border-2 border-white/60 dark:border-white/40 shadow-xl backdrop-blur-lg bw-switch-container -my-4"
                 style={{
                   width: navWidth
                     ? `${Math.round(navWidth * 0.35)}px`
@@ -288,7 +288,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                   onClick={() => changeTheme("yellow")}
                   aria-label="Light Theme"
                   title="Gelbes Design"
-                  className={`flex-1 h-full bg-[#FFC72C] transition-all cursor-pointer hover:brightness-95 ${
+                  className={`flex-1 h-full bg-[#FFC72C]/85 transition-all cursor-pointer hover:brightness-95 ${
                     themeMode === "yellow" ? "theme-flag-yellow-active-pulse" : ""
                   }`}
                 />
@@ -296,10 +296,13 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                   onClick={() => changeTheme("blue")}
                   aria-label="Dark Theme"
                   title="Blaues Design"
-                  className={`flex-1 h-full bg-[#2563eb] transition-all cursor-pointer hover:brightness-95 ${
+                  className={`flex-1 h-full bg-[#2563eb]/85 transition-all cursor-pointer hover:brightness-95 ${
                     themeMode === "blue" ? "theme-flag-active-pulse" : ""
                   }`}
                 />
+                {/* Glossy glass sheen — only the top half, so it doesn't
+                    wash out the active-stripe pulse animation underneath */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/60 to-transparent" />
               </div>
             </div>
           </div>
@@ -438,24 +441,26 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               {/* Theme Selector — same flag design as desktop, also
                   stretched edge-to-edge vertically (no top/bottom gap) */}
               <div
-                className="flex items-stretch w-16 rounded-md overflow-hidden border border-black/20 dark:border-white/30 shadow-sm bw-switch-container -my-4"
+                className="relative flex items-stretch w-16 rounded-md overflow-hidden border-2 border-white/60 dark:border-white/40 shadow-xl backdrop-blur-lg bw-switch-container -my-4"
                 style={{ height: headerHeight ? `${headerHeight}px` : "2rem" }}
               >
                 <SwissSwitch />
                 <button
                   onClick={() => changeTheme("yellow")}
                   aria-label="Light Theme"
-                  className={`flex-1 h-full bg-[#FFC72C] transition-all cursor-pointer ${
+                  className={`flex-1 h-full bg-[#FFC72C]/85 transition-all cursor-pointer ${
                     themeMode === "yellow" ? "theme-flag-yellow-active-pulse" : ""
                   }`}
                 />
                 <button
                   onClick={() => changeTheme("blue")}
                   aria-label="Dark Theme"
-                  className={`flex-1 h-full bg-[#2563eb] transition-all cursor-pointer ${
+                  className={`flex-1 h-full bg-[#2563eb]/85 transition-all cursor-pointer ${
                     themeMode === "blue" ? "theme-flag-active-pulse" : ""
                   }`}
                 />
+                {/* Glossy glass sheen — top half only */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/60 to-transparent" />
               </div>
 
               {/* Hamburger Button */}

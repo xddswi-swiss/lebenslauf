@@ -256,10 +256,10 @@ const MainContent: React.FC = () => {
                 height={300}
                 priority={true}
               />
-              <p className="m-[5px] text-[var(--text-main)] text-base font-bold">
+              <p className="m-[5px] text-center text-[var(--text-main)] text-base font-bold">
                 Eren Aydın
               </p>
-              <p className="m-[5px] text-[var(--text-muted)] text-xs">
+              <p className="m-[5px] text-center text-[var(--text-muted)] text-xs">
                 {t.hero.role}
               </p>
               {/* SVG of Arrow */}
