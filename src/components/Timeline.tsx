@@ -155,24 +155,20 @@ export const Timeline: React.FC<TimelineProps> = ({
     // ScrollTrigger stagger for timeline cards
     const items = gsap.utils.toArray<HTMLElement>('.timeline-item');
     items.forEach((item, i) => {
-      // Much more dramatic scroll reveal for cards
+      // Smooth, elegant fade and slide up
       gsap.fromTo(
         item,
         { 
           opacity: 0, 
-          y: 100, 
-          x: i % 2 === 0 ? -50 : 50, // Alternate sliding from left/right
-          scale: 0.8,
-          rotationZ: i % 2 === 0 ? -5 : 5
+          y: 60,
+          scale: 0.98
         },
         {
           opacity: 1,
           y: 0,
-          x: 0,
           scale: 1,
-          rotationZ: 0,
           duration: 1.2,
-          ease: "elastic.out(1, 0.5)",
+          ease: "power3.out",
           scrollTrigger: {
             trigger: item,
             start: "top 85%", // When the top of the item hits 85% of viewport

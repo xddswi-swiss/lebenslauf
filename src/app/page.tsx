@@ -17,6 +17,8 @@ import ElectricBorder from "@/components/ElectricBorder";
 import { motion as m, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
 import Image from "next/image";
 
 import {
@@ -129,54 +131,75 @@ const MainContent: React.FC = () => {
 
   }, { scope: heroRef });
 
+  // Initialize Lenis for elegant smooth scrolling
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Sync GSAP ScrollTrigger with Lenis
+    const ScrollTrigger = require("gsap/ScrollTrigger").ScrollTrigger;
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+      gsap.ticker.remove(lenis.raf);
+    };
+  }, []);
+
   const mainRef = React.useRef<HTMLDivElement>(null);
   useGSAP(() => {
     const ScrollTrigger = require("gsap/ScrollTrigger").ScrollTrigger;
     gsap.registerPlugin(ScrollTrigger);
 
-    // ABOUT ME: 3D Flip in
+    // Elegant Fade/Slide for all sections
+    const animConfig = { duration: 1.2, ease: "power3.out", y: 0, opacity: 1 };
+    
+    // ABOUT ME
     gsap.fromTo(".scroll-anim-about",
-      { opacity: 0, rotationX: 90, transformOrigin: "top center", z: -500 },
-      { 
-        opacity: 1, rotationX: 0, z: 0, duration: 1.2, ease: "power4.out",
-        scrollTrigger: { trigger: ".scroll-anim-about", start: "top 80%" }
-      }
+      { opacity: 0, y: 50 },
+      { ...animConfig, scrollTrigger: { trigger: ".scroll-anim-about", start: "top 85%" } }
     );
 
-    // DOCUMENTS: Staggered Fan out
+    // DOCUMENTS
     gsap.fromTo(".scroll-anim-docs",
-      { opacity: 0, scale: 0.5, rotationZ: -10, y: 100 },
-      { 
-        opacity: 1, scale: 1, rotationZ: 0, y: 0, duration: 1, ease: "back.out(1.5)",
-        scrollTrigger: { trigger: ".scroll-anim-docs", start: "top 85%" }
-      }
+      { opacity: 0, y: 50 },
+      { ...animConfig, scrollTrigger: { trigger: ".scroll-anim-docs", start: "top 85%" } }
     );
 
-    // SKILLS: Elastic pop from center
+    // SKILLS
     gsap.fromTo(".scroll-anim-skills",
-      { opacity: 0, scale: 0.2 },
-      { 
-        opacity: 1, scale: 1, duration: 1.5, ease: "elastic.out(1, 0.4)",
-        scrollTrigger: { trigger: ".scroll-anim-skills", start: "top 80%" }
-      }
+      { opacity: 0, y: 50 },
+      { ...animConfig, scrollTrigger: { trigger: ".scroll-anim-skills", start: "top 85%" } }
     );
 
-    // GUESTBOOK: Slide up with a skew
+    // GUESTBOOK
     gsap.fromTo(".scroll-anim-guestbook",
-      { opacity: 0, y: 150, skewY: 10 },
-      { 
-        opacity: 1, y: 0, skewY: 0, duration: 1, ease: "power3.out",
-        scrollTrigger: { trigger: ".scroll-anim-guestbook", start: "top 85%" }
-      }
+      { opacity: 0, y: 50 },
+      { ...animConfig, scrollTrigger: { trigger: ".scroll-anim-guestbook", start: "top 85%" } }
     );
 
-    // CONTACT: Squeeze in from the sides (scaleX)
+    // CONTACT
     gsap.fromTo(".scroll-anim-contact",
-      { opacity: 0, scaleX: 0, transformOrigin: "center center" },
-      { 
-        opacity: 1, scaleX: 1, duration: 1.2, ease: "expo.out",
-        scrollTrigger: { trigger: ".scroll-anim-contact", start: "top 90%" }
-      }
+      { opacity: 0, y: 50 },
+      { ...animConfig, scrollTrigger: { trigger: ".scroll-anim-contact", start: "top 85%" } }
     );
 
   }, { scope: mainRef });
