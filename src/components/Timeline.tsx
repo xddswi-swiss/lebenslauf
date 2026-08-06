@@ -17,6 +17,8 @@ import {
 } from "react-icons/fi";
 import { ExperienceItem } from "@/data/translations";
 
+gsap.registerPlugin(ScrollTrigger);
+
 interface TimelineProps {
   selectedMatcher?: "kaufmann" | "elektro" | null;
 }
@@ -26,8 +28,6 @@ export const Timeline: React.FC<TimelineProps> = ({
 }) => {
   const { t, language } = useLanguage();
   const containerRef = React.useRef<HTMLDivElement>(null);
-
-  gsap.registerPlugin(ScrollTrigger);
 
   const matchesPath = (role: string) => {
     if (!selectedMatcher) return true;

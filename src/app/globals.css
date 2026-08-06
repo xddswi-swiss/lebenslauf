@@ -176,18 +176,43 @@
 }
 
 
-/* Global theme transition for all color-related properties */
-*, ::before, ::after {
-  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+/* Theme transition for all color-related properties.
+   Scoped to .theme-switching (set by ThemeContext for the length of a switch)
+   instead of applying to every element permanently: unscoped, this put a live
+   transition on all ~590 elements on the page and cost ~800ms of main-thread
+   blocking per theme change. box-shadow/fill/stroke are dropped from the list —
+   animating shadows repaints large areas for almost no visual gain here. */
+html.theme-switching,
+html.theme-switching *,
+html.theme-switching ::before,
+html.theme-switching ::after {
+  transition-property: background-color, border-color, color;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 700ms;
+  transition-duration: 400ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-switching,
+  html.theme-switching *,
+  html.theme-switching ::before,
+  html.theme-switching ::after {
+    transition-duration: 0s;
+  }
+}
+
+html {
+  /* Blocks pinch-zoom while leaving panning (scrolling) to the compositor.
+     Replaces a pair of non-passive touchstart/touchmove listeners that forced
+     every swipe to wait on the main thread. */
+  touch-action: pan-x pan-y;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
-  scroll-behavior: smooth;
+  /* No scroll-behavior here — Lenis drives smooth scrolling and the native
+     implementation fights it. */
 }
 
 /* Custom premium scrollbar */

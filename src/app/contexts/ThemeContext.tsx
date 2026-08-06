@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
 
 export type ThemeMode = "white" | "yellow" | "blue";
 
@@ -102,10 +108,20 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [themeMode, setThemeMode] = useState<ThemeMode>("white");
+  const switchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const applyTheme = (mode: ThemeMode) => {
     setThemeMode(mode);
     localStorage.setItem("theme-mode", mode);
+
+    // Colour transitions are only wired up while this class is present (see the
+    // .theme-switching rule in globals.css), so the rest of the time no element
+    // on the page carries a live transition.
+    document.documentElement.classList.add("theme-switching");
+    if (switchTimeout.current) clearTimeout(switchTimeout.current);
+    switchTimeout.current = setTimeout(() => {
+      document.documentElement.classList.remove("theme-switching");
+    }, 450);
 
     let color = "#ffffff";
     if (mode === "white") {

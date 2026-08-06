@@ -53,21 +53,15 @@ export function ThemeInitializer() {
             }
           })();
 
-          // Prevent pinch-to-zoom gestures on mobile devices (e.g. iOS Safari)
+          // Pinch-to-zoom is blocked by 'touch-action: pan-x pan-y' on <html>
+          // (see globals.css). This listener only covers iOS Safari, which
+          // ignores touch-action for pinch gestures. It never fires during a
+          // normal scroll, unlike the non-passive touchstart/touchmove pair that
+          // used to live here — those ran on every frame of every swipe and made
+          // the browser wait on the main thread before it could scroll.
           document.addEventListener('gesturestart', function(e) {
             e.preventDefault();
           });
-          
-          // Prevent zoom during momentum scroll (inertia)
-          function preventMultiTouch(e) {
-            if (e.touches && e.touches.length > 1) {
-              if (e.cancelable) {
-                e.preventDefault();
-              }
-            }
-          }
-          document.addEventListener('touchstart', preventMultiTouch, { passive: false });
-          document.addEventListener('touchmove', preventMultiTouch, { passive: false });
         `,
       }}
     />

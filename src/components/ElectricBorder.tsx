@@ -289,7 +289,31 @@ export default function ElectricBorder({
       animationRef.current = requestAnimationFrame(draw);
     }
 
-    animationRef.current = requestAnimationFrame(draw);
+    // Only run the loop while the border is actually on screen. It redraws a
+    // noise-displaced, multi-pass glowing outline every frame, which is wasted
+    // work (and battery) whenever the section is scrolled out of view.
+    const start = (): void => {
+      if (animationRef.current === null) {
+        lastFrameTimeRef.current = 0;
+        animationRef.current = requestAnimationFrame(draw);
+      }
+    };
+    const stop = (): void => {
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
+    };
+
+    const io =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(
+            ([entry]) => (entry.isIntersecting ? start() : stop()),
+            { rootMargin: "100px" }
+          )
+        : null;
+    if (io) io.observe(container);
+    else start();
 
     const ro =
       typeof ResizeObserver !== "undefined"
@@ -301,7 +325,8 @@ export default function ElectricBorder({
     ro?.observe(container);
 
     return () => {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+      stop();
+      io?.disconnect();
       ro?.disconnect();
     };
   }, [

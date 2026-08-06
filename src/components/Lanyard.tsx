@@ -2,13 +2,7 @@
 /* eslint-disable react/no-unknown-property */
 
 import { useEffect, useMemo, useRef, useState, Suspense, memo } from "react";
-import {
-  Canvas,
-  extend,
-  useFrame,
-  type ThreeElement,
-  type ThreeEvent,
-} from "@react-three/fiber";
+import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
 import {
   useGLTF,
   useTexture,

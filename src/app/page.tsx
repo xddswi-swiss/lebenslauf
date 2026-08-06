@@ -12,10 +12,10 @@ import { Footer } from "@/components/Footer";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { GsapHeroText } from "@/components/GsapHeroText";
-import Strands from "@/components/Strands";
 import ElectricBorder from "@/components/ElectricBorder";
 import { motion as m, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
@@ -23,6 +23,8 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 
 const Lanyard = dynamic(() => import("@/components/Lanyard"), { ssr: false });
+
+gsap.registerPlugin(ScrollTrigger);
 import {
   FiDownload,
   FiArrowRight,
@@ -30,50 +32,7 @@ import {
   FiInstagram,
   FiFileText,
 } from "react-icons/fi";
-import {
-  reportItems,
-  languagesData,
-  referencesData,
-} from "@/data/translations";
-import {
-  FaUtensils,
-  FaFistRaised,
-  FaSwimmer,
-  FaMusic,
-  FaLeaf,
-  FaCamera,
-  FaWalking,
-  FaFileWord,
-  FaFileExcel,
-  FaCode,
-} from "react-icons/fa";
-
-const hobbiesWithIcons = [
-  { key: "cook" as const, icon: <FaUtensils /> },
-  { key: "kung-fu" as const, icon: <FaFistRaised /> },
-  { key: "swim" as const, icon: <FaSwimmer /> },
-  { key: "music" as const, icon: <FaMusic /> },
-  { key: "nature" as const, icon: <FaLeaf /> },
-  { key: "photography" as const, icon: <FaCamera /> },
-  { key: "walk" as const, icon: <FaWalking /> },
-  { key: "word" as const, icon: <FaFileWord /> },
-  { key: "excel" as const, icon: <FaFileExcel /> },
-  { key: "code" as const, icon: <FaCode /> },
-];
-
-const getStrandsColors = (index: number) => {
-  if (index === -1) return ["#06B6D4", "#7C3AED", "#FF3B5C"]; // Default fallback
-
-  const palettes = [
-    ["#F21137", "#FF6C02", "#68020F"], // 0. Red / Volcanic
-    ["#7C3AED", "#3B82F6", "#C084FC"], // 1. Deep Nebula
-    ["#10B981", "#059669", "#A7F3D0"], // 2. Green / Mint
-    ["#EC4899", "#8B5CF6", "#FBCFE8"], // 3. Cosmic Rose
-    ["#06B6D4", "#3B82F6", "#99F6E4"], // 4. Electric Cyan / Blue
-  ];
-
-  return palettes[index];
-};
+import { reportItems, referencesData } from "@/data/translations";
 
 // --- MANUEL DEĞİŞTİREBİLECEĞİNİZ İSTATİSTİKLER ---
 // Buradaki sayıları ve tarihi dilediğiniz gibi güncelleyebilirsiniz:
@@ -86,11 +45,27 @@ const LANYARD_POSITION: [number, number, number] = [0, 0, 16];
 
 const MainContent: React.FC = () => {
   const { t, language } = useLanguage();
-  const { theme, themeMode } = useTheme();
+  const { themeMode } = useTheme();
   const [randomColorIndex, setRandomColorIndex] = useState<number>(-1);
   const [docs, setDocs] = useState<any[]>([]);
-  const [mounted, setMounted] = useState(false);
   const heroRef = React.useRef<HTMLDivElement>(null);
+
+  // The lanyard is desktop-only, but hiding it with `hidden md:block` alone
+  // still mounts it: the dynamic import pulls in three, @react-three/fiber and
+  // the rapier WASM (~5MB of JS in dev) and a WebGL context gets created, all
+  // for something no phone ever displays. Parsing that jams the main thread for
+  // ~1s in a burst that ends around the 3s mark, and Lenis' non-passive touch
+  // listeners can't run meanwhile — which is why scrolling was dead on arrival.
+  // Gating the mount on a real media query keeps the chunk off mobile entirely.
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 768px)");
+    const update = (): void => setIsDesktop(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
 
   const memoizedLanyard = useMemo(() => (
     <Lanyard
@@ -149,33 +124,33 @@ const MainContent: React.FC = () => {
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 2,
+      anchors: true,
     });
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    // Sync GSAP ScrollTrigger with Lenis
-    const ScrollTrigger = require("gsap/ScrollTrigger").ScrollTrigger;
     lenis.on('scroll', ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    // Exactly one clock drives Lenis. Feeding it from a private rAF loop *and*
+    // the gsap ticker (as this used to) calls raf() twice a frame from two
+    // different time origins — rAF counts from navigation, the ticker from when
+    // gsap started — and raf() derives its delta from the previous timestamp it
+    // was handed. The two series interleave, so every frame got a nonsense
+    // delta and scrolling stuttered, worst of all under touch.
+    const drive = (time: number): void => {
       lenis.raf(time * 1000);
-    });
+    };
+    gsap.ticker.add(drive);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      // Must be the same reference that was added — passing lenis.raf here left
+      // the ticker callback running against a destroyed instance forever.
+      gsap.ticker.remove(drive);
       lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
     };
   }, []);
 
   const mainRef = React.useRef<HTMLDivElement>(null);
   useGSAP(() => {
-    const ScrollTrigger = require("gsap/ScrollTrigger").ScrollTrigger;
-    gsap.registerPlugin(ScrollTrigger);
 
     // Elegant Fade/Slide for all sections
     const animConfig = { duration: 1.2, ease: "power3.out", y: 0, opacity: 1 };
@@ -211,10 +186,6 @@ const MainContent: React.FC = () => {
     );
 
   }, { scope: mainRef, dependencies: [] });
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     // Set initial static items immediately to prevent hydration mismatches during server rendering
@@ -397,7 +368,7 @@ const MainContent: React.FC = () => {
 
             {/* DESKTOP ONLY: 3D Physics Lanyard */}
             <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[650px] md:w-[600px] md:h-[800px] -mt-24 md:-mt-32 pointer-events-auto z-[45]">
-              {memoizedLanyard}
+              {isDesktop && memoizedLanyard}
             </div>
           </div>
         </section>
@@ -810,7 +781,9 @@ export default function Home() {
         }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         style={{
-          height: isLoading ? "100vh" : "auto",
+          // dvh, not vh: on mobile the browser chrome makes 100vh taller than
+          // what is actually visible, so the locked page overflowed underneath.
+          height: isLoading ? "100dvh" : "auto",
           overflow: isLoading ? "hidden" : "visible",
         }}
       >
