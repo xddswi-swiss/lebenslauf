@@ -25,7 +25,7 @@ interface SkillsGridProps {
   selectedMatcher?: "kaufmann" | "elektro" | null;
 }
 
-const ICONS: Record<CategoryKey, React.ElementType> = {
+const ICONS: Record<CategoryKey, React.ComponentType<any>> = {
   personal: FiUserCheck,
   school: FiBookOpen,
   digital: FiMonitor,
@@ -167,7 +167,7 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({
       <div className="sa-wrap" role="list">
         {categories.map((key) => {
           const isActive = active === key;
-          const Icon = ICONS[key];
+          const Icon = ICONS[key as CategoryKey];
 
           let label = "";
           if (key === "languages") label = t.details.languagesTitle;

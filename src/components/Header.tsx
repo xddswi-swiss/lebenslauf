@@ -681,7 +681,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
         )}
       </AnimatePresence>
       {/* Floating Vertical Language Switcher for Mobile (Right Side, vertically stacked) */}
-      <div className="fixed right-1 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-2 p-1.5 rounded-2xl bg-[var(--glass-card-bg)]/80 shadow-2xl lg:hidden">
+      <div className="fixed right-1 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2 p-1.5 rounded-2xl bg-[var(--glass-card-bg)]/80 shadow-2xl lg:hidden">
         {(["de", "tr", "en"] as const).map((code) => (
           <button
             key={code}

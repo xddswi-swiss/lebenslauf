@@ -8,29 +8,25 @@ interface GsapHeroTextProps {
   text: string;
   className?: string;
   delay?: number;
-  tag?: keyof JSX.IntrinsicElements;
+  tag?: React.ElementType;
 }
 
 export const GsapHeroText: React.FC<GsapHeroTextProps> = ({
   text,
   className = "",
   delay = 0,
-  tag: Tag = "h1",
+  tag = "h1",
 }) => {
+  const Tag = tag as any;
   const containerRef = useRef<HTMLElement>(null);
 
   const words = text.split(" ").map((word, wordIndex) => {
-    const chars = word.split("").map((char, charIndex) => (
-      <span
-        key={`${wordIndex}-${charIndex}`}
-        className="inline-block opacity-0 translate-y-8 rotate-12 origin-bottom char-reveal"
-      >
-        {char}
-      </span>
-    ));
     return (
-      <span key={wordIndex} className="inline-block whitespace-nowrap mr-[0.25em]">
-        {chars}
+      <span
+        key={wordIndex}
+        className="inline-block opacity-0 translate-y-8 rotate-6 origin-bottom char-reveal mr-[0.25em] whitespace-nowrap"
+      >
+        {word}
       </span>
     );
   });

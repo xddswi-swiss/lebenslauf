@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useLanguage } from "./contexts/LanguageContext";
 import { useTheme } from "./contexts/ThemeContext";
 import { Timeline } from "@/components/Timeline";
@@ -20,7 +20,6 @@ import { useGSAP } from "@gsap/react";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import Image from "next/image";
-
 import {
   FiDownload,
   FiArrowRight,
@@ -80,6 +79,8 @@ const STATS_BEWERBUNGEN = 96; // Lehrstellenbewerbungen (Çıraklık Başvurusu)
 const STATS_LETZTE_AKTUALISIERUNG = "19.06.2026"; // Son Güncelleme Tarihi
 // ------------------------------------------------
 
+
+
 const MainContent: React.FC = () => {
   const { t, language } = useLanguage();
   const { theme, themeMode } = useTheme();
@@ -122,14 +123,14 @@ const MainContent: React.FC = () => {
       "-=0.3"
     );
 
-    // 6. Photo card drops in from top with a massive elastic bounce
+    // 6. Photo card drops in from top with a quick elastic bounce
     tl.fromTo(".gsap-hero-photo",
-      { y: -200, opacity: 0, rotationZ: 15, scale: 0.8 },
-      { y: 0, opacity: 1, rotationZ: 0, scale: 1, duration: 1.5, ease: "elastic.out(1, 0.3)" },
+      { y: -120, opacity: 0, rotationZ: 15, scale: 0.8 },
+      { y: 0, opacity: 1, rotationZ: 0, scale: 1, duration: 0.6, ease: "elastic.out(1, 0.6)" },
       "-=0.8" // Start while buttons are popping in
     );
 
-  }, { scope: heroRef });
+  }, { scope: heroRef, dependencies: [] });
 
   // Initialize Lenis for elegant smooth scrolling
   useEffect(() => {
@@ -202,7 +203,7 @@ const MainContent: React.FC = () => {
       { ...animConfig, scrollTrigger: { trigger: ".scroll-anim-contact", start: "top 85%" } }
     );
 
-  }, { scope: mainRef });
+  }, { scope: mainRef, dependencies: [] });
 
   useEffect(() => {
     setMounted(true);
@@ -270,7 +271,7 @@ const MainContent: React.FC = () => {
           ref={heroRef}
           className="scroll-mt-32 min-h-[50vh] flex flex-col-reverse lg:flex-row items-center justify-between gap-12 relative pt-12 pb-0"
         >
-          <div className="max-w-3xl space-y-6 flex-1">
+          <div className="max-w-3xl space-y-6 flex-1 relative z-0">
             <div
               className="status-badge gsap-hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-bg)] border border-[var(--badge-border)] text-primary text-xs font-bold"
             >
@@ -282,9 +283,10 @@ const MainContent: React.FC = () => {
             </div>
 
             <GsapHeroText
+              key={t.hero.greeting}
               text={t.hero.greeting}
               delay={0.1}
-              className="text-4xl md:text-6xl lg:text-7xl font-black text-[var(--text-main)] leading-tight tracking-tight"
+              className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[var(--text-main)] leading-tight tracking-tight"
             />
 
             <h2
@@ -347,7 +349,7 @@ const MainContent: React.FC = () => {
 
           {/* Right Column: Premium Photo Card */}
           <div
-            className="flex-shrink-0 z-10 gsap-hero-photo"
+            className="flex-shrink-0 z-[45] gsap-hero-photo relative lg:-translate-x-4 lg:translate-y-4"
           >
             <div
               tabIndex={0}
