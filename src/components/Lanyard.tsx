@@ -97,13 +97,19 @@ export default memo(function Lanyard({
     return () => observer.disconnect();
   }, []);
 
+  const cameraPosition = useMemo<[number, number, number]>(() => {
+    // If it's mobile, move the camera closer along the Z-axis by 1.5 units
+    // to make the card appear slightly larger.
+    return isMobile ? [position[0], position[1], position[2] - 1.5] : position;
+  }, [position, isMobile]);
+
   return (
     <div
       ref={wrapRef}
       className="relative z-10 w-full h-full min-h-[400px] flex justify-center items-center transform scale-100 origin-center pointer-events-auto"
     >
       <Canvas
-        camera={{ position, fov }}
+        camera={{ position: cameraPosition, fov }}
         dpr={[1, isMobile ? 1.25 : 2]}
         frameloop={onScreen ? "always" : "never"}
         gl={{ alpha: transparent, antialias: !isMobile }}
@@ -309,9 +315,10 @@ function Band({
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1.2]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1.2]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1.2]);
+  const ropeLength = isMobile ? 0.95 : 1.2;
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], ropeLength]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], ropeLength]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], ropeLength]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
     [0, 1.45, 0],
