@@ -77,15 +77,49 @@ export default memo(function Lanyard({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Lives out here because the attribute that suppresses Lenis has to sit on the
+  // canvas element, which Band (inside the scene graph) can't reach.
+  const [dragging, setDragging] = useState(false);
+
+  // Scrolled past the hero, the canvas would otherwise keep redrawing and
+  // stepping physics for something nobody can see — expensive on phones.
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const [onScreen, setOnScreen] = useState(true);
+
+  useEffect(() => {
+    const node = wrapRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setOnScreen(entry.isIntersecting),
+      { rootMargin: "100px" }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="relative z-10 w-full h-full min-h-[400px] flex justify-center items-center transform scale-100 origin-center pointer-events-auto">
+    <div
+      ref={wrapRef}
+      className="relative z-10 w-full h-full min-h-[400px] flex justify-center items-center transform scale-100 origin-center pointer-events-auto"
+    >
       <Canvas
         camera={{ position, fov }}
-        dpr={[1, isMobile ? 1.5 : 2]}
-        gl={{ alpha: transparent, antialias: true }}
-        onCreated={({ gl }) =>
-          gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)
-        }
+        dpr={[1, isMobile ? 1.25 : 2]}
+        frameloop={onScreen ? "always" : "never"}
+        gl={{ alpha: transparent, antialias: !isMobile }}
+        // Native touch scrolling would take the gesture away mid-drag and end it
+        // with a pointercancel, so it stays off. Nothing is trapped by that:
+        // Lenis scrolls the page from JS, so swiping over the canvas still works
+        // — and it only steps aside (data-lenis-prevent-touch) while a drag is
+        // actually in progress, so pulling the card doesn't scroll the page too.
+        style={{ touchAction: "none" }}
+        {...(dragging ? { "data-lenis-prevent-touch": "" } : {})}
+        onCreated={({ gl }) => {
+          gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1);
+          // style={} above only reaches r3f's container div; put it on the
+          // canvas itself too so the rule applies to the actual touch target.
+          gl.domElement.style.touchAction = "none";
+        }}
       >
         <ambientLight intensity={Math.PI} />
         <Suspense fallback={null}>
@@ -97,9 +131,10 @@ export default memo(function Lanyard({
               imageFit={imageFit}
               lanyardImage={lanyardImage}
               lanyardWidth={lanyardWidth}
+              onDragChange={setDragging}
             />
           </Physics>
-          <Environment blur={0.75}>
+          <Environment blur={0.75} resolution={isMobile ? 128 : 256}>
             <Lightformer
               intensity={2}
               color="white"
@@ -144,6 +179,7 @@ interface BandProps {
   imageFit?: "cover" | "contain";
   lanyardImage?: string | null;
   lanyardWidth?: number;
+  onDragChange?: (dragging: boolean) => void;
 }
 
 type LanyardRigidBody = RapierRigidBody & {
@@ -159,6 +195,7 @@ function Band({
   imageFit = "cover",
   lanyardImage = null,
   lanyardWidth = 1,
+  onDragChange,
 }: BandProps) {
   const band = useRef<
     THREE.Mesh<
@@ -280,6 +317,27 @@ function Band({
     [0, 1.45, 0],
   ]);
 
+  // Safety net for drags that never get a pointerup on the card itself: the
+  // browser can hand the gesture over to scrolling, or the OS can swallow it
+  // (app switch, notification), leaving only a window-level pointercancel. If
+  // the drag flag survives that, the card stays kinematicPosition and keeps
+  // following a pointer that no longer moves — it freezes mid-air with the rope
+  // stretched taut instead of falling back.
+  useEffect(() => {
+    onDragChange?.(!!dragged);
+  }, [dragged, onDragChange]);
+
+  useEffect(() => {
+    if (!dragged) return;
+    const release = (): void => drag(false);
+    window.addEventListener("pointerup", release);
+    window.addEventListener("pointercancel", release);
+    return () => {
+      window.removeEventListener("pointerup", release);
+      window.removeEventListener("pointercancel", release);
+    };
+  }, [dragged]);
+
   useEffect(() => {
     if (hovered) {
       document.body.style.cursor = dragged ? "grabbing" : "grab";
@@ -370,12 +428,20 @@ function Band({
             position={[0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
+            onPointerCancel={() => drag(false)}
             onPointerUp={(e: ThreeEvent<PointerEvent>) => {
-              (e.target as Element).releasePointerCapture(e.pointerId);
+              // Throws NotFoundError if the pointer was already released (which
+              // touch does on its own). Letting it escape would skip drag(false)
+              // and strand the card in kinematic mode.
+              try {
+                (e.target as Element).releasePointerCapture(e.pointerId);
+              } catch {}
               drag(false);
             }}
             onPointerDown={(e: ThreeEvent<PointerEvent>) => {
-              (e.target as Element).setPointerCapture(e.pointerId);
+              try {
+                (e.target as Element).setPointerCapture(e.pointerId);
+              } catch {}
               drag(
                 new THREE.Vector3()
                   .copy(e.point)
@@ -386,7 +452,7 @@ function Band({
             <mesh geometry={nodes.card.geometry}>
               <meshPhysicalMaterial
                 map={cardMap}
-                map-anisotropy={16}
+                map-anisotropy={isMobile ? 4 : 16}
                 clearcoat={isMobile ? 0 : 1}
                 clearcoatRoughness={0.15}
                 roughness={0.9}
