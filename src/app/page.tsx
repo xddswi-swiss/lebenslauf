@@ -11,9 +11,12 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { GsapHeroText } from "@/components/GsapHeroText";
 import Strands from "@/components/Strands";
 import ElectricBorder from "@/components/ElectricBorder";
 import { motion as m, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 
 import {
@@ -81,6 +84,102 @@ const MainContent: React.FC = () => {
   const [randomColorIndex, setRandomColorIndex] = useState<number>(-1);
   const [docs, setDocs] = useState<any[]>([]);
   const [mounted, setMounted] = useState(false);
+  const heroRef = React.useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    // Master GSAP Timeline for Hero Section
+    const tl = gsap.timeline({ delay: 0.2 });
+
+    // 1. Status badge pops in
+    tl.fromTo(".gsap-hero-badge",
+      { scale: 0, opacity: 0, rotation: -15 },
+      { scale: 1, opacity: 1, rotation: 0, duration: 0.6, ease: "back.out(2)" }
+    );
+
+    // 2. The Greeting text is handled by GsapHeroText component itself, which has delay=0.1
+    // We can animate the rest of the elements starting after a short offset
+    
+    // 3. Subtitle / Role slides in from right with a twist
+    tl.fromTo(".gsap-hero-role",
+      { x: 100, opacity: 0, skewX: 20 },
+      { x: 0, opacity: 1, skewX: 0, duration: 0.8, ease: "power4.out" },
+      "-=0.2" // Overlap slightly with badge
+    );
+
+    // 4. Description text fades in from bottom
+    tl.fromTo(".gsap-hero-desc",
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
+      "-=0.4"
+    );
+
+    // 5. CTAs stagger in elastically
+    tl.fromTo(".gsap-hero-cta",
+      { scale: 0.5, opacity: 0, y: 50 },
+      { scale: 1, opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "elastic.out(1, 0.6)" },
+      "-=0.3"
+    );
+
+    // 6. Photo card drops in from top with a massive elastic bounce
+    tl.fromTo(".gsap-hero-photo",
+      { y: -200, opacity: 0, rotationZ: 15, scale: 0.8 },
+      { y: 0, opacity: 1, rotationZ: 0, scale: 1, duration: 1.5, ease: "elastic.out(1, 0.3)" },
+      "-=0.8" // Start while buttons are popping in
+    );
+
+  }, { scope: heroRef });
+
+  const mainRef = React.useRef<HTMLDivElement>(null);
+  useGSAP(() => {
+    const ScrollTrigger = require("gsap/ScrollTrigger").ScrollTrigger;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // ABOUT ME: 3D Flip in
+    gsap.fromTo(".scroll-anim-about",
+      { opacity: 0, rotationX: 90, transformOrigin: "top center", z: -500 },
+      { 
+        opacity: 1, rotationX: 0, z: 0, duration: 1.2, ease: "power4.out",
+        scrollTrigger: { trigger: ".scroll-anim-about", start: "top 80%" }
+      }
+    );
+
+    // DOCUMENTS: Staggered Fan out
+    gsap.fromTo(".scroll-anim-docs",
+      { opacity: 0, scale: 0.5, rotationZ: -10, y: 100 },
+      { 
+        opacity: 1, scale: 1, rotationZ: 0, y: 0, duration: 1, ease: "back.out(1.5)",
+        scrollTrigger: { trigger: ".scroll-anim-docs", start: "top 85%" }
+      }
+    );
+
+    // SKILLS: Elastic pop from center
+    gsap.fromTo(".scroll-anim-skills",
+      { opacity: 0, scale: 0.2 },
+      { 
+        opacity: 1, scale: 1, duration: 1.5, ease: "elastic.out(1, 0.4)",
+        scrollTrigger: { trigger: ".scroll-anim-skills", start: "top 80%" }
+      }
+    );
+
+    // GUESTBOOK: Slide up with a skew
+    gsap.fromTo(".scroll-anim-guestbook",
+      { opacity: 0, y: 150, skewY: 10 },
+      { 
+        opacity: 1, y: 0, skewY: 0, duration: 1, ease: "power3.out",
+        scrollTrigger: { trigger: ".scroll-anim-guestbook", start: "top 85%" }
+      }
+    );
+
+    // CONTACT: Squeeze in from the sides (scaleX)
+    gsap.fromTo(".scroll-anim-contact",
+      { opacity: 0, scaleX: 0, transformOrigin: "center center" },
+      { 
+        opacity: 1, scaleX: 1, duration: 1.2, ease: "expo.out",
+        scrollTrigger: { trigger: ".scroll-anim-contact", start: "top 90%" }
+      }
+    );
+
+  }, { scope: mainRef });
 
   useEffect(() => {
     setMounted(true);
@@ -141,63 +240,49 @@ const MainContent: React.FC = () => {
       <Header activeColorIndex={randomColorIndex} />
 
       {/* Main Container */}
-      <main suppressHydrationWarning className="flex-1 max-w-6xl w-full mx-auto px-6 pt-24 md:pt-32 pb-12 md:pb-20 space-y-20 md:space-y-28 overflow-x-hidden">
+      <main ref={mainRef} suppressHydrationWarning className="flex-1 max-w-6xl w-full mx-auto px-6 pt-24 md:pt-32 pb-12 md:pb-20 space-y-20 md:space-y-28 overflow-x-hidden">
         {/* Hero Section */}
         <section
           id="hero"
+          ref={heroRef}
           className="scroll-mt-32 min-h-[50vh] flex flex-col-reverse lg:flex-row items-center justify-between gap-12 relative pt-12 pb-0"
         >
           <div className="max-w-3xl space-y-6 flex-1">
-            <m.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="status-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-bg)] border border-[var(--badge-border)] text-primary text-xs font-bold"
+            <div
+              className="status-badge gsap-hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-bg)] border border-[var(--badge-border)] text-primary text-xs font-bold"
             >
               <span className="relative flex h-3 w-3">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 status-badge-dot status-badge-pulse"></span>
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500 status-badge-dot status-badge-core"></span>
               </span>
               <span>{t.hero.statusBadge}</span>
-            </m.div>
+            </div>
 
-            <m.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+            <GsapHeroText
+              text={t.hero.greeting}
+              delay={0.1}
               className="text-4xl md:text-6xl lg:text-7xl font-black text-[var(--text-main)] leading-tight tracking-tight"
-            >
-              {t.hero.greeting}
-            </m.h1>
+            />
 
-            <m.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-2xl md:text-4xl font-extrabold bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent"
+            <h2
+              className="text-2xl md:text-4xl font-extrabold bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent gsap-hero-role"
             >
               {t.hero.role}
-            </m.h2>
+            </h2>
 
-            <m.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-[var(--text-body)] text-lg md:text-xl leading-relaxed max-w-2xl"
+            <p
+              className="text-[var(--text-body)] text-lg md:text-xl leading-relaxed max-w-2xl gsap-hero-desc"
             >
               {t.hero.subtitle}
-            </m.p>
+            </p>
 
             {/* Hero CTAs */}
-            <m.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+            <div
               className="flex flex-wrap items-center gap-4 pt-4"
             >
               <a
                 href="#contact"
-                className="flex items-center gap-2 px-6 py-3.5 rounded-full bg-primary hover:opacity-90 text-white font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/35 transition-all duration-300 cursor-pointer group"
+                className="flex items-center gap-2 px-6 py-3.5 rounded-full bg-primary hover:opacity-90 text-white font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/35 transition-all duration-300 cursor-pointer group gsap-hero-cta"
               >
                 {t.hero.emailMe}
                 <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
@@ -208,7 +293,7 @@ const MainContent: React.FC = () => {
                 download
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3.5 rounded-full bg-primary hover:opacity-90 text-white font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/35 transition-all duration-300 cursor-pointer group"
+                className="flex items-center gap-2 px-6 py-3.5 rounded-full bg-primary hover:opacity-90 text-white font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/35 transition-all duration-300 cursor-pointer group gsap-hero-cta"
               >
                 <FiDownload />
                 {t.hero.downloadCv}
@@ -220,7 +305,7 @@ const MainContent: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub Profile"
-                  className="p-3 rounded-full glass-card hover:border-[var(--muted)] text-[var(--text-body)] hover:text-[var(--text-main)] transition-all"
+                  className="p-3 rounded-full glass-card hover:border-[var(--muted)] text-[var(--text-body)] hover:text-[var(--text-main)] transition-all gsap-hero-cta"
                 >
                   <FiGithub className="text-xl" />
                 </a>
@@ -229,20 +314,17 @@ const MainContent: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram Profile"
-                  className="p-3 rounded-full glass-card hover:border-[var(--muted)] text-[var(--text-body)] hover:text-[var(--text-main)] transition-all"
+                  className="p-3 rounded-full glass-card hover:border-[var(--muted)] text-[var(--text-body)] hover:text-[var(--text-main)] transition-all gsap-hero-cta"
                 >
                   <FiInstagram className="text-xl" />
                 </a>
               </div>
-            </m.div>
+            </div>
           </div>
 
           {/* Right Column: Premium Photo Card */}
-          <m.div
-            initial={{ opacity: 0, scale: 0.95, x: 20 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex-shrink-0 z-10"
+          <div
+            className="flex-shrink-0 z-10 gsap-hero-photo"
           >
             <div
               tabIndex={0}
@@ -277,15 +359,13 @@ const MainContent: React.FC = () => {
                 />
               </svg>
             </div>
-          </m.div>
+          </div>
         </section>
 
         {/* About Me Section */}
-        <section id="about" className="scroll-mt-32">
+        <section id="about" className="scroll-mt-32 scroll-anim-about">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
-            <m.div
-              whileHover={{ scale: 1.01 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            <div
               className="lg:col-span-7 flex flex-col justify-center cursor-default"
             >
               <ElectricBorder
@@ -323,7 +403,7 @@ const MainContent: React.FC = () => {
                   />
                 </div>
               </ElectricBorder>
-            </m.div>
+            </div>
 
             <div className="lg:col-span-5 glass-card p-6 md:p-8 rounded-3xl space-y-6 flex flex-col justify-between max-w-[360px] w-full lg:ml-auto mx-auto">
               <div>
@@ -372,7 +452,7 @@ const MainContent: React.FC = () => {
         </section>
 
         {/* School Documents (Zeugnisse) Section */}
-        <section id="documents" className="scroll-mt-32">
+        <section id="documents" className="scroll-mt-32 scroll-anim-docs">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
               {t.documents.title}
@@ -470,7 +550,7 @@ const MainContent: React.FC = () => {
         </section>
 
         {/* Experience Section */}
-        <section id="experience" className="scroll-mt-32">
+        <section id="experience" className="scroll-mt-32 scroll-anim-timeline">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
               {t.experience.title}
@@ -480,12 +560,12 @@ const MainContent: React.FC = () => {
         </section>
 
         {/* Skills Section */}
-        <section id="skills" className="scroll-mt-32">
+        <section id="skills" className="scroll-mt-32 scroll-anim-skills">
           <SkillsGrid selectedMatcher={null} />
         </section>
 
         {/* Guestbook Section */}
-        <section id="guestbook" className="scroll-mt-32">
+        <section id="guestbook" className="scroll-mt-32 scroll-anim-guestbook">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
               {t.guestbook.title}
@@ -499,7 +579,7 @@ const MainContent: React.FC = () => {
         </section>
 
         {/* Contact & References Section */}
-        <section id="contact" className="scroll-mt-32 max-w-5xl mx-auto">
+        <section id="contact" className="scroll-mt-32 max-w-5xl mx-auto scroll-anim-contact">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
               {t.contact.title}

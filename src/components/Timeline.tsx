@@ -4,6 +4,9 @@ import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/app/contexts/LanguageContext";
 import { experienceItems } from "@/data/translations";
 import { motion as m, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import {
   FiBriefcase,
   FiBookOpen,
@@ -22,6 +25,9 @@ export const Timeline: React.FC<TimelineProps> = ({
   selectedMatcher = null,
 }) => {
   const { t, language } = useLanguage();
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  gsap.registerPlugin(ScrollTrigger);
 
   const matchesPath = (role: string) => {
     if (!selectedMatcher) return true;
@@ -144,6 +150,56 @@ export const Timeline: React.FC<TimelineProps> = ({
       );
     };
   }, [language]);
+
+  useGSAP(() => {
+    // ScrollTrigger stagger for timeline cards
+    const items = gsap.utils.toArray<HTMLElement>('.timeline-item');
+    items.forEach((item, i) => {
+      // Much more dramatic scroll reveal for cards
+      gsap.fromTo(
+        item,
+        { 
+          opacity: 0, 
+          y: 100, 
+          x: i % 2 === 0 ? -50 : 50, // Alternate sliding from left/right
+          scale: 0.8,
+          rotationZ: i % 2 === 0 ? -5 : 5
+        },
+        {
+          opacity: 1,
+          y: 0,
+          x: 0,
+          scale: 1,
+          rotationZ: 0,
+          duration: 1.2,
+          ease: "elastic.out(1, 0.5)",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 85%", // When the top of the item hits 85% of viewport
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    });
+
+    // Parallax effect for the company initials / images inside expanded content
+    const parallaxImages = gsap.utils.toArray<HTMLElement>('.parallax-img');
+    parallaxImages.forEach(img => {
+      gsap.fromTo(img, 
+        { y: -20 },
+        {
+          y: 20,
+          ease: "none",
+          scrollTrigger: {
+            trigger: img.closest('.timeline-item'),
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true
+          }
+        }
+      );
+    });
+  }, { scope: containerRef, dependencies: [isWorkExpanded, isEducationExpanded, expandedIndex, workItems] });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -275,7 +331,7 @@ export const Timeline: React.FC<TimelineProps> = ({
   const reportLabel = reportLabels[language] || reportLabels.de;
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-0 space-y-6">
+    <div className="w-full max-w-5xl mx-auto space-y-8" ref={containerRef}>
       {/* SECTION 1: ERFAHRUNGEN (WORK EXPERIENCES) */}
       <div className="glass-card rounded-3xl overflow-hidden border border-[var(--glass-border)] shadow-xl transition-all duration-300">
         <button
@@ -330,7 +386,7 @@ export const Timeline: React.FC<TimelineProps> = ({
                         <m.div
                           key={`work-${index}`}
                           variants={itemVariants}
-                          className="relative group pl-0"
+                          className="relative group pl-0 timeline-item"
                         >
                           {/* Timeline node */}
                           <div
@@ -406,7 +462,7 @@ export const Timeline: React.FC<TimelineProps> = ({
                                         <img
                                           src={item.imageUrl}
                                           alt={item.company}
-                                          className="w-24 h-32 md:w-36 md:h-48 rounded-2xl object-cover shadow-lg absolute inset-0 z-10"
+                                          className="w-24 h-32 md:w-36 md:h-48 rounded-2xl object-cover shadow-lg absolute inset-0 z-10 parallax-img"
                                           onError={(e) => {
                                             (
                                               e.target as HTMLElement
@@ -415,7 +471,7 @@ export const Timeline: React.FC<TimelineProps> = ({
                                         />
                                       )}
                                       <div
-                                        className={`w-24 h-32 md:w-36 md:h-48 rounded-2xl flex items-center justify-center font-black text-2xl md:text-4xl text-white bg-gradient-to-tr ${getCompanyGradient(item.company)} shadow-lg absolute inset-0`}
+                                        className={`w-24 h-32 md:w-36 md:h-48 rounded-2xl flex items-center justify-center font-black text-2xl md:text-4xl text-white bg-gradient-to-tr ${getCompanyGradient(item.company)} shadow-lg absolute inset-0 parallax-img`}
                                       >
                                         {getCompanyInitials(item.company)}
                                       </div>
