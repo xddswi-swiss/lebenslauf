@@ -81,7 +81,7 @@ const STATS_BEWERBUNGEN = 96; // Lehrstellenbewerbungen (Çıraklık Başvurusu)
 const STATS_LETZTE_AKTUALISIERUNG = "19.06.2026"; // Son Güncelleme Tarihi
 // ------------------------------------------------
 
-const LANYARD_POSITION: [number, number, number] = [0, 0, 20];
+const LANYARD_POSITION: [number, number, number] = [0, 0, 16];
 
 const MainContent: React.FC = () => {
   const { t, language } = useLanguage();
