@@ -34,6 +34,18 @@
 
   --title-gradient-from: #000000;
   --title-gradient-to: #4d4d4d;
+
+  /* Map cyan to orange in the yellow theme to fix the timeline education section */
+  --color-cyan-50: #fff4ed;
+  --color-cyan-100: #ffe6d5;
+  --color-cyan-200: #ffcca6;
+  --color-cyan-300: #ffaa66;
+  --color-cyan-400: #ff8533;
+  --color-cyan-500: #ff6c02;
+  --color-cyan-600: #e65c00;
+  --color-cyan-700: #cc5200;
+  --color-cyan-800: #a64200;
+  --color-cyan-900: #803300;
 }
 
 /* Beautiful Gradient Backgrounds and Glass Cards for Yellow Theme */
