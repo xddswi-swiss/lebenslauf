@@ -125,26 +125,20 @@ const MainContent: React.FC = () => {
       wheelMultiplier: 1,
       touchMultiplier: 2,
       anchors: true,
+      // Lenis keeps its own rAF loop rather than being driven by the gsap
+      // ticker. The ticker parks itself (gsap-core: autoSleep, once nothing is
+      // tweening and it has fewer than two listeners), and with our driver as
+      // its only listener that left Lenis frozen while idle: the first swipe
+      // went nowhere and only the second one moved the page, because the first
+      // was what woke the ticker back up. Desktop hid it — the lanyard's render
+      // loop keeps the ticker busy — so it only showed on mobile.
+      autoRaf: true,
     });
 
     lenis.on('scroll', ScrollTrigger.update);
-
-    // Exactly one clock drives Lenis. Feeding it from a private rAF loop *and*
-    // the gsap ticker (as this used to) calls raf() twice a frame from two
-    // different time origins — rAF counts from navigation, the ticker from when
-    // gsap started — and raf() derives its delta from the previous timestamp it
-    // was handed. The two series interleave, so every frame got a nonsense
-    // delta and scrolling stuttered, worst of all under touch.
-    const drive = (time: number): void => {
-      lenis.raf(time * 1000);
-    };
-    gsap.ticker.add(drive);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
-      // Must be the same reference that was added — passing lenis.raf here left
-      // the ticker callback running against a destroyed instance forever.
-      gsap.ticker.remove(drive);
       lenis.destroy();
     };
   }, []);
