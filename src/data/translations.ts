@@ -191,6 +191,12 @@ export interface TranslationSchema {
     elektro: string;
     reset: string;
   };
+  theme: {
+    sunlit: string;
+    midnight: string;
+    bw: string;
+    changeTheme: string;
+  };
 }
 
 import experiencesData from "./experiences.json";
@@ -603,6 +609,12 @@ export const translations: Record<Language, TranslationSchema> = {
       elektro: "Elektroinstallateur EFZ",
       reset: "Zurücksetzen / Alle anzeigen",
     },
+    theme: {
+      sunlit: "Sonnig",
+      midnight: "Mitternacht",
+      bw: "Schwarz & Weiss",
+      changeTheme: "Design wechseln",
+    },
   },
   tr: {
     meta: {
@@ -802,6 +814,12 @@ export const translations: Record<Language, TranslationSchema> = {
       kaufmann: "Kaufmann EFZ (Ticari)",
       elektro: "Elektroinstallateur EFZ (Elektrik)",
       reset: "Filtreyi Sıfırla / Hepsini Göster",
+    },
+    theme: {
+      sunlit: "Güneşli",
+      midnight: "Gece Yarısı",
+      bw: "Siyah & Beyaz",
+      changeTheme: "Tema değiştir",
     },
   },
   en: {
@@ -1005,6 +1023,12 @@ export const translations: Record<Language, TranslationSchema> = {
       kaufmann: "Commercial (Kaufmann)",
       elektro: "Electrical Installer",
       reset: "Reset Filter / Show All",
+    },
+    theme: {
+      sunlit: "Sunlit",
+      midnight: "Midnight",
+      bw: "Black & White",
+      changeTheme: "Change theme",
     },
   },
 };

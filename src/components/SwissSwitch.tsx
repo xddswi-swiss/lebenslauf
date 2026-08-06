@@ -3,9 +3,14 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@/app/contexts/ThemeContext";
 
-export const SwissSwitch: React.FC = () => {
-  const { changeTheme } = useTheme();
-  const [bwMode, setBwMode] = useState(true);
+interface SwissSwitchProps {
+  asMenuItem?: boolean;
+  onSelect?: () => void;
+}
+
+export const SwissSwitch: React.FC<SwissSwitchProps> = ({ asMenuItem, onSelect }) => {
+  const { changeTheme, themeMode } = useTheme();
+  const [bwMode, setBwMode] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -54,8 +59,29 @@ export const SwissSwitch: React.FC = () => {
   const activateBwMode = () => {
     changeTheme("white");
     playClickSound(true);
+    onSelect?.();
   };
 
+  // ── Dropdown menu item variant ──
+  if (asMenuItem) {
+    return (
+      <button
+        onClick={activateBwMode}
+        aria-label="Toggle Black and White Mode"
+        title="Schwarz-Weiss Design"
+        className={`w-full flex items-center gap-3 px-4 py-3 text-left text-sm transition-all duration-150 cursor-pointer hover:bg-white/10 ${themeMode === 'white' ? 'font-bold' : 'font-medium'}`}
+      >
+        <span
+          className="w-5 h-5 rounded-full flex-shrink-0 shadow-md ring-1 ring-black/20"
+          style={{ background: 'linear-gradient(135deg,#ffffff 50%,#000000 50%)' }}
+        />
+        <span className="flex-1 text-[var(--text-main)]">Black &amp; White</span>
+        {themeMode === 'white' && <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />}
+      </button>
+    );
+  }
+
+  // ── Original flag stripe variant (fallback) ──
   return (
     <button
       onClick={activateBwMode}

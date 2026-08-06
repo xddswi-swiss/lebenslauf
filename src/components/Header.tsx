@@ -267,43 +267,69 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               EREN AYDIN
             </m.a>
 
-            {/* Theme Selector — a small flag: three color stripes flush
-                together in one shared frame (like the reference flag image),
-                instead of separate rounded squares. */}
-            <div
-              className="hidden lg:flex items-center ml-1"
-              title="Design wechseln / Tema değiştir / Change theme"
-            >
-              <div
-                className="relative flex items-stretch rounded-md overflow-hidden border-2 border-white/60 dark:border-white/40 shadow-xl backdrop-blur-lg bw-switch-container -my-4"
-                style={{
-                  width: navWidth
-                    ? `${Math.round(navWidth * 0.35)}px`
-                    : "5.5rem",
-                  height: headerHeight ? `${headerHeight}px` : "2rem",
-                }}
+            {/* ── MODERN THEME SWITCHER — Floating Pill Dropdown ── */}
+            <div className="hidden lg:flex items-center ml-2 relative" title={t.theme.changeTheme}>
+              {/* Trigger Button */}
+              <button
+                onClick={() => setOpenDesktopGroup(openDesktopGroup === '__theme__' ? null : '__theme__')}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-white/15 hover:bg-white/25 transition-all duration-200 cursor-pointer shadow-sm text-[var(--text-main)]"
               >
-                <SwissSwitch />
-                <button
-                  onClick={() => changeTheme("yellow")}
-                  aria-label="Light Theme"
-                  title="Gelbes Design"
-                  className={`flex-1 h-full bg-[#FFC72C]/85 transition-all cursor-pointer hover:brightness-95 ${
-                    themeMode === "yellow" ? "theme-flag-yellow-active-pulse" : ""
-                  }`}
+                {/* Active theme dot */}
+                <span
+                  className="w-3 h-3 rounded-full flex-shrink-0 ring-2 ring-white/50 transition-all duration-300"
+                  style={{
+                    background: themeMode === 'yellow'
+                      ? 'linear-gradient(135deg,#ffd54f,#ffc72c)'
+                      : themeMode === 'blue'
+                      ? 'linear-gradient(135deg,#60a5fa,#1e3a5f)'
+                      : 'linear-gradient(135deg,#fff,#000)',
+                  }}
                 />
-                <button
-                  onClick={() => changeTheme("blue")}
-                  aria-label="Dark Theme"
-                  title="Blaues Design"
-                  className={`flex-1 h-full bg-[#2563eb]/85 transition-all cursor-pointer hover:brightness-95 ${
-                    themeMode === "blue" ? "theme-flag-active-pulse" : ""
-                  }`}
-                />
-                {/* Glossy glass sheen — only the top half, so it doesn't
-                    wash out the active-stripe pulse animation underneath */}
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/60 to-transparent" />
-              </div>
+                <span className="text-xs font-semibold tracking-wide">
+                  {themeMode === 'yellow' ? t.theme.sunlit : themeMode === 'blue' ? t.theme.midnight : t.theme.bw}
+                </span>
+                <svg className={`w-3 h-3 transition-transform duration-200 ${openDesktopGroup === '__theme__' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {/* Dropdown Panel */}
+              <AnimatePresence>
+                {openDesktopGroup === '__theme__' && (
+                  <m.div
+                    initial={{ opacity: 0, y: -6, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -6, scale: 0.95 }}
+                    transition={{ duration: 0.15, ease: 'easeOut' }}
+                    className="absolute top-full left-0 mt-2 w-44 rounded-2xl overflow-hidden shadow-2xl border border-white/20 backdrop-blur-xl z-50"
+                    style={{ background: 'var(--glass-card-bg)', backgroundColor: 'var(--card)' }}
+                  >
+                    {/* Yellow */}
+                    <button
+                      onClick={() => { changeTheme('yellow'); setOpenDesktopGroup(null); }}
+                      className={`w-full flex items-center gap-3 px-4 py-3 text-left text-sm transition-all duration-150 cursor-pointer hover:bg-white/20 ${themeMode === 'yellow' ? 'font-bold' : 'font-medium'}`}
+                    >
+                      <span className="w-5 h-5 rounded-full flex-shrink-0 shadow-md" style={{ background: 'linear-gradient(135deg,#ffd54f,#ffc72c,#ffa000)' }} />
+                      <span className="flex-1 text-[var(--text-main)]">{t.theme.sunlit}</span>
+                      {themeMode === 'yellow' && <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />}
+                    </button>
+
+                    {/* Blue */}
+                    <button
+                      onClick={() => { changeTheme('blue'); setOpenDesktopGroup(null); }}
+                      className={`w-full flex items-center gap-3 px-4 py-3 text-left text-sm transition-all duration-150 cursor-pointer hover:bg-white/10 ${themeMode === 'blue' ? 'font-bold' : 'font-medium'}`}
+                    >
+                      <span className="w-5 h-5 rounded-full flex-shrink-0 shadow-md" style={{ background: 'linear-gradient(135deg,#60a5fa,#2563eb,#1e3a5f)' }} />
+                      <span className="flex-1 text-[var(--text-main)]">{t.theme.midnight}</span>
+                      {themeMode === 'blue' && <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />}
+                    </button>
+
+                    {/* B&W */}
+                    <div className="mx-3 border-t border-white/10" />
+                    <SwissSwitch asMenuItem onSelect={() => setOpenDesktopGroup(null)} />
+                  </m.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 
@@ -438,29 +464,57 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
 
             {/* Mobile Menu Actions */}
             <div className="flex lg:hidden items-center gap-1">
-              {/* Theme Selector — same flag design as desktop, also
-                  stretched edge-to-edge vertically (no top/bottom gap) */}
-              <div
-                className="relative flex items-stretch w-16 rounded-md overflow-hidden border-2 border-white/60 dark:border-white/40 shadow-xl backdrop-blur-lg bw-switch-container -my-4"
-                style={{ height: headerHeight ? `${headerHeight}px` : "2rem" }}
-              >
-                <SwissSwitch />
+              {/* Compact Theme Pill — mobil header, opens its own mini dropdown */}
+              <div className="relative">
                 <button
-                  onClick={() => changeTheme("yellow")}
-                  aria-label="Light Theme"
-                  className={`flex-1 h-full bg-[#FFC72C]/85 transition-all cursor-pointer ${
-                    themeMode === "yellow" ? "theme-flag-yellow-active-pulse" : ""
-                  }`}
-                />
-                <button
-                  onClick={() => changeTheme("blue")}
-                  aria-label="Dark Theme"
-                  className={`flex-1 h-full bg-[#2563eb]/85 transition-all cursor-pointer ${
-                    themeMode === "blue" ? "theme-flag-active-pulse" : ""
-                  }`}
-                />
-                {/* Glossy glass sheen — top half only */}
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/60 to-transparent" />
+                  onClick={() => setOpenDesktopGroup(openDesktopGroup === '__mobile_theme__' ? null : '__mobile_theme__')}
+                  aria-label={t.theme.changeTheme}
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full border border-white/30 backdrop-blur-md bg-white/15 cursor-pointer shadow-sm"
+                >
+                  <span
+                    className="w-2.5 h-2.5 rounded-full flex-shrink-0 ring-1 ring-white/50"
+                    style={{
+                      background: themeMode === 'yellow'
+                        ? 'linear-gradient(135deg,#ffd54f,#ffc72c)'
+                        : themeMode === 'blue'
+                        ? 'linear-gradient(135deg,#60a5fa,#1e3a5f)'
+                        : 'linear-gradient(135deg,#fff,#000)',
+                    }}
+                  />
+                </button>
+
+                {/* Mini theme dropdown for mobile */}
+                <AnimatePresence>
+                  {openDesktopGroup === '__mobile_theme__' && (
+                    <m.div
+                      initial={{ opacity: 0, y: -6, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -6, scale: 0.95 }}
+                      transition={{ duration: 0.15, ease: 'easeOut' }}
+                      className="absolute top-full right-0 mt-2 w-44 rounded-2xl overflow-hidden shadow-2xl border border-white/20 backdrop-blur-xl z-50"
+                      style={{ background: 'var(--glass-card-bg)', backgroundColor: 'var(--card)' }}
+                    >
+                      <button
+                        onClick={() => { changeTheme('yellow'); setOpenDesktopGroup(null); }}
+                        className={`w-full flex items-center gap-3 px-4 py-3 text-left text-sm transition-all cursor-pointer hover:bg-white/20 ${themeMode === 'yellow' ? 'font-bold' : 'font-medium'}`}
+                      >
+                        <span className="w-5 h-5 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(135deg,#ffd54f,#ffc72c,#ffa000)' }} />
+                        <span className="flex-1 text-[var(--text-main)]">{t.theme.sunlit}</span>
+                        {themeMode === 'yellow' && <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />}
+                      </button>
+                      <button
+                        onClick={() => { changeTheme('blue'); setOpenDesktopGroup(null); }}
+                        className={`w-full flex items-center gap-3 px-4 py-3 text-left text-sm transition-all cursor-pointer hover:bg-white/10 ${themeMode === 'blue' ? 'font-bold' : 'font-medium'}`}
+                      >
+                        <span className="w-5 h-5 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(135deg,#60a5fa,#2563eb,#1e3a5f)' }} />
+                        <span className="flex-1 text-[var(--text-main)]">{t.theme.midnight}</span>
+                        {themeMode === 'blue' && <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />}
+                      </button>
+                      <div className="mx-3 border-t border-white/10" />
+                      <SwissSwitch asMenuItem onSelect={() => setOpenDesktopGroup(null)} />
+                    </m.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Hamburger Button */}
@@ -565,6 +619,32 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                 {/* Language Switcher */}
                 <div className="flex items-center justify-center gap-1 w-full">
                   <LanguageSwitcher />
+                </div>
+
+                {/* Theme Switcher — Drawer */}
+                <div className="space-y-1">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--text-muted)] px-1 mb-2">{t.theme.changeTheme}</p>
+                  <button
+                    onClick={() => { changeTheme('yellow'); setIsMobileMenuOpen(false); }}
+                    className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl glass-card border text-sm transition-all cursor-pointer ${
+                      themeMode === 'yellow' ? 'border-primary/50 font-bold' : 'border-[var(--glass-border)] font-medium'
+                    }`}
+                  >
+                    <span className="w-4 h-4 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(135deg,#ffd54f,#ffc72c,#ffa000)' }} />
+                    <span className="flex-1 text-left text-[var(--text-main)]">{t.theme.sunlit}</span>
+                    {themeMode === 'yellow' && <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />}
+                  </button>
+                  <button
+                    onClick={() => { changeTheme('blue'); setIsMobileMenuOpen(false); }}
+                    className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl glass-card border text-sm transition-all cursor-pointer ${
+                      themeMode === 'blue' ? 'border-primary/50 font-bold' : 'border-[var(--glass-border)] font-medium'
+                    }`}
+                  >
+                    <span className="w-4 h-4 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(135deg,#60a5fa,#2563eb,#1e3a5f)' }} />
+                    <span className="flex-1 text-left text-[var(--text-main)]">{t.theme.midnight}</span>
+                    {themeMode === 'blue' && <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />}
+                  </button>
+                  <SwissSwitch asMenuItem onSelect={() => setIsMobileMenuOpen(false)} />
                 </div>
 
                 {/* Social media shortcuts */}
