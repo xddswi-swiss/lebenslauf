@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { motion as m } from "framer-motion";
 import { useLanguage } from "@/app/contexts/LanguageContext";
-import { useTheme } from "@/app/contexts/ThemeContext";
 import { FiHome, FiRefreshCw, FiAlertTriangle } from "react-icons/fi";
 
 interface ErrorProps {

@@ -10,7 +10,6 @@ import {
   FiMapPin,
   FiChevronDown,
   FiDownload,
-  FiTrash2,
 } from "react-icons/fi";
 import { ExperienceItem } from "@/data/translations";
 

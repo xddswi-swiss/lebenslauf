@@ -22,6 +22,22 @@
   --text-body: #e2e8f0;
   --text-muted: #cbd5e1;
 
+  /* Animated border around the About card (ElectricBorder) */
+  --electric-border: #00ffcc;
+  --electric-glow: #3b82f6;
+
+  /* Mobile drawer — structural rules live in globals.css and read these */
+  --drawer-surface: linear-gradient(160deg, #24466f 0%, #1e3a5f 55%, #16283f 100%);
+  --drawer-border: rgba(255, 255, 255, 0.12);
+  --drawer-text: #e2e8f0;
+  --drawer-text-muted: rgba(226, 232, 240, 0.55);
+  --drawer-accent: #60a5fa;
+  --drawer-item-hover: rgba(255, 255, 255, 0.07);
+  --drawer-item-active: rgba(96, 165, 250, 0.16);
+  --drawer-chip: rgba(255, 255, 255, 0.08);
+  --drawer-chip-active: #60a5fa;
+  --drawer-chip-active-text: #0f2540;
+
   /* Glassmorphism Variables for Midnight Blue */
   --glass-bg: rgba(30, 58, 95, 0.85);
   --glass-card-bg: linear-gradient(
@@ -45,10 +61,6 @@
   border: 1px solid #bbe3fb !important;
   color: #102552 !important;
   box-shadow: 0 4px 15px rgba(133, 199, 242, 0.3) !important;
-}
-
-:root.dark:not(.bw-mode) .hobby-badge * {
-  color: #102552 !important;
 }
 
 /* Beautiful Gradient Backgrounds and Glass Cards for Midnight Blue Theme */
@@ -118,12 +130,6 @@
   color: #ffffff !important;
 }
 
-:root.dark:not(.bw-mode)
-  header.header-glass-gradient
-  button:not(.bg-primary):not(.bw-switch-container button):not(.glass-card) {
-  color: #e2e8f0 !important;
-}
-
 :root.dark:not(.bw-mode) header.header-glass-gradient button.glass-card {
   border-color: rgba(59, 130, 246, 0.4) !important;
   background-color: rgba(255, 255, 255, 0.1) !important;
@@ -168,32 +174,6 @@
   color: #ffffff !important;
 }
 
-/* Mobile Drawer Override */
-:root.dark:not(.bw-mode) .mobile-drawer {
-  background: linear-gradient(135deg, #1e3a5f, #16283f) !important;
-  border-left: 1px solid rgba(59, 130, 246, 0.3) !important;
-}
-
-:root.dark:not(.bw-mode) .mobile-drawer * {
-  color: #e2e8f0 !important;
-}
-
-:root.dark:not(.bw-mode) .mobile-drawer .border-b,
-:root.dark:not(.bw-mode) .mobile-drawer .border-t {
-  border-color: rgba(255, 255, 255, 0.1) !important;
-}
-
-/* ASCII and Code blocks */
-html.dark:not(.bw-mode) .skills-card-ascii {
-  background: rgba(30, 58, 95, 0.8) !important;
-  border: 1px solid rgba(59, 130, 246, 0.4) !important;
-}
-
-html.dark:not(.bw-mode) .skills-ascii-content {
-  color: #60a5fa !important;
-  text-shadow: 0 0 4px rgba(59, 130, 246, 0.4) !important;
-}
-
 /* Theme specific Stat Cards */
 :root.dark:not(.bw-mode) .stat-card-1 {
   background: linear-gradient(
@@ -225,50 +205,6 @@ html.dark:not(.bw-mode) .skills-ascii-content {
 :root.dark:not(.bw-mode) .stat-card-2 .stat-label,
 :root.dark:not(.bw-mode) .stat-card-2 .stat-desc {
   color: #34d399 !important;
-}
-
-/* --- Unified Button Styling for Dark/Blue Theme --- */
-:root.dark:not(.bw-mode) button.bg-primary:not(.bw-switch-container *):not(.scroll-top-btn),
-:root.dark:not(.bw-mode) a.bg-primary:not(.bw-switch-container *),
-:root.dark:not(.bw-mode) button[type="submit"]:not(.bw-switch-container *),
-:root.dark:not(.bw-mode) .cb-btn {
-  background: rgba(59, 130, 246, 0.2) !important;
-  border: 1px solid rgba(59, 130, 246, 0.4) !important;
-  color: #60a5fa !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1) !important;
-}
-
-:root.dark:not(.bw-mode) button.bg-primary:not(.bw-switch-container *):not(.scroll-top-btn):hover,
-:root.dark:not(.bw-mode) a.bg-primary:not(.bw-switch-container *):hover,
-:root.dark:not(.bw-mode)
-  button[type="submit"]:not(.bw-switch-container *):hover,
-:root.dark:not(.bw-mode) .cb-btn:hover {
-  background: rgba(59, 130, 246, 0.4) !important;
-  border-color: rgba(59, 130, 246, 0.8) !important;
-  color: #ffffff !important;
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3) !important;
-  transform: translateY(-2px) !important;
-}
-
-:root.dark:not(.bw-mode) button.bg-primary:not(.bw-switch-container *):not(.scroll-top-btn):active,
-:root.dark:not(.bw-mode) a.bg-primary:not(.bw-switch-container *):active,
-:root.dark:not(.bw-mode)
-  button[type="submit"]:not(.bw-switch-container *):active,
-:root.dark:not(.bw-mode) .cb-btn:active {
-  transform: translateY(1px) !important;
-  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.2) !important;
-}
-
-/* Dark Theme: Drawer Glass Gradient Background */
-:root.dark:not(.bw-mode) .drawer-glass-gradient {
-  background: linear-gradient(
-    135deg,
-    rgba(30, 58, 95, 0.98) 0%,
-    rgba(22, 40, 63, 0.95) 100%
-  );
 }
 
 /* --- Dark Theme Light Blue Elements (#85c7f2) --- */
@@ -316,24 +252,6 @@ html.dark:not(.bw-mode) .skills-ascii-content {
 }
 
 :root.dark:not(.bw-mode) a[href="#contact"].bg-primary:hover {
-  background: #a3d7f7 !important;
-  box-shadow: 0 8px 25px rgba(133, 199, 242, 0.45) !important;
-}
-
-/* 4. Skill Matcher Buttons (Kaufmann EFZ & Elektroinstallateur EFZ) */
-:root.dark:not(.bw-mode) .matcher-btn {
-  background: #85c7f2 !important;
-  border: 1px solid #bbe3fb !important;
-  color: #102552 !important;
-  box-shadow: 0 6px 20px rgba(133, 199, 242, 0.3) !important;
-}
-
-:root.dark:not(.bw-mode) .matcher-btn *,
-:root.dark:not(.bw-mode) .matcher-btn svg {
-  color: #102552 !important;
-}
-
-:root.dark:not(.bw-mode) .matcher-btn:hover {
   background: #a3d7f7 !important;
   box-shadow: 0 8px 25px rgba(133, 199, 242, 0.45) !important;
 }

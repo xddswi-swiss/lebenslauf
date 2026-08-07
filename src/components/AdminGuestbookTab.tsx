@@ -5,7 +5,6 @@ import { useLanguage } from "@/app/contexts/LanguageContext";
 import {
   FiTrash2,
   FiLoader,
-  FiMessageSquare,
   FiCalendar,
   FiUser,
 } from "react-icons/fi";

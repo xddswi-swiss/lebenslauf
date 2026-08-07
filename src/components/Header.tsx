@@ -6,22 +6,21 @@ import { useTheme } from "@/app/contexts/ThemeContext";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { motion as m, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import {
-  FiSun,
-  FiMoon,
   FiMenu,
   FiX,
   FiUser,
   FiFileText,
   FiBriefcase,
   FiAward,
-  FiSliders,
   FiMail,
   FiChevronRight,
   FiChevronDown,
   FiGithub,
   FiInstagram,
   FiMessageSquare,
+  FiLock,
 } from "react-icons/fi";
 
 // --- NAVİGASYON (HEADER) DİNAMİK RENK AYARI ---
@@ -36,64 +35,16 @@ export interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
   const { t, language, setLanguage } = useLanguage();
-  const { theme, themeMode, changeTheme } = useTheme();
+  const { theme } = useTheme();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [headerStyle, setHeaderStyle] = useState<React.CSSProperties>({});
-  const [drawerStyle, setDrawerStyle] = useState<React.CSSProperties>({});
   const [activeSection, setActiveSection] = useState<string>("");
   const [openDesktopGroup, setOpenDesktopGroup] = useState<string | null>(
     null,
   );
   const navRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLElement>(null);
-  const [navWidth, setNavWidth] = useState<number | null>(null);
-  const [headerHeight, setHeaderHeight] = useState<number | null>(null);
-
-  // Measure the desktop nav's rendered width and the header's own full
-  // height, so the theme flag can be stretched to match the nav's width and
-  // fill the header's height edge-to-edge (no top/bottom gap).
-  useEffect(() => {
-    const measure = () => {
-      if (navRef.current) {
-        setNavWidth(navRef.current.offsetWidth);
-      }
-      if (headerRef.current) {
-        setHeaderHeight(headerRef.current.offsetHeight);
-      }
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    const id = window.setTimeout(measure, 300); // after fonts/layout settle
-    return () => {
-      window.removeEventListener("resize", measure);
-      window.clearTimeout(id);
-    };
-  }, [language]);
-
-  // Track active section on scroll
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Find the first intersecting entry
-        const visibleEntry = entries.find((entry) => entry.isIntersecting);
-        if (visibleEntry) {
-          setActiveSection(visibleEntry.target.id);
-        }
-      },
-      {
-        rootMargin: "-20% 0px -70% 0px", // Trigger when section is in the top 20-30% of viewport
-      },
-    );
-
-    navLinks.forEach((link) => {
-      const sectionId = link.href.substring(1);
-      const element = document.getElementById(sectionId);
-      if (element) observer.observe(element);
-    });
-
-    return () => observer.disconnect();
-  }, [language]); // Re-bind observer if language changes (though IDs remain same, safe measure)
 
   // NOTE: Mobile status bar (theme-color meta tag) syncing is handled
   // centrally in ThemeContext.tsx's applyTheme()/updateSafariThemeColor().
@@ -175,10 +126,52 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
       : [{ href: group.href!, label: group.label, icon: group.icon }],
   );
 
+  // Kept out of navGroups/navLinks on purpose: those drive the section
+  // IntersectionObserver, and /admin is a route rather than an anchor.
+  const adminLink = { href: "/admin", label: t.nav.admin };
+
+  // Lock the page behind the drawer and let Escape close it. Without the lock
+  // the body kept scrolling under the open drawer on touch.
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isMobileMenuOpen]);
+
+  // Highlight whichever section is currently under the top of the viewport.
+  // This has to sit below navLinks — it used to run 80 lines above the
+  // declaration and read it out of the closure, which meant a language switch
+  // rebuilt navLinks but left the observer bound to the previous array.
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries.find((entry) => entry.isIntersecting);
+        if (visibleEntry) {
+          setActiveSection(visibleEntry.target.id);
+        }
+      },
+      { rootMargin: "-20% 0px -70% 0px" },
+    );
+
+    navLinks.forEach((link) => {
+      const element = document.getElementById(link.href.substring(1));
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [navLinks]);
+
   useEffect(() => {
     if (!ENABLE_RANDOM_HEADER_GRADIENT || activeColorIndex === -1) {
       setHeaderStyle({});
-      setDrawerStyle({});
       return;
     }
     const lightGradients = [
@@ -197,33 +190,14 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
       "linear-gradient(to right, rgba(6, 182, 212, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%)", // 4. Electric Cyan (Cyan-Blue)
     ];
 
-    const lightDrawers = [
-      "linear-gradient(to bottom, rgba(255, 249, 233, 0.98) 0%, rgba(254, 226, 226, 0.35) 70%, rgba(239, 68, 68, 0.22) 100%)",
-      "linear-gradient(to bottom, rgba(255, 249, 233, 0.98) 0%, rgba(237, 233, 254, 0.35) 70%, rgba(139, 92, 246, 0.22) 100%)",
-      "linear-gradient(to bottom, rgba(255, 249, 233, 0.98) 0%, rgba(209, 250, 229, 0.35) 70%, rgba(16, 185, 129, 0.22) 100%)",
-      "linear-gradient(to bottom, rgba(255, 249, 233, 0.98) 0%, rgba(253, 224, 241, 0.35) 70%, rgba(236, 72, 153, 0.22) 100%)",
-      "linear-gradient(to bottom, rgba(255, 249, 233, 0.98) 0%, rgba(224, 242, 254, 0.35) 70%, rgba(6, 182, 212, 0.22) 100%)",
-    ];
-
-    const darkDrawers = [
-      "linear-gradient(to bottom, rgba(3, 3, 3, 0.98) 0%, rgba(242, 17, 55, 0.25) 70%, rgba(249, 115, 22, 0.15) 100%)",
-      "linear-gradient(to bottom, rgba(3, 3, 3, 0.98) 0%, rgba(139, 92, 246, 0.25) 70%, rgba(59, 130, 246, 0.15) 100%)",
-      "linear-gradient(to bottom, rgba(3, 3, 3, 0.98) 0%, rgba(16, 185, 129, 0.25) 70%, rgba(16, 185, 129, 0.15) 100%)",
-      "linear-gradient(to bottom, rgba(3, 3, 3, 0.98) 0%, rgba(236, 72, 153, 0.25) 70%, rgba(124, 58, 237, 0.15) 100%)",
-      "linear-gradient(to bottom, rgba(3, 3, 3, 0.98) 0%, rgba(6, 182, 212, 0.25) 70%, rgba(59, 130, 246, 0.15) 100%)",
-    ];
-
     const index = activeColorIndex;
     const activeGradient =
       theme === "dark" ? darkGradients[index] : lightGradients[index];
-    const activeDrawer =
-      theme === "dark" ? darkDrawers[index] : lightDrawers[index];
 
     setHeaderStyle({
       backgroundImage: activeGradient,
       backgroundColor: "var(--glass-bg)",
     });
-    setDrawerStyle({ background: activeDrawer });
   }, [theme, activeColorIndex]);
 
   // Animation variants for sidebar items
@@ -231,21 +205,16 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-      },
+      transition: { delayChildren: 0.08, staggerChildren: 0.055 },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, x: 30 },
+    hidden: { opacity: 0, x: 26 },
     show: {
       opacity: 1,
       x: 0,
-      transition: {
-        duration: 0.22,
-        ease: "easeOut" as const,
-      },
+      transition: { type: "spring" as const, stiffness: 420, damping: 30 },
     },
   };
 
@@ -401,6 +370,14 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
               })}
             </nav>
 
+            <Link
+              href={adminLink.href}
+              className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-card text-sm font-semibold text-[var(--text-body)] hover:text-[var(--text-main)] transition-all"
+            >
+              <FiLock className="text-sm" />
+              {adminLink.label}
+            </Link>
+
             <div className="hidden lg:flex items-center gap-1">
               <LanguageSwitcher />
             </div>
@@ -434,15 +411,16 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
             />
             {/* Drawer Sidebar */}
             <m.div
+              role="dialog"
+              aria-modal="true"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              style={drawerStyle}
+              transition={{ type: "spring", stiffness: 320, damping: 32 }}
               className="mobile-drawer fixed right-0 top-0 bottom-0 w-[85%] max-w-[340px] z-[70] h-full shadow-2xl flex flex-col p-6 border-l border-[var(--glass-border)] lg:hidden"
             >
               {/* Drawer Header */}
-              <div className="flex items-center justify-between pb-5 border-b border-[var(--glass-border)] mb-6">
+              <div className="drawer-head">
                 <span className="text-lg font-black bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent font-logo">
                   EREN AYDIN
                 </span>
@@ -450,7 +428,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
                   aria-label="Close Mobile Menu"
-                  className="p-2.5 rounded-full glass-card text-[var(--text-body)] hover:text-[var(--text-main)] hover:rotate-90 duration-200 transition-all cursor-pointer"
+                  className="drawer-close"
                 >
                   <FiX className="text-lg" />
                 </button>
@@ -461,7 +439,7 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                 variants={containerVariants}
                 initial="hidden"
                 animate="show"
-                className="flex flex-col gap-3.5 flex-1 overflow-y-auto pr-1"
+                className="drawer-nav"
               >
                 {navLinks.map((link) => {
                   const sectionId = link.href.substring(1);
@@ -472,52 +450,50 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                       variants={itemVariants}
                       key={link.href}
                       href={link.href}
+                      aria-current={isActive ? "true" : undefined}
                       onClick={() => {
                         setActiveSection(sectionId);
                         setIsMobileMenuOpen(false);
                       }}
-                      className={`flex items-center justify-between p-3.5 rounded-2xl glass-card border transition-all group ${
-                        isActive
-                          ? "border-primary/50 bg-primary/10 text-[var(--text-main)]"
-                          : "border-[var(--glass-border)] hover:border-primary/20 text-[var(--text-body)] hover:text-[var(--text-main)] hover:bg-primary/5"
-                      }`}
+                      className={`drawer-item${isActive ? " is-active" : ""}`}
                     >
-                      <div className="flex items-center gap-3">
-                        <span
-                          className={`p-2 rounded-xl transition-transform ${
-                            isActive
-                              ? "bg-primary/20 dark:bg-primary/40 text-primary dark:text-white scale-110 ring-1 ring-primary/30 dark:ring-primary/60"
-                              : "bg-[var(--badge-bg)] text-primary group-hover:scale-110"
-                          }`}
-                        >
-                          {link.icon}
-                        </span>
-                        <span className="text-sm font-bold tracking-wide">
-                          {link.label}
-                        </span>
-                      </div>
-                      <FiChevronRight
-                        className={`transition-transform ${isActive ? "text-primary translate-x-1" : "text-[var(--text-muted)] group-hover:translate-x-1"}`}
-                      />
+                      <span className="drawer-item-main">
+                        <span className="drawer-chip">{link.icon}</span>
+                        <span className="drawer-label">{link.label}</span>
+                      </span>
+                      <FiChevronRight className="drawer-arrow" />
                     </m.a>
                   );
                 })}
+
+                <m.div variants={itemVariants} className="drawer-admin">
+                  <Link
+                    href={adminLink.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="drawer-item"
+                  >
+                    <span className="drawer-item-main">
+                      <span className="drawer-chip">
+                        <FiLock className="text-lg" />
+                      </span>
+                      <span className="drawer-label">{adminLink.label}</span>
+                    </span>
+                    <FiChevronRight className="drawer-arrow" />
+                  </Link>
+                </m.div>
               </m.nav>
 
               {/* Drawer Footer */}
-              <div className="pt-6 border-t border-[var(--glass-border)] mt-auto space-y-6">
-                {/* Language Switcher */}
+              <div className="drawer-foot">
                 <div className="flex items-center justify-center gap-1 w-full">
                   <LanguageSwitcher />
                 </div>
 
-                {/* Social media shortcuts */}
-                <div className="flex justify-center gap-4 text-[var(--text-muted)]">
+                <div className="drawer-social">
                   <a
                     href="https://github.com/yigiterenaydin"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 glass-card rounded-xl hover:text-white hover:bg-primary hover:border-primary transition-all duration-300"
                     aria-label="GitHub"
                   >
                     <FiGithub className="text-lg" />
@@ -526,14 +502,12 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
                     href="https://www.instagram.com/eren_zhhh/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 glass-card rounded-xl hover:text-white hover:bg-primary hover:border-primary transition-all duration-300"
                     aria-label="Instagram"
                   >
                     <FiInstagram className="text-lg" />
                   </a>
                   <a
                     href="mailto:eren.yigit.aydin@gmail.com"
-                    className="p-2.5 glass-card rounded-xl hover:text-white hover:bg-primary hover:border-primary transition-all duration-300"
                     aria-label="Email"
                   >
                     <FiMail className="text-lg" />

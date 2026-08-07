@@ -16,10 +16,14 @@ export function ThemeInitializer() {
               }
             }
 
+            // Must match --background in the matching theme stylesheet and the
+            // values in ThemeContext.applyTheme. Blue used to be #102552 here
+            // while everything else already said #1e3a5f, so the mobile status
+            // bar painted the old darker navy and then jumped on first render.
             var colors = {
               white: '#ffffff',
               yellow: '#ffc72c',
-              blue: '#102552'
+              blue: '#1e3a5f'
             };
             var color = colors[theme] || '#ffffff';
 
@@ -53,21 +57,17 @@ export function ThemeInitializer() {
             }
           })();
 
-          // Prevent pinch-to-zoom gestures on mobile devices (e.g. iOS Safari)
+          // Pinch-to-zoom is blocked by 'touch-action: pan-x pan-y' on <html>
+          // (see globals.css). Only iOS Safari needs a listener, and
+          // gesturestart never fires during an ordinary scroll.
+          //
+          // The non-passive touchstart/touchmove pair that used to live here
+          // ran on every frame of every swipe and forced the browser to wait
+          // for JavaScript before it was allowed to scroll — with a busy main
+          // thread that reads as the page ignoring your finger.
           document.addEventListener('gesturestart', function(e) {
             e.preventDefault();
           });
-          
-          // Prevent zoom during momentum scroll (inertia)
-          function preventMultiTouch(e) {
-            if (e.touches && e.touches.length > 1) {
-              if (e.cancelable) {
-                e.preventDefault();
-              }
-            }
-          }
-          document.addEventListener('touchstart', preventMultiTouch, { passive: false });
-          document.addEventListener('touchmove', preventMultiTouch, { passive: false });
         `,
       }}
     />

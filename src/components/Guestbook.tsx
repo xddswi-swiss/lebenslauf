@@ -4,14 +4,12 @@ import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/app/contexts/LanguageContext";
 import { motion as m, AnimatePresence } from "framer-motion";
 import {
-  FiMessageSquare,
   FiSend,
   FiUser,
   FiCheck,
   FiLoader,
   FiChevronLeft,
   FiChevronRight,
-  FiEdit3,
   FiArrowLeft,
   FiHeart,
 } from "react-icons/fi";

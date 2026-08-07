@@ -5,7 +5,7 @@
 
 html.bw-mode,
 html.bw-mode body,
-body.bw-mode {
+html.bw-mode {
   background: #ffffff !important;
   background-image: none !important;
   color: #000000 !important;
@@ -22,6 +22,24 @@ body.bw-mode {
   --text-main: #000000;
   --text-body: #000000;
   --text-muted: #000000;
+
+  /* Animated border around the About card (ElectricBorder) */
+  --electric-border: #000000;
+  --electric-glow: #000000;
+
+  /* Mobile drawer — structural rules live in globals.css and read these.
+     No greys: this theme is strictly black on white, so depth comes from
+     the black accent rail and inverted chips rather than tinted fills. */
+  --drawer-surface: #ffffff;
+  --drawer-border: #000000;
+  --drawer-text: #000000;
+  --drawer-text-muted: #000000;
+  --drawer-accent: #000000;
+  --drawer-item-hover: rgba(0, 0, 0, 0.06);
+  --drawer-item-active: rgba(0, 0, 0, 0.1);
+  --drawer-chip: transparent;
+  --drawer-chip-active: #000000;
+  --drawer-chip-active-text: #ffffff;
 }
 
 /* Target text elements directly (EXCEPT PageLoader z-[9999]) */
@@ -51,15 +69,15 @@ html.bw-mode footer li {
 
 /* Ensure PageLoader always preserves original dark background and white text */
 html.bw-mode div.fixed.z-\[9999\],
-body.bw-mode div.fixed.z-\[9999\],
+html.bw-mode div.fixed.z-\[9999\],
 html.bw-mode div.fixed.z-\[9999\] *,
-body.bw-mode div.fixed.z-\[9999\] * {
+html.bw-mode div.fixed.z-\[9999\] * {
   color: #ffffff !important;
   -webkit-text-fill-color: initial !important;
 }
 
 html.bw-mode div.fixed.z-\[9999\] h2,
-body.bw-mode div.fixed.z-\[9999\] h2 {
+html.bw-mode div.fixed.z-\[9999\] h2 {
   background-clip: text !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
@@ -69,9 +87,9 @@ body.bw-mode div.fixed.z-\[9999\] h2 {
 html.bw-mode input,
 html.bw-mode textarea,
 html.bw-mode select,
-body.bw-mode input,
-body.bw-mode textarea,
-body.bw-mode select {
+html.bw-mode input,
+html.bw-mode textarea,
+html.bw-mode select {
   background: #ffffff !important;
   border: 1.5px solid #000000 !important;
   color: #000000 !important;
@@ -80,8 +98,8 @@ body.bw-mode select {
 
 html.bw-mode input::placeholder,
 html.bw-mode textarea::placeholder,
-body.bw-mode input::placeholder,
-body.bw-mode textarea::placeholder {
+html.bw-mode input::placeholder,
+html.bw-mode textarea::placeholder {
   color: #555555 !important;
   opacity: 1 !important;
 }
@@ -89,26 +107,26 @@ body.bw-mode textarea::placeholder {
 /* Timeline City & Period Badges in B&W Mode */
 html.bw-mode #experience span,
 html.bw-mode #experience div,
-body.bw-mode #experience span,
-body.bw-mode #experience div {
+html.bw-mode #experience span,
+html.bw-mode #experience div {
   color: #000000 !important;
 }
 
 /* Skills Matrix Texts in B&W Mode */
 html.bw-mode #skills *,
-body.bw-mode #skills * {
+html.bw-mode #skills * {
   color: #000000 !important;
 }
 
 /* Guestbook Section Texts in B&W Mode */
 html.bw-mode #guestbook *,
-body.bw-mode #guestbook * {
+html.bw-mode #guestbook * {
   color: #000000 !important;
 }
 
 /* Header in B&W */
 html.bw-mode header.header-glass-gradient,
-body.bw-mode header.header-glass-gradient {
+html.bw-mode header.header-glass-gradient {
   background: #ffffff !important;
   border-bottom: 1px solid #000000 !important;
   box-shadow: none !important;
@@ -121,8 +139,8 @@ html.bw-mode header.header-glass-gradient *:not(.active-language-btn):not(.activ
 
 html.bw-mode .active-language-btn,
 html.bw-mode .active-language-btn *,
-body.bw-mode .active-language-btn,
-body.bw-mode .active-language-btn * {
+html.bw-mode .active-language-btn,
+html.bw-mode .active-language-btn * {
   background-color: #000000 !important;
   background: #000000 !important;
   color: #ffffff !important;
@@ -131,31 +149,31 @@ body.bw-mode .active-language-btn * {
 
 /* Glass Cards & Elements in B&W (Keep natural rounded corners and solid border on hover) */
 html.bw-mode .glass-card,
-body.bw-mode .glass-card,
+html.bw-mode .glass-card,
 html.bw-mode [class*="glass-card"],
-body.bw-mode [class*="glass-card"] {
+html.bw-mode [class*="glass-card"] {
   background: #ffffff !important;
   border: 1px solid #000000 !important;
   box-shadow: none !important;
 }
 
 html.bw-mode .glass-card:hover,
-body.bw-mode .glass-card:hover,
+html.bw-mode .glass-card:hover,
 html.bw-mode [class*="glass-card"]:hover,
-body.bw-mode [class*="glass-card"]:hover {
+html.bw-mode [class*="glass-card"]:hover {
   border: 1px solid #000000 !important;
   border-color: #000000 !important;
   box-shadow: none !important;
 }
 
 html.bw-mode .glass-card::before,
-body.bw-mode .glass-card::before {
+html.bw-mode .glass-card::before {
   display: none !important;
 }
 
 /* 1. First Reference Card Only (Thomas Seinige) */
 html.bw-mode #contact .lg\:col-span-5 .space-y-3 > div:first-child,
-body.bw-mode #contact .lg\:col-span-5 .space-y-3 > div:first-child {
+html.bw-mode #contact .lg\:col-span-5 .space-y-3 > div:first-child {
   background: #000000 !important;
   border: 1px solid #000000 !important;
   color: #ffffff !important;
@@ -171,7 +189,7 @@ html.bw-mode #contact .lg\:col-span-5 .space-y-3 > div:first-child a {
 
 /* 2. Contact Form Submit Button (Nachricht senden) */
 html.bw-mode #contact form button[type="submit"],
-body.bw-mode #contact form button[type="submit"] {
+html.bw-mode #contact form button[type="submit"] {
   background: #000000 !important;
   border: 1px solid #000000 !important;
   color: #ffffff !important;
@@ -190,7 +208,7 @@ html.bw-mode #contact form button[type="submit"]:hover {
 
 /* 3. Hero Contact Button (İletişime Geç / Kontakt aufnehmen) -> SOLID BLACK */
 html.bw-mode a[href="#contact"].bg-primary,
-body.bw-mode a[href="#contact"].bg-primary {
+html.bw-mode a[href="#contact"].bg-primary {
   background: #000000 !important;
   border: 1px solid #000000 !important;
   color: #ffffff !important;
@@ -199,12 +217,12 @@ body.bw-mode a[href="#contact"].bg-primary {
 }
 
 html.bw-mode a[href="#contact"].bg-primary *,
-body.bw-mode a[href="#contact"].bg-primary * {
+html.bw-mode a[href="#contact"].bg-primary * {
   color: #ffffff !important;
 }
 
 html.bw-mode a[href="#contact"].bg-primary:hover,
-body.bw-mode a[href="#contact"].bg-primary:hover {
+html.bw-mode a[href="#contact"].bg-primary:hover {
   background: #333333 !important;
   border-color: #333333 !important;
   color: #ffffff !important;
@@ -212,7 +230,7 @@ body.bw-mode a[href="#contact"].bg-primary:hover {
 
 /* 3b. Hero Download CV Button (Özgeçmişi İndir / Lebenslauf herunderladen) -> WHITE BG */
 html.bw-mode a[download].bg-primary,
-body.bw-mode a[download].bg-primary {
+html.bw-mode a[download].bg-primary {
   background: #ffffff !important;
   border: 1px solid #000000 !important;
   color: #000000 !important;
@@ -221,44 +239,25 @@ body.bw-mode a[download].bg-primary {
 }
 
 html.bw-mode a[download].bg-primary *,
-body.bw-mode a[download].bg-primary * {
+html.bw-mode a[download].bg-primary * {
   color: #000000 !important;
 }
 
 html.bw-mode a[download].bg-primary:hover,
-body.bw-mode a[download].bg-primary:hover {
+html.bw-mode a[download].bg-primary:hover {
   background: #000000 !important;
   border-color: #000000 !important;
   color: #ffffff !important;
 }
 
 html.bw-mode a[download].bg-primary:hover *,
-body.bw-mode a[download].bg-primary:hover * {
+html.bw-mode a[download].bg-primary:hover * {
   color: #ffffff !important;
-}
-
-/* 4. Skill Matcher Buttons (Kaufmann EFZ & Elektroinstallateur EFZ) */
-html.bw-mode .matcher-btn,
-body.bw-mode .matcher-btn {
-  background: #000000 !important;
-  border: 1px solid #000000 !important;
-  color: #ffffff !important;
-  box-shadow: none !important;
-}
-
-html.bw-mode .matcher-btn *,
-html.bw-mode .matcher-btn svg {
-  color: #ffffff !important;
-}
-
-html.bw-mode .matcher-btn:hover {
-  background: #333333 !important;
-  border-color: #333333 !important;
 }
 
 /* 5. Experiences Header Button (Erfahrungen) */
 html.bw-mode .experience-header-btn,
-body.bw-mode .experience-header-btn {
+html.bw-mode .experience-header-btn {
   background: #000000 !important;
   border-color: #000000 !important;
   color: #ffffff !important;
@@ -266,20 +265,20 @@ body.bw-mode .experience-header-btn {
 }
 
 html.bw-mode .experience-header-btn *,
-body.bw-mode .experience-header-btn * {
+html.bw-mode .experience-header-btn * {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
 
 html.bw-mode .experience-header-btn span.rounded-full,
-body.bw-mode .experience-header-btn span.rounded-full {
+html.bw-mode .experience-header-btn span.rounded-full {
   background: #ffffff !important;
   border-color: #ffffff !important;
   color: #000000 !important;
 }
 
 html.bw-mode .experience-header-btn span.rounded-full *,
-body.bw-mode .experience-header-btn span.rounded-full * {
+html.bw-mode .experience-header-btn span.rounded-full * {
   color: #000000 !important;
   -webkit-text-fill-color: #000000 !important;
   stroke: #000000 !important;
@@ -292,35 +291,35 @@ html.bw-mode .experience-header-btn:hover {
 
 /* 6. Accordion Elements in B&W Mode */
 html.bw-mode .sa-wrap,
-body.bw-mode .sa-wrap {
+html.bw-mode .sa-wrap {
   border: 1px solid #000000 !important;
   box-shadow: none !important;
   background: #ffffff !important;
 }
 
 html.bw-mode .sa-panel,
-body.bw-mode .sa-panel {
+html.bw-mode .sa-panel {
   border-right: 1px solid #000000 !important;
   background: #ffffff !important;
 }
 
 html.bw-mode .sa-panel .sa-lbl,
 html.bw-mode .sa-panel .sa-ico,
-body.bw-mode .sa-panel .sa-lbl,
-body.bw-mode .sa-panel .sa-ico {
+html.bw-mode .sa-panel .sa-lbl,
+html.bw-mode .sa-panel .sa-ico {
   color: #000000 !important;
 }
 
 html.bw-mode .sa-panel.sa-active .sa-head-open,
-body.bw-mode .sa-panel.sa-active .sa-head-open {
+html.bw-mode .sa-panel.sa-active .sa-head-open {
   background: #000000 !important;
   border-bottom: 1px solid #000000 !important;
 }
 
 html.bw-mode .sa-panel.sa-active .sa-head-open,
 html.bw-mode .sa-panel.sa-active .sa-head-open *,
-body.bw-mode .sa-panel.sa-active .sa-head-open,
-body.bw-mode .sa-panel.sa-active .sa-head-open * {
+html.bw-mode .sa-panel.sa-active .sa-head-open,
+html.bw-mode .sa-panel.sa-active .sa-head-open * {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
   fill: #ffffff !important;
@@ -328,7 +327,7 @@ body.bw-mode .sa-panel.sa-active .sa-head-open * {
 }
 
 html.bw-mode .sa-panel.sa-active .sa-body,
-body.bw-mode .sa-panel.sa-active .sa-body {
+html.bw-mode .sa-panel.sa-active .sa-body {
   background: #ffffff !important;
   border: none !important;
   /* globals.css .sa-body has a faint inset shadow (rgba(0,0,0,0.04)) for
@@ -340,31 +339,31 @@ body.bw-mode .sa-panel.sa-active .sa-body {
 
 html.bw-mode .sa-panel.sa-active .sa-name,
 html.bw-mode .sa-panel.sa-active .sa-pct,
-body.bw-mode .sa-panel.sa-active .sa-name,
-body.bw-mode .sa-panel.sa-active .sa-pct {
+html.bw-mode .sa-panel.sa-active .sa-name,
+html.bw-mode .sa-panel.sa-active .sa-pct {
   color: #000000 !important;
 }
 
 html.bw-mode .sa-panel.sa-active .sa-fill,
-body.bw-mode .sa-panel.sa-active .sa-fill {
+html.bw-mode .sa-panel.sa-active .sa-fill {
   background: #000000 !important;
 }
 
 html.bw-mode .sa-panel.sa-active .sa-fill::after,
-body.bw-mode .sa-panel.sa-active .sa-fill::after {
+html.bw-mode .sa-panel.sa-active .sa-fill::after {
   background: #000000 !important;
   box-shadow: none !important;
 }
 
 html.bw-mode .sa-panel.sa-active .sa-beam,
-body.bw-mode .sa-panel.sa-active .sa-beam {
+html.bw-mode .sa-panel.sa-active .sa-beam {
   background: #000000 !important;
   box-shadow: none !important;
 }
 
 /* Stat Cards in B&W (stat-card-2 is solid black with white text) */
 html.bw-mode .stat-card-1,
-body.bw-mode .stat-card-1 {
+html.bw-mode .stat-card-1 {
   background: #ffffff !important;
   border: 1px solid #000000 !important;
   color: #000000 !important;
@@ -372,20 +371,20 @@ body.bw-mode .stat-card-1 {
 }
 
 html.bw-mode .stat-card-1 *,
-body.bw-mode .stat-card-1 *,
+html.bw-mode .stat-card-1 *,
 html.bw-mode .stat-card-1 .stat-number,
 html.bw-mode .stat-card-1 .stat-label,
 html.bw-mode .stat-card-1 .stat-desc,
-body.bw-mode .stat-card-1 .stat-number,
-body.bw-mode .stat-card-1 .stat-label,
-body.bw-mode .stat-card-1 .stat-desc {
+html.bw-mode .stat-card-1 .stat-number,
+html.bw-mode .stat-card-1 .stat-label,
+html.bw-mode .stat-card-1 .stat-desc {
   color: #000000 !important;
   opacity: 1 !important;
   font-weight: 600 !important;
 }
 
 html.bw-mode .stat-card-2,
-body.bw-mode .stat-card-2 {
+html.bw-mode .stat-card-2 {
   background: #000000 !important;
   border: 1px solid #000000 !important;
   color: #ffffff !important;
@@ -393,15 +392,15 @@ body.bw-mode .stat-card-2 {
 }
 
 html.bw-mode .stat-card-2 *,
-body.bw-mode .stat-card-2 * {
+html.bw-mode .stat-card-2 * {
   color: #ffffff !important;
 }
 
 /* Status & Hobby Badges in B&W */
 html.bw-mode .status-badge,
 html.bw-mode .hobby-badge,
-body.bw-mode .status-badge,
-body.bw-mode .hobby-badge {
+html.bw-mode .status-badge,
+html.bw-mode .hobby-badge {
   background: #ffffff !important;
   border: 1px solid #000000 !important;
   color: #000000 !important;
@@ -410,14 +409,14 @@ body.bw-mode .hobby-badge {
 
 html.bw-mode .status-badge *,
 html.bw-mode .hobby-badge *,
-body.bw-mode .status-badge *,
-body.bw-mode .hobby-badge * {
+html.bw-mode .status-badge *,
+html.bw-mode .hobby-badge * {
   color: #000000 !important;
 }
 
 /* Document Card Icons & Texts in B&W Mode */
 html.bw-mode #documents *,
-body.bw-mode #documents * {
+html.bw-mode #documents * {
   opacity: 1 !important;
 }
 
@@ -425,23 +424,23 @@ html.bw-mode #documents .glass-card p,
 html.bw-mode #documents .glass-card span,
 html.bw-mode #documents .glass-card h3,
 html.bw-mode #documents .glass-card h4,
-body.bw-mode #documents .glass-card p,
-body.bw-mode #documents .glass-card span,
-body.bw-mode #documents .glass-card h3,
-body.bw-mode #documents .glass-card h4 {
+html.bw-mode #documents .glass-card p,
+html.bw-mode #documents .glass-card span,
+html.bw-mode #documents .glass-card h3,
+html.bw-mode #documents .glass-card h4 {
   color: #000000 !important;
   font-weight: 600 !important;
 }
 
 html.bw-mode #documents .glass-card[class*="text-"],
-body.bw-mode #documents .glass-card[class*="text-"] {
+html.bw-mode #documents .glass-card[class*="text-"] {
   background-color: #000000 !important;
   color: #ffffff !important;
   border: 1.5px solid #000000 !important;
 }
 
 html.bw-mode #documents .glass-card[class*="text-"] *,
-body.bw-mode #documents .glass-card[class*="text-"] * {
+html.bw-mode #documents .glass-card[class*="text-"] * {
   color: #ffffff !important;
 }
 
@@ -451,25 +450,25 @@ body.bw-mode #documents .glass-card[class*="text-"] * {
    violet/amber/rose). Same white-bg/black-border → black-bg/white-icon
    invert pattern used for the footer social icons. */
 html.bw-mode #documents a[class*="text-"],
-body.bw-mode #documents a[class*="text-"] {
+html.bw-mode #documents a[class*="text-"] {
   background-color: #ffffff !important;
   color: #000000 !important;
   border: 1.5px solid #000000 !important;
 }
 
 html.bw-mode #documents a[class*="text-"] *,
-body.bw-mode #documents a[class*="text-"] * {
+html.bw-mode #documents a[class*="text-"] * {
   color: #000000 !important;
 }
 
 html.bw-mode #documents a[class*="text-"]:hover,
-body.bw-mode #documents a[class*="text-"]:hover {
+html.bw-mode #documents a[class*="text-"]:hover {
   background-color: #000000 !important;
   border: 1.5px solid #000000 !important;
 }
 
 html.bw-mode #documents a[class*="text-"]:hover *,
-body.bw-mode #documents a[class*="text-"]:hover * {
+html.bw-mode #documents a[class*="text-"]:hover * {
   color: #ffffff !important;
 }
 
@@ -477,14 +476,14 @@ body.bw-mode #documents a[class*="text-"]:hover * {
    Icon color itself is left to Tailwind's text-[var(--text-body)] / hover:text-white
    classes on the <a>, same as the yellow/dark themes — no fill/stroke overrides. */
 html.bw-mode footer a.glass-card,
-body.bw-mode footer a.glass-card {
+html.bw-mode footer a.glass-card {
   background-color: #ffffff !important;
   border: 1.5px solid #000000 !important;
   box-shadow: none !important;
 }
 
 html.bw-mode footer a.glass-card:hover,
-body.bw-mode footer a.glass-card:hover {
+html.bw-mode footer a.glass-card:hover {
   background-color: #000000 !important;
   border: 1.5px solid #000000 !important;
   box-shadow: none !important;
@@ -493,8 +492,8 @@ body.bw-mode footer a.glass-card:hover {
 /* Visual Sitemap Part 1 & Part 2 Buttons in B&W Mode */
 html.bw-mode footer .grid button.glass-card,
 html.bw-mode footer .grid a.glass-card,
-body.bw-mode footer .grid button.glass-card,
-body.bw-mode footer .grid a.glass-card {
+html.bw-mode footer .grid button.glass-card,
+html.bw-mode footer .grid a.glass-card {
   background: #ffffff !important;
   border: 1.5px solid #000000 !important;
   color: #000000 !important;
@@ -502,14 +501,14 @@ body.bw-mode footer .grid a.glass-card {
 
 html.bw-mode footer .grid button.glass-card *,
 html.bw-mode footer .grid a.glass-card *,
-body.bw-mode footer .grid button.glass-card *,
-body.bw-mode footer .grid a.glass-card * {
+html.bw-mode footer .grid button.glass-card *,
+html.bw-mode footer .grid a.glass-card * {
   color: #000000 !important;
 }
 
 /* Visual Sitemap Main Container - NO HOVER EFFECTS & STABLE BORDER */
 html.bw-mode footer div.border-2,
-body.bw-mode footer div.border-2 {
+html.bw-mode footer div.border-2 {
   background: #ffffff !important;
   border: 1px solid #000000 !important;
   box-shadow: none !important;
@@ -517,16 +516,16 @@ body.bw-mode footer div.border-2 {
 
 html.bw-mode footer div.border-2::before,
 html.bw-mode footer div.border-2::after,
-body.bw-mode footer div.border-2::before,
-body.bw-mode footer div.border-2::after {
+html.bw-mode footer div.border-2::before,
+html.bw-mode footer div.border-2::after {
   display: none !important;
 }
 
 /* Footer All Texts & Copyright in B&W Mode (100% Solid Black, No Grayness) */
 html.bw-mode footer,
-body.bw-mode footer,
+html.bw-mode footer,
 html.bw-mode footer *,
-body.bw-mode footer * {
+html.bw-mode footer * {
   opacity: 1 !important;
 }
 
@@ -538,14 +537,14 @@ html.bw-mode footer h3,
 html.bw-mode footer h4,
 html.bw-mode footer li,
 html.bw-mode footer button,
-body.bw-mode footer p,
-body.bw-mode footer span,
-body.bw-mode footer div,
-body.bw-mode footer a:not(.glass-card:hover),
-body.bw-mode footer h3,
-body.bw-mode footer h4,
-body.bw-mode footer li,
-body.bw-mode footer button {
+html.bw-mode footer p,
+html.bw-mode footer span,
+html.bw-mode footer div,
+html.bw-mode footer a:not(.glass-card:hover),
+html.bw-mode footer h3,
+html.bw-mode footer h4,
+html.bw-mode footer li,
+html.bw-mode footer button {
   color: #000000 !important;
   -webkit-text-fill-color: #000000 !important;
   font-weight: 700 !important;
@@ -553,7 +552,7 @@ body.bw-mode footer button {
 
 /* Exception for Logo badge in Footer (Black circle with White "E") */
 html.bw-mode footer .w-10.h-10.rounded-full,
-body.bw-mode footer .w-10.h-10.rounded-full {
+html.bw-mode footer .w-10.h-10.rounded-full {
   background: #000000 !important;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
@@ -561,14 +560,14 @@ body.bw-mode footer .w-10.h-10.rounded-full {
 
 /* Cookie Consent Banner in B&W Mode */
 html.bw-mode [class*="z-\[99999\]"] .glass-card,
-body.bw-mode [class*="z-\[99999\]"] .glass-card {
+html.bw-mode [class*="z-\[99999\]"] .glass-card {
   background: #ffffff !important;
   border: 1px solid #000000 !important;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25) !important;
 }
 
 html.bw-mode [class*="z-\[99999\]"] button.bg-primary,
-body.bw-mode [class*="z-\[99999\]"] button.bg-primary {
+html.bw-mode [class*="z-\[99999\]"] button.bg-primary {
   background: #000000 !important;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
@@ -576,7 +575,7 @@ body.bw-mode [class*="z-\[99999\]"] button.bg-primary {
 }
 
 html.bw-mode [class*="z-\[99999\]"] button.border-2,
-body.bw-mode [class*="z-\[99999\]"] button.border-2 {
+html.bw-mode [class*="z-\[99999\]"] button.border-2 {
   background: #ffffff !important;
   color: #000000 !important;
   -webkit-text-fill-color: #000000 !important;
@@ -585,16 +584,16 @@ body.bw-mode [class*="z-\[99999\]"] button.border-2 {
 
 /* ScrollToTop Button in B&W Mode (Solid Black Circle, Bright White Climbing Stickman) */
 html.bw-mode button[aria-label="Scroll to top"],
-body.bw-mode button[aria-label="Scroll to top"] {
+html.bw-mode button[aria-label="Scroll to top"] {
   background: #000000 !important;
   color: #ffffff !important;
   border: 1.5px solid #000000 !important;
 }
 
 html.bw-mode .climbing-stickman,
-body.bw-mode .climbing-stickman,
+html.bw-mode .climbing-stickman,
 html.bw-mode .climbing-stickman *,
-body.bw-mode .climbing-stickman * {
+html.bw-mode .climbing-stickman * {
   color: #ffffff !important;
   stroke: #ffffff !important;
   fill: #ffffff !important;
@@ -603,7 +602,7 @@ body.bw-mode .climbing-stickman * {
 
 /* Active Language Button in B&W Mode (Solid Black Background, Bright White Text) */
 html.bw-mode .active-language-btn,
-body.bw-mode .active-language-btn {
+html.bw-mode .active-language-btn {
   background: #000000 !important;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
@@ -622,61 +621,6 @@ body.bw-mode .active-language-btn {
   -webkit-text-fill-color: #ffffff !important;
 }
 
-/* Mobile Drawer in B&W Mode
-   Header.tsx sets an inline `style={drawerStyle}` on .mobile-drawer with a
-   random colored gradient (one of 5 accent colors, incl. green/cyan/pink) —
-   this is only ever overridden per-theme via a hardcoded `.mobile-drawer`
-   !important rule in theme-yellow.css / theme-dark.css. Since bw-mode never
-   had its own override, the random colored gradient leaked straight through
-   in B&W mode. Fixed here the same way yellow/dark already do it. */
-html.bw-mode .mobile-drawer,
-body.bw-mode .mobile-drawer {
-  background: #ffffff !important;
-  border-left: 1px solid #000000 !important;
-}
-
-html.bw-mode .mobile-drawer *,
-body.bw-mode .mobile-drawer * {
-  color: #000000 !important;
-}
-
-html.bw-mode .mobile-drawer .border-b,
-html.bw-mode .mobile-drawer .border-t,
-body.bw-mode .mobile-drawer .border-b,
-body.bw-mode .mobile-drawer .border-t {
-  border-color: rgba(0, 0, 0, 0.15) !important;
-}
-
-/* Mobile Drawer nav links: yellow/dark themes deliberately have NO border
-   or box around each row (globals.css strips it for every theme via
-   `.mobile-drawer .glass-card { border: none !important; }`) — the only
-   per-item visual is the icon badge chip + a faint hover/press tint. Keep
-   B&W mode exactly as borderless/flat as yellow/blue; just make the icon
-   badge chip and hover tint grayscale instead of colored. */
-html.bw-mode .mobile-drawer .glass-card,
-body.bw-mode .mobile-drawer .glass-card {
-  background-color: transparent !important;
-  border: none !important;
-}
-
-/* Yellow/dark themes have no visible hover background at all on these rows
-   (globals.css's generic 5% black tint is imperceptible against a solid
-   colored drawer) — only the icon's built-in scale-110 grow shows. In B&W
-   mode that same faint tint reads as plain gray, which isn't allowed, so
-   cancel it outright and let the icon's scale transform be the only
-   hover/press feedback, matching yellow/blue exactly. */
-html.bw-mode .mobile-drawer .glass-card:hover,
-body.bw-mode .mobile-drawer .glass-card:hover {
-  background-color: transparent !important;
-}
-
-/* Icon badge chip behind each nav link's icon (bg-[var(--badge-bg)]) — no
-   gray fill, leave it flat/transparent so only the black icon shows. */
-html.bw-mode .mobile-drawer [class*="badge-bg"],
-body.bw-mode .mobile-drawer [class*="badge-bg"] {
-  background-color: transparent !important;
-}
-
 /* Kill every stray cyan accent in B&W Mode (e.g. the "Ausbildung" accordion
    toggle's from-cyan-500/5 gradient, which reads as a faint light-green
    wash, plus its cyan text/border on expand). B&W mode must stay strictly
@@ -684,18 +628,18 @@ body.bw-mode .mobile-drawer [class*="badge-bg"] {
 html.bw-mode [class*="from-cyan"],
 html.bw-mode [class*="to-cyan"],
 html.bw-mode [class*="via-cyan"],
-body.bw-mode [class*="from-cyan"],
-body.bw-mode [class*="to-cyan"],
-body.bw-mode [class*="via-cyan"] {
+html.bw-mode [class*="from-cyan"],
+html.bw-mode [class*="to-cyan"],
+html.bw-mode [class*="via-cyan"] {
   background-image: none !important;
 }
 
 html.bw-mode [class*="text-cyan"],
-body.bw-mode [class*="text-cyan"] {
+html.bw-mode [class*="text-cyan"] {
   color: #000000 !important;
 }
 
 html.bw-mode [class*="border-cyan"],
-body.bw-mode [class*="border-cyan"] {
+html.bw-mode [class*="border-cyan"] {
   border-color: #000000 !important;
 }

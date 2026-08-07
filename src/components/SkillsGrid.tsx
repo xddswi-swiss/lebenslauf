@@ -164,7 +164,7 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({
       </div>
 
       {/* ---- Accordion ---- */}
-      <div className="sa-wrap" role="list">
+      <div className="sa-wrap">
         {categories.map((key) => {
           const isActive = active === key;
           const Icon = ICONS[key];
@@ -187,8 +187,9 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({
             <div
               key={key}
               className={`sa-panel${isActive ? " sa-active" : ""}`}
-              role="listitem"
+              role="button"
               aria-expanded={isActive}
+              aria-label={label}
               style={
                 {
                   "--cat-color": catColor.base,

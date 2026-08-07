@@ -4,7 +4,6 @@ import React from "react";
 import Link from "next/link";
 import { motion as m } from "framer-motion";
 import { useLanguage } from "@/app/contexts/LanguageContext";
-import { useTheme } from "@/app/contexts/ThemeContext";
 import {
   FiHome,
   FiArrowLeft,
@@ -18,7 +17,6 @@ import {
 
 export default function NotFound() {
   const { language, setLanguage, t } = useLanguage();
-  const { theme } = useTheme();
 
   // Navigation Sitemap links
   const sitemapLinks = [

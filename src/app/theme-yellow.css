@@ -20,6 +20,22 @@
   --text-body: #1a1a1a;
   --text-muted: #333333;
 
+  /* Animated border around the About card (ElectricBorder) */
+  --electric-border: #000000;
+  --electric-glow: #ff6c02;
+
+  /* Mobile drawer — structural rules live in globals.css and read these */
+  --drawer-surface: linear-gradient(160deg, #ffc72c 0%, #ffb300 55%, #ff9d00 100%);
+  --drawer-border: rgba(0, 0, 0, 0.14);
+  --drawer-text: #000000;
+  --drawer-text-muted: rgba(0, 0, 0, 0.6);
+  --drawer-accent: #000000;
+  --drawer-item-hover: rgba(0, 0, 0, 0.07);
+  --drawer-item-active: rgba(0, 0, 0, 0.12);
+  --drawer-chip: rgba(255, 255, 255, 0.5);
+  --drawer-chip-active: #000000;
+  --drawer-chip-active-text: #ffc72c;
+
   /* Glassmorphism Variables for Yellow */
   --glass-bg: rgba(255, 199, 44, 0.85);
   --glass-card-bg: linear-gradient(
@@ -102,12 +118,6 @@
   font-weight: 900 !important;
 }
 
-:root:not(.dark):not(.bw-mode)
-  header.header-glass-gradient
-  button:not(.bg-primary):not(.bw-switch-container button):not(.glass-card) {
-  color: #000000 !important;
-}
-
 :root:not(.dark):not(.bw-mode) header.header-glass-gradient button.glass-card {
   border-color: rgba(255, 255, 255, 0.5) !important;
   background-color: rgba(255, 255, 255, 0.3) !important;
@@ -146,32 +156,6 @@
 :root:not(.dark):not(.bw-mode) footer .rounded-full.bg-gradient-to-br {
   background: #000000 !important;
   color: #ffc72c !important;
-}
-
-/* Mobile Drawer Override */
-:root:not(.dark):not(.bw-mode) .mobile-drawer {
-  background: linear-gradient(135deg, #ffc72c, #ffb300) !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.4) !important;
-}
-
-:root:not(.dark):not(.bw-mode) .mobile-drawer * {
-  color: #000000 !important;
-}
-
-:root:not(.dark):not(.bw-mode) .mobile-drawer .border-b,
-:root:not(.dark):not(.bw-mode) .mobile-drawer .border-t {
-  border-color: rgba(0, 0, 0, 0.1) !important;
-}
-
-/* ASCII and Code blocks */
-html:not(.dark):not(.bw-mode) .skills-card-ascii {
-  background: rgba(255, 255, 255, 0.5) !important;
-  border: 1px solid rgba(255, 255, 255, 0.8) !important;
-}
-
-html:not(.dark):not(.bw-mode) .skills-ascii-content {
-  color: #b37d00 !important;
-  text-shadow: none !important;
 }
 
 /* Forms (Inputs & Textareas) Override */
@@ -227,14 +211,6 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
   transform: translateY(-1px);
 }
 
-:root:not(.dark):not(.bw-mode) .cb-fill {
-  background: rgba(0, 0, 0, 0.15) !important;
-}
-
-:root:not(.dark):not(.bw-mode) .cb-label {
-  color: #000000 !important;
-}
-
 /* Theme specific Stat Cards */
 :root:not(.dark):not(.bw-mode) .stat-card-1 {
   background: linear-gradient(
@@ -262,21 +238,6 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
 :root:not(.dark):not(.bw-mode) .stat-card-2 .stat-label,
 :root:not(.dark):not(.bw-mode) .stat-card-2 .stat-desc {
   color: #ffffff !important;
-}
-
-/* Yellow Theme: Drawer Glass Gradient Background */
-:root:not(.dark):not(.bw-mode) .drawer-glass-gradient {
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 213, 79, 0.98) 0%,
-    rgba(255, 199, 44, 0.95) 70%,
-    rgba(255, 160, 0, 0.08) 100%
-  );
-}
-
-/* Yellow Theme: Skill Track (progress bar arka planı — sarıda okunabilir) */
-:root:not(.dark):not(.bw-mode) .skill-track {
-  background: rgba(0, 0, 0, 0.12) !important;
 }
 
 /* Yellow Theme: Grid mesh arka planını kaldır */
@@ -321,219 +282,6 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
 }
 
 :root:not(.dark):not(.bw-mode) a[href="#contact"].bg-primary:hover {
-  background: linear-gradient(to bottom right, #ff6600, #cc5200) !important;
-  box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
-}
-
-/* Yellow Theme: Skill Matcher Buttons (Kaufmann EFZ & Elektroinstallateur EFZ) */
-:root:not(.dark):not(.bw-mode) .matcher-btn {
-  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  color: #ffffff !important;
-  box-shadow: 0 6px 20px rgba(230, 92, 0, 0.25) !important;
-}
-
-:root:not(.dark):not(.bw-mode) .matcher-btn *,
-:root:not(.dark):not(.bw-mode) .matcher-btn svg {
-  color: #ffffff !important;
-}
-
-:root:not(.dark):not(.bw-mode) .matcher-btn:hover {
-  background: linear-gradient(to bottom right, #ff6600, #cc5200) !important;
-  box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
-}
-
-/* Yellow Theme: Experiences Header Button (Erfahrungen) */
-:root:not(.dark):not(.bw-mode) .experience-header-btn {
-  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  color: #ffffff !important;
-  box-shadow: 0 6px 20px rgba(230, 92, 0, 0.25) !important;
-}
-
-:root:not(.dark):not(.bw-mode) .experience-header-btn *,
-:root:not(.dark):not(.bw-mode) .experience-header-btn svg {
-  color: #ffffff !important;
-}
-
-:root:not(.dark):not(.bw-mode) .experience-header-btn:hover {
-  background: linear-gradient(to bottom right, #ff6600, #cc5200) !important;
-  box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
-}
-
-/* Yellow Theme: Accordion Panels Warm Vibrant Amber Orange (from User Image) */
-:root:not(.dark):not(.bw-mode) .sa-wrap {
-  border: 1px solid rgba(0, 0, 0, 0.15) !important;
-  box-shadow: 0 10px 30px rgba(245, 158, 11, 0.25) !important;
-  background: #f59e0b !important;
-}
-
-:root:not(.dark):not(.bw-mode) .sa-panel {
-  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
-}
-
-:root:not(.dark):not(.bw-mode) .sa-panel .sa-lbl {
-  color: #ffffff !important;
-  font-weight: 800 !important;
-  text-shadow: none !important;
-}
-
-:root:not(.dark):not(.bw-mode) .sa-panel .sa-ico {
-  color: #ffffff !important;
-}
-
-:root:not(.dark):not(.bw-mode) .sa-panel:hover:not(.sa-active) {
-  background: #c2510a !important;
-}
-
-:root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-head-open {
-  background: linear-gradient(
-    to right,
-    var(--cat-color, #e65c00),
-    var(--cat-color-dark, #b34700)
-  ) !important;
-}
-
-:root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-head-open .sa-lbl,
-:root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-head-open .sa-ico {
-  color: #ffffff !important;
-}
-
-:root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-body {
-  background: rgba(255, 248, 230, 0.95) !important;
-}
-
-:root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-name {
-  color: #27272a !important;
-}
-
-:root:not(.dark):not(.bw-mode) .sa-panel.sa-active .sa-pct {
-  color: #b87a00 !important;
-}
-
-/* ScrollToTop Button in Yellow Theme (Orange Circle, Pure White Stickman) */
-:root:not(.dark):not(.bw-mode) button[aria-label="Scroll to top"] {
-  background: #e65c00 !important;
-  color: #ffffff !important;
-  border: 1.5px solid #e65c00 !important;
-  box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
-}
-
-:root:not(.dark):not(.bw-mode) .climbing-stickman,
-:root:not(.dark):not(.bw-mode) .climbing-stickman * {
-  color: #ffffff !important;
-  background: rgba(0, 0, 0, 0.15) !important;
-}
-
-:root:not(.dark):not(.bw-mode) .cb-label {
-  color: #000000 !important;
-}
-
-/* Theme specific Stat Cards */
-:root:not(.dark):not(.bw-mode) .stat-card-1 {
-  background: linear-gradient(
-    to bottom right,
-    rgba(0, 0, 0, 0.9),
-    rgba(0, 0, 0, 0.75)
-  ) !important;
-  color: #ffc72c !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
-}
-:root:not(.dark):not(.bw-mode) .stat-card-1 .stat-number,
-:root:not(.dark):not(.bw-mode) .stat-card-1 .stat-label,
-:root:not(.dark):not(.bw-mode) .stat-card-1 .stat-desc {
-  color: #ffc72c !important;
-}
-
-:root:not(.dark):not(.bw-mode) .stat-card-2 {
-  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 10px 20px rgba(230, 92, 0, 0.2) !important;
-}
-:root:not(.dark):not(.bw-mode) .stat-card-2 .stat-number,
-:root:not(.dark):not(.bw-mode) .stat-card-2 .stat-label,
-:root:not(.dark):not(.bw-mode) .stat-card-2 .stat-desc {
-  color: #ffffff !important;
-}
-
-/* Yellow Theme: Drawer Glass Gradient Background */
-:root:not(.dark):not(.bw-mode) .drawer-glass-gradient {
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 213, 79, 0.98) 0%,
-    rgba(255, 199, 44, 0.95) 70%,
-    rgba(255, 160, 0, 0.08) 100%
-  );
-}
-
-/* Yellow Theme: Skill Track (progress bar arka planı — sarıda okunabilir) */
-:root:not(.dark):not(.bw-mode) .skill-track {
-  background: rgba(0, 0, 0, 0.12) !important;
-}
-
-/* Yellow Theme: Grid mesh arka planını kaldır */
-:root:not(.dark):not(.bw-mode) .bg-grid-mesh {
-  background-image: none !important;
-}
-
-/* Yellow Theme: First Reference Card Only (Thomas Seinige - Orange Gradient) */
-:root:not(.dark):not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child {
-  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  box-shadow: 0 6px 20px rgba(230, 92, 0, 0.2) !important;
-}
-
-:root:not(.dark):not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child h4,
-:root:not(.dark):not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child p,
-:root:not(.dark):not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child span,
-:root:not(.dark):not(.bw-mode) #contact .lg\:col-span-5 .space-y-3 > div:first-child a {
-  color: #ffffff !important;
-}
-
-/* Yellow Theme: Contact Form Submit Button (Nachricht senden) */
-:root:not(.dark):not(.bw-mode) #contact form button[type="submit"] {
-  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  color: #ffffff !important;
-  box-shadow: 0 6px 20px rgba(230, 92, 0, 0.25) !important;
-}
-
-:root:not(.dark):not(.bw-mode) #contact form button[type="submit"]:hover {
-  background: linear-gradient(to bottom right, #ff6600, #cc5200) !important;
-  box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
-}
-
-/* Yellow Theme: Hero Contact Button (Kontakt aufnehmen) */
-:root:not(.dark):not(.bw-mode) a[href="#contact"].bg-primary,
-:root:not(.dark):not(.bw-mode) a[href="#contact"].bg-primary * {
-  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  color: #ffffff !important;
-  box-shadow: 0 6px 20px rgba(230, 92, 0, 0.25) !important;
-}
-
-:root:not(.dark):not(.bw-mode) a[href="#contact"].bg-primary:hover {
-  background: linear-gradient(to bottom right, #ff6600, #cc5200) !important;
-  box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
-}
-
-/* Yellow Theme: Skill Matcher Buttons (Kaufmann EFZ & Elektroinstallateur EFZ) */
-:root:not(.dark):not(.bw-mode) .matcher-btn {
-  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  color: #ffffff !important;
-  box-shadow: 0 6px 20px rgba(230, 92, 0, 0.25) !important;
-}
-
-:root:not(.dark):not(.bw-mode) .matcher-btn *,
-:root:not(.dark):not(.bw-mode) .matcher-btn svg {
-  color: #ffffff !important;
-}
-
-:root:not(.dark):not(.bw-mode) .matcher-btn:hover {
   background: linear-gradient(to bottom right, #ff6600, #cc5200) !important;
   box-shadow: 0 8px 25px rgba(230, 92, 0, 0.4) !important;
 }

@@ -11,7 +11,6 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
-import Strands from "@/components/Strands";
 import ElectricBorder from "@/components/ElectricBorder";
 import { motion as m, AnimatePresence } from "framer-motion";
 import Image from "next/image";
@@ -25,48 +24,9 @@ import {
 } from "react-icons/fi";
 import {
   reportItems,
-  languagesData,
   referencesData,
+  type ReportItem,
 } from "@/data/translations";
-import {
-  FaUtensils,
-  FaFistRaised,
-  FaSwimmer,
-  FaMusic,
-  FaLeaf,
-  FaCamera,
-  FaWalking,
-  FaFileWord,
-  FaFileExcel,
-  FaCode,
-} from "react-icons/fa";
-
-const hobbiesWithIcons = [
-  { key: "cook" as const, icon: <FaUtensils /> },
-  { key: "kung-fu" as const, icon: <FaFistRaised /> },
-  { key: "swim" as const, icon: <FaSwimmer /> },
-  { key: "music" as const, icon: <FaMusic /> },
-  { key: "nature" as const, icon: <FaLeaf /> },
-  { key: "photography" as const, icon: <FaCamera /> },
-  { key: "walk" as const, icon: <FaWalking /> },
-  { key: "word" as const, icon: <FaFileWord /> },
-  { key: "excel" as const, icon: <FaFileExcel /> },
-  { key: "code" as const, icon: <FaCode /> },
-];
-
-const getStrandsColors = (index: number) => {
-  if (index === -1) return ["#06B6D4", "#7C3AED", "#FF3B5C"]; // Default fallback
-
-  const palettes = [
-    ["#F21137", "#FF6C02", "#68020F"], // 0. Red / Volcanic
-    ["#7C3AED", "#3B82F6", "#C084FC"], // 1. Deep Nebula
-    ["#10B981", "#059669", "#A7F3D0"], // 2. Green / Mint
-    ["#EC4899", "#8B5CF6", "#FBCFE8"], // 3. Cosmic Rose
-    ["#06B6D4", "#3B82F6", "#99F6E4"], // 4. Electric Cyan / Blue
-  ];
-
-  return palettes[index];
-};
 
 // --- MANUEL DEĞİŞTİREBİLECEĞİNİZ İSTATİSTİKLER ---
 // Buradaki sayıları ve tarihi dilediğiniz gibi güncelleyebilirsiniz:
@@ -75,16 +35,29 @@ const STATS_BEWERBUNGEN = 96; // Lehrstellenbewerbungen (Çıraklık Başvurusu)
 const STATS_LETZTE_AKTUALISIERUNG = "19.06.2026"; // Son Güncelleme Tarihi
 // ------------------------------------------------
 
-const MainContent: React.FC = () => {
-  const { t, language } = useLanguage();
-  const { theme, themeMode } = useTheme();
-  const [randomColorIndex, setRandomColorIndex] = useState<number>(-1);
-  const [docs, setDocs] = useState<any[]>([]);
-  const [mounted, setMounted] = useState(false);
+// ElectricBorder paints to a canvas, so it needs a resolved colour string
+// rather than a var() reference. Read the value the active theme stylesheet
+// set on :root and re-read it whenever the theme changes.
+const useThemeColor = (variable: string, fallback: string): string => {
+  const { themeMode } = useTheme();
+  const [color, setColor] = useState(fallback);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    const value = getComputedStyle(document.documentElement)
+      .getPropertyValue(variable)
+      .trim();
+    setColor(value || fallback);
+  }, [variable, fallback, themeMode]);
+
+  return color;
+};
+
+const MainContent: React.FC = () => {
+  const { t, language } = useLanguage();
+  const [randomColorIndex, setRandomColorIndex] = useState<number>(-1);
+  const [docs, setDocs] = useState<ReportItem[]>([]);
+  const electricBorder = useThemeColor("--electric-border", "#000000");
+  const electricGlow = useThemeColor("--electric-glow", "#FF6C02");
 
   useEffect(() => {
     // Set initial static items immediately to prevent hydration mismatches during server rendering
@@ -288,21 +261,12 @@ const MainContent: React.FC = () => {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="lg:col-span-7 flex flex-col justify-center cursor-default"
             >
+              {/* Colours come from the active theme stylesheet via
+                  --electric-border / --electric-glow rather than a ternary
+                  here, so all three themes stay defined in one place. */}
               <ElectricBorder
-                color={
-                  themeMode === "white"
-                    ? "#000000"
-                    : themeMode === "blue"
-                      ? "#00FFCC"
-                      : "#000000"
-                }
-                glowColor={
-                  themeMode === "white"
-                    ? "#000000"
-                    : themeMode === "blue"
-                      ? "#3B82F6"
-                      : "#FF6C02"
-                }
+                color={electricBorder}
+                glowColor={electricGlow}
                 thickness={1}
                 speed={0.5}
                 chaos={3.5}
@@ -690,7 +654,9 @@ export default function Home() {
         }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         style={{
-          height: isLoading ? "100vh" : "auto",
+          // dvh, not vh: on mobile the browser chrome makes 100vh taller than
+          // the visible area, so the locked page overflowed underneath it.
+          height: isLoading ? "100dvh" : "auto",
           overflow: isLoading ? "hidden" : "visible",
         }}
       >

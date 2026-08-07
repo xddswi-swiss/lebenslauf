@@ -148,8 +148,11 @@
 }
 
 :root {
-  /* Default: Light Theme variables mapping (Yellow, White, Black) */
-  --background: #d9dc00;
+  /* Fallback only — one of theme-yellow / theme-dark / bw-mode always wins.
+     Kept in sync with the yellow theme so a missed stylesheet degrades to the
+     default look instead of the acid green (#d9dc00) that used to sit here and
+     matched no theme at all. */
+  --background: #ffc72c;
   --foreground: #000000;
   --card: #ffffff;
   --card-border: rgba(0, 0, 0, 0.08);
@@ -176,11 +179,18 @@
 }
 
 
+html {
+  /* Blocks pinch-zoom while leaving panning to the compositor. Replaces the
+     non-passive touchstart/touchmove listeners that used to do this in JS and
+     made every swipe wait on the main thread. */
+  touch-action: pan-x pan-y;
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
-  scroll-behavior: smooth;
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
@@ -204,25 +214,7 @@ body {
   background: var(--muted);
 }
 
-/* Glassmorphism Utilities */
-.glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-color: var(--glass-border);
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease;
-}
-
 .header-glass-gradient {
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--glass-border);
-  transition: all 0.3s ease;
-}
-
-.drawer-glass-gradient {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--glass-border);
@@ -323,23 +315,6 @@ body {
   color: currentColor !important;
 }
 
-/* Mobile Drawer - Strip all link cards, borders, outlines & shadow globally for all themes */
-.mobile-drawer .glass-card,
-.mobile-drawer button.glass-card {
-  background-color: transparent !important;
-  background: transparent !important;
-  border: none !important;
-  border-width: 0px !important;
-  box-shadow: none !important;
-}
-
-.mobile-drawer .glass-card:hover,
-.mobile-drawer button.glass-card:hover {
-  background-color: rgba(0, 0, 0, 0.05) !important;
-  border: none !important;
-  border-width: 0px !important;
-}
-
 /* Custom distinctive logo font */
 .font-logo {
   font-family: var(--font-logo), sans-serif !important;
@@ -384,314 +359,9 @@ body {
   border-color: #000000 !important;
 }
 
-/* Animated Download Button */
-.cb-btn {
-  position: relative;
-  width: 100%;
-  height: 44px;
-  border: 2px solid var(--primary);
-  border-radius: 22px;
-  background: transparent;
-  cursor: pointer;
-  overflow: hidden;
-  user-select: none;
-  font-family: inherit;
-  font-weight: 700;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 10px -2px
-    color-mix(in srgb, var(--primary) 20%, transparent);
-}
-
-.cb-btn:hover {
-  box-shadow: 0 8px 16px -4px
-    color-mix(in srgb, var(--primary) 30%, transparent);
-  transform: translateY(-1px);
-}
-
-.cb-btn:active {
-  transform: translateY(0);
-}
-
-.cb-btn:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 3px;
-}
-
-.cb-fill {
-  position: absolute;
-  inset: 0;
-  background: var(--primary);
-  border-radius: 20px;
-  transform: translateX(-100%);
-  transition: none;
-}
-
-.cb-label {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  z-index: 1;
-  color: var(--primary);
-  transition: color 0.3s;
-}
-
-.cb-arrow {
-  font-size: 15px;
-}
-
-.cb-done {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  color: #ffffff;
-  opacity: 0;
-  transform: scale(0.8);
-  transition:
-    opacity 0.3s,
-    transform 0.3s;
-}
-
-/* B&W mode overrides */
-:root.bw-mode .cb-done {
-  color: #ffffff !important;
-}
-
-:root.bw-mode .cb-label {
-  color: #000000 !important;
-}
-
-:root.bw-mode .cb-btn {
-  border: 1px solid #000000 !important;
-  border-radius: 22px !important;
-  box-shadow: none !important;
-}
-
-:root.bw-mode .cb-fill {
-  background: #000000 !important;
-  border-radius: 20px !important;
-}
-
-.cb-btn.is-loading .cb-fill {
-  transform: translateX(0);
-  transition: transform 1.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.cb-btn.is-loading .cb-label {
-  color: #ffffff;
-}
-
-:root.bw-mode .cb-btn.is-loading .cb-label {
-  color: #ffffff !important;
-}
-
-.cb-btn.is-loading .cb-arrow {
-  animation: cb-bounce 0.6s infinite alternate;
-}
-
-@keyframes cb-bounce {
-  from {
-    transform: translateY(-3px);
-  }
-  to {
-    transform: translateY(3px);
-  }
-}
-
-.cb-btn.is-done .cb-fill {
-  transform: translateX(0);
-}
-
-/* Theme flag: slow "breathing" glow on the currently active color stripe,
-   to draw the eye and hint that these stripes are interactive/clickable. */
-@keyframes theme-flag-pulse {
-  0%,
-  100% {
-    filter: brightness(1);
-  }
-  50% {
-    filter: brightness(1.4);
-  }
-}
-
-.theme-flag-active-pulse {
-  animation: theme-flag-pulse 1.8s ease-in-out infinite;
-}
-
-/* Yellow stripe: a plain brightness pulse made it look like a harsh
-   screaming yellow at the peak, so shift the color itself slightly toward
-   orange instead of just brightening it. */
-@keyframes theme-flag-yellow-pulse {
-  0%,
-  100% {
-    background-color: #ffc72c;
-  }
-  50% {
-    background-color: #ea580c;
-  }
-}
-
-.theme-flag-yellow-active-pulse {
-  animation: theme-flag-yellow-pulse 1.8s ease-in-out infinite;
-}
-
-/* Black & white stripe can't use a brightness pulse (nothing to brighten
-   when it's already the "off" white/black look), so fade its background
-   between white and black instead. */
-@keyframes theme-flag-bw-pulse {
-  0%,
-  100% {
-    background-color: #ffffff;
-  }
-  50% {
-    background-color: #000000;
-  }
-}
-
-.theme-flag-bw-active-pulse {
-  animation: theme-flag-bw-pulse 1.8s ease-in-out infinite;
-}
-
-.cb-btn.is-done .cb-label {
-  opacity: 0;
-}
-
-.cb-btn.is-done .cb-done {
-  opacity: 1;
-  transform: scale(1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .cb-btn.is-loading .cb-arrow {
-    animation: none;
-  }
-}
-
 /* Global touch interaction config to prevent double-tap zoom delay */
 a, button, input, select, textarea {
   touch-action: manipulation;
-}
-
-/* Horizontal Skills Beam Scanner Layout */
-.skills-scanner-container {
-  position: relative;
-  width: 100%;
-  height: 400px;
-  overflow: hidden;
-  touch-action: pan-y;
-}
-
-.skills-slider-track {
-  display: flex;
-  align-items: center;
-  will-change: transform;
-  cursor: grab;
-  touch-action: none; /* Prevents all pinch-zoom and page scroll while dragging */
-}
-
-.skills-slider-track.dragging {
-  cursor: grabbing;
-}
-
-.skills-card-wrapper {
-  position: relative;
-  width: 400px;
-  height: 250px;
-  flex-shrink: 0;
-  margin-right: 32px;
-}
-
-.skills-card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.skills-card-normal {
-  background: var(--glass-card-bg) !important;
-  border: 1px solid var(--glass-border) !important;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 14px 18px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-start !important;
-  z-index: 2;
-  clip-path: inset(0 0 0 var(--clip-right, 0%));
-}
-
-.skills-card-ascii {
-  background: rgba(8, 10, 18, 0.98) !important;
-  z-index: 1;
-  clip-path: inset(0 calc(100% - var(--clip-left, 0%)) 0 0);
-}
-
-.dark .skills-card-ascii {
-  border: 1px solid rgba(0, 220, 255, 0.15) !important;
-}
-
-html:not(.dark):not(.bw-mode) .skills-card-ascii {
-  background: rgba(18, 16, 8, 0.98) !important;
-  border: 1px solid rgba(234, 179, 8, 0.3) !important;
-}
-
-.skills-ascii-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.65;
-  font-family: "Courier New", monospace !important;
-  font-size: 11px !important;
-  line-height: 13px !important;
-  overflow: hidden;
-  white-space: pre !important;
-  margin: 0;
-  padding: 16px 20px;
-  text-align: left;
-  vertical-align: top;
-  box-sizing: border-box;
-  -webkit-mask-image: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.8) 30%,
-    rgba(0, 0, 0, 0.6) 50%,
-    rgba(0, 0, 0, 0.4) 80%,
-    rgba(0, 0, 0, 0.2) 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.8) 30%,
-    rgba(0, 0, 0, 0.6) 50%,
-    rgba(0, 0, 0, 0.4) 80%,
-    rgba(0, 0, 0, 0.2) 100%
-  );
-  animation: glitch-anim 0.1s infinite linear alternate-reverse;
-}
-
-.dark .skills-ascii-content {
-  color: #00dcff !important;
-}
-
-html:not(.dark):not(.bw-mode) .skills-ascii-content {
-  color: #eab308 !important;
-  text-shadow: 0 0 4px rgba(234, 179, 8, 0.4);
 }
 
 @keyframes glitch-anim {
@@ -703,92 +373,6 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
     opacity: 1;
     transform: skewX(0.5deg);
   }
-}
-
-.skill-fill {
-  width: 0%;
-  height: 100%;
-  border-radius: 3px;
-  transition: width 1.5s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-.skills-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid var(--glass-border);
-  padding-bottom: 6px;
-  height: 32px;
-}
-
-.skills-icon {
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-}
-
-.skills-title {
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  color: var(--text-main) !important;
-}
-
-.skills-list {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  width: 100%;
-  flex: 1;
-  justify-content: center;
-}
-
-.skill-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  height: 18px;
-}
-
-.skill-label {
-  width: 48%;
-  font-size: 11.5px;
-  font-weight: 600;
-  color: var(--text-body) !important;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.skill-bar-container {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 0;
-}
-
-.skill-track {
-  flex: 1;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 3px;
-  overflow: hidden;
-  border: none;
-}
-
-.skill-percent {
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--text-muted) !important;
-  font-family: monospace;
-  width: 28px;
-  text-align: right;
-  flex-shrink: 0;
 }
 
 /* Default Stat Cards (Fallback / B&W Mode base) */
@@ -1112,16 +696,234 @@ html:not(.dark):not(.bw-mode) .skills-ascii-content {
   -webkit-text-fill-color: #ffffff !important;
 }
 
-.footer-social-btn {
-  background-color: var(--glass-card-bg);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--glass-border);
-  color: var(--text-body);
+/* ============================================================
+   Mobile drawer
+   Structure only. Every colour comes from the --drawer-* custom
+   properties each theme stylesheet defines on :root, so adding or
+   retuning a theme means editing that theme's variable block and
+   nothing here.
+   ============================================================ */
+.mobile-drawer {
+  background: var(--drawer-surface);
+  border-left: 1px solid var(--drawer-border);
+  color: var(--drawer-text);
 }
 
-.footer-social-btn:hover {
-  border-color: var(--primary);
+.drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--drawer-border);
+  margin-bottom: 1.35rem;
+}
+
+.drawer-close {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--drawer-border);
+  background: transparent;
+  color: var(--drawer-text);
+  cursor: pointer;
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s ease;
+}
+
+.drawer-close:hover {
+  background: var(--drawer-item-hover);
+  transform: rotate(90deg);
+}
+
+.drawer-close:active {
+  transform: rotate(90deg) scale(0.9);
+}
+
+.drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+/* One row. The accent rail on the left is the whole "alive" trick: it is a
+   scaled-to-zero pseudo element that springs to full height on the active
+   row and half height on press, which reads as motion without animating
+   layout. */
+.drawer-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.8rem 0.9rem 0.8rem 1.1rem;
+  border-radius: 14px;
+  color: var(--drawer-text);
+  text-decoration: none;
+  isolation: isolate;
+  transition:
+    background-color 0.2s ease,
+    transform 0.18s ease;
+}
+
+.drawer-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 3px;
+  height: 62%;
+  border-radius: 999px;
+  background: var(--drawer-accent);
+  transform: translateY(-50%) scaleY(0);
+  transform-origin: center;
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.drawer-item:hover {
+  background: var(--drawer-item-hover);
+}
+
+.drawer-item:hover::before {
+  transform: translateY(-50%) scaleY(0.5);
+}
+
+.drawer-item:active {
+  transform: scale(0.975);
+}
+
+.drawer-item.is-active {
+  background: var(--drawer-item-active);
+  font-weight: 800;
+}
+
+.drawer-item.is-active::before {
+  transform: translateY(-50%) scaleY(1);
+}
+
+.drawer-item-main {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.drawer-chip {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--drawer-chip);
+  color: var(--drawer-text);
+  transition:
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.22s ease,
+    color 0.22s ease;
+}
+
+.drawer-item:hover .drawer-chip {
+  transform: translateX(2px) scale(1.08);
+}
+
+.drawer-item.is-active .drawer-chip {
+  background: var(--drawer-chip-active);
+  color: var(--drawer-chip-active-text);
+  transform: scale(1.06);
+}
+
+.drawer-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drawer-arrow {
+  flex-shrink: 0;
+  color: var(--drawer-text-muted);
+  transition:
+    transform 0.24s ease,
+    opacity 0.24s ease;
+  opacity: 0.6;
+}
+
+.drawer-item:hover .drawer-arrow {
+  transform: translateX(4px);
+  opacity: 1;
+}
+
+.drawer-item.is-active .drawer-arrow {
+  color: var(--drawer-accent);
+  transform: translateX(4px);
+  opacity: 1;
+}
+
+/* Admin entry: a page link, not a section anchor, so it is set apart with a
+   dashed rule above it rather than sitting in the same list rhythm. */
+.drawer-admin {
+  margin-top: 0.5rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--drawer-border);
+}
+
+.drawer-foot {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--drawer-border);
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.drawer-social {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.drawer-social a {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--drawer-border);
+  color: var(--drawer-text);
+  transition:
+    transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.drawer-social a:hover {
+  background: var(--drawer-accent);
+  color: var(--drawer-surface, #fff);
+  transform: translateY(-3px);
+}
+
+/* bw-mode has no tinted surface to invert against, so keep the hover as a
+   straight black fill with white glyphs. */
+:root.bw-mode .drawer-social a:hover {
+  background: #000000;
   color: #ffffff;
-  background-color: var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer-item,
+  .drawer-item::before,
+  .drawer-chip,
+  .drawer-arrow,
+  .drawer-close,
+  .drawer-social a {
+    transition: none;
+  }
 }

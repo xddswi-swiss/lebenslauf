@@ -45,6 +45,7 @@ export interface TranslationSchema {
     details: string;
     guestbook: string;
     contact: string;
+    admin: string;
   };
   hero: {
     greeting: string;
@@ -383,19 +384,6 @@ export const referencesData: Record<Language, ReferenceItem[]> = {
   ],
 };
 
-export const interestsData = [
-  "Kochen",
-  "Kung‑Fu",
-  "Schwimmen",
-  "Musik hören",
-  "Natur",
-  "Fotografieren",
-  "Spazieren",
-  "Word",
-  "Excel",
-  "Programmieren",
-];
-
 export const translations: Record<Language, TranslationSchema> = {
   de: {
     meta: {
@@ -412,6 +400,7 @@ export const translations: Record<Language, TranslationSchema> = {
       details: "Kompetenzen",
       guestbook: "Gästebuch",
       contact: "Kontakt",
+      admin: "Admin",
     },
     hero: {
       greeting: "Hallo, ich bin Eren",
@@ -619,6 +608,7 @@ export const translations: Record<Language, TranslationSchema> = {
       details: "Yetkinlikler",
       guestbook: "Ziyaretçi Defteri",
       contact: "İletişim",
+      admin: "Yönetim",
     },
     hero: {
       greeting: "Merhaba, ben Eren",
@@ -819,6 +809,7 @@ export const translations: Record<Language, TranslationSchema> = {
       details: "Competences",
       guestbook: "Guestbook",
       contact: "Contact",
+      admin: "Admin",
     },
     hero: {
       greeting: "Hi, I'm Eren",
