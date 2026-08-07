@@ -472,9 +472,9 @@ export const Timeline: React.FC<TimelineProps> = ({
 
       {/* SECTION 2: AUSBILDUNG (EDUCATION) */}
       <div className="glass-card rounded-3xl overflow-hidden border border-[var(--glass-border)] shadow-xl transition-all duration-300">
-        <button
+        <div
           onClick={() => setIsEducationExpanded(!isEducationExpanded)}
-          className="w-full flex items-center justify-between p-6 md:p-8 cursor-pointer select-none text-left bg-gradient-to-r from-cyan-500/5 to-transparent hover:from-cyan-500/10 transition-all duration-300"
+          className="w-full flex items-center justify-between p-6 md:p-8 cursor-pointer select-none text-left bg-gradient-to-r from-primary/5 to-transparent hover:from-primary/10 transition-all duration-300"
         >
           <span className="flex items-center gap-4">
             <span className="p-3 rounded-2xl bg-[var(--badge-bg)] text-primary">
@@ -494,11 +494,11 @@ export const Timeline: React.FC<TimelineProps> = ({
             </span>
           </span>
           <span
-            className={`p-2 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] transition-transform duration-300 ${isEducationExpanded ? "rotate-180 text-cyan-600 border-cyan-500/30" : ""}`}
+            className={`p-2 rounded-full bg-[var(--background)] border border-[var(--glass-border)] text-[var(--text-muted)] transition-transform duration-300 ${isEducationExpanded ? "rotate-180 text-primary border-primary/30" : ""}`}
           >
             <FiChevronDown className="text-xl" />
           </span>
-        </button>
+        </div>
 
         <AnimatePresence initial={false}>
           {isEducationExpanded && (
@@ -525,19 +525,19 @@ export const Timeline: React.FC<TimelineProps> = ({
                         className="relative group"
                       >
                         {/* Timeline node */}
-                        <div className="absolute -left-14 md:-left-[4.5rem] top-1.5 flex items-center justify-center w-8 h-8 rounded-full bg-[var(--background)] border border-[var(--glass-border)] group-hover:border-cyan-500 dark:group-hover:border-cyan-400 transition-all duration-300">
-                          <FiBookOpen className="text-sm text-[var(--text-muted)] group-hover:text-cyan-700 dark:group-hover:text-cyan-300 transition-all duration-300" />
+                        <div className="absolute -left-14 md:-left-[4.5rem] top-1.5 flex items-center justify-center w-8 h-8 rounded-full bg-[var(--background)] border border-[var(--glass-border)] group-hover:border-primary transition-all duration-300">
+                          <FiBookOpen className="text-sm text-[var(--text-muted)] group-hover:text-primary transition-all duration-300" />
                         </div>
 
                         <div className="glass-card p-6 md:p-8 rounded-3xl relative overflow-hidden border border-[var(--glass-border)]">
-                          <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 blur-2xl rounded-full" />
+                          <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 blur-2xl rounded-full" />
 
                           <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
                             <div>
-                              <h3 className="text-xl font-bold text-[var(--text-main)] group-hover:text-cyan-700 dark:group-hover:text-cyan-300 transition-colors duration-300">
+                              <h3 className="text-xl font-bold text-[var(--text-main)] group-hover:text-primary transition-colors duration-300">
                                 {item.company}
                               </h3>
-                              <p className="text-sm text-cyan-700 dark:text-cyan-300 font-medium mt-0.5 flex items-center gap-1.5">
+                              <p className="text-sm text-primary font-medium mt-0.5 flex items-center gap-1.5">
                                 {item.role}
                                 <span className="text-[var(--glass-border)]">
                                   •
