@@ -79,12 +79,15 @@ const MainContent: React.FC = () => {
       "-=0.3"
     );
 
-    // 6. Photo card drops in from top with a quick elastic bounce
-    tl.fromTo(".gsap-hero-photo",
-      { y: -120, opacity: 0, rotationZ: 15, scale: 0.8 },
-      { y: 0, opacity: 1, rotationZ: 0, scale: 1, duration: 0.6, ease: "elastic.out(1, 0.6)" },
-      "-=0.8" // Start while buttons are popping in
-    );
+    // 6. Photo card drops in from top with a quick elastic bounce (Desktop only)
+    const isMobile = window.innerWidth < 1024;
+    if (!isMobile) {
+      tl.fromTo(".gsap-hero-photo",
+        { y: -120, opacity: 0, rotationZ: 15, scale: 0.8 },
+        { y: 0, opacity: 1, rotationZ: 0, scale: 1, duration: 0.6, ease: "elastic.out(1, 0.6)" },
+        "-=0.8" // Start while buttons are popping in
+      );
+    }
 
   }, { scope: heroRef, dependencies: [] });
 
