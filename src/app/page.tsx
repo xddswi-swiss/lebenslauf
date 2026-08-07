@@ -118,9 +118,9 @@ const MainContent: React.FC = () => {
         {/* Hero Section */}
         <section
           id="hero"
-          className="scroll-mt-32 min-h-[50vh] flex flex-col-reverse lg:flex-row items-center justify-between gap-12 relative pt-12 pb-0"
+          className="scroll-mt-32 min-h-[50vh] grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative pt-12 pb-0"
         >
-          <div className="max-w-3xl space-y-6 flex-1">
+          <div className="order-2 lg:order-1 lg:col-span-7 space-y-6">
             <m.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -215,11 +215,11 @@ const MainContent: React.FC = () => {
             initial={{ opacity: 0, scale: 0.95, x: 20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex-shrink-0 z-10"
+            className="order-1 lg:order-2 lg:col-span-5 flex-shrink-0 z-10 flex justify-center lg:justify-end"
           >
             <div
               tabIndex={0}
-              className="group hover:saturate-100 focus:saturate-100 active:saturate-100 saturate-0 transition-[filter] duration-300 relative w-[300px] h-[380px] bg-[var(--badge-bg)] font-sans border-b-2 border-primary overflow-hidden shadow-2xl rounded-3xl outline-none cursor-pointer"
+              className="group hover:saturate-100 focus:saturate-100 active:saturate-100 saturate-0 transition-[filter] duration-300 relative w-[300px] h-[380px] bg-[var(--badge-bg)] font-sans border-b-2 border-primary overflow-hidden shadow-2xl rounded-3xl outline-none cursor-pointer lg:ml-auto mx-auto"
             >
               <Image
                 className="w-[300px] h-[300px] object-cover group-hover:rounded-br-[100px] group-focus:rounded-br-[100px] group-active:rounded-br-[100px] rounded-br-[0px] transition-[border-radius] duration-300"
