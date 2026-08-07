@@ -223,15 +223,15 @@ export const Header: React.FC<HeaderProps> = ({ activeColorIndex }) => {
       <header
         ref={headerRef}
         style={headerStyle}
-        className="fixed top-0 left-0 right-0 w-full z-50 header-glass-gradient px-6 py-4 transition-all duration-300"
+        className="fixed top-0 left-0 right-0 w-full z-50 header-glass-gradient py-4 transition-all duration-300"
       >
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+        <div className="max-w-6xl w-full mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <m.a
               href="#"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              className="text-xl font-black bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent font-logo"
+              className="text-2xl md:text-[26px] font-black bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent font-logo tracking-tight"
             >
               EREN AYDIN
             </m.a>
