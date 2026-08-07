@@ -118,10 +118,6 @@ export interface TranslationSchema {
       code: string;
     };
   };
-  guestbook: {
-    title: string;
-    subtitle: string;
-  };
   contact: {
     title: string;
     subtitle: string;
@@ -511,10 +507,6 @@ export const translations: Record<Language, TranslationSchema> = {
         code: "Programmieren",
       },
     },
-    guestbook: {
-      title: "Gästebuch",
-      subtitle: "Hinterlassen Sie mir eine Nachricht, Feedback oder einfach einen netten Gruss!",
-    },
     contact: {
       title: "Kontakt",
       subtitle:
@@ -709,10 +701,6 @@ export const translations: Record<Language, TranslationSchema> = {
         excel: "Excel",
         code: "Programlama",
       },
-    },
-    guestbook: {
-      title: "Ziyaretçi Defteri",
-      subtitle: "Bana bir mesaj, geri bildirim veya güzel bir söz bırakın!",
     },
     contact: {
       title: "İletişim",
@@ -914,10 +902,6 @@ export const translations: Record<Language, TranslationSchema> = {
         excel: "Excel",
         code: "Programming",
       },
-    },
-    guestbook: {
-      title: "Guestbook",
-      subtitle: "Leave me a message, feedback, or just say hello!",
     },
     contact: {
       title: "Contact",

@@ -76,7 +76,7 @@ export const Guestbook: React.FC = () => {
   const translations = {
     de: {
       title: "Gästebuch",
-      subtitle: "Hinterlassen Sie mir eine Nachricht, ein Feedback oder ein nettes Wort!",
+      subtitle: "Hinterlassen Sie mir eine Nachricht oder ein nettes Wort!",
       ctaText: "Möchten Sie mir auch eine Nachricht hinterlassen?",
       ctaTextBack: "Möchten Sie zurück zu den gespeicherten Nachrichten?",
       btnWrite: "Nachricht schreiben",
@@ -101,8 +101,8 @@ export const Guestbook: React.FC = () => {
     },
     tr: {
       title: "Ziyaretçi Defteri",
-      subtitle: "Bana bir mesaj, geri bildirim veya güzel bir söz bırakın!",
-      ctaText: "Siz de bana bir mesaj veya geri bildirim bırakmak ister misiniz?",
+      subtitle: "Bana bir mesaj veya güzel bir söz bırakın!",
+      ctaText: "Siz de bana bir mesaj bırakmak ister misiniz?",
       ctaTextBack: "Kayıtlı mesajlara geri dönmek ister misiniz?",
       btnWrite: "Mesaj Yaz",
       btnBack: "Mesajlara Dön",
@@ -126,8 +126,8 @@ export const Guestbook: React.FC = () => {
     },
     en: {
       title: "Guestbook",
-      subtitle: "Leave me a message, feedback, or just say hello!",
-      ctaText: "Would you like to leave me a message or feedback too?",
+      subtitle: "Leave me a message or a kind word!",
+      ctaText: "Would you like to leave me a message too?",
       ctaTextBack: "Would you like to go back to reading messages?",
       btnWrite: "Write a Message",
       btnBack: "Back to Messages",
