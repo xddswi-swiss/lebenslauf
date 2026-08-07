@@ -390,3 +390,27 @@
 :root:not(.dark):not(.bw-mode) button.bg-primary.admin-force-white-text:not(.scroll-top-btn):hover {
   background: linear-gradient(to bottom right, #ff6600, #cc5200) !important;
 }
+
+/* Guestbook Card Toggle Button in Yellow Theme */
+:root:not(.dark):not(.bw-mode) .guestbook-toggle-btn {
+  background: linear-gradient(to bottom right, #e65c00, #b34700) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 4px 15px rgba(230, 92, 0, 0.25) !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+:root:not(.dark):not(.bw-mode) .guestbook-toggle-btn:hover {
+  background: linear-gradient(to bottom right, #ff6600, #cc5200) !important;
+  box-shadow: 0 6px 20px rgba(230, 92, 0, 0.4) !important;
+}
+
+/* Guestbook Sleek Text Toggle (Yellow Theme) */
+:root:not(.dark):not(.bw-mode) .guestbook-text-toggle {
+  color: #e65c00 !important;
+  -webkit-text-fill-color: #e65c00 !important;
+}
+:root:not(.dark):not(.bw-mode) .guestbook-text-toggle:hover {
+  color: #ff6600 !important;
+  -webkit-text-fill-color: #ff6600 !important;
+}

@@ -382,3 +382,28 @@
   fill: #102552 !important;
   -webkit-text-fill-color: #102552 !important;
 }
+
+/* Guestbook Card Toggle Button in Dark Theme */
+:root.dark:not(.bw-mode) .guestbook-toggle-btn {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.35) 0%, rgba(30, 58, 95, 0.6) 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(96, 165, 250, 0.5) !important;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25) !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+:root.dark:not(.bw-mode) .guestbook-toggle-btn:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.55) 0%, rgba(30, 58, 95, 0.8) 100%) !important;
+  border-color: rgba(96, 165, 250, 0.8) !important;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
+}
+
+/* Guestbook Sleek Text Toggle (Dark Theme) */
+:root.dark:not(.bw-mode) .guestbook-text-toggle {
+  color: #60a5fa !important;
+  -webkit-text-fill-color: #60a5fa !important;
+}
+:root.dark:not(.bw-mode) .guestbook-text-toggle:hover {
+  color: #93c5fd !important;
+  -webkit-text-fill-color: #93c5fd !important;
+}
