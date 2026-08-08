@@ -463,14 +463,6 @@ a, button, input, select, textarea {
   cursor: grabbing;
 }
 
-.plug-cable {
-  width: 4px;
-  height: 22px;
-  border-radius: 2px;
-  background: var(--cable);
-  border: 1px solid rgba(0, 0, 0, 0.25);
-}
-
 .plug-body {
   position: relative;
   width: 34px;
@@ -508,11 +500,6 @@ a, button, input, select, textarea {
 .plug:focus-visible .plug-body {
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* The plug for the theme currently in use */
-.plug-live .plug-body {
-  box-shadow: 0 0 0 2px var(--text-main);
 }
 
 /* While dragged the plug follows the pointer, so it leaves the flow */

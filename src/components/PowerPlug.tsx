@@ -51,77 +51,111 @@ export const PowerPlug: React.FC = () => {
 
   const movedRef = useRef(0);
   const [dragging, setDragging] = useState<ThemeMode | null>(null);
-  const [pointer, setPointer] = useState<{ x: number; y: number } | null>(null);
+  /**
+   * Pointer position in both frames at once: viewport coordinates place the
+   * dragged plug, which is position: fixed, and stage coordinates draw the
+   * cable. Both are captured from the same event so a scroll mid-drag cannot
+   * put them out of step.
+   */
+  const [pointer, setPointer] = useState<{
+    clientX: number;
+    clientY: number;
+    stageX: number;
+    stageY: number;
+  } | null>(null);
 
-  // Dynamic SVG Cable paths calculation
-  const [cablePaths, setCablePaths] = useState<Record<string, string>>({});
+  /**
+   * Where each plug hangs when it is not being dragged, in stage coordinates.
+   *
+   * Only this is state. The cable paths themselves are worked out during
+   * render, because deriving them into state meant every pointermove set state
+   * twice — once for the pointer, then again from an effect for the paths — and
+   * rendered twice for one move of the mouse.
+   */
+  const [anchors, setAnchors] = useState<
+    Record<string, { x: number; y: number }>
+  >({});
 
-  const updateCablePaths = useCallback(() => {
-    if (!stageRef.current) return;
-    const stageRect = stageRef.current.getBoundingClientRect();
+  const measureAnchors = useCallback(() => {
+    const stage = stageRef.current;
+    if (!stage) return;
+    const stageRect = stage.getBoundingClientRect();
     if (stageRect.width === 0) return;
 
-    const newPaths: Record<string, string> = {};
-
+    const next: Record<string, { x: number; y: number }> = {};
     PLUGS.forEach((plug) => {
-      const plugBtn = plugRefs.current[plug.mode];
-      if (!plugBtn) return;
-      const plugRect = plugBtn.getBoundingClientRect();
-      const plugCenterX = plugRect.left - stageRect.left + plugRect.width / 2;
-
-      // Source origin is directly above each plug at stage top ceiling
-      const startX = plugCenterX;
-      const startY = 0;
-
-      const isDragging = dragging === plug.mode;
-      const isPluggedIn = themeMode === plug.mode;
-
-      let endX = plugCenterX;
-      let endY = Math.max(0, plugRect.top - stageRect.top);
-
-      if (isDragging && pointer) {
-        // Live pointer tracking when dragging
-        endX = pointer.x - stageRect.left;
-        endY = pointer.y - stageRect.top - 12;
-      } else if (isPluggedIn && !isDragging) {
-        // Connected to top of plug head sitting inside socket
-        endX = plugCenterX;
-        endY = Math.max(0, plugRect.top - stageRect.top);
-      }
-
-      if (!isDragging && !isPluggedIn) {
-        // Resting: 100% straight vertical cable from top ceiling to plug head!
-        newPaths[plug.mode] = `M ${startX} ${startY} L ${startX} ${endY}`;
-      } else {
-        // Dragging or Plugged in: Smooth physics curved cable line trailing behind plug head!
-        const dx = endX - startX;
-        const dy = endY - startY;
-        const absDx = Math.abs(dx);
-        const sag = Math.max(15, Math.min(60, dy * 0.35 + absDx * 0.25));
-
-        const cp1X = startX + dx * 0.1;
-        const cp1Y = startY + sag;
-        const cp2X = endX - dx * 0.1;
-        const cp2Y = endY - sag * 0.4;
-
-        newPaths[plug.mode] = `M ${startX} ${startY} C ${cp1X} ${cp1Y}, ${cp2X} ${cp2Y}, ${endX} ${endY}`;
-      }
+      const el = plugRefs.current[plug.mode];
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      next[plug.mode] = {
+        x: r.left - stageRect.left + r.width / 2,
+        y: Math.max(0, r.top - stageRect.top),
+      };
     });
 
-    setCablePaths(newPaths);
-  }, [dragging, pointer, themeMode]);
+    // Bail out when nothing moved, otherwise a resize or a re-measure would
+    // hand back a fresh object and re-render for no reason.
+    setAnchors((prev) => {
+      const same =
+        Object.keys(next).length === Object.keys(prev).length &&
+        Object.entries(next).every(
+          ([k, v]) => prev[k] && prev[k].x === v.x && prev[k].y === v.y,
+        );
+      return same ? prev : next;
+    });
+  }, []);
 
+  // Layout only shifts when a plug moves in or out of the socket, or the window
+  // resizes — never while the pointer moves.
   useEffect(() => {
-    updateCablePaths();
-    const r1 = requestAnimationFrame(() => {
-      updateCablePaths();
-    });
-    window.addEventListener("resize", updateCablePaths);
+    measureAnchors();
+    const frame = requestAnimationFrame(measureAnchors);
+    window.addEventListener("resize", measureAnchors);
     return () => {
-      cancelAnimationFrame(r1);
-      window.removeEventListener("resize", updateCablePaths);
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", measureAnchors);
     };
-  }, [updateCablePaths]);
+  }, [measureAnchors, themeMode]);
+
+  const cablePathFor = (plug: Plug): string => {
+    const anchor = anchors[plug.mode];
+    if (!anchor) return "";
+
+    const startX = anchor.x;
+    const startY = 0;
+    const isDragging = dragging === plug.mode;
+    const isPluggedIn = themeMode === plug.mode;
+
+    const endX = isDragging && pointer ? pointer.stageX : anchor.x;
+    const endY = isDragging && pointer ? pointer.stageY - 12 : anchor.y;
+
+    if (!isDragging && !isPluggedIn) {
+      // Resting: a straight drop from the ceiling to the plug head.
+      return `M ${startX} ${startY} L ${startX} ${endY}`;
+    }
+
+    // Dragged or plugged in: let the cable sag behind the head.
+    const dx = endX - startX;
+    const dy = endY - startY;
+    const sag = Math.max(15, Math.min(60, dy * 0.35 + Math.abs(dx) * 0.25));
+
+    const cp1X = startX + dx * 0.1;
+    const cp1Y = startY + sag;
+    const cp2X = endX - dx * 0.1;
+    const cp2Y = endY - sag * 0.4;
+
+    return `M ${startX} ${startY} C ${cp1X} ${cp1Y}, ${cp2X} ${cp2Y}, ${endX} ${endY}`;
+  };
+
+  const toPointer = (event: React.PointerEvent) => {
+    const stageRect = stageRef.current?.getBoundingClientRect();
+    return {
+      clientX: event.clientX,
+      clientY: event.clientY,
+      stageX: event.clientX - (stageRect?.left ?? 0),
+      stageY: event.clientY - (stageRect?.top ?? 0),
+    };
+  };
 
   const endDrag = () => {
     setDragging(null);
@@ -131,14 +165,14 @@ export const PowerPlug: React.FC = () => {
   const onPointerDown = (event: React.PointerEvent, mode: ThemeMode) => {
     movedRef.current = 0;
     setDragging(mode);
-    setPointer({ x: event.clientX, y: event.clientY });
+    setPointer(toPointer(event));
     event.currentTarget.setPointerCapture?.(event.pointerId);
   };
 
   const onPointerMove = (event: React.PointerEvent) => {
     if (!dragging) return;
     movedRef.current += Math.abs(event.movementX) + Math.abs(event.movementY);
-    setPointer({ x: event.clientX, y: event.clientY });
+    setPointer(toPointer(event));
   };
 
   const onPointerUp = (event: React.PointerEvent, plug: Plug) => {
@@ -166,7 +200,7 @@ export const PowerPlug: React.FC = () => {
           {PLUGS.map((plug) => (
             <path
               key={plug.mode}
-              d={cablePaths[plug.mode] || ""}
+              d={cablePathFor(plug)}
               stroke={plug.cable}
               strokeWidth={dragging === plug.mode ? "4.5" : "3.5"}
               strokeLinecap="round"
@@ -204,7 +238,7 @@ export const PowerPlug: React.FC = () => {
                   ["--cable" as string]: plug.cable,
                   ["--plug-body" as string]: plug.body,
                   ...(isDragging && pointer
-                    ? { left: `${pointer.x}px`, top: `${pointer.y}px` }
+                    ? { left: `${pointer.clientX}px`, top: `${pointer.clientY}px` }
                     : {}),
                 }}
                 aria-label={`${l.action} ${l[plug.mode].full}`}
