@@ -426,6 +426,14 @@ a, button, input, select, textarea {
 .sa-panel {
   position: relative;
   flex: 0 0 54px;
+  /* Stated again as a real width, not only as a flex-basis. When Safari works
+     out the intrinsic width of the row it can measure each item's own content
+     instead of its flex-basis, and the content here is a label in
+     writing-mode: vertical-rl whose horizontal extent is barely wider than the
+     icon. The row then comes out around a third of its true width and
+     .sa-wrap's overflow: hidden cuts off every panel past the first two or
+     three. A definite width leaves nothing to infer. */
+  width: 54px;
   overflow: hidden;
   cursor: pointer;
   background: var(--glass-card-bg);
@@ -434,6 +442,7 @@ a, button, input, select, textarea {
   -webkit-backdrop-filter: blur(14px);
   transition:
     flex 0.48s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.48s cubic-bezier(0.4, 0, 0.2, 1),
     background 0.3s ease;
 }
 
@@ -462,6 +471,7 @@ a, button, input, select, textarea {
 /* Expanded panel */
 .sa-panel.sa-active {
   flex: 0 0 340px;
+  width: 340px;
   cursor: default;
   display: flex;
   flex-direction: column;
@@ -654,6 +664,9 @@ a, button, input, select, textarea {
 
   .sa-panel {
     flex: 0 0 44px;
+    /* The column layout makes flex-basis a height, so the explicit width the
+       desktop rule sets has to be handed back. */
+    width: auto;
     border-right: none;
     border-bottom: 1px solid var(--glass-border);
   }
@@ -664,6 +677,7 @@ a, button, input, select, textarea {
 
   .sa-panel.sa-active {
     flex: 0 0 auto;
+    width: auto;
   }
 
   .sa-head {
