@@ -124,6 +124,24 @@ html.bw-mode #guestbook * {
   color: #000000 !important;
 }
 
+/* Section collapse toggles (B&W Mode)
+   The yellow and dark themes each state this button's colour in their own
+   stylesheet, so it needs an entry here too rather than relying on the blanket
+   #guestbook / #skills / #experience colour rules above to catch it.
+   Hover changes the background only, never the text colour: those blanket
+   rules carry an id, so an inverted glyph here would lose to them and end up
+   black on black. */
+html.bw-mode .section-toggle {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  border-color: #000000 !important;
+  background: #ffffff !important;
+}
+
+html.bw-mode .section-toggle:hover {
+  background: #ededed !important;
+}
+
 /* Header in B&W */
 html.bw-mode header.header-glass-gradient,
 html.bw-mode header.header-glass-gradient {

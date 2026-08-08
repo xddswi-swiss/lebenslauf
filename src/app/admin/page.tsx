@@ -292,7 +292,7 @@ export default function AdminPage() {
         )}
       </main>
 
-      <Footer activeColorIndex={-1} />
+      <Footer />
       <ScrollToTopButton />
     </div>
   );

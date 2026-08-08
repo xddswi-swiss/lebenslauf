@@ -406,11 +406,11 @@
 }
 
 /* Guestbook Sleek Text Toggle (Yellow Theme) */
-:root:not(.dark):not(.bw-mode) .guestbook-text-toggle {
+:root:not(.dark):not(.bw-mode) .section-toggle {
   color: #e65c00 !important;
   -webkit-text-fill-color: #e65c00 !important;
 }
-:root:not(.dark):not(.bw-mode) .guestbook-text-toggle:hover {
+:root:not(.dark):not(.bw-mode) .section-toggle:hover {
   color: #ff6600 !important;
   -webkit-text-fill-color: #ff6600 !important;
 }

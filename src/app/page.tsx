@@ -11,6 +11,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
 import ElectricBorder from "@/components/ElectricBorder";
 import { motion as m, AnimatePresence } from "framer-motion";
 import Image from "next/image";
@@ -25,6 +26,7 @@ import {
 import {
   reportItems,
   referencesData,
+  SITE_LAST_UPDATED,
   type ReportItem,
 } from "@/data/translations";
 
@@ -32,7 +34,9 @@ import {
 // Buradaki sayıları ve tarihi dilediğiniz gibi güncelleyebilirsiniz:
 const STATS_SCHNUPPERLEHREN = 25; // Schnupperlehren (Staj) Sayısı
 const STATS_BEWERBUNGEN = 96; // Lehrstellenbewerbungen (Çıraklık Başvurusu) Sayısı
-const STATS_LETZTE_AKTUALISIERUNG = "19.06.2026"; // Son Güncelleme Tarihi
+// Son Güncelleme Tarihi — footer da aynı değeri gösterdiği için
+// src/data/translations.ts içinde tutuluyor, oradan düzenleyin.
+const STATS_LETZTE_AKTUALISIERUNG = SITE_LAST_UPDATED;
 // ------------------------------------------------
 
 // ElectricBorder paints to a canvas, so it needs a resolved colour string
@@ -337,15 +341,11 @@ const MainContent: React.FC = () => {
 
         {/* School Documents (Zeugnisse) Section */}
         <section id="documents" className="scroll-mt-32">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
-              {t.documents.title}
-            </h2>
-            <p className="text-[var(--text-muted)] text-sm md:text-base">
-              {t.documents.subtitle}
-            </p>
-          </div>
-
+          <CollapsibleSection
+            id="documents"
+            title={t.documents.title}
+            subtitle={t.documents.subtitle}
+          >
           <div className="max-w-md mx-auto">
             <div className="rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] backdrop-blur-md divide-y divide-[var(--glass-border)] max-h-[520px] overflow-y-auto">
               {(() => {
@@ -431,16 +431,14 @@ const MainContent: React.FC = () => {
               })()}
             </div>
           </div>
+          </CollapsibleSection>
         </section>
 
         {/* Experience Section */}
         <section id="experience" className="scroll-mt-32">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-extrabold text-[var(--text-main)] bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
-              {t.experience.title}
-            </h2>
-          </div>
-          <Timeline selectedMatcher={null} />
+          <CollapsibleSection id="experience" title={t.experience.title}>
+            <Timeline selectedMatcher={null} />
+          </CollapsibleSection>
         </section>
 
         {/* Skills Section */}
@@ -455,12 +453,11 @@ const MainContent: React.FC = () => {
 
         {/* Contact & References Section */}
         <section id="contact" className="scroll-mt-32 max-w-5xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
-              {t.contact.title}
-            </h2>
-          </div>
-
+          <CollapsibleSection
+            id="contact"
+            title={t.contact.title}
+            subtitle={t.contact.subtitle}
+          >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Column: Contact Form */}
             <div className="lg:col-span-7">
@@ -518,10 +515,11 @@ const MainContent: React.FC = () => {
               </div>
             </div>
           </div>
+          </CollapsibleSection>
         </section>
       </main>
 
-      <Footer activeColorIndex={randomColorIndex} />
+      <Footer />
       {/* Scroll to Top Button */}
       <ScrollToTopButton />
     </div>

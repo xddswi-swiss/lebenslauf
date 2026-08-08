@@ -15,21 +15,27 @@ export default function CookieConsent() {
   const [trackingEnabled, setTrackingEnabled] = useState(false);
 
   useEffect(() => {
-    // Expose a global method to manually trigger the cookie banner
-    if (typeof window !== "undefined") {
-      (window as any).showCookieSettings = () => {
-        setShowSettings(true);
-        setIsVisible(true);
-      };
-    }
+    // Reopened from the footer link. A window event rather than a function
+    // assigned onto `window`: no `any` cast, and it does not matter which of
+    // the two components mounts first.
+    const openSettings = () => {
+      setShowSettings(true);
+      setIsVisible(true);
+    };
+    window.addEventListener("open-cookie-settings", openSettings);
 
     // Check if user already made a choice
     const consent = localStorage.getItem("cookie_consent");
+    let timer: ReturnType<typeof setTimeout> | undefined;
     if (!consent) {
       // Delay showing the banner slightly for better UX
-      const timer = setTimeout(() => setIsVisible(true), 1000);
-      return () => clearTimeout(timer);
+      timer = setTimeout(() => setIsVisible(true), 1000);
     }
+
+    return () => {
+      window.removeEventListener("open-cookie-settings", openSettings);
+      if (timer) clearTimeout(timer);
+    };
   }, []);
 
   const handleAcceptAll = () => {

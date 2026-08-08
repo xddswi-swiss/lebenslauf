@@ -399,11 +399,11 @@
 }
 
 /* Guestbook Sleek Text Toggle (Dark Theme) */
-:root.dark:not(.bw-mode) .guestbook-text-toggle {
+:root.dark:not(.bw-mode) .section-toggle {
   color: #60a5fa !important;
   -webkit-text-fill-color: #60a5fa !important;
 }
-:root.dark:not(.bw-mode) .guestbook-text-toggle:hover {
+:root.dark:not(.bw-mode) .section-toggle:hover {
   color: #93c5fd !important;
   -webkit-text-fill-color: #93c5fd !important;
 }

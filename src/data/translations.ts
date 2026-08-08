@@ -1,5 +1,11 @@
 export type Language = "de" | "tr" | "en";
 
+/**
+ * Date the site content was last revised, shown in the footer and used by the
+ * stats block on the home page. Kept here so both read the same value.
+ */
+export const SITE_LAST_UPDATED = "19.06.2026";
+
 export interface ExperienceItem {
   type?: "work" | "education";
   period: string;
@@ -152,6 +158,9 @@ export interface TranslationSchema {
     technologiesDesc: string;
     contactTitle: string;
     rightsReserved: string;
+    privacy: string;
+    cookieSettings: string;
+    lastUpdated: string;
   };
   notFound: {
     title: string;
@@ -537,14 +546,17 @@ export const translations: Record<Language, TranslationSchema> = {
     },
     footer: {
       description:
-        "Schüler mit Interesse an KV-Berufen und Bankwesen. Motiviert und bereit für neue Herausforderungen.",
+        "Schüler auf der Suche nach einer Lehrstelle als Elektroinstallateur EFZ. Motiviert und bereit für neue Herausforderungen.",
       quickAccess: "Schnellzugriff",
       resume: "Lebenslauf",
-      technologiesTitle: "Verwendete Technologien",
+      technologiesTitle: "Gebaut mit",
       technologiesDesc:
-        "Diese Portfolio-Website wurde mit modernen Technologien entwickelt. Insgesamt wurden 12 verschiedene Technologien verwendet.",
+        "Diese Website habe ich selbst entwickelt.",
       contactTitle: "Kontakt",
       rightsReserved: "Alle Rechte vorbehalten.",
+      privacy: "Datenschutz",
+      cookieSettings: "Cookie-Einstellungen",
+      lastUpdated: "Zuletzt aktualisiert",
     },
     notFound: {
       title: "Seite nicht gefunden",
@@ -732,14 +744,17 @@ export const translations: Record<Language, TranslationSchema> = {
     },
     footer: {
       description:
-        "KV (Ticari) meslekleri ve bankacılık sektörü ile ilgilenen öğrenci. Yeni zorluklara hazır ve motive.",
+        "Elektroinstallateur EFZ çıraklığı arayan öğrenci. Yeni zorluklara hazır ve motive.",
       quickAccess: "Hızlı Erişim",
       resume: "Özgeçmiş",
-      technologiesTitle: "Kullanılan Teknolojiler",
+      technologiesTitle: "Kullanılan teknolojiler",
       technologiesDesc:
-        "Bu portfolyo web sitesi modern teknolojilerle geliştirilmiştir. Toplamda 12 farklı teknoloji kullanılmıştır.",
+        "Bu siteyi kendim geliştirdim.",
       contactTitle: "İletişim",
       rightsReserved: "Tüm hakları saklıdır.",
+      privacy: "Gizlilik",
+      cookieSettings: "Çerez Ayarları",
+      lastUpdated: "Son güncelleme",
     },
     notFound: {
       title: "Sayfa Bulunamadı",
@@ -933,14 +948,17 @@ export const translations: Record<Language, TranslationSchema> = {
     },
     footer: {
       description:
-        "Student interested in commercial (KV) professions and banking. Motivated and ready for new challenges.",
+        "Student looking for an apprenticeship as an Electrical Installer EFZ. Motivated and ready for new challenges.",
       quickAccess: "Quick Links",
       resume: "Resume",
-      technologiesTitle: "Technologies Used",
+      technologiesTitle: "Built with",
       technologiesDesc:
-        "This portfolio website was developed using modern technologies. A total of 12 different technologies were used.",
+        "I built this site myself.",
       contactTitle: "Contact",
       rightsReserved: "All rights reserved.",
+      privacy: "Privacy",
+      cookieSettings: "Cookie Settings",
+      lastUpdated: "Last updated",
     },
     notFound: {
       title: "Page Not Found",

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useLanguage } from "@/app/contexts/LanguageContext";
+import { CollapsibleSection } from "@/components/CollapsibleSection";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   FiUserCheck,
@@ -153,16 +154,11 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({
 
   return (
     <div className="w-full max-w-5xl mx-auto">
-      {/* ---- Heading ---- */}
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-extrabold bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
-          {t.skills.title}
-        </h2>
-        <p className="text-[var(--text-muted)] max-w-3xl mx-auto text-sm md:text-base mt-2">
-          {t.skills.subtitle}
-        </p>
-      </div>
-
+      <CollapsibleSection
+        id="skills"
+        title={t.skills.title}
+        subtitle={t.skills.subtitle}
+      >
       {/* ---- Accordion ---- */}
       <div className="sa-wrap">
         {categories.map((key) => {
@@ -275,6 +271,7 @@ export const SkillsGrid: React.FC<SkillsGridProps> = ({
           );
         })}
       </div>
+      </CollapsibleSection>
     </div>
   );
 };

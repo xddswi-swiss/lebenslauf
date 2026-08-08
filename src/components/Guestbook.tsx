@@ -248,33 +248,51 @@ export const Guestbook: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto w-full space-y-2 px-2 sm:px-0">
-      {/* SLEEK TOGGLE TEXT POSITIONED ABOVE CARD (ALWAYS IN THE SAME SPOT) */}
-      <div className="flex justify-end pr-2 md:pr-4 mb-2">
+      {/* HEADING + TOGGLE — both stay outside the collapsible region so the
+          section still names itself when the card is closed. That is what lets
+          the button be an icon with no label next to it. */}
+      <div className="flex items-center justify-center gap-4 mb-6">
+        <div className="text-center">
+          <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
+            {t.title}
+          </h2>
+          <p className="text-[var(--text-muted)] text-sm md:text-base">
+            {t.subtitle}
+          </p>
+        </div>
+
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="guestbook-text-toggle inline-flex items-center gap-2 text-xs md:text-sm font-extrabold tracking-wide transition-all duration-300 cursor-pointer hover:opacity-80 active:scale-95 bg-transparent border-0 outline-none p-0 select-none"
+          className="section-toggle flex-shrink-0 inline-flex items-center justify-center w-11 h-11 md:w-12 md:h-12 rounded-full glass-card border border-[var(--glass-border)] cursor-pointer transition-transform duration-300 hover:scale-110 active:scale-95 outline-none select-none"
           aria-label={isExpanded ? t.btnClose : t.btnOpen}
+          aria-expanded={isExpanded}
+          aria-controls="guestbook-panel"
         >
+          {/* One glyph, rotated. A "+" turned 45 degrees reads as "×". The old
+              version swapped − for + and rotated 180°, which is invisible:
+              both glyphs are symmetric about that turn. */}
           <m.span
-            animate={{ rotate: isExpanded ? 0 : 180 }}
-            transition={{ duration: 0.8 }}
-            className="text-sm md:text-base font-black leading-none inline-block"
+            animate={{ rotate: isExpanded ? 45 : 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="text-2xl md:text-3xl font-black leading-none inline-block"
           >
-            {isExpanded ? "−" : "+"}
+            +
           </m.span>
-          <span>{isExpanded ? t.btnClose : t.btnOpen}</span>
         </button>
       </div>
 
       {/* ROLLADE (SHUTTER) ANIMATION: 2-LAYER (OUTER CLIPPING MASK + INNER VERTICAL Y SLIDING) */}
-      <AnimatePresence initial={false} mode="wait">
+      {/* mode="wait" removed: there is only ever one conditional child here, so
+          there is nothing to wait for it to swap with. */}
+      <AnimatePresence initial={false}>
         {isExpanded && (
           <m.div
+            id="guestbook-panel"
             key="guestbook-rollade-clip-outer"
             initial={{ height: 0 }}
             animate={{ height: "auto" }}
             exit={{ height: 0 }}
-            transition={{ duration: 2.2, ease: "easeInOut" }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
             style={{ overflow: "hidden" }}
             className="w-full pt-1"
           >
@@ -283,7 +301,7 @@ export const Guestbook: React.FC = () => {
               initial={{ y: "-100%", opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: "-100%", opacity: 0 }}
-              transition={{ duration: 2.2, ease: "easeInOut" }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
               className="space-y-4"
             >
               {/* Toast Notification */}
@@ -297,16 +315,6 @@ export const Guestbook: React.FC = () => {
                   <span>{t.successMsg}</span>
                 </m.div>
               )}
-
-              {/* SECTION TITLE */}
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-extrabold text-[var(--text-main)] mb-2 bg-gradient-to-r from-title-from to-title-to bg-clip-text text-transparent inline-block">
-                  {t.title}
-                </h2>
-                <p className="text-[var(--text-muted)] text-sm md:text-base">
-                  {t.subtitle}
-                </p>
-              </div>
 
               {/* GLASS PANEL CONTAINER */}
               <div className="glass-card p-4 sm:p-6 md:p-10 rounded-3xl border border-[var(--glass-border)] bg-[var(--glass-card-bg)] shadow-2xl relative overflow-hidden flex flex-col justify-between h-auto">
