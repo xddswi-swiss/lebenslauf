@@ -405,7 +405,15 @@ a, button, input, select, textarea {
   display: flex;
   flex-direction: row;
   height: 330px;
-  max-width: fit-content;
+  /* Sized by its panels, but stated explicitly rather than through
+     `max-width: fit-content`. Safari on iPadOS does not resolve fit-content
+     reliably on a flex container — it can collapse towards min-content, and
+     with the overflow: hidden below that silently clips every panel past the
+     first two or three. max-content is understood everywhere, and the 100%
+     cap keeps it inside the column on narrow screens. */
+  width: -webkit-max-content;
+  width: max-content;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
   border-radius: 16px;
