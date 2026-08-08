@@ -88,7 +88,12 @@ export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
             transition={{ duration: 0.5, ease: "easeInOut" }}
             style={{ overflow: "hidden" }}
           >
-            {children}
+            {/* Inner padding, not padding on the animated element itself: the
+                height animation runs to 0 and padding there would leave the
+                closed section a few pixels tall. Cards inside lift by 3px on
+                hover, and without this the lift crosses the overflow: hidden
+                edge above and their top border is clipped away. */}
+            <div className="pt-1 pb-1">{children}</div>
           </m.div>
         )}
       </AnimatePresence>

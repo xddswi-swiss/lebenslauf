@@ -249,7 +249,12 @@ body {
   box-shadow:
     0 15px 35px -10px var(--primary-glow),
     inset 0 0 15px rgba(255, 255, 255, 0.05);
-  transform: translateY(-3px) scale(1.003);
+  /* Lift only. The scale(1.003) that used to sit here was too small to see
+     — three tenths of a percent — but cards run the full width of their
+     container, so it pushed their left and right edges a pixel outside the
+     collapsible panel's overflow: hidden and the border appeared to vanish
+     along those sides while hovered. */
+  transform: translateY(-3px);
 }
 
 /* Custom background mesh */
