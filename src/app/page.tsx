@@ -190,7 +190,7 @@ const MainContent: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-wrap items-center gap-4 pt-4"
+              className="flex flex-wrap items-center gap-3 pt-4"
             >
               <a
                 href="#contact"
@@ -211,7 +211,7 @@ const MainContent: React.FC = () => {
                 {t.hero.downloadCv}
               </a>
 
-              <div className="flex items-center gap-3 md:ml-2">
+              <div className="flex items-center gap-3">
                 <a
                   href="https://github.com/yigiterenaydin"
                   target="_blank"

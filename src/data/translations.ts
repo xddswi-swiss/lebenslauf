@@ -521,7 +521,7 @@ export const translations: Record<Language, TranslationSchema> = {
     contact: {
       title: "Kontakt",
       subtitle:
-        "Haben Sie eine offene Lehrstelle oder Fragen? Schreiben Sie mir eine Nachricht.",
+        "Haben Sie Fragen? Schreiben Sie mir eine Nachricht.",
       name: "Name",
       email: "E-Mail",
       message: "Nachricht",
@@ -548,7 +548,7 @@ export const translations: Record<Language, TranslationSchema> = {
     },
     footer: {
       description:
-        "Schüler auf der Suche nach einer Lehrstelle als Elektroinstallateur EFZ. Motiviert und bereit für neue Herausforderungen.",
+        "Beginnt am 10. August 2026 seine Lehre als Elektroinstallateur EFZ. Motiviert und bereit für neue Herausforderungen.",
       quickAccess: "Schnellzugriff",
       resume: "Lebenslauf",
       technologiesTitle: "Gebaut mit",
@@ -720,7 +720,7 @@ export const translations: Record<Language, TranslationSchema> = {
     contact: {
       title: "İletişim",
       subtitle:
-        "Açık çıraklık pozisyonunuz mu var veya bir sorunuz mu var? Bana mesaj gönderin.",
+        "Bir sorunuz mu var? Bana mesaj gönderin.",
       name: "İsim",
       email: "E-posta",
       message: "Mesajınız",
@@ -747,7 +747,7 @@ export const translations: Record<Language, TranslationSchema> = {
     },
     footer: {
       description:
-        "Elektroinstallateur EFZ çıraklığı arayan öğrenci. Yeni zorluklara hazır ve motive.",
+        "10 Ağustos 2026'da Elektroinstallateur EFZ çıraklığına başlıyor. Motive ve yeni zorluklara hazır.",
       quickAccess: "Hızlı Erişim",
       resume: "Özgeçmiş",
       technologiesTitle: "Kullanılan teknolojiler",
@@ -925,7 +925,7 @@ export const translations: Record<Language, TranslationSchema> = {
     contact: {
       title: "Contact",
       subtitle:
-        "Do you have an open apprenticeship position or any questions? Send me a message.",
+        "Do you have any questions? Send me a message.",
       name: "Name",
       email: "Email",
       message: "Message",
@@ -952,7 +952,7 @@ export const translations: Record<Language, TranslationSchema> = {
     },
     footer: {
       description:
-        "Student looking for an apprenticeship as an Electrical Installer EFZ. Motivated and ready for new challenges.",
+        "Starts his apprenticeship as an Electrical Installer EFZ on 10 August 2026. Motivated and ready for new challenges.",
       quickAccess: "Quick Links",
       resume: "Resume",
       technologiesTitle: "Built with",
