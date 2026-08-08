@@ -462,31 +462,31 @@ html.bw-mode #documents .glass-card[class*="text-"] * {
   color: #ffffff !important;
 }
 
-/* Document Download Button in B&W Mode (the separate <a> download link, not
-   the icon avatar above) — at rest AND on hover this must stay pure
-   black/white, never the per-document accent color (blue/orange/emerald/
-   violet/amber/rose). Same white-bg/black-border → black-bg/white-icon
+/* Document row action buttons in B&W Mode (the preview <button> and the
+   download <a>, not the icon avatar above) — at rest AND on hover these must
+   stay pure black/white, never the per-document accent color (blue/orange/
+   emerald/violet/amber/rose). Same white-bg/black-border → black-bg/white-icon
    invert pattern used for the footer social icons. */
 html.bw-mode #documents a[class*="text-"],
-html.bw-mode #documents a[class*="text-"] {
+html.bw-mode #documents button[class*="text-"] {
   background-color: #ffffff !important;
   color: #000000 !important;
   border: 1.5px solid #000000 !important;
 }
 
 html.bw-mode #documents a[class*="text-"] *,
-html.bw-mode #documents a[class*="text-"] * {
+html.bw-mode #documents button[class*="text-"] * {
   color: #000000 !important;
 }
 
 html.bw-mode #documents a[class*="text-"]:hover,
-html.bw-mode #documents a[class*="text-"]:hover {
+html.bw-mode #documents button[class*="text-"]:hover {
   background-color: #000000 !important;
   border: 1.5px solid #000000 !important;
 }
 
 html.bw-mode #documents a[class*="text-"]:hover *,
-html.bw-mode #documents a[class*="text-"]:hover * {
+html.bw-mode #documents button[class*="text-"]:hover * {
   color: #ffffff !important;
 }
 

@@ -12,6 +12,7 @@ import { Footer } from "@/components/Footer";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { CollapsibleSection } from "@/components/CollapsibleSection";
+import { PdfPreview } from "@/components/PdfPreview";
 import ElectricBorder from "@/components/ElectricBorder";
 import { motion as m, AnimatePresence } from "framer-motion";
 import Image from "next/image";
@@ -22,6 +23,7 @@ import {
   FiGithub,
   FiInstagram,
   FiFileText,
+  FiEye,
 } from "react-icons/fi";
 import {
   reportItems,
@@ -60,6 +62,24 @@ const MainContent: React.FC = () => {
   const { t, language } = useLanguage();
   const [randomColorIndex, setRandomColorIndex] = useState<number>(-1);
   const [docs, setDocs] = useState<ReportItem[]>([]);
+  const [preview, setPreview] = useState<{
+    file: string;
+    title: string;
+  } | null>(null);
+
+  // iOS Safari renders nothing inside an iframe pointed at a PDF, so touch
+  // devices get the file in a new tab rather than an empty preview panel.
+  const openDocument = (file: string, title: string) => {
+    const coarsePointer =
+      typeof window !== "undefined" &&
+      window.matchMedia("(pointer: coarse)").matches;
+
+    if (coarsePointer) {
+      window.open(file, "_blank", "noopener,noreferrer");
+      return;
+    }
+    setPreview({ file, title });
+  };
   const electricBorder = useThemeColor("--electric-border", "#000000");
   const electricGlow = useThemeColor("--electric-glow", "#FF6C02");
 
@@ -414,6 +434,15 @@ const MainContent: React.FC = () => {
                           {doc.date}
                         </p>
                       </div>
+                      <button
+                        type="button"
+                        onClick={() => openDocument(doc.file, doc.term)}
+                        aria-label={t.documents.preview}
+                        title={t.documents.preview}
+                        className={`flex-shrink-0 p-2.5 rounded-xl border transition-all duration-200 hover:scale-105 active:scale-95 ${colors.button}`}
+                      >
+                        <FiEye className="text-base" />
+                      </button>
                       <a
                         href={doc.file}
                         download={`${doc.term}.pdf`}
@@ -522,6 +551,12 @@ const MainContent: React.FC = () => {
       <Footer />
       {/* Scroll to Top Button */}
       <ScrollToTopButton />
+
+      <PdfPreview
+        file={preview?.file ?? null}
+        title={preview?.title ?? ""}
+        onClose={() => setPreview(null)}
+      />
     </div>
   );
 };
