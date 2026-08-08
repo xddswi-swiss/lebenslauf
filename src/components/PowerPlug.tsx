@@ -65,15 +65,22 @@ export const PowerPlug: React.FC = () => {
   } | null>(null);
 
   /**
-   * Where each plug hangs when it is not being dragged, in stage coordinates.
+   * Two points per plug, in stage coordinates.
    *
-   * Only this is state. The cable paths themselves are worked out during
-   * render, because deriving them into state meant every pointermove set state
-   * twice — once for the pointer, then again from an effect for the paths — and
-   * rendered twice for one move of the mouse.
+   * `homeX` is the column the cable drops from — the plug's own slot in the
+   * row, which stays put even when the plug itself is down in the socket. That
+   * separation is the point: anchoring the cable to the plug head instead made
+   * a plugged-in cable fall from the middle of the stage, as though it had
+   * been rewired, rather than running across from where it hangs.
+   *
+   * `headX/headY` is wherever the plug body currently is.
+   *
+   * Only this is state. The paths themselves are worked out during render,
+   * because deriving them into state meant every pointermove set state twice —
+   * once for the pointer, then again from an effect for the paths.
    */
   const [anchors, setAnchors] = useState<
-    Record<string, { x: number; y: number }>
+    Record<string, { homeX: number; headX: number; headY: number }>
   >({});
 
   const measureAnchors = useCallback(() => {
@@ -82,14 +89,27 @@ export const PowerPlug: React.FC = () => {
     const stageRect = stage.getBoundingClientRect();
     if (stageRect.width === 0) return;
 
-    const next: Record<string, { x: number; y: number }> = {};
+    const next: Record<
+      string,
+      { homeX: number; headX: number; headY: number }
+    > = {};
+
     PLUGS.forEach((plug) => {
-      const el = plugRefs.current[plug.mode];
-      if (!el) return;
-      const r = el.getBoundingClientRect();
+      // The row always holds a slot for every plug: the button itself, or the
+      // spacer left behind when the plug moved into the socket.
+      const slot = stage.querySelector<HTMLElement>(
+        `.power-plug-row [data-slot="${plug.mode}"]`,
+      );
+      const head = plugRefs.current[plug.mode];
+      if (!slot || !head) return;
+
+      const slotRect = slot.getBoundingClientRect();
+      const headRect = head.getBoundingClientRect();
+
       next[plug.mode] = {
-        x: r.left - stageRect.left + r.width / 2,
-        y: Math.max(0, r.top - stageRect.top),
+        homeX: slotRect.left - stageRect.left + slotRect.width / 2,
+        headX: headRect.left - stageRect.left + headRect.width / 2,
+        headY: Math.max(0, headRect.top - stageRect.top),
       };
     });
 
@@ -99,7 +119,11 @@ export const PowerPlug: React.FC = () => {
       const same =
         Object.keys(next).length === Object.keys(prev).length &&
         Object.entries(next).every(
-          ([k, v]) => prev[k] && prev[k].x === v.x && prev[k].y === v.y,
+          ([k, v]) =>
+            prev[k] &&
+            prev[k].homeX === v.homeX &&
+            prev[k].headX === v.headX &&
+            prev[k].headY === v.headY,
         );
       return same ? prev : next;
     });
@@ -121,13 +145,15 @@ export const PowerPlug: React.FC = () => {
     const anchor = anchors[plug.mode];
     if (!anchor) return "";
 
-    const startX = anchor.x;
+    // Always drops from the plug's own column, never from wherever the head
+    // happens to be.
+    const startX = anchor.homeX;
     const startY = 0;
     const isDragging = dragging === plug.mode;
     const isPluggedIn = themeMode === plug.mode;
 
-    const endX = isDragging && pointer ? pointer.stageX : anchor.x;
-    const endY = isDragging && pointer ? pointer.stageY - 12 : anchor.y;
+    const endX = isDragging && pointer ? pointer.stageX : anchor.headX;
+    const endY = isDragging && pointer ? pointer.stageY - 12 : anchor.headY;
 
     if (!isDragging && !isPluggedIn) {
       // Resting: a straight drop from the ceiling to the plug head.
@@ -222,7 +248,12 @@ export const PowerPlug: React.FC = () => {
             // Active plug sits inside socket container below!
             if (isPluggedIn) {
               return (
-                <div key={plug.mode} className="w-[52px] h-[52px] flex-shrink-0" aria-hidden="true" />
+                <div
+                  key={plug.mode}
+                  data-slot={plug.mode}
+                  className="w-[52px] h-[52px] flex-shrink-0"
+                  aria-hidden="true"
+                />
               );
             }
 
@@ -232,6 +263,7 @@ export const PowerPlug: React.FC = () => {
                 ref={(el) => {
                   plugRefs.current[plug.mode] = el;
                 }}
+                data-slot={plug.mode}
                 type="button"
                 className={`plug${isDragging ? " plug-dragging" : ""}`}
                 style={{

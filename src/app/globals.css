@@ -436,6 +436,10 @@ a, button, input, select, textarea {
   gap: 12px;
   align-items: flex-end;
   justify-content: center;
+  /* Headroom for the cables. They are drawn from the top edge of the stage
+     down to each plug, so without this the row sits against the ceiling and
+     the cable is a stub a few pixels long. */
+  margin-top: 52px;
 }
 
 .plug {
@@ -513,7 +517,9 @@ a, button, input, select, textarea {
 .socket {
   width: 76px;
   height: 56px;
-  margin-top: 10px;
+  /* Enough drop that the plugged-in cable reads as a run of cable rather than
+     the plug simply sitting on top of the socket. */
+  margin-top: 44px;
   border-radius: 12px;
   background: var(--glass-card-bg);
   border: 2px solid var(--glass-border);
