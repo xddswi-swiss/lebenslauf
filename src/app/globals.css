@@ -476,7 +476,7 @@ a, button, input, select, textarea {
   width: 34px;
   height: 26px;
   border-radius: 7px 7px 4px 4px;
-  background: var(--cable);
+  background: var(--plug-body, var(--cable));
   border: 1px solid rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
@@ -550,6 +550,11 @@ a, button, input, select, textarea {
   border-radius: 3px;
   background: var(--text-main);
   opacity: 0.55;
+}
+
+.plug-inserted .plug-pin-inserted {
+  transform: translateY(4px);
+  opacity: 0.85;
 }
 
 /* ==========================================================
