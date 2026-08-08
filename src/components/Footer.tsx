@@ -6,6 +6,7 @@ import { SITE_LAST_UPDATED } from "@/data/translations";
 import { FiDownload, FiInstagram, FiGithub, FiMail } from "react-icons/fi";
 import Link from "next/link";
 import { VisualSitemap } from "@/components/VisualSitemap";
+import { PowerPlug } from "@/components/PowerPlug";
 
 // --- MANUEL DEĞİŞTİREBİLECEĞİNİZ İLETİŞİM / SOSYAL MEDYA LİNKLERİ ---
 const LINK_GITHUB = "https://github.com/yigiterenaydin";
@@ -60,6 +61,8 @@ export const Footer: React.FC = () => {
           <p className="text-xs text-[var(--text-muted)]">
             {t.footer.lastUpdated}: {SITE_LAST_UPDATED}
           </p>
+
+          <PowerPlug />
         </div>
 
         {/* Contact — the widest block, because that is the point of the site */}

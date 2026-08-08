@@ -402,6 +402,157 @@ a, button, input, select, textarea {
 }
 
 /* ==========================================================
+   Footer power plugs (theme switcher)
+   ----------------------------------------------------------
+   The cable colours are hard-coded rather than read from theme variables:
+   a blue cable has to stay blue in every theme, because the colour is the
+   whole point of the control. The socket is furniture, so that one does
+   follow the theme.
+   ========================================================== */
+
+.power-plug {
+  margin-top: 4px;
+}
+
+.power-plug-hint {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+/* Shrink-wraps to the plug row so the socket below can centre against it.
+   inline-flex rather than a fit-content width: shrink-to-fit on an
+   inline-level box is the one intrinsic sizing every engine agrees on. */
+.power-plug-stage {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.power-plug-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.plug {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 52px;
+  /* The footer column is around 190px at the md breakpoint. Without this the
+     flex default shrinks the second and third plug but not the first, and the
+     three come out different widths. */
+  flex: 0 0 auto;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: grab;
+  /* Scoped to the plug so a drag never competes with the page scroll, which
+     html { touch-action: pan-x pan-y } otherwise hands to the compositor. */
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.plug:active {
+  cursor: grabbing;
+}
+
+.plug-cable {
+  width: 4px;
+  height: 22px;
+  border-radius: 2px;
+  background: var(--cable);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.plug-body {
+  position: relative;
+  width: 34px;
+  height: 26px;
+  border-radius: 7px 7px 4px 4px;
+  background: var(--cable);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  padding-top: 24px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.plug-pin {
+  width: 4px;
+  height: 9px;
+  border-radius: 0 0 2px 2px;
+  background: #9ca3af;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  border-top: none;
+}
+
+.plug-name {
+  font-size: 9px;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+.plug:hover .plug-body,
+.plug:focus-visible .plug-body {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* The plug for the theme currently in use */
+.plug-live .plug-body {
+  box-shadow: 0 0 0 2px var(--text-main);
+}
+
+/* While dragged the plug follows the pointer, so it leaves the flow */
+.plug-dragging {
+  position: fixed;
+  z-index: 60;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.socket {
+  width: 76px;
+  height: 56px;
+  margin-top: 10px;
+  border-radius: 12px;
+  background: var(--glass-card-bg);
+  border: 2px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.socket-ready {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-glow);
+}
+
+.socket-hole {
+  width: 7px;
+  height: 12px;
+  border-radius: 3px;
+  background: var(--text-main);
+  opacity: 0.55;
+}
+
+/* ==========================================================
    Skills Vertical Accordion (sa-*)
    ========================================================== */
 
